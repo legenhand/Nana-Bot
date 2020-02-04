@@ -63,7 +63,7 @@ RUN python3 -m pip install psycopg2
 
 RUN git clone https://github.com/legenhand/Nana-TgBot.git /root/nana
 WORKDIR /root/nana
-COPY ./nana/config.py /root/nana/nana
+COPY ./nana/config.py* /root/nana/nana
 ENV PATH="/home/userbot/bin:$PATH"
 
 # Added Database Postgres

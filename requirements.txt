@@ -1,0 +1,16 @@
+requests
+https://github.com/AyraHikari/pyrogram/archive/asyncio-dev.zip
+TgCrypto
+pydrive
+sqlalchemy
+psycopg2
+bs4
+pyDownload
+pillow
+gtts
+gitpython
+pafy
+youtube_dl
+urbandict
+googletrans
+currencyconverter

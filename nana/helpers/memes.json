@@ -1,0 +1,510 @@
+{
+    "tenguy": {
+        "title": "10 Guy",
+        "example": "https://memegen.link/tenguy/your_text/goes_here.jpg"
+    },
+    "afraid": {
+        "title": "Afraid to Ask Andy",
+        "example": "https://memegen.link/afraid/i_don't_know_what_this_meme_is_for/and_at_this_point_i'm_too_afraid_to_ask.jpg"
+    },
+    "apcr": {
+        "title": "Almost Politically Correct Redneck",
+        "example": "https://memegen.link/apcr/your_text/goes_here.jpg"
+    },
+    "older": {
+        "title": "An Older Code Sir, But It Checks Out",
+        "example": "https://memegen.link/older/it's_an_older_meme_sir/but_it_checks_out.jpg"
+    },
+    "aag": {
+        "title": "Ancient Aliens Guy",
+        "example": "https://memegen.link/aag/_/aliens.jpg"
+    },
+    "atis": {
+        "title": "And Then I Said",
+        "example": "https://memegen.link/atis/and_then_i_said/the_exam_will_only_contain_what_we've_covered_in_lectures.jpg"
+    },
+    "tried": {
+        "title": "At Least You Tried",
+        "example": "https://memegen.link/tried/at_least/you_tried.jpg"
+    },
+    "biw": {
+        "title": "Baby Insanity Wolf",
+        "example": "https://memegen.link/biw/gets_iced_coffee/in_the_winter.jpg"
+    },
+    "stew": {
+        "title": "Baby, You've Got a Stew Going",
+        "example": "https://memegen.link/stew/_/baby,_you've_got_a_stew_going!.jpg"
+    },
+    "blb": {
+        "title": "Bad Luck Brian",
+        "example": "https://memegen.link/blb/your_text/goes_here.jpg"
+    },
+    "kermit": {
+        "title": "But That's None of My Business",
+        "example": "https://memegen.link/kermit/_/but_that's_none_of_my_business.jpg"
+    },
+    "bd": {
+        "title": "Butthurt Dweller",
+        "example": "https://memegen.link/bd/can't_workout/don't_want_to_get_too_buff.jpg"
+    },
+    "ch": {
+        "title": "Captain Hindsight",
+        "example": "https://memegen.link/ch/if_you_wanted_to_avoid_the_friend_zone/you_should_have_made_your_intentions_known_from_the_start.jpg"
+    },
+    "cbg": {
+        "title": "Comic Book Guy",
+        "example": "https://memegen.link/cbg/_/worst_thing_ever!.jpg"
+    },
+    "wonka": {
+        "title": "Condescending Wonka",
+        "example": "https://memegen.link/wonka/your_text/goes_here.jpg"
+    },
+    "cb": {
+        "title": "Confession Bear",
+        "example": "https://memegen.link/cb/i_stole/the_pic_i_nic_basket.jpg"
+    },
+    "gandalf": {
+        "title": "Confused Gandalf",
+        "example": "https://memegen.link/gandalf/_/what_did_i_just_say~q.jpg"
+    },
+    "keanu": {
+        "title": "Conspiracy Keanu",
+        "example": "https://memegen.link/keanu/your_text/goes_here.jpg"
+    },
+    "cryingfloor": {
+        "title": "Crying on Floor",
+        "example": "https://memegen.link/cryingfloor/it's_okay/lets_just_reschedule_drinking.jpg"
+    },
+    "dsm": {
+        "title": "Dating Site Murderer",
+        "example": "https://memegen.link/dsm/they_will_never_find_your_body/as_attractive_as_i_do.jpg"
+    },
+    "disastergirl": {
+        "title": "Disaster Girl",
+        "example": "https://memegen.link/disastergirl/what_did_you_say~q.jpg"
+    },
+    "live": {
+        "title": "Do It Live!",
+        "example": "https://memegen.link/live/_/do_it_live!.jpg"
+    },
+    "ants": {
+        "title": "Do You Want Ants?",
+        "example": "https://memegen.link/ants/do_you_want_ants~q/because_that's_how_you_get_ants.jpg"
+    },
+    "doge": {
+        "title": "Doge",
+        "example": "https://memegen.link/doge/such_meme/very_skill.jpg"
+    },
+    "trump": {
+        "title": "Donald Trump",
+        "example": "https://memegen.link/trump/this_is_the_best_meme_in_the_history_of_memes/maybe_ever.jpg"
+    },
+    "drake": {
+        "title": "Drakeposting",
+        "example": "https://memegen.link/drake/your_text/goes_here.jpg"
+    },
+    "ermg": {
+        "title": "Ermahgerd",
+        "example": "https://memegen.link/ermg/ermahgerd/memes.jpg"
+    },
+    "facepalm": {
+        "title": "Facepalm",
+        "example": "https://memegen.link/facepalm/your_text/goes_here.jpg"
+    },
+    "firsttry": {
+        "title": "First Try!",
+        "example": "https://memegen.link/firsttry/_/first_try!.jpg"
+    },
+    "fwp": {
+        "title": "First World Problems",
+        "example": "https://memegen.link/fwp/your_text/goes_here.jpg"
+    },
+    "fa": {
+        "title": "Forever Alone",
+        "example": "https://memegen.link/fa/forever/alone.jpg"
+    },
+    "fbf": {
+        "title": "Foul Bachelor Frog",
+        "example": "https://memegen.link/fbf/paper_towel/the_plate_that_cleans_up_after_itself.jpg"
+    },
+    "fmr": {
+        "title": "Fuck Me, Right?",
+        "example": "https://memegen.link/fmr/_/fuck_me,_right~q.jpg"
+    },
+    "fry": {
+        "title": "Futurama Fry",
+        "example": "https://memegen.link/fry/not_sure_if_trolling/or_just_stupid.jpg"
+    },
+    "ggg": {
+        "title": "Good Guy Greg",
+        "example": "https://memegen.link/ggg/your_text/goes_here.jpg"
+    },
+    "grumpycat": {
+        "title": "Grumpy Cat",
+        "example": "https://memegen.link/grumpycat/i_hope_that_what_does_not_kill_you/tries_again.jpg"
+    },
+    "harold": {
+        "title": "Hide the Pain Harold",
+        "example": "https://memegen.link/harold/when_the_boss_sees/your_meme_tab.jpg"
+    },
+    "hipster": {
+        "title": "Hipster Barista",
+        "example": "https://memegen.link/hipster/your_text/goes_here.jpg"
+    },
+    "icanhas": {
+        "title": "I Can Has Cheezburger?",
+        "example": "https://memegen.link/icanhas/i_can_has/this_meme~q.jpg"
+    },
+    "crazypills": {
+        "title": "I Feel Like I'm Taking Crazy Pills",
+        "example": "https://memegen.link/crazypills/_/i_feel_like_i'm_taking_crazy_pills.jpg"
+    },
+    "mw": {
+        "title": "I Guarantee It",
+        "example": "https://memegen.link/mw/you're_gonna_like_the_way_you_look/i_guarantee_it.jpg"
+    },
+    "noidea": {
+        "title": "I Have No Idea What I'm Doing",
+        "example": "https://memegen.link/noidea/i_have_no_idea/what_i'm_doing.jpg"
+    },
+    "regret": {
+        "title": "I Immediately Regret This Decision!",
+        "example": "https://memegen.link/regret/_/i_immediately_regret_this_decision.jpg"
+    },
+    "boat": {
+        "title": "I Should Buy a Boat Cat",
+        "example": "https://memegen.link/boat/_/i_should_buy_a_boat.jpg"
+    },
+    "hagrid": {
+        "title": "I Should Not Have Said That",
+        "example": "https://memegen.link/hagrid/_/i_should_not_have_said_that.jpg"
+    },
+    "sohappy": {
+        "title": "I Would Be So Happy",
+        "example": "https://memegen.link/sohappy/if_i_could_use_this_meme/i_would_be_so_happy.jpg"
+    },
+    "captain": {
+        "title": "I am the Captain Now",
+        "example": "https://memegen.link/captain/look_at_me/i_am_the_captain_now.jpg"
+    },
+    "bender": {
+        "title": "I'm Going to Build My Own Theme Park",
+        "example": "https://memegen.link/bender/i'm_going_to_build_my_own_theme_park/with_blackjack_and_hookers.jpg"
+    },
+    "inigo": {
+        "title": "Inigo Montoya",
+        "example": "https://memegen.link/inigo/you_keep_using_that_word/i_do_not_think_it_means_what_you_think_it_means.jpg"
+    },
+    "iw": {
+        "title": "Insanity Wolf",
+        "example": "https://memegen.link/iw/does_testing/in_production.jpg"
+    },
+    "ackbar": {
+        "title": "It's A Trap!",
+        "example": "https://memegen.link/ackbar/_/it's_a_trap!.jpg"
+    },
+    "happening": {
+        "title": "It's Happening",
+        "example": "https://memegen.link/happening/_/it's_happening.jpg"
+    },
+    "joker": {
+        "title": "It's Simple, Kill the Batman",
+        "example": "https://memegen.link/joker/it's_simple/kill_the_batman.jpg"
+    },
+    "ive": {
+        "title": "Jony Ive Redesigns Things",
+        "example": "https://memegen.link/ive/we_think/you'll_love_it.jpg"
+    },
+    "jd": {
+        "title": "Joseph Ducreux / Archaic Rap",
+        "example": "https://memegen.link/jd/disregard_females/acquire_currency.jpg"
+    },
+    "ll": {
+        "title": "Laughing Lizard",
+        "example": "https://memegen.link/ll/_/hhhehehe.jpg"
+    },
+    "lrv": {
+        "title": "Laundry Room Viking",
+        "example": "https://memegen.link/lrv/do_the_laundry_they_said/it_will_be_fun_they_said.jpg"
+    },
+    "leo": {
+        "title": "Leo Strutting",
+        "example": "https://memegen.link/leo/your_text/goes_here.jpg"
+    },
+    "away": {
+        "title": "Life... Finds a Way",
+        "example": "https://memegen.link/away/life.../finds_a_way.jpg"
+    },
+    "morpheus": {
+        "title": "Matrix Morpheus",
+        "example": "https://memegen.link/morpheus/your_text/goes_here.jpg"
+    },
+    "mb": {
+        "title": "Member Berries",
+        "example": "https://memegen.link/mb/'member/star_wars~q.jpg"
+    },
+    "badchoice": {
+        "title": "Milk Was a Bad Choice",
+        "example": "https://memegen.link/badchoice/milk/was_a_bad_choice.jpg"
+    },
+    "mmm": {
+        "title": "Minor Mistake Marvin",
+        "example": "https://memegen.link/mmm/your_text/goes_here.jpg"
+    },
+    "spongebob": {
+        "title": "Mocking Spongebob",
+        "example": "https://memegen.link/spongebob/your_text/goes_here.jpg"
+    },
+    "soup-nazi": {
+        "title": "No Soup for You / Soup Nazi",
+        "example": "https://memegen.link/soup-nazi/no_soup_for_you!.jpg"
+    },
+    "jetpack": {
+        "title": "Nothing To Do Here",
+        "example": "https://memegen.link/jetpack/nothing_to_do_here.jpg"
+    },
+    "imsorry": {
+        "title": "Oh, I'm Sorry, I Thought This Was America",
+        "example": "https://memegen.link/imsorry/oh,_i'm_sorry/i_thought_this_was_america.jpg"
+    },
+    "red": {
+        "title": "Oh, Is That What We're Going to Do Today?",
+        "example": "https://memegen.link/red/oh,_is_that_what_we're_going_to_do_today~q/we're_going_to_fight~q.jpg"
+    },
+    "mordor": {
+        "title": "One Does Not Simply Walk into Mordor",
+        "example": "https://memegen.link/mordor/one_does_not_simply/walk_into_mordor.jpg"
+    },
+    "oprah": {
+        "title": "Oprah You Get a Car",
+        "example": "https://memegen.link/oprah/you_get_a_meme/and_you_get_a_meme.jpg"
+    },
+    "oag": {
+        "title": "Overly Attached Girlfriend",
+        "example": "https://memegen.link/oag/i_know_you_received_my_email/because_i_checked_your_inbox.jpg"
+    },
+    "remembers": {
+        "title": "Pepperidge Farm Remembers",
+        "example": "https://memegen.link/remembers/remember_this_meme~q/pepperidge_farm_remembers.jpg"
+    },
+    "persian": {
+        "title": "Persian Cat Room Guardian",
+        "example": "https://memegen.link/persian/your_text/goes_here.jpg"
+    },
+    "philosoraptor": {
+        "title": "Philosoraptor",
+        "example": "https://memegen.link/philosoraptor/your_text/goes_here.jpg"
+    },
+    "jw": {
+        "title": "Probably Not a Good Idea",
+        "example": "https://memegen.link/jw/you_just_went_and_made_a_new_dinosaur~q/probably_not_a_good_idea.jpg"
+    },
+    "patrick": {
+        "title": "Push it somewhere else Patrick",
+        "example": "https://memegen.link/patrick/why_dont_we_take_all_the_memes/and_put_them_on_memegen.jpg"
+    },
+    "rollsafe": {
+        "title": "Roll Safe",
+        "example": "https://memegen.link/rollsafe/can't_get_fired/if_you_don't_have_a_job.jpg"
+    },
+    "sad-obama": {
+        "title": "Sad Barack Obama",
+        "example": "https://memegen.link/sad-obama/sad_barack_obama/doesn't_think_you'll_vote.jpg"
+    },
+    "sad-clinton": {
+        "title": "Sad Bill Clinton",
+        "example": "https://memegen.link/sad-clinton/sad_bill_clinton/doesn't_think_you'll_vote.jpg"
+    },
+    "sadfrog": {
+        "title": "Sad Frog / Feels Bad Man",
+        "example": "https://memegen.link/sadfrog/_/feels_bad_man.jpg"
+    },
+    "sad-bush": {
+        "title": "Sad George Bush",
+        "example": "https://memegen.link/sad-bush/sad_george_bush/doesn't_think_you'll_vote.jpg"
+    },
+    "sad-biden": {
+        "title": "Sad Joe Biden",
+        "example": "https://memegen.link/sad-biden/sad_joe_biden/doesn't_think_you'll_vote.jpg"
+    },
+    "sad-boehner": {
+        "title": "Sad John Boehner",
+        "example": "https://memegen.link/sad-boehner/sad_john_boehner/doesn't_think_you'll_vote.jpg"
+    },
+    "saltbae": {
+        "title": "Salt Bae",
+        "example": "https://memegen.link/saltbae/your_text/goes_here.jpg"
+    },
+    "sarcasticbear": {
+        "title": "Sarcastic Bear",
+        "example": "https://memegen.link/sarcasticbear/i'm_so_sorry/i_haven't_memorized_the_internet.jpg"
+    },
+    "dwight": {
+        "title": "Schrute Facts",
+        "example": "https://memegen.link/dwight/love_is_all_you_need~q/false._you_need_water_and_rations..jpg"
+    },
+    "sb": {
+        "title": "Scumbag Brain",
+        "example": "https://memegen.link/sb/remembers_the_face/but_not_the_name.jpg"
+    },
+    "ss": {
+        "title": "Scumbag Steve",
+        "example": "https://memegen.link/ss/needs_a_place_to_crash/never_leaves.jpg"
+    },
+    "soa": {
+        "title": "Seal of Approval",
+        "example": "https://memegen.link/soa/first_wipe/clean_toiletpaper.jpg"
+    },
+    "sf": {
+        "title": "Sealed Fate",
+        "example": "https://memegen.link/sf/i_accidentally_used_a_swear_word/and_i_know_my_mom_heard_it_from_the_other_room.jpg"
+    },
+    "dodgson": {
+        "title": "See? Nobody Cares",
+        "example": "https://memegen.link/dodgson/weu2019ve_got_dodgson_here!/see~q_nobody_cares.jpg"
+    },
+    "money": {
+        "title": "Shut Up and Take My Money!",
+        "example": "https://memegen.link/money/shut_up_and/take_my_money!.jpg"
+    },
+    "snek": {
+        "title": "Skeptical Snake",
+        "example": "https://memegen.link/snek/when_you_already_checked_that_one_leaf/and_it_starts_moving.jpg"
+    },
+    "sk": {
+        "title": "Skeptical Third World Kid",
+        "example": "https://memegen.link/sk/you_finished_your_plate/because_i_was_starving~q.jpg"
+    },
+    "sohot": {
+        "title": "So Hot Right Now",
+        "example": "https://memegen.link/sohot/this_meme_is/so_hot_right_now.jpg"
+    },
+    "nice": {
+        "title": "So I Got That Goin' For Me, Which is Nice",
+        "example": "https://memegen.link/nice/_/so_i_got_that_goin'_for_me,_which_is_nice.jpg"
+    },
+    "awesome-awkward": {
+        "title": "Socially Awesome Awkward Penguin",
+        "example": "https://memegen.link/awesome-awkward/first_day_at_new_job/spill_coffee_on_bossman.jpg"
+    },
+    "awesome": {
+        "title": "Socially Awesome Penguin",
+        "example": "https://memegen.link/awesome/say_a_word_wrong/create_hilarious_inside_joke.jpg"
+    },
+    "awkward-awesome": {
+        "title": "Socially Awkward Awesome Penguin",
+        "example": "https://memegen.link/awkward-awesome/trip_guy_on_the_street/he_was_running_with_a_stolen_purse.jpg"
+    },
+    "awkward": {
+        "title": "Socially Awkward Penguin",
+        "example": "https://memegen.link/awkward/start_telling_joke/forget_punchline.jpg"
+    },
+    "stop-it": {
+        "title": "Stop It, Get Some Help",
+        "example": "https://memegen.link/stop-it/stop_it/get_some_help.jpg"
+    },
+    "fetch": {
+        "title": "Stop Trying to Make Fetch Happen",
+        "example": "https://memegen.link/fetch/stop_trying_to_make_fetch_happen/it's_not_going_to_happen.jpg"
+    },
+    "success": {
+        "title": "Success Kid",
+        "example": "https://memegen.link/success/don't_know_a_question_on_the_test/answer_is_in_another_question.jpg"
+    },
+    "scc": {
+        "title": "Sudden Clarity Clarence",
+        "example": "https://memegen.link/scc/your_text/goes_here.jpg"
+    },
+    "ski": {
+        "title": "Super Cool Ski Instructor",
+        "example": "https://memegen.link/ski/_/you're_gonna_have_a_bad_time.jpg"
+    },
+    "aint-got-time": {
+        "title": "Sweet Brown / Ain't Nobody Got Time For That",
+        "example": "https://memegen.link/aint-got-time/memes~q/ain't_nobody_got_time_fo'_that.jpg"
+    },
+    "officespace": {
+        "title": "That Would Be Great",
+        "example": "https://memegen.link/officespace/yeah.../that'd_be_great.jpg"
+    },
+    "interesting": {
+        "title": "The Most Interesting Man in the World",
+        "example": "https://memegen.link/interesting/your_text/goes_here.jpg"
+    },
+    "toohigh": {
+        "title": "The Rent Is Too Damn High",
+        "example": "https://memegen.link/toohigh/the_rent_is/too_damn_high.jpg"
+    },
+    "bs": {
+        "title": "This is Bull, Shark",
+        "example": "https://memegen.link/bs/what_a_surprise.../you_caught_me_again.jpg"
+    },
+    "fine": {
+        "title": "This is Fine",
+        "example": "https://memegen.link/fine/_/this_is_fine.jpg"
+    },
+    "sparta": {
+        "title": "This is Sparta!",
+        "example": "https://memegen.link/sparta/this._is./sparta!.jpg"
+    },
+    "ugandanknuck": {
+        "title": "Ugandan Knuckles",
+        "example": "https://memegen.link/ugandanknuck/your_text/goes_here.jpg"
+    },
+    "puffin": {
+        "title": "Unpopular opinion puffin",
+        "example": "https://memegen.link/puffin/your_text/goes_here.jpg"
+    },
+    "whatyear": {
+        "title": "What Year Is It?",
+        "example": "https://memegen.link/whatyear/_/what_year_is_it~q.jpg"
+    },
+    "center": {
+        "title": "What is this, a Center for Ants?!",
+        "example": "https://memegen.link/center/what_is_this/a_center_for_ants.jpg"
+    },
+    "both": {
+        "title": "Why Not Both?",
+        "example": "https://memegen.link/both/_/why_not_both~q.jpg"
+    },
+    "winter": {
+        "title": "Winter is coming",
+        "example": "https://memegen.link/winter/prepare_yourself/winter_is_coming.jpg"
+    },
+    "xy": {
+        "title": "X all the Y",
+        "example": "https://memegen.link/xy/all_the_things!!!.jpg"
+    },
+    "buzz": {
+        "title": "X, X Everywhere",
+        "example": "https://memegen.link/buzz/memes/memes_everywhere.jpg"
+    },
+    "yodawg": {
+        "title": "Xzibit Yo Dawg",
+        "example": "https://memegen.link/yodawg/yo_dawg/i_heard_you_like_memes.jpg"
+    },
+    "yuno": {
+        "title": "Y U NO Guy",
+        "example": "https://memegen.link/yuno/y_u_no/use_this_meme!~q.jpg"
+    },
+    "yallgot": {
+        "title": "Y'all Got Any More of Them",
+        "example": "https://memegen.link/yallgot/y'all_got_any_more_of_them/memes.jpg"
+    },
+    "gears": {
+        "title": "You Know What Really Grinds My Gears?",
+        "example": "https://memegen.link/gears/you_know_what_really_grinds_my_gears~q/when_people_post_images_of_cogs_that_don't_mesh.jpg"
+    },
+    "bad": {
+        "title": "You Should Feel Bad",
+        "example": "https://memegen.link/bad/your_meme_is_bad/and_you_should_feel_bad.jpg"
+    },
+    "elf": {
+        "title": "You Sit on a Throne of Lies",
+        "example": "https://memegen.link/elf/_/you_sit_on_a_throne_of_lies.jpg"
+    },
+    "chosen": {
+        "title": "You Were the Chosen One!",
+        "example": "https://memegen.link/chosen/you_were_the_chosen_one!.jpg"
+    }
+}

@@ -1,0 +1,119 @@
+{
+  "name": "Nana - Telegram Userbot with Assistant",
+  "description": "A modular Telegram Userbot with Assistant running on Python 3.6+",
+  "logo": "https://i.imgur.com/m7KfBVq.png",
+  "keywords": [
+    "telegram",
+    "userbot",
+    "plugin",
+    "modular",
+    "nana",
+    "pyrogram",
+    "productivity",
+    "testing"
+  ],
+  "repository": "https://github.com/AyraHikari/Nana-TgBot",
+  "website": "https://github.com/AyraHikari/Nana-TgBot/wiki",
+  "success_url": "https://t.me/AyraSupport",
+  "stack": "container",
+  "env": {
+    "ENV": {
+      "description": "Fill this if you using environ variable as config.",
+      "value": "Yes"
+    },
+    "api_id": {
+      "description": "Get this value from https://my.telegram.org/apps",
+      "value": ""
+    },
+    "api_hash": {
+      "description": "Get this value from https://my.telegram.org/apps",
+      "value": ""
+    },
+    "Owner": {
+      "description": "Go to some bot, and check your id there. Ex. Emilia or Rose.",
+      "value": ""
+    },
+    "Command": {
+      "description": "Prefix command, separate by space.",
+      "value": "! ."
+    },
+    "AdminSettings": {
+      "description": "Fill your telegram id",
+      "value": ""
+    },
+    "ASSISTANT_WORKER": {
+      "description": "(optional) Worker for Assistant bot",
+      "value": "2",
+      "required": false
+    },
+    "NANA_WORKER": {
+      "description": "(optional) Worker for User bot",
+      "value": "8",
+      "required": false
+    },
+    "REMINDER_UPDATE": {
+      "description": "(optional) Pass False to disable reminder update every running script",
+      "value": "True",
+      "required": false
+    },
+    "lang_code": {
+      "description": "(optional) Your language code",
+      "value": "en",
+      "required": false
+    },
+    "device_model": {
+      "description": "(optional) Your device mode for userbot",
+      "value": "PC",
+      "required": false
+    },
+    "system_version": {
+      "description": "(optional) Your System version for userbot",
+      "value": "Linux",
+      "required": false
+    },
+    "thumbnail_API": {
+      "description": "(optional) Register free here: https://thumbnail.ws/",
+      "required": false
+    },
+    "screenshotlayer_API": {
+      "description": "(optional) Register free here: https://screenshotlayer.com/",
+      "value": "False",
+      "required": false
+    },
+    "USERBOT_LOAD": {
+      "description": "(optional) Fill if you want to load that module only",
+      "required": false
+    },
+    "USERBOT_NOLOAD": {
+      "description": "(optional) Fill if you dont want to load that module",
+      "required": false
+    },
+    "ASSISTANT_LOAD": {
+      "description": "(optional) Fill if you want to load that module only",
+      "required": false
+    },
+    "ASSISTANT_NOLOAD": {
+      "description": "(optional) Fill if you dont want to load that module",
+      "required": false
+    },
+    "USERBOT_SESSION": {
+      "description": "[REQUIRED] For make a session: https://github.com/AyraHikari/pyrogram-session-maker"
+    },
+    "ASSISTANT_SESSION": {
+      "description": "[REQUIRED] For make a session: https://github.com/AyraHikari/pyrogram-session-maker"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    }
+  ]
+}

@@ -12,9 +12,9 @@
     "productivity",
     "testing"
   ],
-  "repository": "https://github.com/AyraHikari/Nana-TgBot",
-  "website": "https://github.com/AyraHikari/Nana-TgBot/wiki",
-  "success_url": "https://t.me/AyraSupport",
+  "repository": "https://github.com/legenhand/Nana-Bot",
+  "website": "sagita.tech",
+  "success_url": "https://t.me/userbotindo",
   "stack": "container",
   "env": {
     "ENV": {
@@ -97,10 +97,10 @@
       "required": false
     },
     "USERBOT_SESSION": {
-      "description": "[REQUIRED] For make a session: https://github.com/AyraHikari/pyrogram-session-maker"
+      "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
     },
     "ASSISTANT_SESSION": {
-      "description": "[REQUIRED] For make a session: https://github.com/AyraHikari/pyrogram-session-maker"
+      "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
     }
   },
   "addons": [

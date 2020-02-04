@@ -32,9 +32,9 @@ A: Because real bot will help you a lot for many things, and make user easy to u
 
 ### Installation Guide
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AyraHikari/Nana-TgBot)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/legenhand/Nana-Bot)
 
-See our wikis to get [Installation Guide](https://github.com/AyraHikari/Nana-TgBot/wiki).
+See our wikis to get [Installation Guide](https://sagita.tech/2020/02/02/tutorial-install-userbot-di-linux-server-nana-bot/).
 
 If you some problems, please come join and ask on our Community!
 

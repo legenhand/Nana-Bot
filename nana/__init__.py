@@ -47,11 +47,11 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     log.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
     quit(1)
 
-USERBOT_VERSION = "0.3.3"
-ASSISTANT_VERSION = "0.3.3"
+USERBOT_VERSION = "1.0.0"
+ASSISTANT_VERSION = "1.0.0"
 
 OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
-REPOSITORY = "https://github.com/AyraHikari/Nana-TgBot"
+REPOSITORY = "https://github.com/legenhand/Nana-Bot.git"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI", "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 
 BOT_SESSION = "nana/session/ManageBot"

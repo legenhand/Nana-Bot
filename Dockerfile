@@ -59,11 +59,17 @@ RUN apk --no-cache add build-base
 RUN apk --no-cache add postgresql-dev
 RUN python3 -m pip install psycopg2
 
-# Copy Python Requirements to /app
+# Copy Python Requirements to /root/nana
 
 RUN git clone https://github.com/legenhand/Nana-TgBot.git /root/nana
 WORKDIR /root/nana
+
+#Copy config file to /root/nana/nana
 COPY ./nana/config.example.py ./nana/config.py* /root/nana/nana/
+
+#Copy credentials google drive to /root/nana
+COPY ./README.md ./client_secrets.json* /root/nana/
+
 ENV PATH="/home/userbot/bin:$PATH"
 
 # Added Database Postgres

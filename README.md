@@ -1,6 +1,6 @@
 # Nana-TgBot
 
-[![Build Status](https://semaphoreci.com/api/v1/ayrahikari/nana-tgbot/branches/master/badge.svg)](https://semaphoreci.com/ayrahikari/nana-tgbot)
+[![Build Status](https://semaphoreci.com/api/v1/legenhand/nana-bot/branches/master/badge.svg)](https://semaphoreci.com/legenhand/nana-bot)
 
 ### Userbot + Assistant for Telegram
 
@@ -23,7 +23,7 @@
 ```
 
 Currently work fine perfectly, but some features may give you error. Please report a bug to me if you facing any issues.
-> Go to our group support if you want to ask something [@AyraSupport](https://t.me/AyraSupport)
+> Go to our group support if you want to ask something [@nanabotsupport](https://t.me/nanabotsupport)
 
 ```
 Q: Why need Assistant (Real bot)?
@@ -42,3 +42,4 @@ If you some problems, please come join and ask on our Community!
 
 - [Telegram Userbot](https://github.com/RaphielGang/Telegram-UserBot)
 - [Paperlane Extended](https://github.com/AvinashReddy3108/PaperplaneExtended)
+- [Ayra Hikari](https://github.com/AyraHikari)

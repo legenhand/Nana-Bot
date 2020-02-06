@@ -14,7 +14,7 @@ import sys
 
 from bs4 import BeautifulSoup
 from pathlib import Path
-
+from pytube import YouTube
 from nana import app, setbot, Command
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana.helpers.parser import cleanhtml, escape_markdown
@@ -63,6 +63,17 @@ async def youtube_search(client, message):
 		nomor += 1
 		yutub += '<b>{}.</b> <a href="{}">{}</a> {}\n'.format(nomor, "https://www.youtube.com" + url, title, vidtime)
 	await message.edit(yutub, disable_web_page_preview=True, parse_mode="html")
+
+@app.on_message(Filters.user("self") & Filters.command(["ytdownload"], Command))
+async def youtube_download(client, message):
+	args = message.text.split(None, 1)
+	if len(args) == 1:
+		await message.edit("Write any args here!")
+		return
+	teks = args[1]
+	await message.edit(args)
+	# YouTube(teks).streams.first().download('nana/downloads')
+	await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(YouTube(teks).title),supports_streaming=True)
 
 @app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
 async def youtube_downloader(client, message):

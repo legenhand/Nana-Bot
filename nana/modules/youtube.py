@@ -66,14 +66,26 @@ async def youtube_search(client, message):
 
 @app.on_message(Filters.user("self") & Filters.command(["ytdownload"], Command))
 async def youtube_download(client, message):
-	args = message.text.split(None, 1)
+	args = message.text.split(None, 2)
 	if len(args) == 1:
 		await message.edit("Write any args here!")
 		return
-	teks = args[1]
-	await message.edit(args)
-	# YouTube(teks).streams.first().download('nana/downloads')
-	await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(YouTube(teks).title),supports_streaming=True)
+	if len(args) == 2:
+		link = args[1]
+		await message.edit(args)
+		YouTube(link).streams.first().download('nana/downloads')
+		await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(YouTube(link).title),supports_streaming=True)
+		return
+	if len(args) == 3:
+		link = args[1]
+		reso = args[2]
+		await message.edit(args)
+		yt = YouTube(link)
+		stream = yt.streams.filter(file_extension='mp4').filter(resolution="{}".format(reso)).first()
+		stream.download('nana/downloads')
+		await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(YouTube(link).title),supports_streaming=True)
+		return
+		
 
 @app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
 async def youtube_downloader(client, message):

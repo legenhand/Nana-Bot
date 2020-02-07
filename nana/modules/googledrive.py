@@ -61,6 +61,19 @@ async def get_driveinfo(driveid):
 	filename = cleanhtml(str(getdrivename.find('title'))).split(" - ")[0]
 	return filename
 
+@app.on_message(Filters.user("self") & Filters.command(["credentials"], Command))
+async def credentials(client, message):
+	args = message.text.split(None, 1)
+	if len(args) == 1:
+		await message.edit("Write any args here!")
+		return
+	if len(args) == 2:
+		file = open("client_secrets.json","w")
+		file.write(args[1])
+		file.close()
+		await message.edit("credentials success saved on client_secrets")
+		return
+
 
 @app.on_message(Filters.user("self") & Filters.command(["gdrive"], Command))
 async def gdrive_stuff(client, message):

@@ -13,7 +13,7 @@ async def gdrive_helper(client, message):
 	if len(message.text.split()) == 1:
 		gdriveclient = os.path.isfile("client_secrets.json")
 		if not gdriveclient:
-			await message.reply("Hello, look like you're not logged in to google drive 🙂\nI can help you to login.\n\nFirst of all, you need to activate your google drive API\n1. [Go here](https://developers.google.com/drive/api/v3/quickstart/python), click **Enable the drive API**\n2. Login to your google account (skip this if you're already logged in)\n3. After logged in, click **Enable the drive API** again, and click **Download Client Configuration** button, download that.\n4. After downloaded that file, rename `credentials.json` to `client_secrets.json`, and upload to your bot dir (not in nana dir)\n\nAfter that, you can go next guide by type `/gdrive`")
+			await message.reply("Hello, look like you're not logged in to google drive 🙂\nI can help you to login.\n\nFirst of all, you need to activate your google drive API\n1. [Go here](https://developers.google.com/drive/api/v3/quickstart/python), click **Enable the drive API**\n2. Login to your google account (skip this if you're already logged in)\n3. After logged in, click **Enable the drive API** again, and click **Download Client Configuration** button, download that.\n4. After downloaded that file, open that file then copy all of that content, back to telegram then do .credentials (copy the content of that file)  do without bracket")
 			return
 		gauth.LoadCredentialsFile("nana/session/drive")
 		if gauth.credentials is None:

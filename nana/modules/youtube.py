@@ -11,6 +11,7 @@ import requests
 import shutil
 import traceback
 import sys
+import youtube_dl
 
 from bs4 import BeautifulSoup
 from pathlib import Path
@@ -81,9 +82,10 @@ async def youtube_download(client, message):
 		reso = args[2]
 		await message.edit(args)
 		yt = YouTube(link)
+		vidtitle = YouTube(link).title
 		stream = yt.streams.filter(file_extension='mp4').filter(resolution="{}".format(reso)).first()
 		stream.download('nana/downloads')
-		await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(YouTube(link).title),supports_streaming=True)
+		await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(vidtitle),supports_streaming=True)
 		return
 		
 

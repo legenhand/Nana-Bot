@@ -85,7 +85,7 @@ async def youtube_download(client, message):
 		vidtitle = YouTube(link).title
 		YouTube(link).streams.first().download('nana/downloads')
 		status = "**Uploading File To Telegram...**\n"
-		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4",supports_streaming=True)
+		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4")
 		status = "**Done ✔️✔️**\n"
 		await message.edit(status+text)
 		return
@@ -100,7 +100,7 @@ async def youtube_download(client, message):
 		stream.download('nana/downloads')
 		status = "**Uploading File To Telegram...**\n"
 		await message.edit(status+text)
-		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4",supports_streaming=True)
+		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4")
 		status = "**Done ✔️✔️**\n"
 		await message.edit(status+text)
 		return

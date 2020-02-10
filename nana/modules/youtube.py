@@ -32,8 +32,8 @@ Enjoy~
 Give text as args for search from youtube, will send result more than 10 depending on yt page.
 
 ──「 **Download video** 」──
--> `ytdl (url)`
-Download youtube video (mp4), you can select resolutions from the list.
+-> `ytdl (url) (resolution*)`
+Download youtube video (mp4), resolution is optional. use resolution under 240p result video will send gif format
 
 ──「 **Convert to music** 」──
 -> `ytmusic (url)`
@@ -65,61 +65,45 @@ async def youtube_search(client, message):
 		yutub += '<b>{}.</b> <a href="{}">{}</a> {}\n'.format(nomor, "https://www.youtube.com" + url, title, vidtime)
 	await message.edit(yutub, disable_web_page_preview=True, parse_mode="html")
 
-@app.on_message(Filters.user("self") & Filters.command(["ytdownload"], Command))
+@app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
 async def youtube_download(client, message):
 	args = message.text.split(None, 2)
+	await message.edit("Checking")
 	if len(args) == 1:
 		await message.edit("Write any args here!")
 		return
+	try:
+		yt = YouTube(args[1])
+	except ValueError:
+		await message.edit("Invalid URL!")
+		return
 	if len(args) == 2:
 		link = args[1]
-		await message.edit(args)
+		text = "[⁣]({})🎬 **Title:** [{}]({})\n".format(yt.thumbnail_url, escape_markdown(yt.title), link)
+		status = "**Downloading video...**\n"
+		await message.edit(status+text)
+		vidtitle = YouTube(link).title
 		YouTube(link).streams.first().download('nana/downloads')
-		await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(YouTube(link).title),supports_streaming=True)
+		status = "**Uploading File To Telegram...**\n"
+		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4",supports_streaming=True)
+		status = "**Done ✔️✔️**\n"
+		await message.edit(status+text)
 		return
 	if len(args) == 3:
 		link = args[1]
 		reso = args[2]
-		await message.edit(args)
-		yt = YouTube(link)
+		text = "[⁣]({})🎬 **Title:** [{}]({})\n".format(yt.thumbnail_url, escape_markdown(yt.title), link)
+		status = "**Downloading video...**\n"
+		await message.edit(status+text)
 		vidtitle = YouTube(link).title
 		stream = yt.streams.filter(file_extension='mp4').filter(resolution="{}".format(reso)).first()
 		stream.download('nana/downloads')
-		await app.send_video(message.chat.id, video="nana/downloads/{}.mp4".format(vidtitle),supports_streaming=True)
+		status = "**Uploading File To Telegram...**\n"
+		await message.edit(status+text)
+		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4",supports_streaming=True)
+		status = "**Done ✔️✔️**\n"
+		await message.edit(status+text)
 		return
-		
-
-@app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
-async def youtube_downloader(client, message):
-	args = message.text.split(None, 1)
-	if len(args) == 1:
-		await message.edit("Write any args here!")
-		return
-	teks = args[1]
-	await message.edit("Checking...")
-	if "youtu.be" in teks:
-		ytid = teks.split("youtu.be/")[1]
-		if "&" in ytid:
-			ytid = ytid.split("&")[0]
-	elif "watch?" in teks:
-		ytid = teks.split("watch?v=")[1]
-		if "&" in ytid:
-			ytid = ytid.split("&")[0]
-	else:
-		await message.edit("URL not supported!")
-		return
-	yt = requests.get("https://api.unblockvideos.com/youtube_downloader?id={}&selector=mp4".format(ytid)).json()
-	thumb = "https://i1.ytimg.com/vi/{}/mqdefault.jpg".format(ytid)
-	title = BeautifulSoup(requests.get('https://www.youtube.com/watch?v={}'.format(ytid)).content, "html.parser")
-	title = title.find('meta', {"name": "twitter:title"}).get('content')
-	capt = "**{}**\n\nDownloads:".format(title)
-	for x in yt:
-		capt += "\n-> [{}]({})".format(x['format'], x['url'])
-	try:
-		await client.send_photo(message.chat.id, photo=thumb, caption=capt, reply_to_message_id=message.message_id, parse_mode='markdown')
-	except:
-		await message.edit(capt + "[⁣]({})".format(thumb), disable_web_page_preview=True)
-
 
 @app.on_message(Filters.user("self") & Filters.command(["ytmusic", "ytaudio"], Command))
 async def youtube_music(client, message):

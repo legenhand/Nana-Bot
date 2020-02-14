@@ -30,10 +30,12 @@ async def quotly(client, message):
          check = msg[0]["sticker"]["file_id"]
          is_sticker = True
       except:
-         is_sticker = False
          time.sleep(0.5)
          progress += random.randint(0,10)
-         await message.edit("```Making a Quote```\nProcessing {}%".format(progress))
+         try:
+            await message.edit("```Making a Quote```\nProcessing {}%".format(progress))
+         except:
+            await message.edit("ERROR SUUUU")
    await message.edit("```Complete !```")
    msg_id = msg[0]["message_id"]
    await app.forward_messages(message.chat.id,"@QuotLyBot",msg_id)

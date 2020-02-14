@@ -36,6 +36,11 @@ Edit log message, or deldog instead
 ──「 **Get Data Center** 」──
 -> `dc`
 Get user specific data center
+
+──「 **Get Repo Nana-Bot** 」──
+-> `repo`
+Get Repo For this userbot
+
 """
 
 
@@ -178,4 +183,4 @@ async def dc_id(client, message):
 
 @app.on_message(Filters.user("self") & Filters.command(["repo"], Command))
 async def repo(client, message):
-	await message.edit("Click [here](https://github.com/legenhand/Nana-Bot) to open OpenUserBot's GitHub page.")
+	await message.edit("Click [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",disable_web_page_preview=True)

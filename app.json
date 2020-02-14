@@ -14,7 +14,7 @@
   ],
   "repository": "https://github.com/legenhand/Nana-Bot",
   "website": "sagita.tech",
-  "success_url": "https://t.me/userbotindo",
+  "success_url": "https://t.me/nanabotsupport",
   "stack": "container",
   "env": {
     "ENV": {
@@ -78,6 +78,10 @@
     "screenshotlayer_API": {
       "description": "(optional) Register free here: https://screenshotlayer.com/",
       "value": "False",
+      "required": false
+    },
+    "bitly_token": {
+      "description": "(optional) Register at : https://http://app.bitly.com/ profile settings -> generic access token",
       "required": false
     },
     "USERBOT_LOAD": {

@@ -30,7 +30,7 @@ class Config(object):
 	# APIs token
 	thumbnail_API = "" # Register free here: https://thumbnail.ws/
 	screenshotlayer_API = "" # Register free here: https://screenshotlayer.com/
-
+	bitly_token = ""
 	# Load or no load plugins
 	# userbot
 	USERBOT_LOAD = []

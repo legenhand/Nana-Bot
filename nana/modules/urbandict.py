@@ -1,4 +1,3 @@
-import urbandict
 import requests
 import json
 
@@ -14,12 +13,6 @@ Search for urban dictionary
 -> `ud (text)`
 Search urban for dictionary
 """
-
-def jprint(obj):
-    # create a formatted string of the Python JSON object
-    text = json.dumps(obj, sort_keys=True, indent=4)
-    print(text)
-
 
 @app.on_message(Filters.user("self") & Filters.command(["ud"], Command))
 async def urban_dictionary(client, message):

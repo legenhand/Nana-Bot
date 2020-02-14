@@ -12,6 +12,6 @@ gtts
 gitpython
 pafy
 youtube_dl
-urbandict
 googletrans
 currencyconverter
+bitlyshortener

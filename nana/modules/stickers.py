@@ -20,7 +20,11 @@ Reply a sticker/image, and sticker is your.
 
 ──「 **Set Sticker Pack** 」──
 -> /setsticker
-This command only for Assistant bot, to set your sticker pack. When sticker pack is full, type that command, and select another. Or create new at @Stickers
+This command only for Assistant bot, to set your sticker pack. When sticker pack is full, type that command and select another or create new from @Stickers!
+
+-> /setanimation
+This command is used to set animated pack through Assistant bot. When sticker pack is full, type that command and select another or create new from @Stickers!
+
 """
 
 @app.on_message(Filters.user("self") & Filters.command(["kang"], Command))

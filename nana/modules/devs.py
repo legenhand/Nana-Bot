@@ -175,3 +175,7 @@ async def dc_id(client, message):
 	else:
 		text = "{}'s assigned datacenter is **Unknown**".format(user)
 	await message.edit(text)
+
+@app.on_message(Filters.user("self") & Filters.command(["repo"], Command))
+async def repo(client, message):
+	await message.edit("Click [here](https://github.com/legenhand/Nana-Bot) to open OpenUserBot's GitHub page.")

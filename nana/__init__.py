@@ -98,7 +98,7 @@ if ENV:
 	# APIs
 	thumbnail_API = os.environ.get('thumbnail_API', None)
 	screenshotlayer_API = os.environ.get('screenshotlayer_API', None)
-	bitly_token = os.environ.get('bitly_token', None)
+	bitly_token = [os.environ.get('bitly_token', None)]
 	# LOADER
 	USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
 	USERBOT_NOLOAD = os.environ.get("USERBOT_NOLOAD", "").split()

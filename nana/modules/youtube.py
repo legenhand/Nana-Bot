@@ -1,24 +1,19 @@
-import asyncio
 import subprocess
 import os
-import asyncio
 import requests
 import logging
-import time
 import pafy
 import re
-import requests
 import shutil
 import traceback
 import sys
-import youtube_dl
+import time
 
 from bs4 import BeautifulSoup
-from pathlib import Path
 from pytube import YouTube
 from nana import app, setbot, Command
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
-from nana.helpers.parser import cleanhtml, escape_markdown
+from nana.helpers.parser import escape_markdown
 from nana.modules.downloads import download_url
 
 __MODULE__ = "YouTube"
@@ -77,32 +72,39 @@ async def youtube_download(client, message):
 	except ValueError:
 		await message.edit("Invalid URL!")
 		return
+
 	if len(args) == 2:
 		link = args[1]
-		text = "[⁣]({})🎬 **Title:** [{}]({})\n".format(yt.thumbnail_url, escape_markdown(yt.title), link)
+		text = "🎬 **Title:** [{}]({})\n".format(escape_markdown(yt.title), link)
 		status = "**Downloading video...**\n"
-		await message.edit(status+text)
-		vidtitle = YouTube(link).title
-		YouTube(link).streams.first().download('nana/downloads')
+		await message.edit(status+text,disable_web_page_preview=True)
+		YouTube(link).streams.first().download('nana/downloads',filename="tempvid")
 		status = "**Uploading File To Telegram...**\n"
-		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4")
-		status = "**Done ✔️✔️**\n"
-		await message.edit(status+text)
+		await message.edit(status+text,disable_web_page_preview=True)
+		await app.send_video(message.chat.id, video="nana/downloads/tempvid.mp4")
+		status = "**Removing Temp File...**"
+		await message.edit(status)
+		os.remove('nana/downloads/tempvid.mp4')
+		status = "** Done ✔️✔️**\n"
+		await message.edit(status+text, disable_web_page_preview=True)
+
 		return
 	if len(args) == 3:
 		link = args[1]
 		reso = args[2]
-		text = "[⁣]({})🎬 **Title:** [{}]({})\n".format(yt.thumbnail_url, escape_markdown(yt.title), link)
+		text = "🎬 **Title:** [{}]({})\n".format(escape_markdown(yt.title), link)
 		status = "**Downloading video...**\n"
-		await message.edit(status+text)
-		vidtitle = YouTube(link).title
+		await message.edit(status+text,disable_web_page_preview=True)
 		stream = yt.streams.filter(file_extension='mp4').filter(resolution="{}".format(reso)).first()
-		stream.download('nana/downloads')
+		stream.download('nana/downloads',filename="tempvid")
 		status = "**Uploading File To Telegram...**\n"
-		await message.edit(status+text)
-		await app.send_video(message.chat.id, video="nana/downloads/" + str(vidtitle) + ".mp4")
+		await message.edit(status+text,disable_web_page_preview=True)
+		await app.send_video(message.chat.id, video="nana/downloads/tempvid.mp4")
+		status = "**Removing Temp File...**"
+		await message.edit(status)
+		os.remove('nana/downloads/tempvid.mp4')
 		status = "**Done ✔️✔️**\n"
-		await message.edit(status+text)
+		await message.edit(status+text,disable_web_page_preview=True)
 		return
 
 @app.on_message(Filters.user("self") & Filters.command(["ytmusic", "ytaudio"], Command))

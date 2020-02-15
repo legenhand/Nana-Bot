@@ -1,5 +1,6 @@
 # Nana-TgBot
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9ae4da862103460fb64e48c5ed5d0ed5)](https://app.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&utm_medium=referral&utm_content=legenhand/Nana-Bot&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://semaphoreci.com/api/v1/legenhand/nana-bot/branches/master/badge.svg)](https://semaphoreci.com/legenhand/nana-bot)
 
 ### Userbot + Assistant for Telegram

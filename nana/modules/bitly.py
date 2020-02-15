@@ -2,8 +2,8 @@ from nana import app, setbot, Command, bitly_token
 from pyrogram import Filters
 from bitlyshortener import Shortener
 
-MODULE = "Bitly"
-HELP = """
+__MODULE__ = "Bitly"
+__HELP__ = """
 This module will shortener your link
 
 ──「 **shorten your url** 」──

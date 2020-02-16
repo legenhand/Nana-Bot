@@ -16,3 +16,4 @@ googletrans
 currencyconverter
 bitlyshortener
 heroku3
+opencv-python

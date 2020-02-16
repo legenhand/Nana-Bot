@@ -31,6 +31,7 @@ class Config(object):
 	thumbnail_API = "" # Register free here: https://thumbnail.ws/
 	screenshotlayer_API = "" # Register free here: https://screenshotlayer.com/
 	bitly_token = ""
+	HEROKU_API = ""
 	# Load or no load plugins
 	# userbot
 	USERBOT_LOAD = []

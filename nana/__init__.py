@@ -99,6 +99,7 @@ if ENV:
 	thumbnail_API = os.environ.get('thumbnail_API', None)
 	screenshotlayer_API = os.environ.get('screenshotlayer_API', None)
 	bitly_token = [os.environ.get('bitly_token', None)]
+	HEROKU_API = os.environ.get('HEROKU_API', None)
 	# LOADER
 	USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
 	USERBOT_NOLOAD = os.environ.get("USERBOT_NOLOAD", "").split()
@@ -153,7 +154,7 @@ else:
 	thumbnail_API = Config.thumbnail_API
 	screenshotlayer_API = Config.screenshotlayer_API
 	bitly_token = [Config.bitly_token]
-
+	HEROKU_API = Config.HEROKU_API
 	# LOADER
 	USERBOT_LOAD = Config.USERBOT_LOAD
 	USERBOT_NOLOAD = Config.USERBOT_NOLOAD

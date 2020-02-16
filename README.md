@@ -1,6 +1,6 @@
 # Nana-TgBot
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aca613ff94154a11b2fc463dda080227)](https://www.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=legenhand/Nana-Bot&amp;utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)](https://circleci.com/gh/legenhand/Nana-Bot)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aca613ff94154a11b2fc463dda080227)](https://www.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=legenhand/Nana-Bot&amp;utm_campaign=Badge_Grade)
 ### Userbot + Assistant for Telegram
 
 ```

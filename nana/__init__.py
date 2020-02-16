@@ -154,7 +154,7 @@ else:
 	thumbnail_API = Config.thumbnail_API
 	screenshotlayer_API = Config.screenshotlayer_API
 	bitly_token = [Config.bitly_token]
-	HEROKU_API = Config.HEROKU_APIO
+	HEROKU_API = Config.HEROKU_API
 	# LOADER
 	USERBOT_LOAD = Config.USERBOT_LOAD
 	USERBOT_NOLOAD = Config.USERBOT_NOLOAD

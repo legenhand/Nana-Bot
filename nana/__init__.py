@@ -47,8 +47,8 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     log.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
     quit(1)
 
-USERBOT_VERSION = "1.0.0"
-ASSISTANT_VERSION = "1.0.0"
+USERBOT_VERSION = "1.1.0"
+ASSISTANT_VERSION = "1.1.0"
 
 OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
 REPOSITORY = "https://github.com/legenhand/Nana-Bot.git"
@@ -154,7 +154,7 @@ else:
 	thumbnail_API = Config.thumbnail_API
 	screenshotlayer_API = Config.screenshotlayer_API
 	bitly_token = [Config.bitly_token]
-	HEROKU_API = Config.HEROKU_API
+	HEROKU_API = Config.HEROKU_APIO
 	# LOADER
 	USERBOT_LOAD = Config.USERBOT_LOAD
 	USERBOT_NOLOAD = Config.USERBOT_NOLOAD

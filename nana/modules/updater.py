@@ -2,7 +2,7 @@ import os
 import shutil
 import sys
 
-from nana import app, Command, OFFICIAL_BRANCH, REPOSITORY
+from nana import app, Command, OFFICIAL_BRANCH, REPOSITORY, HEROKU_API
 from __main__ import restart_all, except_hook
 from pyrogram import Filters
 from nana.assistant.updater import update_changelog
@@ -135,6 +135,25 @@ async def Updater(client, message):
 		return
 	elif len(message.text.split()) == 2 and message.text.split()[1] == "now":
 		await message.edit('`New update found, updating...`')
+		if HEROKU_API is not None:
+			import heroku3
+			heroku = heroku3.from_key(HEROKU_API)
+			heroku_applications = heroku.apps()
+			if len(heroku_applications) >= 1:
+				heroku_app = heroku_applications[0]
+				heroku_git_url = heroku_app.git_url.replace(
+                "https://",
+                "https://api:" + HEROKU_API + "@"
+            	)
+				if "heroku" in repo.remotes:
+					remote = repo.remote("heroku")
+					remote.set_url(heroku_git_url)
+				else:
+					remote = repo.create_remote("heroku", heroku_git_url)
+				remote.push(refspec="HEAD:refs/heads/master")
+			else:
+				await message.reply("no heroku application found, but a key given? 😕 ")
+
 		try:
 			upstream.pull(brname)
 			await message.edit('Successfully Updated!\nBot is restarting...')

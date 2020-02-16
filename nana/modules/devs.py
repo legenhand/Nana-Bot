@@ -7,7 +7,6 @@ import shutil
 import subprocess
 import sys
 import traceback
-import cv2
 
 from platform import python_version, uname
 from nana import app, Command, logging, app, setbot, Owner, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername
@@ -208,17 +207,3 @@ async def alive(client, message):
 		text += "\nBot logged in as `{}`\n Go to your assistant for more information!".format(me.first_name)
 	await message.edit(text)
 
-@app.on_message(Filters.user("self") & Filters.command(["facedetect"], Command))
-async def facedetect(client, message):
-	await client.download_media(message.reply_to_message.photo, file_name="nana/cache/facedetect.png")
-	await message.edit("Processing image...")
-	face_cascade = cv2.CascadeClassifier("nana/cache/haarcascade_frontalface_default.xml")
-	image = cv2.imread("nana/cache/facedetect.png")
-	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-	faces = face_cascade.detectMultiScale(gray, 1.2, 4)
-	for (x, y, w, h) in faces:
-		cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
-	cv2.imwrite("nana/cache/face.png",image)
-	await message.edit("Found {0} Faces!\n`Processing...`".format(len(faces)))
-	await app.send_photo(message.chat.id,photo="nana/cache/face.png")
-	await message.edit("`Complete!`\nFound {0} Faces!".format(len(faces)))

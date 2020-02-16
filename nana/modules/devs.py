@@ -8,7 +8,8 @@ import subprocess
 import sys
 import traceback
 
-from nana import app, Command, logging
+from platform import python_version, uname
+from nana import app, Command, logging, app, setbot, Owner, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername
 from nana.helpers.deldog import deldog
 from nana.helpers.parser import mention_markdown
 from pyrogram import Filters
@@ -184,3 +185,24 @@ async def dc_id(client, message):
 @app.on_message(Filters.user("self") & Filters.command(["repo"], Command))
 async def repo(client, message):
 	await message.edit("Click [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",disable_web_page_preview=True)
+
+@app.on_message(Filters.user("self") & Filters.command(["alive"], Command))
+async def alive(client, message):
+	try:
+		me = await app.get_me()
+	except ConnectionError:
+		me = None
+	text = "Hello {}!\n".format(message.from_user.first_name)
+	text += "**Here is your current stats:**\n"
+	if not me:
+		text += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
+	else:
+		text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
+	text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
+	text += "-> Database: `{}`\n".format(DB_AVAIABLE)
+	text += "-> Python: `{}`\n".format(python_version())
+	if not me:
+		text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
+	else:
+		text += "\nBot logged in as `{}`\n Go to your assistant for more information!".format(me.first_name)
+	await message.edit(text)

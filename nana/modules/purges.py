@@ -8,6 +8,8 @@ from pyrogram import Filters
 
 __MODULE__ = "Purges"
 __HELP__ = """
+THIS FEATURE IS DISABLE DUE BUG ON DELETE ALL MESSAGE
+
 Purge many messages in less than one seconds, you need to became admin to do this.
 Except for purgeme feature
 
@@ -43,7 +45,7 @@ Give a number **without reply** to purge for x messages.
 Purge your messages only, no need admin permission.
 """
 
-@app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
+#@app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
 async def purge(client, message):
 	if message.reply_to_message:
 		is_reply = True
@@ -80,7 +82,7 @@ async def purge(client, message):
 		await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["purgeme"], Command))
+#@app.on_message(Filters.user("self") & Filters.command(["purgeme"], Command))
 async def purge_myself(client, message):
 	if len(message.text.split()) >= 2 and message.text.split()[1].isdigit():
 		target = int(message.text.split()[1])

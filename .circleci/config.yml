@@ -1,21 +1,11 @@
 version: 2.1
-
-orbs:
-  python: circleci/python@0.2.1
-
 jobs:
-  build-and-test:
-    executor: python/default
+  build:
+    docker:
+      - image: alpine:3.7
     steps:
-      - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
       - run:
-          command: python3 -m nana
-          name: Test
-
-workflows:
-  main:
-    jobs:
-      - build-and-test
+          name: The First Step
+          command: |
+            echo 'Hello World!'
+            echo 'This is the delivery pipeline'

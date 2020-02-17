@@ -84,6 +84,11 @@ async def gdrive_stuff(client, message):
 		if not gdriveclient:
 			await setbot.send_message(message.from_user.id, "Hello, look like you're not logged in to google drive 🙂\nI can help you to login.\n\nFirst of all, you need to activate your google drive API\n1. [Go here](https://developers.google.com/drive/api/v3/quickstart/python), click **Enable the drive API**\n2. Login to your google account (skip this if you're already logged in)\n3. After logged in, click **Enable the drive API** again, and click **Download Client Configuration** button, download that.\n4. After downloaded that file, open that file then copy all of that content, back to telegram then do .credentials (copy the content of that file)  do without bracket\n\nAfter that, you can go next guide by type /gdrive")
 		else:
+			try:
+				authurl = gauth.GetAuthUrl()
+			except:
+				await setbot.send_message(message.from_user.id,"Wrong Credentials! Check var ENV gdrive_credentials on heroku or do .credentials (your credentials) for change your Credentials")
+				return
 			await setbot.send_message(message.from_user.id, "Hello, look like you're not logged in to google drive :)\nI can help you to login.\n\n**To login Google Drive**\n1. `/gdrive` to get login URL\n2. After you're logged in, copy your Token.\n3. `/gdrive (token)` without `(` or `)` to login, and your session will saved to `nana/session/drive`.\n\nDon't share your session to someone, else they will hack your google drive account!")
 		return
 	elif gauth.access_token_expired:

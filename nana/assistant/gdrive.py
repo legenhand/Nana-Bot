@@ -21,11 +21,6 @@ async def gdrive_helper(client, message):
 				file = open("client_secrets.json","w")
 				file.write(gdrive_credentials)
 				file.close()
-				try:
-					authurl = gauth.GetAuthUrl()
-				except:
-					await message.edit("Wrong Credentials! Check your var ENV gdrive_credentials on heroku")
-					return
 				gdriveclient = os.path.isfile("client_secrets.json")
 		if not gdriveclient:
 			await message.reply("Hello, look like you're not logged in to google drive 🙂\nI can help you to login.\n\nFirst of all, you need to activate your google drive API\n1. [Go here](https://developers.google.com/drive/api/v3/quickstart/python), click **Enable the drive API**\n2. Login to your google account (skip this if you're already logged in)\n3. After logged in, click **Enable the drive API** again, and click **Download Client Configuration** button, download that.\n4. After downloaded that file, open that file then copy all of that content, back to telegram then do .credentials (copy the content of that file)  do without bracket \n\nAfter that, you can go next guide by type /gdrive")
@@ -33,7 +28,11 @@ async def gdrive_helper(client, message):
 		
 		gauth.LoadCredentialsFile("nana/session/drive")
 		if gauth.credentials is None:
-			authurl = gauth.GetAuthUrl()
+			try:
+				authurl = gauth.GetAuthUrl()
+			except:
+				await message.reply("Wrong Credentials! Check var ENV gdrive_credentials on heroku or do .credentials (your credentials) for change your Credentials")
+				return
 			teks = "First, you must log in to your Google drive first.\n\n[Visit this link and login to your Google account]({})\n\nAfter that you will get a verification code, type `/gdrive (verification code)` without '(' or ')'.".format(authurl)
 			await message.reply(teks)
 			return

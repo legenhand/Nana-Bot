@@ -2,7 +2,7 @@ import os, time
 import pydrive
 from pydrive.drive import GoogleDrive
 
-from nana import app, setbot, AdminSettings, gauth
+from nana import app, setbot, AdminSettings, gauth, gdrive_credentials, HEROKU_API
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
 from __main__ import get_runtime
 from nana.modules.chats import get_msgc
@@ -11,10 +11,19 @@ from nana.modules.chats import get_msgc
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["gdrive"]))
 async def gdrive_helper(client, message):
 	if len(message.text.split()) == 1:
+		if HEROKU_API:
+			if not gdrive_credentials:
+				await message.reply("Hello, look like you're not logged in to google drive 🙂\nI can help you to login.\n\nFirst of all, you need to activate your google drive API\n1. [Go here](https://developers.google.com/drive/api/v3/quickstart/python), click **Enable the drive API**\n2. Login to your google account (skip this if you're already logged in)\n3. After logged in, click **Enable the drive API** again, and click **Download Client Configuration** button, download that.\n4. After downloaded that file, open that file then copy all of that content, back to telegram then do .credentials (copy the content of that file)  do without bracket \n\nAfter that, you can go next guide by type /gdrive")
+				return
+			else:
+				file = open("client_secrets.json","w")
+				file.write(gdrive_credentials)
+				file.close()
 		gdriveclient = os.path.isfile("client_secrets.json")
 		if not gdriveclient:
 			await message.reply("Hello, look like you're not logged in to google drive 🙂\nI can help you to login.\n\nFirst of all, you need to activate your google drive API\n1. [Go here](https://developers.google.com/drive/api/v3/quickstart/python), click **Enable the drive API**\n2. Login to your google account (skip this if you're already logged in)\n3. After logged in, click **Enable the drive API** again, and click **Download Client Configuration** button, download that.\n4. After downloaded that file, open that file then copy all of that content, back to telegram then do .credentials (copy the content of that file)  do without bracket \n\nAfter that, you can go next guide by type /gdrive")
 			return
+		
 		gauth.LoadCredentialsFile("nana/session/drive")
 		if gauth.credentials is None:
 			authurl = gauth.GetAuthUrl()
@@ -29,7 +38,7 @@ async def gdrive_helper(client, message):
 		try:
 			gauth.Auth(message.text.split()[1])
 		except pydrive.auth.AuthenticationError:
-			await msg.reply_text("Kode autentikasi anda salah!")
+			await message.reply("Kode autentikasi anda salah!")
 			return
 		gauth.SaveCredentialsFile("nana/session/drive")
 		drive = GoogleDrive(gauth)

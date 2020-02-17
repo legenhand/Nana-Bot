@@ -44,7 +44,7 @@ async def gdrive_helper(client, message):
 		try:
 			gauth.Auth(message.text.split()[1])
 		except pydrive.auth.AuthenticationError:
-			await message.reply("Kode autentikasi anda salah!")
+			await message.reply("Your Authentication code is Wrong!")
 			return
 		gauth.SaveCredentialsFile("nana/session/drive")
 		drive = GoogleDrive(gauth)

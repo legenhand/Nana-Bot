@@ -6,7 +6,7 @@ import requests
 from pydrive.drive import GoogleDrive
 
 from bs4 import BeautifulSoup
-from nana import app, setbot, Command, gauth
+from nana import app, setbot, Command, gauth, gdrive_credentials, HEROKU_API
 from nana.helpers.parser import cleanhtml
 from nana.modules.downloads import download_url
 from pyrogram import Filters
@@ -79,6 +79,11 @@ async def credentials(client, message):
 async def gdrive_stuff(client, message):
 	gauth.LoadCredentialsFile("nana/session/drive")
 	if gauth.credentials is None:
+		if HEROKU_API:
+			if gdrive_credentials:
+				file = open("client_secrets.json","w")
+				file.write(gdrive_credentials)
+				file.close()
 		await message.edit("You are not logged in to your google drive account!\nYour assistant bot may help you to login google drive, check your assistant bot for more information!")
 		gdriveclient = os.path.isfile("client_secrets.json")
 		if not gdriveclient:

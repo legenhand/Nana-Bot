@@ -7,7 +7,6 @@ import shutil
 import subprocess
 import sys
 import traceback
-import cv2
 
 from speedtest import Speedtest
 from platform import python_version, uname

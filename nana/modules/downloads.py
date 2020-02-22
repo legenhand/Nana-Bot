@@ -9,7 +9,6 @@ import json
 from random import choice
 import requests
 from bs4 import BeautifulSoup
-from humanize import naturalsize
 
 from nana import app, Command
 from pyrogram import Filters
@@ -32,9 +31,9 @@ Reply a document to download it.
 Create A direct link download
 
 Supported Link
-`gdrive  | zippyshare   | mega
-yadi.sk | cloud.mail.ru| mediafire
-osdn.net| Sourceforge  | github.com
+`gdrive     | zippyshare   | mega
+yadi.sk    | mediafire    | osdn.net
+github.com | Sourceforge
 androidfilehost.com`
 """
 
@@ -286,55 +285,6 @@ def yandex_disk(url: str) -> str:
         reply += '`Error: File not found / Download limit reached`\n'
         return reply
     return reply
-
-
-def mega_dl(url: str) -> str:
-    """ MEGA.nz direct links generator
-    Using https://github.com/tonikelope/megadown"""
-    reply = ''
-    try:
-        link = re.findall(r'\bhttps?://.*mega.*\.nz\S+', url)[0]
-    except IndexError:
-        reply = "`No MEGA.nz links found`\n"
-        return reply
-    command = f'bin/megadown -q -m {link}'
-    result = popen(command).read()
-    try:
-        data = json.loads(result)
-        print(data)
-    except json.JSONDecodeError:
-        reply += "`Error: Can't extract the link`\n"
-        return reply
-    dl_url = data['url']
-    name = data['file_name']
-    size = naturalsize(int(data['file_size']))
-    reply += f'[{name} ({size})]({dl_url})\n'
-    return reply
-
-
-def cm_ru(url: str) -> str:
-    """ cloud.mail.ru direct links generator
-    Using https://github.com/JrMasterModelBuilder/cmrudl.py"""
-    reply = ''
-    try:
-        link = re.findall(r'\bhttps?://.*cloud\.mail\.ru\S+', url)[0]
-    except IndexError:
-        reply = "`No cloud.mail.ru links found`\n"
-        return reply
-    command = f'bin/cmrudl -s {link}'
-    result = popen(command).read()
-    result = result.splitlines()[-1]
-    try:
-        data = json.loads(result)
-    except json.decoder.JSONDecodeError:
-        reply += "`Error: Can't extract the link`\n"
-        return reply
-    dl_url = data['download']
-    name = data['file_name']
-    size = naturalsize(int(data['file_size']))
-    reply += f'[{name} ({size})]({dl_url})\n'
-    return reply
-
 
 def mediafire(url: str) -> str:
     """ MediaFire direct links generator """

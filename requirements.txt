@@ -17,3 +17,4 @@ currencyconverter
 bitlyshortener
 heroku3
 speedtest-cli
+humanize

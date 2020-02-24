@@ -7,20 +7,17 @@ from nana import app, Command
 
 
 @app.on_message(Filters.user("self") & Filters.command(["mega"], Command))
-async def mega_download(client, message):
-    args = message.text.split(None, 1)
+async def mega_download(client, msg):
+    args = msg.text.split(None, 1)
     if len(args) == 1:
-        await message.edit("usage: mega (url)")
+        await msg.edit("usage: mega (url)")
         return
-    await message.edit("Processing...")
+    await msg.edit("Processing...")
     if not os.path.exists('nana/downloads/mega'):
         os.makedirs('nana/downloads/mega')
     m = Mega()
-    try:
-        m.download_url(args[1], "nana/downloads/mega")
-    except:
-        await message.edit("Wrong Url or link not exist!")
-    await message.edit("Success! file was downloaded at nana/downloads")
+    await m.download_url(message=msg, url=args[1], dest_path="nana/downloads/mega")
+    await msg.edit("Success! file was downloaded at nana/downloads")
 
 
 @app.on_message(Filters.user("self") & Filters.command(["megafile"], Command))

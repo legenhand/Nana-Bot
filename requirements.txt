@@ -17,4 +17,4 @@ currencyconverter
 bitlyshortener
 heroku3
 speedtest-cli
-mega.py
+git+https://github.com/legenhand/mega.py.git

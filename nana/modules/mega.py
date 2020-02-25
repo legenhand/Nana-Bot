@@ -5,6 +5,20 @@ from pyrogram import Filters
 
 from nana import app, Command
 
+__MODULE__ = "Mega Downloader"
+__HELP__ = """
+Download any file from URL or from telegram
+
+──「 **Download mega file from URL** 」──
+-> `mega (url)`
+Give url as args to download it.
+
+──「 **List Downloaded** 」──
+-> `megafile`
+List of file that have downloaded with mega.
+
+"""
+
 
 @app.on_message(Filters.user("self") & Filters.command(["mega"], Command))
 async def mega_download(client, msg):

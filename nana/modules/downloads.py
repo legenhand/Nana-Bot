@@ -1,18 +1,18 @@
-import time
-import datetime
-import os
-
-from os import popen
-import re
-import urllib.parse
+import asyncio
 import json
+import math
+import os
+import re
+import time
+import urllib.parse
 from random import choice
+
 import requests
 from bs4 import BeautifulSoup
+from pyDownload import Downloader
+from pyrogram import Filters
 
 from nana import app, Command
-from pyrogram import Filters
-from pyDownload import Downloader
 
 __MODULE__ = "Downloads"
 __HELP__ = """
@@ -74,10 +74,10 @@ async def download_url(url, file_name):
     if size > 1024000000:
         file_size = round(size / 1024000000, 3)
         downlaoded += "\n💿 File size: `" + str(file_size) + " GB`\n"
-    elif size > 1024000 and size < 1024000000:
+    elif 1024000 < size < 1024000000:
         file_size = round(size / 1024000, 3)
         downlaoded += "\n💿 File size: `" + str(file_size) + " MB`\n"
-    elif size > 1024 and size < 1024000:
+    elif 1024 < size < 1024000:
         file_size = round(size / 1024, 3)
         downlaoded += "\n💿 File size: `" + str(file_size) + " KB`\n"
     elif size < 1024:
@@ -122,28 +122,43 @@ async def download_from_telegram(client, message):
         start = int(time.time())
         if message.reply_to_message.photo:
             nama = "photo_{}_{}.png".format(message.reply_to_message.photo, message.reply_to_message.photo.date)
-            await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama)
+            await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama,
+                                        progress=lambda d, t: asyncio.get_event_loop().create_task(
+                                            progressdl(d, t, message, c_time, "Downloading...")))
         elif message.reply_to_message.animation:
             nama = "giphy_{}-{}.gif".format(message.reply_to_message.animation.date,
                                             message.reply_to_message.animation.file_size)
-            await client.download_media(message.reply_to_message.animation, file_name="nana/downloads/" + nama)
+            await client.download_media(message.reply_to_message.animation, file_name="nana/downloads/" + nama,
+                                        progress=lambda d, t: asyncio.get_event_loop().create_task(
+                                            progressdl(d, t, message, c_time, "Downloading...")))
         elif message.reply_to_message.video:
             nama = "video_{}-{}.mp4".format(message.reply_to_message.video.date,
                                             message.reply_to_message.video.file_size)
-            await client.download_media(message.reply_to_message.video, file_name="nana/downloads/" + nama)
+            await client.download_media(message.reply_to_message.video, file_name="nana/downloads/" + nama,
+                                        progress=lambda d, t: asyncio.get_event_loop().create_task(
+                                            progressdl(d, t, message, c_time, "Downloading...")))
         elif message.reply_to_message.sticker:
             nama = "sticker_{}_{}.webp".format(message.reply_to_message.sticker.date,
                                                message.reply_to_message.sticker.set_name)
-            await client.download_media(message.reply_to_message.sticker, file_name="nana/downloads/" + nama)
+            await client.download_media(message.reply_to_message.sticker, file_name="nana/downloads/" + nama,
+                                        progress=lambda d, t: asyncio.get_event_loop().create_task(
+                                            progressdl(d, t, message, c_time, "Downloading...")))
         elif message.reply_to_message.audio:
             nama = "{}".format(message.reply_to_message.audio.file_name)
-            await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama)
+            await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama,
+                                        progress=lambda d, t: asyncio.get_event_loop().create_task(
+                                            progressdl(d, t, message, c_time, "Downloading...")))
         elif message.reply_to_message.voice:
             nama = "audio_{}.ogg".format(message.reply_to_message.voice)
-            await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama)
+            await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama,
+                                        progress=lambda d, t: asyncio.get_event_loop().create_task(
+                                            progressdl(d, t, message, c_time, "Downloading...")))
         elif message.reply_to_message.document:
+            c_time = time.time()
             nama = "{}".format(message.reply_to_message.document.file_name)
-            await client.download_media(message.reply_to_message.document, file_name="nana/downloads/" + nama)
+            await client.download_media(message.reply_to_message.document, file_name="nana/downloads/" + nama,
+                                        progress=lambda d, t: asyncio.get_event_loop().create_task(
+                                            progressdl(d, t, message, c_time, "Downloading...")))
         else:
             await message.edit("Unknown file!")
             return
@@ -173,12 +188,8 @@ async def direct_link_generator(client, message):
             reply += gdrive(link)
         elif 'zippyshare.com' in link:
             reply += zippy_share(link)
-        elif 'mega.' in link:
-            reply += mega_dl(link)
         elif 'yadi.sk' in link:
             reply += yandex_disk(link)
-        elif 'cloud.mail.ru' in link:
-            reply += cm_ru(link)
         elif 'mediafire.com' in link:
             reply += mediafire(link)
         elif 'sourceforge.net' in link:
@@ -257,9 +268,9 @@ def zippy_share(url: str) -> str:
         if "getElementById('dlbutton')" in script.text:
             url_raw = re.search(r'= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);',
                                 script.text).group('url')
-            math = re.search(r'= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);',
-                             script.text).group('math')
-            dl_url = url_raw.replace(math, '"' + str(eval(math)) + '"')
+            mathh = re.search(r'= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);',
+                              script.text).group('math')
+            dl_url = url_raw.replace(mathh, '"' + str(eval(mathh)) + '"')
             break
     dl_url = base_url + eval(dl_url)
     name = urllib.parse.unquote(dl_url.split('/')[-1])
@@ -285,6 +296,7 @@ def yandex_disk(url: str) -> str:
         reply += '`Error: File not found / Download limit reached`\n'
         return reply
     return reply
+
 
 def mediafire(url: str) -> str:
     """ MediaFire direct links generator """
@@ -427,3 +439,61 @@ def useragent():
         'lxml').findAll('td', {'class': 'useragent'})
     user_agent = choice(useragents)
     return user_agent.text
+
+
+async def progressdl(current, total, event, start, type_of_ps, file_name=None):
+    """Generic progress_callback for uploads and downloads."""
+    now = time.time()
+    diff = now - start
+    if round(diff % 10.00) == 0 or current == total:
+        percentage = current * 100 / total
+        speed = current / diff
+        elapsed_time = round(diff) * 1000
+        time_to_completion = round((total - current) / speed) * 1000
+        estimated_total_time = elapsed_time + time_to_completion
+        progress_str = "[{0}{1}] {2}%\n".format(
+            ''.join(["▰" for i in range(math.floor(percentage / 10))]),
+            ''.join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+            round(percentage, 2))
+        tmp = progress_str + \
+              "{0} of {1}\nETA: {2}".format(
+                  humanbytes(current),
+                  humanbytes(total),
+                  time_formatter(estimated_total_time)
+              )
+        if file_name:
+            await event.edit("{}\nFile Name: `{}`\n{}".format(
+                type_of_ps, file_name, tmp))
+        else:
+            await event.edit("{}\n{}".format(type_of_ps, tmp))
+
+
+def humanbytes(size):
+    """Input size in bytes,
+    outputs in a human readable format"""
+    # https://stackoverflow.com/a/49361727/4723940
+    if not size:
+        return ""
+    # 2 ** 10 = 1024
+    power = 2 ** 10
+    raised_to_pow = 0
+    dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
+    while size > power:
+        size /= power
+        raised_to_pow += 1
+    return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
+
+
+def time_formatter(milliseconds: int) -> str:
+    """Inputs time in milliseconds, to get beautified time,
+    as string"""
+    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    tmp = ((str(days) + " day(s), ") if days else "") + \
+          ((str(hours) + " hour(s), ") if hours else "") + \
+          ((str(minutes) + " minute(s), ") if minutes else "") + \
+          ((str(seconds) + " second(s), ") if seconds else "") + \
+          ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
+    return tmp[:-2]

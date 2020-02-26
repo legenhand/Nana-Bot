@@ -52,7 +52,8 @@ RUN apk add --no-cache --update \
     sqlite \
     sqlite-dev \
     sudo \
-    zlib-dev
+    zlib-dev \
+    ffmpeg
 
 RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base

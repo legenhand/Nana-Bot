@@ -120,6 +120,7 @@ async def download_from_telegram(client, message):
     if message.reply_to_message:
         await message.edit("__Downloading...__")
         start = int(time.time())
+        c_time = time.time()
         if message.reply_to_message.photo:
             nama = "photo_{}_{}.png".format(message.reply_to_message.photo, message.reply_to_message.photo.date)
             await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama,
@@ -154,7 +155,6 @@ async def download_from_telegram(client, message):
                                         progress=lambda d, t: asyncio.get_event_loop().create_task(
                                             progressdl(d, t, message, c_time, "Downloading...")))
         elif message.reply_to_message.document:
-            c_time = time.time()
             nama = "{}".format(message.reply_to_message.document.file_name)
             await client.download_media(message.reply_to_message.document, file_name="nana/downloads/" + nama,
                                         progress=lambda d, t: asyncio.get_event_loop().create_task(

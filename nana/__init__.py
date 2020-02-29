@@ -2,7 +2,6 @@ import logging
 import os
 import sys
 
-from pySmartDL import SmartDL
 from pydrive.auth import GoogleAuth
 from pyrogram import Client, errors
 from sqlalchemy import create_engine, exc
@@ -97,6 +96,7 @@ if ENV:
     screenshotlayer_API = os.environ.get('screenshotlayer_API', None)
     bitly_token = [os.environ.get('bitly_token', None)]
     gdrive_credentials = os.environ.get('gdrive_credentials', None)
+    lydia_api = os.environ.get('lydia_api', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
@@ -153,6 +153,7 @@ else:
     screenshotlayer_API = Config.screenshotlayer_API
     bitly_token = [Config.bitly_token]
     gdrive_credentials = None
+    lydia_api = Config.lydia_api
     HEROKU_API = Config.HEROKU_API
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD
@@ -174,23 +175,6 @@ gauth = GoogleAuth()
 
 DB_AVAIABLE = False
 BOTINLINE_AVAIABLE = False
-
-# Setting Up CloudMail.ru and MEGA.nz extractor binaries,
-# and giving them correct perms to work properly.
-if not os.path.exists('bin'):
-    os.mkdir('bin')
-
-binaries = {
-    "https://raw.githubusercontent.com/TG-UBotX/megadown/master/megadown":
-        "bin/megadown",
-    "https://raw.githubusercontent.com/TG-UBotX/cmrudl.py/master/cmrudl.py":
-        "bin/cmrudl",
-}
-
-for binary, path in binaries.items():
-    downloader = SmartDL(binary, path, progress_bar=False)
-    downloader.start()
-    os.chmod(path, 0o755)
 
 
 # Postgresql

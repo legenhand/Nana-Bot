@@ -45,6 +45,6 @@ async def lydia(client, message):
     global lydia_status, session
     if lydia_status:
         output = session.think_thought(message.text)
-        await message.reply("`{0}`".format(output))
+        await message.reply_text("`{0}`".format(output), quote=True)
     else:
         return

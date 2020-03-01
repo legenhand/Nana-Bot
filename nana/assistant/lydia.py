@@ -40,11 +40,11 @@ async def lydia_stats(client, message):
         await message.reply("now Lydia will reply your message!")
 
 
-@setbot.on_message()
+@setbot.on_message(Filters.user(AdminSettings))
 async def lydia(client, message):
     global lydia_status, session
     if lydia_status:
         output = session.think_thought(message.text)
-        await message.reply("Lydia : `{0}`".format(output))
+        await message.reply("`{0}`".format(output))
     else:
         return

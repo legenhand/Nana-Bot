@@ -21,4 +21,4 @@ heroku3
 speedtest-cli
 git+https://github.com/legenhand/mega.py.git
 httplib2==0.15.0
-coffeehouse
+coffeehouse==2.1.0

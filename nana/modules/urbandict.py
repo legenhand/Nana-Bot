@@ -27,18 +27,15 @@ async def urban_dictionary(client, message):
         word = json.dumps(data['list'][0]['word'])
         definition = json.dumps(data['list'][0]['definition'])
         example = json.dumps(data['list'][0]['example'])
-        teks = "**Result of {}**\n\n**{}**\n**Meaning:**\n{}\n\n**Example:**\n{}".format(text, word,
-                                                                                         replace_definition(definition),
-                                                                                         replace_example(example))
+        teks = "**Text: {}**\n**Meaning:**\n`{}`\n\n**Example:**\n`{}`".format(replace_text(word),
+                                                                               replace_text(definition),
+                                                                               replace_text(example))
         await message.edit(teks)
         return
     elif response.status_code == 404:
         await message.edit("Cannot connect to Urban Dictionary")
 
 
-def replace_definition(text):
-    return text.replace("[", "<i><b>").replace("]", "</i></b>").replace("\"", "")
-
-
-def replace_example(text):
-    return replace_definition(text).replace("\\r", "").replace("\\n", "\n").replace("\\", "__")
+def replace_text(text):
+    return text.replace("[", "").replace("]", "").replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
+        "\\", "")

@@ -22,27 +22,32 @@ async def subprocess_run(cmd, megadl):
                     shell=True, universal_newlines=True,
                     executable="bash")
     talk = subproc.communicate()
-    exitCode = subproc.returncode
-    if exitCode != 0:
+    exit_code = subproc.returncode
+    if exit_code != 0:
         await megadl.edit(
             '```An error was detected while running the subprocess:\n'
-            f'exit code: {exitCode}\n'
+            f'exit code: {exit_code}\n'
             f'stdout: {talk[0]}\n'
             f'stderr: {talk[1]}```')
-        return exitCode
+        return exit_code
     return talk
 
 
 @app.on_message(Filters.user("self") & Filters.command(["megadownload"], Command))
 async def mega_downloader(client, megadl):
     args = megadl.text.split(None, 1)
-    if len(args) == 1:
-        await megadl.edit("usage: mega (url)")
+    await megadl.edit("`Processing...`")
+    msg_link = await megadl.reply_to_message.text
+    link = args[1]
+    if link:
+        pass
+    elif msg_link:
+        link = msg_link.text
+    else:
+        await megadl.edit("Usage: `.mega <mega url>`")
         return
-    await megadl.edit("Processing...")
     try:
-        link = re.findall(r'\bhttps?://.*mega.*\.nz\S+', args[1])[0]
-        await megadl.edit(link)
+        link = re.findall(r'\bhttps?://.*mega.*\.nz\S+', link)[0]
     except IndexError:
         await megadl.edit("`No MEGA.nz link found`\n")
         return
@@ -107,6 +112,8 @@ async def mega_downloader(client, megadl):
                               f"Download took: {download_time}")
     else:
         await megadl.edit("Failed to download, check heroku Log for details")
+        for e in downloader.get_errors():
+            megadl.edit(str(e))
     return
 
 

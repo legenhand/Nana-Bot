@@ -2,13 +2,12 @@ import os
 import shutil
 import sys
 
-from nana import app, Command, OFFICIAL_BRANCH, REPOSITORY, HEROKU_API
 from __main__ import restart_all, except_hook
-from pyrogram import Filters
-from nana.assistant.updater import update_changelog
-
 from git import Repo, exc
+from pyrogram import Filters
 
+from nana import app, Command, OFFICIAL_BRANCH, REPOSITORY, HEROKU_API
+from nana.assistant.updater import update_changelog
 
 __MODULE__ = "Updater"
 __HELP__ = """
@@ -24,12 +23,14 @@ Only check update if avaiable
 Update your bot to latest version
 """
 
+
 async def gen_chlog(repo, diff):
 	changelog = ""
 	d_form = "%H:%M - %d/%m/%y"
 	for cl in repo.iter_commits(diff):
 		changelog += f'• [{cl.committed_datetime.strftime(d_form)}]: {cl.summary} <{cl.author}>\n'
 	return changelog
+
 
 async def initial_git(repo):
 	isexist = os.path.exists('nana-old')
@@ -49,8 +50,9 @@ async def initial_git(repo):
 	shutil.rmtree('nana/session/')
 	os.rename('nana-old/nana/session/', 'nana/session/')
 
+
 @app.on_message(Filters.user("self") & Filters.command(["update"], Command))
-async def Updater(client, message):
+async def updater(client, message):
 	await message.edit("__Checking update...__")
 	initial = False
 	try:
@@ -58,7 +60,7 @@ async def Updater(client, message):
 	except exc.NoSuchPathError as error:
 		await message.edit(f"**Update failed!**\n\nError:\n`directory {error} is not found`")
 		return
-	except exc.InvalidGitRepositoryError as error:
+	except exc.InvalidGitRepositoryError:
 		repo = Repo.init()
 		initial = True
 	except exc.GitCommandError as error:
@@ -67,7 +69,9 @@ async def Updater(client, message):
 
 	if initial:
 		if len(message.text.split()) != 2:
-			await message.edit('Your git workdir is missing!\nBut i can repair and take new latest update for you.\nJust do `update now` to repair and take update!')
+			await message.edit(
+				'Your git workdir is missing!\nBut i can repair and take new latest update for you.\nJust do `update '
+				'now` to repair and take update!')
 			return
 		elif len(message.text.split()) == 2 and message.text.split()[1] == "now":
 			try:
@@ -78,10 +82,11 @@ async def Updater(client, message):
 				await except_hook(exc_type, exc_obj, exc_tb)
 				return
 			await message.edit('Successfully Updated!\nBot is restarting...')
-			await update_changelog("-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in nana-old")
+			await update_changelog(
+				"-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in "
+				"nana-old")
 			await restart_all()
 			return
-
 
 	brname = repo.active_branch.name
 	if brname not in OFFICIAL_BRANCH:
@@ -109,7 +114,9 @@ async def Updater(client, message):
 				await except_hook(exc_type, exc_obj, exc_tb)
 				return
 			await message.edit('Successfully Updated!\nBot is restarting...')
-			await update_changelog("-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in nana-old")
+			await update_changelog(
+				"-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in "
+				"nana-old")
 			await restart_all()
 			return
 		exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -122,13 +129,15 @@ async def Updater(client, message):
 		return
 
 	if len(message.text.split()) != 2:
-		changelog_str = f'To update latest changelog, do\n-> `update now`\n\n**New UPDATE available for [{brname}]:\n\nCHANGELOG:**\n`{changelog}`'
+		changelog_str = f'To update latest changelog, do\n-> `update now`\n\n**New UPDATE available for [{brname}]:\n' \
+						f'\nCHANGELOG:**\n`{changelog}` '
 		if len(changelog_str) > 4096:
 			await message.edit("`Changelog is too big, view the file to see it.`")
 			file = open("nana/cache/output.txt", "w+")
 			file.write(changelog_str)
 			file.close()
-			await client.send_document(message.chat.id, "nana/cache/output.txt", reply_to_message_id=message.message_id, caption="`Changelog file`")
+			await client.send_document(message.chat.id, "nana/cache/output.txt", reply_to_message_id=message.message_id,
+									   caption="`Changelog file`")
 			os.remove("nana/cache/output.txt")
 		else:
 			await message.edit(changelog_str)
@@ -142,9 +151,9 @@ async def Updater(client, message):
 			if len(heroku_applications) >= 1:
 				heroku_app = heroku_applications[0]
 				heroku_git_url = heroku_app.git_url.replace(
-                "https://",
-                "https://api:" + HEROKU_API + "@"
-            	)
+					"https://",
+					"https://api:" + HEROKU_API + "@"
+				)
 				if "heroku" in repo.remotes:
 					remote = repo.remote("heroku")
 					remote.set_url(heroku_git_url)
@@ -166,4 +175,6 @@ async def Updater(client, message):
 		await update_changelog(changelog)
 		await restart_all()
 	else:
-		await message.edit("Usage:\n-> `update` to check update\n-> `update now` to update latest commits\nFor more information check at your Assistant")
+		await message.edit(
+			"Usage:\n-> `update` to check update\n-> `update now` to update latest commits\nFor more information "
+			"check at your Assistant")

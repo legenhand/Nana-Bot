@@ -1,13 +1,10 @@
-import os, requests
+import os
+from platform import python_version
 
-from bs4 import BeautifulSoup
-from platform import python_version, uname
-
-from nana import app, setbot, Owner, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername
-from __main__ import reload_userbot, restart_all
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
 
-from threading import Thread
+from nana import app, setbot, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername
+from nana.__main__ import reload_userbot, restart_all
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["start"]))

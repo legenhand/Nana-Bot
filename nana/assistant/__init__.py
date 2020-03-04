@@ -1,6 +1,5 @@
-import importlib
-
 from nana import ASSISTANT_LOAD, ASSISTANT_NOLOAD, log
+
 
 def __list_all_modules():
     from os.path import dirname, basename, isfile
@@ -12,20 +11,20 @@ def __list_all_modules():
                    and not f.endswith('__init__.py')]
 
     if ASSISTANT_LOAD or ASSISTANT_NOLOAD:
-        to_Load = ASSISTANT_LOAD
-        if to_Load:
-            if not all(any(mod == module_name for module_name in all_modules) for mod in to_Load):
+        to_load = ASSISTANT_LOAD
+        if to_load:
+            if not all(any(mod == module_name for module_name in all_modules) for mod in to_load):
                 log.error("Invalid Module name for Assistant bot!")
                 quit(1)
 
         else:
-            to_Load = all_modules
+            to_load = all_modules
 
         if ASSISTANT_NOLOAD:
             log.info("Not loaded: {}".format(ASSISTANT_NOLOAD))
-            return [item for item in to_Load if item not in ASSISTANT_NOLOAD]
+            return [item for item in to_load if item not in ASSISTANT_NOLOAD]
 
-        return to_Load
+        return to_load
 
     return all_modules
 

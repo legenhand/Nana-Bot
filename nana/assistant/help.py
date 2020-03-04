@@ -4,7 +4,7 @@ import time
 from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, BotName, Owner, DB_AVAIABLE, app
+from nana import setbot, AdminSettings, Command, BotName, DB_AVAIABLE
 from nana.__main__ import get_runtime
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
@@ -85,17 +85,8 @@ async def help_button(client, query):
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")))
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["statsbot"]))
-async def stats_bot(client, message):
-    await setbot.send_message(Owner, "test")
-
-
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
 async def stats(client, message):
-    try:
-        me = await app.get_me()
-    except ConnectionError:
-        me = None
     text = "**Here is your current stats**\n"
     text += "Notes: `0 notes`\n"
     if DB_AVAIABLE:

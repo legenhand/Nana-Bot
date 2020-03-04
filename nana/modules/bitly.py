@@ -1,6 +1,7 @@
-from nana import app, setbot, Command, bitly_token
-from pyrogram import Filters
 from bitlyshortener import Shortener
+from pyrogram import Filters
+
+from nana import app, Command, bitly_token
 
 __MODULE__ = "Bitly"
 __HELP__ = """
@@ -11,6 +12,7 @@ This module will shortener your link
 Shorten your url with bitly
 
 """
+
 
 @app.on_message(Filters.user("self") & Filters.command(["bitly"], Command))
 async def bitly(client, message):

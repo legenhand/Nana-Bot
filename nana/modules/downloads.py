@@ -97,10 +97,10 @@ async def download_from_url(client, message):
         await message.edit("Usage: `dl <url> <filename>`")
         return
     if len(message.text.split()) == 2:
-        URL = message.text.split(None, 1)[1]
-        file_name = URL.split("/")[-1]
+        url = message.text.split(None, 1)[1]
+        file_name = url.split("/")[-1]
     elif len(message.text.split()) == 3:
-        URL = message.text.split(None, 2)[1]
+        url = message.text.split(None, 2)[1]
         file_name = message.text.split(None, 2)[2]
     else:
         await message.edit("Invaild args given!")
@@ -111,12 +111,12 @@ async def download_from_url(client, message):
         await message.edit("Invalid download path in config!")
         return
     await message.edit("Downloading...")
-    download = await download_url(URL, file_name)
+    download = await download_url(url, file_name)
     await message.edit(download)
 
 
 @app.on_message(Filters.user("self") & Filters.command(["download"], Command))
-async def download_from_telegram(client, message):
+async def dssownload_from_telegram(client, message):
     if message.reply_to_message:
         await message.edit("__Downloading...__")
         start = int(time.time())

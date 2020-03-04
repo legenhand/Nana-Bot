@@ -1,9 +1,9 @@
-import pyrogram
 import os
 
 from gtts import gTTS
-from nana import app, Command
 from pyrogram import Filters
+
+from nana import app, Command
 
 __MODULE__ = "Voice"
 __HELP__ = """
@@ -34,35 +34,38 @@ vi: Vietname  |
 zh-cn: Chinese (Mandarin/China)
 zh-tw: Chinese (Mandarin/Taiwan)`
 """
-lang = "en" # Default Language for voice
+lang = "en"  # Default Language for voice
+
 
 @app.on_message(Filters.user("self") & Filters.command(["voice"], Command))
 async def voice(client, message):
-	global lang
-	if len(message.text.split()) == 1:
-		await message.edit("Send text then change to audio")
-		return
-	await message.delete()
-	await client.send_chat_action(message.chat.id, "record_audio")
-	text = message.text.split(None, 1)[1]
-	tts = gTTS(text, lang=lang)
-	tts.save('nana/cache/voice.mp3')
-	if message.reply_to_message:
-		await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3", reply_to_message_id=message.reply_to_message.message_id)
-	else:
-		await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3")
-	await client.send_chat_action(message.chat.id, action="cancel")
-	os.remove("nana/cache/voice.mp3")
+    global lang
+    if len(message.text.split()) == 1:
+        await message.edit("Send text then change to audio")
+        return
+    await message.delete()
+    await client.send_chat_action(message.chat.id, "record_audio")
+    text = message.text.split(None, 1)[1]
+    tts = gTTS(text, lang=lang)
+    tts.save('nana/cache/voice.mp3')
+    if message.reply_to_message:
+        await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3",
+                                reply_to_message_id=message.reply_to_message.message_id)
+    else:
+        await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3")
+    await client.send_chat_action(message.chat.id, action="cancel")
+    os.remove("nana/cache/voice.mp3")
+
 
 @app.on_message(Filters.user("self") & Filters.command(["voicelang"], Command))
 async def voicelang(client, message):
-	global lang
-	temp = lang
-	lang = message.text.split(None, 1)[1]
-	try:
-		tts = gTTS("tes", lang=lang)
-	except:
-		await message.edit("Wrong Language id !")
-		lang = temp
-		return
-	await message.edit("Language Set to {}".format(lang))
+    global lang
+    temp = lang
+    lang = message.text.split(None, 1)[1]
+    try:
+        tts = gTTS("tes", lang=lang)
+    except:
+        await message.edit("Wrong Language id !")
+        lang = temp
+        return
+    await message.edit("Language Set to {}".format(lang))

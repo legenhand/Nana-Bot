@@ -171,15 +171,15 @@ async def dc_id(client, message):
     user = message.from_user
     if message.reply_to_message:
         if message.reply_to_message.forward_from:
-            dc_id = await client.get_user_dc(message.reply_to_message.forward_from.id)
+            dc_id = message.reply_to_message.forward_from.dc_id
             user = mention_markdown(message.reply_to_message.forward_from.id,
                                     message.reply_to_message.forward_from.first_name)
         else:
-            dc_id = await client.get_user_dc(message.reply_to_message.from_user.id)
+            dc_id = message.reply_to_message.from_user.dc_id
             user = mention_markdown(message.reply_to_message.from_user.id,
                                     message.reply_to_message.from_user.first_name)
     else:
-        dc_id = await client.get_user_dc(message.from_user.id)
+        dc_id = user.dc_id
         user = mention_markdown(message.from_user.id, message.from_user.first_name)
     if dc_id == 1:
         text = "{}'s assigned datacenter is **DC1**, located in **MIA, Miami FL, USA**".format(user)

@@ -158,7 +158,7 @@ logging.basicConfig(level=logging.ERROR,
                     format=LOG_FORMAT,
                     datefmt='%m-%d %H:%M',
                     filename='nana/logs/error.log',
-                    filemode='a')
+                    filemode='w')
 console = logging.StreamHandler()
 console.setLevel(logging.ERROR)
 formatter = logging.Formatter(LOG_FORMAT)

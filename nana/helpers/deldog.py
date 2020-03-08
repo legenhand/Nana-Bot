@@ -1,14 +1,15 @@
 import requests
 
-def deldog(data):
+
+async def deldog(message, data):
     BASE_URL = 'https://del.dog'
     r = requests.post(f'{BASE_URL}/documents', data=data.encode('utf-8'))
     if r.status_code == 404:
-        update.effective_message.reply_text('Failed to reach dogbin')
+        await message.edit('Failed to reach dogbin')
         r.raise_for_status()
     res = r.json()
     if r.status_code != 200:
-        update.effective_message.reply_text(res['message'])
+        await message.edit(res['message'])
         r.raise_for_status()
     key = res['key']
     if res['isUrl']:

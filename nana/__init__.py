@@ -152,7 +152,9 @@ else:
     AdminSettings = Config.AdminSettings
     REMINDER_UPDATE = Config.REMINDER_UPDATE
     TEST_MODE = Config.TEST_MODE
-
+if os.path.exists("nana/logs/error.log"):
+    f = open("nana/logs/error.log", "w")
+    f.write("PEAK OF THE LOGS FILE")
 LOG_FORMAT = "[%(asctime)s.%(msecs)03d] %(filename)s:%(lineno)s %(levelname)s: %(message)s"
 logging.basicConfig(level=logging.ERROR,
                     format=LOG_FORMAT,
@@ -166,6 +168,7 @@ console.setFormatter(formatter)
 logging.getLogger('').addHandler(console)
 
 log = logging.getLogger()
+log.error("THIS IS PEAK OF LOG ERROR, IGNORE THIS MESSAGE LOG")
 
 if USERBOT_SESSION and ASSISTANT_SESSION:
     BOT_SESSION = ASSISTANT_SESSION

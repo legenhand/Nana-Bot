@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 import math
 import os
 import re
@@ -26,6 +27,10 @@ Give url as args to download it.
 -> `download`
 Reply a document to download it.
 
+──「 **Upload To Telegram** 」──
+-> `upload (path)`
+give path of file to send to telegram.
+
 ──「 **Direct Link Download** 」──
 -> `direct (url)`
 Create A direct link download
@@ -36,6 +41,26 @@ yadi.sk    | mediafire    | osdn.net
 github.com | Sourceforge
 androidfilehost.com`
 """
+
+
+@app.on_message(Filters.user("self") & Filters.command(["upload"], Command))
+async def upload_file(client, message):
+    args = message.text.split(None, 1)
+    if len(args) == 1:
+        await message.edit("usage : upload (path)")
+        return
+    path = args[1]
+    try:
+        await app.send_document(message.chat.id, path, progress=lambda d, t: asyncio.get_event_loop().create_task(
+            progressdl(d, t, message, time.time(), "Uploading...")))
+    except Exception as e:
+        logging.error("Exception occured", exc_info=True)
+        logging.error(e)
+        await message.edit("`File not found!`")
+        return
+    await message.edit("`Success!`")
+    await asyncio.sleep(5)
+    await client.delete_messages(message.chat.id, message.message_id)
 
 
 async def time_parser(start, end):

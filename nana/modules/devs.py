@@ -159,7 +159,7 @@ async def terminal(client, message):
 @app.on_message(Filters.user("self") & Filters.command(["log"], Command))
 async def log(client, message):
     f = open("nana/logs/error.log", "r")
-    data = deldog(f.read())
+    data = await deldog(message, f.read())
     await message.edit("`Your recent logs stored here : `{}".format(data))
 
 

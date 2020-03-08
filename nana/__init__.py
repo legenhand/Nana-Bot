@@ -13,9 +13,8 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 # logging
 # 
 # -> Advanced logging, for debugging purposes
-# LOG_FORMAT = "[%(asctime)s.%(msecs)03d] %(filename)s:%(lineno)s %(levelname)s: %(message)s"
-# logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-# 
+
+#
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
     TEST_DEVELOP = bool(os.environ.get('TEST_DEVELOP', False))
@@ -23,23 +22,17 @@ else:
     try:
         from nana.config import Development as Config
     except ModuleNotFoundError:
-        logging.basicConfig(level=logging.INFO)
-        log = logging.getLogger()
-        log.error("You need to place config.py in nana dir!")
+        logging.error("You need to place config.py in nana dir!")
         quit(1)
     TEST_DEVELOP = Config.TEST_MODE
 
 if TEST_DEVELOP:
-    logging.basicConfig(level=logging.WARNING)
-    log = logging.getLogger()
-    log.warning("Testing mode activated!")
-else:
-    logging.basicConfig(level=logging.INFO)
+    logging.warning("Testing mode activated!")
     log = logging.getLogger()
 
 # if version < 3.6, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
-    log.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
+    logging.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
     quit(1)
 
 USERBOT_VERSION = "1.1.1b"
@@ -54,6 +47,8 @@ BOT_SESSION = "nana/session/ManageBot"
 APP_SESSION = "nana/session/Nana"
 
 if ENV:
+    # Logger
+    logger = os.environ.get('LOGGER', False)
     # Version
     lang_code = os.environ.get('lang_code', "en")
     device_model = os.environ.get('device_model', "PC")
@@ -110,7 +105,8 @@ if ENV:
     REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
     TEST_MODE = bool(os.environ.get('TEST_MODE', False))
 else:
-
+    # logger
+    logger = Config.LOGGER
     # Version
     lang_code = Config.lang_code
     device_model = Config.device_model
@@ -138,16 +134,6 @@ else:
     NANA_WORKER = Config.NANA_WORKER
     ASSISTANT_WORKER = Config.ASSISTANT_WORKER
 
-    try:
-        TEST_DEVELOP = Config.TEST_DEVELOP
-        if TEST_DEVELOP:
-            BOT_SESSION = Config.BOT_SESSION
-            APP_SESSION = Config.APP_SESSION
-        else:
-            raise AttributeError
-    except AttributeError:
-        pass
-
     # APIs
     thumbnail_API = Config.thumbnail_API
     screenshotlayer_API = Config.screenshotlayer_API
@@ -166,6 +152,20 @@ else:
     AdminSettings = Config.AdminSettings
     REMINDER_UPDATE = Config.REMINDER_UPDATE
     TEST_MODE = Config.TEST_MODE
+
+LOG_FORMAT = "[%(asctime)s.%(msecs)03d] %(filename)s:%(lineno)s %(levelname)s: %(message)s"
+logging.basicConfig(level=logging.ERROR,
+                    format=LOG_FORMAT,
+                    datefmt='%m-%d %H:%M',
+                    filename='nana/logs/error.log',
+                    filemode='a')
+console = logging.StreamHandler()
+console.setLevel(logging.ERROR)
+formatter = logging.Formatter(LOG_FORMAT)
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
+
+log = logging.getLogger()
 
 if USERBOT_SESSION and ASSISTANT_SESSION:
     BOT_SESSION = ASSISTANT_SESSION

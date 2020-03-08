@@ -108,3 +108,7 @@ nana/session/*
 !nana/session/README.md
 client_secrets.json
 unknown_errors.txt
+
+# logs file
+nana/logs/*
+!nana/logs/README.md

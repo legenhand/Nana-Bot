@@ -13,7 +13,7 @@ pillow
 gtts
 gitpython
 pafy
-youtube_dl
+youtube_dl==2020.2.16
 googletrans
 currencyconverter
 bitlyshortener
@@ -22,3 +22,4 @@ speedtest-cli
 git+https://github.com/legenhand/mega.py.git
 httplib2==0.15.0
 coffeehouse==2.1.0
+pycurl

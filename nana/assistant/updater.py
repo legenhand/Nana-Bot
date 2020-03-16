@@ -119,6 +119,8 @@ async def update_button(client, query):
             remote.push(refspec="HEAD:refs/heads/master")
         else:
             await query.reply("no heroku application found, but a key given? 😕 ")
+        await message.edit("Build Unsuccess, Check heroku build log for more detail")
+        return
     try:
         upstream.pull(brname)
         await query.message.edit_text('Successfully Updated!\nBot is restarting...')

@@ -162,7 +162,8 @@ async def updater(client, message):
                 remote.push(refspec="HEAD:refs/heads/master")
             else:
                 await message.reply("no heroku application found, but a key given? 😕 ")
-
+            await message.edit("Build Unsuccess, Check heroku build log for more detail")
+            return
         try:
             upstream.pull(brname)
             await message.edit('Successfully Updated!\nBot is restarting...')

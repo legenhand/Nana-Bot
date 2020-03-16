@@ -10,7 +10,7 @@ from pyrogram import Filters
 from nana import app, Command, logger
 from .downloads import download_file_from_tg, name_file, humanbytes
 
-__MODULE__ = "transfer.sh"
+__MODULE__ = "transfer sh"
 __HELP__ = """
 Mirror any telegram file to transfer.sh
 
@@ -25,8 +25,10 @@ Reply to telegram file for mirroring to transfer.sh
 async def tfsh(client, message):
     if not message.reply_to_message:
         await message.edit("`Reply to any file telegram message!`")
+        return
     await message.edit("`Processing...`")
     name = await name_file(client, message)
+
     await download_file_from_tg(client, message)
     await message.edit(await send_to_transfersh("nana/downloads/{}".format(name), message, name))
 
@@ -57,7 +59,7 @@ async def send_to_transfersh(file, message, name):
         return "Unsupported file format!"
     c.close()
     file.close()
-    return "`Success!\nwill be saved till {}`\n<a href=\"{}\">Link Download</a>".format(final_date, download_link)
+    return "`Success!\nwill be saved till {}`\n{}".format(final_date, download_link)
 
 
 def get_size(file):

@@ -53,7 +53,9 @@ RUN apk add --no-cache --update \
     sqlite-dev \
     sudo \
     zlib-dev \
-    ffmpeg
+    ffmpeg \
+    libcurl4-openssl-dev \
+    libssl-dev \
 
 RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base

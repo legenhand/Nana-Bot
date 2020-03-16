@@ -54,8 +54,8 @@ RUN apk add --no-cache --update \
     sudo \
     zlib-dev \
     ffmpeg \
-    libcurl4-openssl-dev \
-    libssl-dev \
+    curl-dev \
+    libressl-dev
 
 RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base

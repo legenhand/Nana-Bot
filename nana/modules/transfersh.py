@@ -7,7 +7,7 @@ import os
 import pycurl
 from pyrogram import Filters
 
-from nana import app, Command, logger
+from nana import app, Command, log
 from .downloads import download_file_from_tg, name_file, humanbytes
 
 __MODULE__ = "transfer sh"
@@ -28,9 +28,16 @@ async def tfsh(client, message):
         return
     await message.edit("`Processing...`")
     name = await name_file(client, message)
-
     await download_file_from_tg(client, message)
-    await message.edit(await send_to_transfersh("nana/downloads/{}".format(name), message, name))
+    if len(name) > 10:
+        name_file_upload = name[-10:]
+    else:
+        name_file_upload = name
+    name_file_upload.encode('ascii', 'ignore')
+    os.rename(r'nana/downloads/{}'.format(name), r'nana/downloads/{}'.format(name_file_upload))
+    print(name_file_upload)
+    await message.edit(
+        await send_to_transfersh("nana/downloads/{}".format(name_file_upload), message, name_file_upload))
 
 
 async def send_to_transfersh(file, message, name):
@@ -50,15 +57,15 @@ async def send_to_transfersh(file, message, name):
     c.setopt(c.URL, url)
 
     c.setopt(c.UPLOAD, 1)
-    file = open(file)
-    c.setopt(c.READDATA, file)
-    try:
-        download_link = c.perform_rs()
-    except pycurl.error as e:
-        logger.ERROR(e)
-        return "Unsupported file format!"
-    c.close()
-    file.close()
+    with open(file, 'rb') as f:
+        c.setopt(c.READDATA, f)
+        try:
+            download_link = c.perform_rs()
+        except pycurl.error as e:
+            log.error(e)
+            return "Unsupported file format!"
+        c.close()
+    f.close()
     return "`Success!\nwill be saved till {}`\n{}".format(final_date, download_link)
 
 

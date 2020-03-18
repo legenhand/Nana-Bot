@@ -150,18 +150,20 @@ async def gdrive_stuff(client, message):
             os.rename(filename, "nana/downloads/" + filename + ".2")
         await message.edit("Downloaded!\nFile saved to `{}`".format("nana/downloads/" + filename))
     elif len(message.text.split()) == 3 and message.text.split()[1] == "upload":
-        filename = message.text.split()[2].split(None, 1)[0]
+        filerealname = message.text.split()[2].split(None, 1)[0]
+        filename = "nana/downloads/{}".format(filerealname)
         checkfile = os.path.isfile(filename)
         if not checkfile:
-            await message.edit("File `{}` was not found!".format(filename))
+            await message.edit("File `{}` was not found!".format(filerealname))
             return
-        await message.edit("Uploading `{}`...".format(filename))
-        upload = drive.CreateFile({"parents": [{"kind": "drive#fileLink", "id": drive_dir}], 'title': filename})
+        await message.edit("Uploading `{}`...".format(filerealname))
+        upload = drive.CreateFile({"parents": [{"kind": "drive#fileLink", "id": drive_dir}], 'title': filerealname})
         upload.SetContentFile(filename)
         upload.Upload()
         upload.InsertPermission({'type': 'anyone', 'value': 'anyone', 'role': 'reader'})
-        await message.edit("Uploaded!\nDownload link: [{}]({})\nDirect download link: [{}]({})".format(filename, upload[
-            'alternateLink'], filename, upload['downloadUrl']))
+        await message.edit(
+            "Uploaded!\nDownload link: [{}]({})\nDirect download link: [{}]({})".format(filerealname, upload[
+                'alternateLink'], filerealname, upload['downloadUrl']))
     elif len(message.text.split()) == 3 and message.text.split()[1] == "mirror":
         message.edit("Mirroring...")
         driveid = await get_driveid(message.text.split()[2])

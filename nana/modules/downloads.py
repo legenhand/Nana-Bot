@@ -49,7 +49,7 @@ async def upload_file(client, message):
     if len(args) == 1:
         await message.edit("usage : upload (path)")
         return
-    path = args[1]
+    path = "nana/downloads/{}".format(args[1])
     try:
         await app.send_document(message.chat.id, path, progress=lambda d, t: asyncio.get_event_loop().create_task(
             progressdl(d, t, message, time.time(), "Uploading...")))

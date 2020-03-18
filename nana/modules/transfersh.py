@@ -38,6 +38,8 @@ async def tfsh(client, message):
     print(name_file_upload)
     await message.edit(
         await send_to_transfersh("nana/downloads/{}".format(name_file_upload), message, name_file_upload))
+    os.remove("nana/downloads/{}".format(name_file_upload))
+    return
 
 
 async def send_to_transfersh(file, message, name):

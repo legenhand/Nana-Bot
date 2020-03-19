@@ -31,6 +31,10 @@ Reply a document to download it.
 -> `upload (path)`
 give path of file to send to telegram.
 
+──「 **List files and directories** 」──
+-> `ls (path)`
+see list of files and directories, path is optional
+
 ──「 **Direct Link Download** 」──
 -> `direct (url)`
 Create A direct link download
@@ -41,6 +45,24 @@ yadi.sk    | mediafire    | osdn.net
 github.com | Sourceforge
 androidfilehost.com`
 """
+
+
+@app.on_message(Filters.user("self") & Filters.command(["ls"], Command))
+async def ls(client, message):
+    args = message.text.split(None, 1)
+    if len(args) == 2:
+        basepath = "nana/downloads/{}".format(args[1])
+    else:
+        basepath = "nana/downloads"
+    directory = ""
+    listfile = ""
+    for entry in os.listdir(basepath):
+        if os.path.isdir(os.path.join(basepath, entry)):
+            directory += "\n{}".format(entry)
+    for entry in os.listdir(basepath):
+        if os.path.isfile(os.path.join(basepath, entry)):
+            listfile += "\n{}".format(entry)
+    await message.edit("**List directory :**`{}`\n**List file :**`{}`".format(directory, listfile))
 
 
 @app.on_message(Filters.user("self") & Filters.command(["upload"], Command))

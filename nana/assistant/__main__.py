@@ -102,6 +102,7 @@ async def settings(client, message):
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
     if HEROKU_API:
+        list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
     button = InlineKeyboardMarkup(list_button)
     await message.reply(text, reply_markup=button)
@@ -261,3 +262,71 @@ async def reboot_heroku(client, query):
     except errors.exceptions.bad_request_400.MessageNotModified:
         pass
     await client.answer_callback_query(query.id, "No heroku application found, but a key given?")
+
+
+@setbot.on_callback_query(dynamic_data_filter("heroku_vars"))
+async def vars_heroku(client, query):
+    text = "**⚙️ Welcome to Heroku Vars Settings!**\n" \
+           "`Setting your heroku config vars here!`\n"
+    list_button = [[InlineKeyboardButton("⬅ back️", callback_data="back"),
+                    InlineKeyboardButton("➕  add️", callback_data="add_vars")]]
+    if HEROKU_API:
+        heroku = heroku3.from_key(HEROKU_API)
+        heroku_applications = heroku.apps()
+        if len(heroku_applications) >= 1:
+            app = heroku_applications[0]
+            config = app.config()
+            # if config["api_id"]:
+            #     list_button.insert(0, [InlineKeyboardButton("api_id✅", callback_data="api_id")])
+            # else:
+            #     list_button.insert(0, [InlineKeyboardButton("api_id🚫", callback_data="api_id")])
+            configdict = config.to_dict()
+            i = 0
+            for x, y in configdict.items():
+                list_button.insert(0, [InlineKeyboardButton("{}✅".format(x), callback_data="tes")])
+    button = InlineKeyboardMarkup(list_button)
+    await query.message.edit_text(text, reply_markup=button)
+
+
+namevars = ""
+valuevars = ""
+
+
+@setbot.on_callback_query(dynamic_data_filter("add_vars"))
+async def add_vars(client, query):
+    global namevars
+    await query.message.edit_text("Send Name Variable :")
+    setbot.on_message()
+
+
+@setbot.on_callback_query(dynamic_data_filter("back"))
+async def back(client, message):
+    try:
+        me = await app.get_me()
+    except ConnectionError:
+        me = None
+    text = "**⚙️ Welcome to Nana Settings!**\n"
+    if not me:
+        text += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
+    else:
+        text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
+    text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
+    text += "-> Database: `{}`\n".format(DB_AVAIABLE)
+    text += "-> Python: `{}`\n".format(python_version())
+    text += "\nJust setup what you need here"
+    if not me:
+        togglestart = "Start Bot"
+    else:
+        togglestart = "Stop Bot"
+    list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
+                    InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
+    if HEROKU_API:
+        list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
+        list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+    button = InlineKeyboardMarkup(list_button)
+    await message.message.edit_text(text, reply_markup=button)
+
+
+async def name_vars(client, message):
+    global namevars
+    namevars = message.text

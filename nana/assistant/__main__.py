@@ -1,11 +1,16 @@
 import os
+import time
 from platform import python_version
 
 import heroku3
-from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors
+from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors, ReplyKeyboardMarkup
 
-from nana import app, setbot, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, HEROKU_API
+from nana import app, setbot, AdminSettings, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, HEROKU_API, \
+    Owner
 from nana.__main__ import reload_userbot, restart_all
+
+if DB_AVAIABLE:
+    from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["start"]))
@@ -29,7 +34,9 @@ Convert a text to various style, can be used anywhere!
             return
         if helparg == "createown":
             await message.reply(
-                "Want to create your own Userbot and Assistant?\n[Go here](https://github.com/AyraHikari/Nana-TgBot/wiki), read guide carefully.\nIf you want to ask, join our community @AyraSupport")
+                "Want to create your own Userbot and Assistant?\n[Go here]("
+                "https://github.com/AyraHikari/Nana-TgBot/wiki), read guide carefully.\nIf you want to ask, "
+                "join our community @AyraSupport")
             return
     try:
         me = await app.get_me()
@@ -100,7 +107,8 @@ async def settings(client, message):
     else:
         togglestart = "Stop Bot"
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
-                    InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
+                    InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
+                   [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
@@ -330,3 +338,137 @@ async def back(client, message):
 async def name_vars(client, message):
     global namevars
     namevars = message.text
+
+
+#
+# Settings For Sticker
+#
+
+TEMP_KEYBOARD = []
+USER_SET = {}
+TODEL = {}
+
+
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setsticker"]))
+async def get_stickers(client, message):
+    if not DB_AVAIABLE:
+        await message.edit("Your database is not avaiable!")
+        return
+    global TEMP_KEYBOARD, USER_SET
+    await app.send_message("@Stickers", "/stats")
+    # app.read_history("@Stickers")
+    time.sleep(0.2)
+    keyboard = await app.get_history("@Stickers", limit=1)
+    keyboard = keyboard[0].reply_markup.keyboard
+    for x in keyboard:
+        for y in x:
+            TEMP_KEYBOARD.append(y)
+    await app.send_message("@Stickers", "/cancel")
+    msg = await message.reply("Select your stickers for set as kang sticker",
+                              reply_markup=ReplyKeyboardMarkup(keyboard))
+    USER_SET[message.from_user.id] = msg.message_id
+    USER_SET["type"] = 1
+
+
+# app.read_history("@Stickers")
+
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setanimation"]))
+async def get_stickers(client, message):
+    if not DB_AVAIABLE:
+        await message.edit("Your database is not avaiable!")
+        return
+    global TEMP_KEYBOARD, USER_SET
+    await app.send_message("@Stickers", "/stats")
+    # app.read_history("@Stickers")
+    time.sleep(0.2)
+    keyboard = await app.get_history("@Stickers", limit=1)
+    keyboard = keyboard[0].reply_markup.keyboard
+    for x in keyboard:
+        for y in x:
+            TEMP_KEYBOARD.append(y)
+    await app.send_message("@Stickers", "/cancel")
+    msg = await message.reply("Select your stickers for set as kang animation sticker",
+                              reply_markup=ReplyKeyboardMarkup(keyboard))
+    USER_SET[message.from_user.id] = msg.message_id
+    USER_SET["type"] = 2
+
+
+# app.read_history("@Stickers")
+
+def get_stickerlist(message):
+    if not DB_AVAIABLE:
+        return
+    global TEMP_KEYBOARD, USER_SET
+    if message.from_user and message.from_user.id in list(USER_SET):
+        return True
+    else:
+        TEMP_KEYBOARD = []
+        USER_SET = {}
+
+
+@setbot.on_message(get_stickerlist)
+async def set_stickers(client, message):
+    if not DB_AVAIABLE:
+        await message.edit("Your database is not avaiable!")
+        return
+    global TEMP_KEYBOARD, USER_SET
+    if message.text in TEMP_KEYBOARD:
+        await client.delete_messages(message.chat.id, USER_SET[message.from_user.id])
+        if USER_SET["type"] == 1:
+            set_sticker_set(message.from_user.id, message.text)
+        elif USER_SET["type"] == 2:
+            set_stanim_set(message.from_user.id, message.text)
+        status = "Ok, sticker was set to `{}`".format(message.text)
+        TEMP_KEYBOARD = []
+        USER_SET = {}
+    else:
+        status = "Invalid pack selected."
+        TEMP_KEYBOARD = []
+        USER_SET = {}
+    try:
+        me = await app.get_me()
+    except ConnectionError:
+        me = None
+    text = "**⚙️ Welcome to Nana Settings!**\n"
+    if not me:
+        text += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
+    else:
+        text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
+    text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
+    text += "-> Database: `{}`\n".format(DB_AVAIABLE)
+    text += "-> Python: `{}`\n".format(python_version())
+    text += "\n{}".format(status)
+    if not me:
+        togglestart = "Start Bot"
+    else:
+        togglestart = "Stop Bot"
+    list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
+                    InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
+                   [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]
+    if HEROKU_API:
+        list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
+        list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+    button = InlineKeyboardMarkup(list_button)
+    await message.reply(text, reply_markup=button)
+
+
+@setbot.on_callback_query(dynamic_data_filter("setsticker"))
+async def settings_sticker(client, message):
+    if not DB_AVAIABLE:
+        await message.edit("Your database is not avaiable!")
+        return
+    global TEMP_KEYBOARD, USER_SET
+    await app.send_message("@Stickers", "/stats")
+    # app.read_history("@Stickers")
+    time.sleep(0.2)
+    keyboard = await app.get_history("@Stickers", limit=1)
+    keyboard = keyboard[0].reply_markup.keyboard
+    for x in keyboard:
+        for y in x:
+            TEMP_KEYBOARD.append(y)
+    await app.send_message("@Stickers", "/cancel")
+    await message.message.delete()
+    msg = await setbot.send_message(Owner, "Select your stickers for set as kang animation sticker",
+                                    reply_markup=ReplyKeyboardMarkup(keyboard))
+    USER_SET[message.from_user.id] = msg.message_id
+    USER_SET["type"] = 2

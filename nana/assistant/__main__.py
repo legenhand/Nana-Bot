@@ -461,8 +461,12 @@ async def settings_sticker(client, message):
     await app.send_message("@Stickers", "/stats")
     # app.read_history("@Stickers")
     time.sleep(0.2)
-    keyboard = await app.get_history("@Stickers", limit=1)
-    keyboard = keyboard[0].reply_markup.keyboard
+    try:
+        keyboard = await app.get_history("@Stickers", limit=1)
+        keyboard = keyboard[0].reply_markup.keyboard
+    except:
+        message.message.edit_text("You dont have any sticker pack!\nAdd stickers pack in @Stickers ")
+        return
     for x in keyboard:
         for y in x:
             TEMP_KEYBOARD.append(y)

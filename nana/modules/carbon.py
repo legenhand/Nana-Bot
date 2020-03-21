@@ -23,7 +23,7 @@ async def carbon_api(client, message):
         """ A Wrapper for carbon.now.sh """
         await message.edit("Processing...")
         CARBON = 'https://carbon.now.sh/?l={lang}&code={code}'
-        CARBONLANG = "en"
+        CARBONLANG = "auto"
         textx = message.reply_to_message
         pcode = message.text
         if pcode[8:]:
@@ -34,7 +34,7 @@ async def carbon_api(client, message):
         url = CARBON.format(code=code, lang=CARBONLANG)
         chrome_options = Options()
         chrome_options.add_argument("--headless")
-        chrome_options.binary_location = os.environ.get("CHROME_BIN", "/usr/bin/google-chrome")
+        chrome_options.binary_location = os.environ.get("CHROME_BIN", "/usr/bin/chromium-browser")
         chrome_options.add_argument("--window-size=1920x1080")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")

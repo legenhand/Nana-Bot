@@ -55,7 +55,9 @@ RUN apk add --no-cache --update \
     zlib-dev \
     ffmpeg \
     curl-dev \
-    libressl-dev
+    libressl-dev \
+    chromium-chromedriver \
+    chromium
 
 RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base

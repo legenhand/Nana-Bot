@@ -1,3 +1,4 @@
+selenium
 kbbi
 pySmartDL
 requests

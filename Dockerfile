@@ -59,6 +59,9 @@ RUN apk add --no-cache --update \
     chromium-chromedriver \
     chromium
 
+ENV CHROME_BIN=/usr/bin/chromium-browser \
+    CHROME_PATH=/usr/lib/chromium/
+
 RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base
 RUN apk --no-cache add postgresql-dev

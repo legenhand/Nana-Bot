@@ -1,5 +1,8 @@
+import os
+import shutil
 from datetime import datetime
 
+import requests
 from covid import Covid
 from pyrogram import Filters
 
@@ -16,9 +19,19 @@ Check info of cases corona virus disease 2019
 
 @app.on_message(Filters.user("self") & Filters.command(["corona"], Command))
 async def corona(client, message):
+    await message.edit("`Processing...`")
     args = message.text.split(None, 1)
     if len(args) == 1:
-        await message.edit("`usage : corona (country)`")
+        url = 'https://covid-19-api-2-i54peomv2.now.sh/api/og'
+        response = requests.get(url, stream=True)
+        with open('og', 'wb') as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+        del response
+        os.rename("og", "og.png")
+        await client.send_photo(message.chat.id, "og.png", caption="<a href=\"https://covid-19-api-2-i54peomv2.now.sh"
+                                                                   "/api/og\">Source</a>")
+        await message.delete()
+        os.remove("og.png")
         return
     covid = Covid()
     data = covid.get_data()
@@ -44,3 +57,4 @@ def get_country_data(country, world):
         if country_data["country"] == country:
             return country_data
     return
+

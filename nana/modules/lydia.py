@@ -1,6 +1,5 @@
 import time
 
-from coffeehouse import InvalidApiKeyError
 from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
 from pyrogram import Filters
@@ -33,7 +32,7 @@ async def lydia_private(client, message):
             lydia = LydiaAI(coffeehouse_api)
             # Create a new chat session (Like a conversation)
             session = lydia.create_session()
-        except InvalidApiKeyError as e:
+        except:
             await message.edit("Wrong lydia API key!")
             return
         lydia_status = True

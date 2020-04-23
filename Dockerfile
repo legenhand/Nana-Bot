@@ -7,7 +7,8 @@ FROM alpine:edge
 RUN sed -e 's;^#http\(.*\)/v3.9/community;http\1/v3.9/community;g' -i /etc/apk/repositories
 
 # Installing Python
-RUN apk add --no-cache --update \
+#
+RUN apk add --no-cache=true --update \
     bash \
     build-base \
     bzip2-dev \
@@ -41,7 +42,6 @@ RUN apk add --no-cache --update \
     py-sqlalchemy \
     py-tz \
     py3-aiohttp \
-    python-dev \
     openssl \
     pv \
     jq \
@@ -55,9 +55,7 @@ RUN apk add --no-cache --update \
     zlib-dev \
     ffmpeg \
     curl-dev \
-    libressl-dev \
-    chromium-chromedriver \
-    chromium
+    libressl-dev
 
 ENV CHROME_BIN=/usr/bin/chromium-browser \
     CHROME_PATH=/usr/lib/chromium/

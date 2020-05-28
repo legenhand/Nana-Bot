@@ -23,8 +23,6 @@ RUN apk add --no-cache=true --update \
     jpeg-dev \
     libffi-dev \
     libpq \
-    nodejs \
-    npm \
     libwebp-dev \
     libxml2 \
     libxml2-dev \
@@ -66,9 +64,6 @@ RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base
 RUN apk --no-cache add postgresql-dev
 RUN python3 -m pip install psycopg2
-
-# carbon-now-cli installation
-RUN npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 
 # Copy Python Requirements to /root/nana
 RUN git clone https://github.com/pokurt/Nana-Bot.git /root/nana

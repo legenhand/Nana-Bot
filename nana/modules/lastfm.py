@@ -18,6 +18,7 @@ LASTFM_API_KEY = lastfm_api
 @app.on_message(Filters.user("self") & Filters.command(["lastfm"], Command))
 async def lastfm(client, message):
     username = lastfm_username
+    user = username
     if not username:
         await message.edit("You haven't set your username yet!")
         return

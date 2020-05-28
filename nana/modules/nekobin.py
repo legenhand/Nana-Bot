@@ -14,6 +14,9 @@ Create a Nekobin paste using replied to message.
 
 @app.on_message(Filters.user("self") & Filters.command(["neko"], Command))
 async def paste(client, message):
+    if len(message.text.split()) == 1:
+        await message.edit("Usage: `neko <text> or neko <reply to a text>`")
+        return
     await message.edit_text("`Pasting...`")
     if message.reply_to_message:
         splitter = message.text.split(None, 1)

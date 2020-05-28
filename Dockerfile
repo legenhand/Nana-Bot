@@ -82,7 +82,6 @@ ENV PATH="/home/userbot/bin:$PATH"
 #
 # Install requirements
 #
-RUN sudo pip3 install -r requirements.txt
-RUN pip3 install -U git+https://github.com/pyrogram/pyrogram@asyncio-dev
+RUN sudo pip3 install -U -r requirements.txt
 
 CMD ["python3","-m","nana"]

@@ -1,72 +1,75 @@
-"""
-Carbon Scraper Plugin for Userbot. //text in creative way.
-usage: .carbon //as a reply to any text message
-
-Thanks to @AvinashReddy3108 for a Base Plugin.
-Go and Do a star on his repo: https://github.com/AvinashReddy3108/PaperplaneExtended/
-
-"""
 import os
-from time import sleep
-from urllib.parse import quote_plus
+from asyncio import sleep
 
-from pyrogram import Filters
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from pyrogram import Filters, Message
 
-from nana import Command, app
+from nana import app, Command
+
+CARBON_LANG = "py"
 
 
 @app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
-async def carbon_api(client, message):
-    if not message.text[0].isalpha() and message.text[0] not in ("/", "#", "@", "!"):
-        """ A Wrapper for carbon.now.sh """
-        await message.edit("Processing...")
-        CARBON = 'https://carbon.now.sh/?l={lang}&code={code}'
-        CARBONLANG = "auto"
-        textx = message.reply_to_message
-        pcode = message.text
-        if pcode[8:]:
-            pcode = str(pcode[8:])
-        elif textx:
-            pcode = str(textx.text)  # Importing message to module
-        code = quote_plus(pcode)  # Converting to urlencoded
-        url = CARBON.format(code=code, lang=CARBONLANG)
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.binary_location = os.environ.get("CHROME_BIN", "/usr/bin/chromium-browser")
-        chrome_options.add_argument("--window-size=1920x1080")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument('--disable-gpu')
-        prefs = {'download.default_directory': './'}
-        chrome_options.add_experimental_option('prefs', prefs)
-        await message.edit("Processing 30%")
+async def carbon_test(client, message):
+    """
+    Receives text and makes a carbon image using the text
+    Eg: .carbon your code here (multi line supported)
+    """
+    carbon_text = message.text[8:]
 
-        driver = webdriver.Chrome(executable_path="chromedriver", options=chrome_options)
-        driver.get(url)
-        download_path = './'
-        driver.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
-        params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': download_path}}
-        command_result = driver.execute("send_command", params)
+    # Write the code to a file cause carbon-now-cli wants a file.
+    file = "nana/downloads/carbon.{}".format(get_carbon_lang())
+    f = open(file, "w+")
+    f.write(carbon_text)
+    f.close()
 
-        driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
-        sleep(5)  # this might take a bit.
-        driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
-        sleep(5)
-        await message.edit("Processing 50%")
-        driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
-        sleep(5)  # Waiting for downloading
+    await message.edit_text("Carbonizing code...")
+    # Do the thing
+    os.system("carbon-now -h -t nana/downloads/carbon {}".format(file))
+    # await message.edit_text("Carbonizing completed...")
+    # Send the thing
+    await client.send_photo(message.chat.id, 'nana/downloads/carbon.png')
+    await message.delete()
 
-        await message.edit("Processing 90%")
-        file = './carbon.png'
-        await message.edit("Done!!")
-        await client.send_document(
-            message.chat.id,
-            file,
-            caption="Made using [Carbon](https://carbon.now.sh/about/), a project by [Dawn Labs](https://dawnlabs.io/)",
-        )
 
-        os.remove('./carbon.png')
-        # Removing carbon.png after uploading
-        await message.delete()  # Deleting msg
+@app.on_message(Filters.user("self") & Filters.command(["carbonlang"], Command))
+async def update_carbon_lang(client, message):
+    """
+    Set language to use Carbon with.
+    Eg: .carbonlang js -> will set the file type to js
+    """
+    global CARBON_LANG
+    cmd = message.command
+
+    type_text = ""
+    if len(cmd) > 1:
+        type_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        type_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("Give me something to carbonize")
+        await sleep(2)
+        await message.delete()
+        return
+
+    CARBON_LANG = type_text
+    await message.edit_text("Carbon type set to {}".format(type_text))
+    await sleep(2)
+    await message.delete()
+
+
+
+def get_carbon_lang():
+    """
+    Gets carbon language. Default py
+    """
+    return CARBON_LANG
+
+
+# add_command_help(
+#     'carbon', [
+#         ['.carbon', 'Generates a carbon image of your code.\nUsage: `.carbon` reply to message or command args'],
+#         ['.carbonlang', 'Change carbon language for syntax highlighting.\nUsage: `.carbonlang` reply to message or '
+#                         'command args\n'
+#                         'Please use file extensions for best results.'],
+#     ]
+# )

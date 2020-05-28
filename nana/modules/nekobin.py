@@ -15,7 +15,18 @@ Create a Nekobin paste using replied to message.
 @app.on_message(Filters.user("self") & Filters.command(["neko"], Command))
 async def paste(client, message):
     await message.edit_text("`Pasting...`")
-    text = message.reply_to_message.text
+    if message.reply_to_message:
+        splitter = message.text.split(None, 1)
+        if len(splitter) == 1:
+            text = message.reply_to_message.text or message.reply_to_message.caption
+        else:
+            text = splitter[1]
+    else:
+        splitter = message.text.split(None, 1)
+        if len(splitter) == 1:
+            return
+        else:
+            text = splitter[1]
     try:
         key = requests.post('https://nekobin.com/api/documents', json={"content": text}).json().get('result').get('key')
     except requests.exceptions.RequestException as e:

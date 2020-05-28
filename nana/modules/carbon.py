@@ -7,7 +7,6 @@ from nana import app, Command
 
 CARBON_LANG = "py"
 
-
 @app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
 async def carbon_test(client, message):
     """
@@ -33,10 +32,6 @@ async def carbon_test(client, message):
 
 @app.on_message(Filters.user("self") & Filters.command(["carbonlang"], Command))
 async def update_carbon_lang(client, message):
-    """
-    Set language to use Carbon with.
-    Eg: .carbonlang js -> will set the file type to js
-    """
     global CARBON_LANG
     cmd = message.command
 
@@ -59,9 +54,6 @@ async def update_carbon_lang(client, message):
 
 
 def get_carbon_lang():
-    """
-    Gets carbon language. Default py
-    """
     return CARBON_LANG
 
 

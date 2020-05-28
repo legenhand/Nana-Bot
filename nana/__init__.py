@@ -2,7 +2,6 @@ import logging
 import os
 import sys
 
-from pydrive.auth import GoogleAuth
 from pyrogram import Client, errors
 from sqlalchemy import create_engine, exc
 from sqlalchemy.ext.declarative import declarative_base
@@ -90,7 +89,6 @@ if ENV:
     thumbnail_API = os.environ.get('thumbnail_API', None)
     screenshotlayer_API = os.environ.get('screenshotlayer_API', None)
     bitly_token = [os.environ.get('bitly_token', None)]
-    gdrive_credentials = os.environ.get('gdrive_credentials', None)
     lydia_api = os.environ.get('lydia_api', None)
     lastfm_api = os.environ.get('lastfm_api', None)
     lastfm_username = os.environ.get('lastfm_username', None)
@@ -140,9 +138,10 @@ else:
     thumbnail_API = Config.thumbnail_API
     screenshotlayer_API = Config.screenshotlayer_API
     bitly_token = [Config.bitly_token]
-    gdrive_credentials = None
     lydia_api = Config.lydia_api
     HEROKU_API = Config.HEROKU_API
+    lastfm_api = Config.lastfm_api
+    lastfm_username = Config.lastfm_username
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD
     USERBOT_NOLOAD = Config.USERBOT_NOLOAD
@@ -175,8 +174,6 @@ log.error("THIS IS PEAK OF LOG ERROR, IGNORE THIS MESSAGE LOG")
 if USERBOT_SESSION and ASSISTANT_SESSION:
     BOT_SESSION = ASSISTANT_SESSION
     APP_SESSION = USERBOT_SESSION
-
-gauth = GoogleAuth()
 
 DB_AVAIABLE = False
 BOTINLINE_AVAIABLE = False

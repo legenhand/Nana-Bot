@@ -3,12 +3,14 @@ import random
 import shutil
 import textwrap
 from difflib import get_close_matches
+import asyncio
 
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
 
 from nana import app, Command
+from nana.helpers.PyroHelpers import ReplyCheck
 
 __MODULE__ = "Memes"
 __HELP__ = """
@@ -61,56 +63,92 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
-
 @app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
-    await message.delete()
-    if message.reply_to_message:
-        splitter = message.text.split(None, 1)
-        if len(splitter) == 1:
-            text = message.reply_to_message.text or message.reply_to_message.caption
-        else:
-            text = splitter[1]
-    else:
-        splitter = message.text.split(None, 1)
-        if len(splitter) == 1:
+    try:
+        cmd = message.command
+
+        mock_text = ""
+        if len(cmd) > 1:
+            mock_text = " ".join(cmd[1:])
+        elif message.reply_to_message and len(cmd) == 1:
+            mock_text = message.reply_to_message.text
+        elif not message.reply_to_message and len(cmd) == 1:
+            await message.edit("gIvE sOMEtHInG tO MoCk")
+            await asyncio.sleep(2)
+            await message.delete()
             return
-        else:
-            text = splitter[1]
 
-    getimg = requests.get(MOCK_SPONGE, stream=True)
-    with open("nana/cache/sponge.png", 'wb') as f:
-        getimg.raw.decode_content = True
-        shutil.copyfileobj(getimg.raw, f)
+        mock_results = await bot.get_inline_bot_results(
+            "stickerizerbot",
+            "#7" + mock_text)
 
-    pesan = await mocking_text(text)
-    para = textwrap.wrap(pesan, width=50)
-    im = Image.open("nana/cache/sponge.png")
-    max_w, max_h = im.size
-    draw = ImageDraw.Draw(im)
-    font = ImageFont.truetype('nana/helpers/IMPACT.TTF', 35)
-    newline = 0
-    for line in para:
-        newline += 1.25
-    current_h, pad = (max_h / 1.25) + newline, 6
-    x, y = 3, 3
-    for line in para:
-        w, h = draw.textsize(line, font=font)
-        # stroke
-        draw.text(((max_w - w) / 2 - x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
-        draw.text(((max_w - w) / 2 + x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
-        draw.text(((max_w - w) / 2 - x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
-        draw.text(((max_w - w) / 2 + x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
-        # Teks
-        draw.text(((max_w - w) / 2, current_h), line, font=font, fill=(255, 255, 255, 255))
-        current_h += h + pad
-    im.save('nana/cache/sponge.png')
-    if message.reply_to_message:
-        await client.send_sticker(message.chat.id, "nana/cache/sponge.png",
-                                  reply_to_message_id=message.reply_to_message.message_id)
-    else:
-        await client.send_sticker(message.chat.id, "nana/cache/sponge.png")
-    os.remove("nana/cache/sponge.png")
+        try:
+            await bot.send_inline_bot_result(
+                chat_id=message.chat.id,
+                query_id=mock_results.query_id,
+                result_id=mock_results.results[0].id,
+                reply_to_message_id=ReplyCheck(message),
+                hide_via=True)
+        except TimeoutError:
+            await message.edit("@StickerizerBot didn't respond in time.")
+            await asyncio.sleep(2)
+        await message.delete()
+    except Except:
+        await message.edit("`Failed to reach Stickerizerbot`")
+        await asyncio.sleep(2)
+        await message.delete()
+
+        
+# @app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
+# async def mock_spongebob(client, message):
+#     await message.delete()
+#     if message.reply_to_message:
+#         splitter = message.text.split(None, 1)
+#         if len(splitter) == 1:
+#             text = message.reply_to_message.text or message.reply_to_message.caption
+#         else:
+#             text = splitter[1]
+#     else:
+#         splitter = message.text.split(None, 1)
+#         if len(splitter) == 1:
+#             return
+#         else:
+#             text = splitter[1]
+
+#     getimg = requests.get(MOCK_SPONGE, stream=True)
+#     with open("nana/cache/sponge.png", 'wb') as f:
+#         getimg.raw.decode_content = True
+#         shutil.copyfileobj(getimg.raw, f)
+
+#     pesan = await mocking_text(text)
+#     para = textwrap.wrap(pesan, width=50)
+#     im = Image.open("nana/cache/sponge.png")
+#     max_w, max_h = im.size
+#     draw = ImageDraw.Draw(im)
+#     font = ImageFont.truetype('nana/helpers/IMPACT.TTF', 35)
+#     newline = 0
+#     for line in para:
+#         newline += 1.25
+#     current_h, pad = (max_h / 1.25) + newline, 6
+#     x, y = 3, 3
+#     for line in para:
+#         w, h = draw.textsize(line, font=font)
+#         # stroke
+#         draw.text(((max_w - w) / 2 - x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
+#         draw.text(((max_w - w) / 2 + x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
+#         draw.text(((max_w - w) / 2 - x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
+#         draw.text(((max_w - w) / 2 + x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
+#         # Teks
+#         draw.text(((max_w - w) / 2, current_h), line, font=font, fill=(255, 255, 255, 255))
+#         current_h += h + pad
+#     im.save('nana/cache/sponge.png')
+#     if message.reply_to_message:
+#         await client.send_sticker(message.chat.id, "nana/cache/sponge.png",
+#                                   reply_to_message_id=message.reply_to_message.message_id)
+#     else:
+#         await client.send_sticker(message.chat.id, "nana/cache/sponge.png")
+#     os.remove("nana/cache/sponge.png")
 
 
 @app.on_message(Filters.user("self") & Filters.command(["😂"], Command))

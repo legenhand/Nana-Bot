@@ -9,6 +9,7 @@ from platform import python_version
 import requests
 from pyrogram import Filters
 from speedtest import Speedtest
+import pyrogram as p
 
 from nana import Command, logging, app, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION
 from nana.helpers.deldog import deldog
@@ -216,6 +217,7 @@ async def alive(client, message):
     text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
     text += "-> Database: `{}`\n".format(DB_AVAIABLE)
     text += "-> Python: `{}`\n".format(python_version())
+    text += "-> Pyrogram: `{}`\n".format(p.__version__)
     if not me:
         text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
     else:

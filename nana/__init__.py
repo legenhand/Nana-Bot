@@ -39,7 +39,7 @@ USERBOT_VERSION = "1.1.1b"
 ASSISTANT_VERSION = "1.1.1b"
 
 OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
-REPOSITORY = "https://github.com/legenhand/Nana-Bot.git"
+REPOSITORY = "https://github.com/pokurt/Nana-Bot.git"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI",
                    "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 

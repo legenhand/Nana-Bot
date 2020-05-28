@@ -4,6 +4,7 @@ kbbi
 pySmartDL
 requests
 git+https://github.com/pytube3/pytube3.git
+git+https://github.com/pyrogram/pyrogram@asyncio-dev
 TgCrypto
 pydrive
 sqlalchemy

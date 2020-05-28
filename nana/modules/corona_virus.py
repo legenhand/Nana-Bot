@@ -6,7 +6,6 @@ import asyncio
 
 from prettytable import PrettyTable
 import requests
-from covid import Covid
 from pyrogram import Filters
 
 from nana import Command, app

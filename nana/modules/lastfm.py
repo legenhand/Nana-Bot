@@ -6,17 +6,16 @@ from pyrogram import Filters
 from nana import app, Command, lastfm_username, lastfm_api
 
 __HELP__ = """
+──「 **LastFM** 」──
+-> `lastfm`
 Share what you're what listening to with the help of this module!
-*Available commands:*
 
 """
-
 __MODULE__ = "Last.FM"
 
-username = lastfm_username
-
 @app.on_message(Filters.user("self") & Filters.command(["lastfm"], Command))
-async def weather(client, message):
+async def lastfm(client, message):
+    username = lastfm_username
     if not username:
         await message.edit("You haven't set your username yet!")
         return

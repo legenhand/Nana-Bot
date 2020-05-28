@@ -29,9 +29,5 @@ async def weather(client, message):
     if "Sorry, we processed more than 1M requests today and we ran out of our datasource capacity." in a.text:
         await message.edit("Sorry, location not found!")
         return
-
-    we = f"<code>{escape(a.text)}</code>"
-    weather ="`{}`\n".format(we)
-
-
+    weather = f"<code>{escape(a.text)}</code>"
     await message.edit(weather, parse_mode='html')

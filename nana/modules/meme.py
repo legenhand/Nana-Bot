@@ -29,6 +29,10 @@ Reply someone message to Stickerize with Waifu text.
 -> `onichan`
 Reply someone message to Stickerize with Onichan text.
 
+──「 **Stretch Text** 」──
+-> `stretch`
+streeetcchhh
+
 ──「 **Copy Pasta** 」──
 -> `cp`
 Reply someone message, then add randoms emoji to his/her text.

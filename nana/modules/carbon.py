@@ -10,12 +10,7 @@ CARBON_LANG = "py"
 
 @app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
 async def carbon_api(client, message):
-    """
-    Receives text and makes a carbon image using the text
-    Eg: .carbon your code here (multi line supported)
-    """
     carbon_text = message.text[8:]
-
     # Write the code to a file cause carbon-now-cli wants a file.
     file = "nana/downloads/carbon.{}".format(get_carbon_lang())
     f = open(file, "w+")
@@ -33,13 +28,8 @@ async def carbon_api(client, message):
 
 @app.on_message(Filters.user("self") & Filters.command(["carbonlang"], Command))
 async def carbon_api(client, message):
-    """
-    Set language to use Carbon with.
-    Eg: .carbonlang js -> will set the file type to js
-    """
     global CARBON_LANG
     cmd = message.command
-
     type_text = ""
     if len(cmd) > 1:
         type_text = " ".join(cmd[1:])
@@ -50,18 +40,7 @@ async def carbon_api(client, message):
         await sleep(2)
         await message.delete()
         return
-
     CARBON_LANG = type_text
     await message.edit_text("Carbon type set to {}".format(type_text))
     await sleep(2)
     await message.delete()
-
-# add_command_help(
-#     'carbon', [
-#         ['.carbon', 'Generates a carbon image of your code.\nUsage: `.carbon` reply to message or command args'],
-#         ['.carbonlang', 'Change carbon language for syntax highlighting.\nUsage: `.carbonlang` reply to message or '
-#                         'command args\n'
-#                         'Please use file extensions for best results.'],
-#         ['!carbonlang', 'Show current carbon language. Default is python.\nUsage: `!carbonlang`'],
-#     ]
-# )

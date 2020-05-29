@@ -54,7 +54,9 @@ RUN apk add --no-cache=true --update \
     curl-dev \
     libressl-dev \
     nodejs \
-    npm
+    npm \
+    udev \
+    ttf-freefont \
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path
 ENV CHROME_BIN=/usr/bin/chromium-browser
@@ -70,7 +72,6 @@ RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 RUN apk --no-cache add postgresql-dev
 
 # Chromium Install
-RUN apk add --nocache udev ttf-freefont chromium git
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 ENV CHROMIUM_PATH /usr/bin/chromium-browser
 

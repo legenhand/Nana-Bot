@@ -56,7 +56,7 @@ RUN apk add --no-cache=true --update \
     nodejs \
     npm \
     udev \
-    ttf-freefont \
+    ttf-freefont
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path
 ENV CHROME_BIN=/usr/bin/chromium-browser

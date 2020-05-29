@@ -9,7 +9,7 @@ CARBON_LANG = "py"
 
 
 @app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
-async def carbon_api(client, message):
+async def carbon(client, message):
     carbon_text = message.text[8:]
     # Write the code to a file cause carbon-now-cli wants a file.
     file = "nana/downloads/carbon.{}".format(get_carbon_lang())
@@ -27,7 +27,7 @@ async def carbon_api(client, message):
 
 
 @app.on_message(Filters.user("self") & Filters.command(["carbonlang"], Command))
-async def carbon_api(client, message):
+async def carbonlang(client, message):
     global CARBON_LANG
     cmd = message.command
     type_text = ""

@@ -47,7 +47,8 @@ Convert your text to Vaporwave/Aestethic style.
 """
 
 # MOCK_SPONGE = "https://telegra.ph/file/c2a5d11e28168a269e136.jpg"
-animus = [20, 32, 33, 40, 41, 42, 58]
+waifus = [20, 32, 33, 40, 41, 42, 58]
+onichans = [37, 38, 48, 55]
 
 async def mocking_text(text):
     teks = list(text)
@@ -65,9 +66,15 @@ async def mocking_text(text):
 async def waifu(client, message):
     await message.delete() 
     waifu = message.reply_to_message.text
-    x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(animus)}{waifu}")
+    x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(waifus)}{waifu}")
     await message.reply_inline_bot_result(x.query_id, x.results[0].id)
 
+@app.on_message(Filters.user("self") & Filters.command(["onichan"], Command))
+async def onichan(client, message):
+    await message.delete() 
+    oni = message.reply_to_message.text
+    x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(onichans)}{oni}")
+    await message.reply_inline_bot_result(x.query_id, x.results[0].id)
 
 @app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):

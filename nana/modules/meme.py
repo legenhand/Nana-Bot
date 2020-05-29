@@ -8,6 +8,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
 
+from nana.helpers.PyroHelpers import ReplyCheck
 from nana import app, Command
 
 __MODULE__ = "Memes"
@@ -27,8 +28,8 @@ Reply someone message to Stickerize with Waifu text.
 -> `onichan`
 Reply someone message to Stickerize with Onichan text.
 
-──「 **Emoji insertion** 」──
--> `😂`
+──「 **Copy Pasta** 」──
+-> `cp`
 Reply someone message, then add randoms emoji to his/her text.
 
 ──「 **Mocking text** 」──
@@ -71,25 +72,40 @@ async def mocking_text(text):
     return pesan
 
 @app.on_message(Filters.user("self") & Filters.command(["waifu"], Command))
-async def waifu(client, message): 
+async def waifu(client, message):
+    await message.delete()
     waifu = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(waifus)}{waifu}")
-    await message.reply_inline_bot_result(x.query_id, x.results[0].id)
+    await client.send_inline_bot_result(chat_id=message.chat.id,
+                                        query_id=x.query_id,
+                                        result_id = x.results[0].id,
+                                        reply_to_message_id=ReplyCheck(message),
+                                        hide_via=True)
 
 @app.on_message(Filters.user("self") & Filters.command(["onichan"], Command))
-async def onichan(client, message): 
+async def onichan(client, message):
+    await message.delete()
     oni = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(onichans)}{oni}")
-    await message.reply_inline_bot_result(x.query_id, x.results[0].id)
+    await client.send_inline_bot_result(chat_id=message.chat.id,
+                                        query_id=x.query_id,
+                                        result_id = x.results[0].id,
+                                        reply_to_message_id=ReplyCheck(message),
+                                        hide_via=True)
 
 @app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
+    await message.delete()
     mock = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#7{mock}")
-    await message.reply_inline_bot_result(x.query_id, x.results[0].id)
+    await client.send_inline_bot_result(chat_id=message.chat.id,
+                                        query_id=x.query_id,
+                                        result_id = x.results[0].id,
+                                        reply_to_message_id=ReplyCheck(message),
+                                        hide_via=True)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["😂"], Command))
+@app.on_message(Filters.user("self") & Filters.command(["cp"], Command))
 async def haha_emojis(client, message):
     if message.reply_to_message.message_id:
         teks = message.reply_to_message.text

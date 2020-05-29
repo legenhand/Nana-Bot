@@ -112,24 +112,25 @@ async def mock_spongebob(client, message):
 @app.on_message(Filters.user("self") & Filters.command(["stretch"], Command))
 async def stretch(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("`Giiiiiiiv sooooooomeeeeeee teeeeeeext!`")
+        await message.edit("Usage: `neko (text) or neko (reply to a text)`")
         return
+    await message.edit_text("`Stretching...`")
     if message.reply_to_message:
         splitter = message.text.split(None, 1)
         if len(splitter) == 1:
-            stretch_text = message.reply_to_message.text or message.reply_to_message.caption
+            text = message.reply_to_message.text or message.reply_to_message.caption
         else:
-            stretch_text = splitter[1]
+            text = splitter[1]
     else:
         splitter = message.text.split(None, 1)
         if len(splitter) == 1:
             return
         else:
-            stretch_text = splitter[1]
+            text = splitter[1]
 
     count = random.randint(3, 10)
     reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
-                        stretch_text)
+                        text)
     await message.edit(reply_text)
 
 @app.on_message(Filters.user("self") & Filters.command(["cp"], Command))

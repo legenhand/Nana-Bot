@@ -3,6 +3,7 @@ import random
 import shutil
 import textwrap
 from difflib import get_close_matches
+import re
 
 import requests
 from PIL import Image, ImageDraw, ImageFont
@@ -104,6 +105,28 @@ async def mock_spongebob(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
+@app.on_message(Filters.user("self") & Filters.command(["stretch"], Command))
+async def stretch(client, message):
+    if len(message.text.split()) == 1:
+        await message.edit("`Giiiiiiiv sooooooomeeeeeee teeeeeeext!`")
+        return
+    if message.reply_to_message:
+        splitter = message.text.split(None, 1)
+        if len(splitter) == 1:
+            stretch_text = message.reply_to_message.text or message.reply_to_message.caption
+        else:
+            stretch_text = splitter[1]
+    else:
+        splitter = message.text.split(None, 1)
+        if len(splitter) == 1:
+            return
+        else:
+            stretch_text = splitter[1]
+
+    count = random.randint(3, 10)
+    reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
+                        stretch_text)
+    await message.edit(reply_text)
 
 @app.on_message(Filters.user("self") & Filters.command(["cp"], Command))
 async def haha_emojis(client, message):

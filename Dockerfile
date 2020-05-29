@@ -52,7 +52,9 @@ RUN apk add --no-cache=true --update \
     zlib-dev \
     ffmpeg \
     curl-dev \
-    libressl-dev
+    libressl-dev \
+    nodejs \
+    npm
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path
 ENV CHROME_BIN=/usr/bin/chromium-browser \
@@ -61,6 +63,9 @@ ENV CHROME_BIN=/usr/bin/chromium-browser \
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base
+
+# carbon.now.sh installation
+RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 
 # Added Database Postgres
 RUN apk --no-cache add postgresql-dev

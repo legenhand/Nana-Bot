@@ -72,21 +72,21 @@ async def mocking_text(text):
 
 @app.on_message(Filters.user("self") & Filters.command(["waifu"], Command))
 async def waifu(client, message):
-    await message.delete() 
+    # await message.delete() 
     waifu = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(waifus)}{waifu}")
     await message.reply_inline_bot_result(x.query_id, x.results[0].id)
 
 @app.on_message(Filters.user("self") & Filters.command(["onichan"], Command))
 async def onichan(client, message):
-    await message.delete() 
+    # await message.delete() 
     oni = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(onichans)}{oni}")
     await message.reply_inline_bot_result(x.query_id, x.results[0].id)
 
 @app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
-    await message.delete() 
+    # await message.delete() 
     mock = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#7{mock}")
     await message.reply_inline_bot_result(x.query_id, x.results[0].id)

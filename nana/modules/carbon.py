@@ -7,6 +7,8 @@ from nana import Command, app
 
 CARBON_LANG = "py"
 
+def get_carbon_lang():
+    return CARBON_LANG
 
 @app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
 async def carbon(client, message):
@@ -24,7 +26,6 @@ async def carbon(client, message):
     # Send the thing
     await client.send_photo(message.chat.id, 'nana/downloads/carbon.png')
     await message.delete()
-
 
 @app.on_message(Filters.user("self") & Filters.command(["carbonlang"], Command))
 async def carbonlang(client, message):

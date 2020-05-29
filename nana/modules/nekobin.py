@@ -37,8 +37,7 @@ async def paste(client, message):
         await asyncio.sleep(2)
         await message.delete()
     else:
-        url = f'https://nekobin.com/{key}'
-        reply_text = f'Parsed to **Nekobin** : {url}'
+        reply_text = f'`Successfully pasted on` [Nekobin](https://nekobin.com/{key})'
         await message.edit_text(
             reply_text,
             disable_web_page_preview=True,

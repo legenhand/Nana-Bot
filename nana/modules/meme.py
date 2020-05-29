@@ -71,72 +71,22 @@ async def mocking_text(text):
     return pesan
 
 @app.on_message(Filters.user("self") & Filters.command(["waifu"], Command))
-async def waifu(client, message):
-    # await message.delete() 
+async def waifu(client, message): 
     waifu = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(waifus)}{waifu}")
     await message.reply_inline_bot_result(x.query_id, x.results[0].id)
 
 @app.on_message(Filters.user("self") & Filters.command(["onichan"], Command))
-async def onichan(client, message):
-    # await message.delete() 
+async def onichan(client, message): 
     oni = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(onichans)}{oni}")
     await message.reply_inline_bot_result(x.query_id, x.results[0].id)
 
 @app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
-    # await message.delete() 
     mock = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#7{mock}")
     await message.reply_inline_bot_result(x.query_id, x.results[0].id)
-#     await message.delete()
-#     if message.reply_to_message:
-#         splitter = message.text.split(None, 1)
-#         if len(splitter) == 1:
-#             text = message.reply_to_message.text or message.reply_to_message.caption
-#         else:
-#             text = splitter[1]
-#     else:
-#         splitter = message.text.split(None, 1)
-#         if len(splitter) == 1:
-#             return
-#         else:
-#             text = splitter[1]
-
-#     getimg = requests.get(MOCK_SPONGE, stream=True)
-#     with open("nana/cache/sponge.png", 'wb') as f:
-#         getimg.raw.decode_content = True
-#         shutil.copyfileobj(getimg.raw, f)
-
-#     pesan = await mocking_text(text)
-#     para = textwrap.wrap(pesan, width=50)
-#     im = Image.open("nana/cache/sponge.png")
-#     max_w, max_h = im.size
-#     draw = ImageDraw.Draw(im)
-#     font = ImageFont.truetype('nana/helpers/IMPACT.TTF', 35)
-#     newline = 0
-#     for line in para:
-#         newline += 1.25
-#     current_h, pad = (max_h / 1.25) + newline, 6
-#     x, y = 3, 3
-#     for line in para:
-#         w, h = draw.textsize(line, font=font)
-#         # stroke
-#         draw.text(((max_w - w) / 2 - x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
-#         draw.text(((max_w - w) / 2 + x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
-#         draw.text(((max_w - w) / 2 - x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
-#         draw.text(((max_w - w) / 2 + x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
-#         # Teks
-#         draw.text(((max_w - w) / 2, current_h), line, font=font, fill=(255, 255, 255, 255))
-#         current_h += h + pad
-#     im.save('nana/cache/sponge.png')
-#     if message.reply_to_message:
-#         await client.send_sticker(message.chat.id, "nana/cache/sponge.png",
-#                                   reply_to_message_id=message.reply_to_message.message_id)
-#     else:
-#         await client.send_sticker(message.chat.id, "nana/cache/sponge.png")
-#     os.remove("nana/cache/sponge.png")
 
 
 @app.on_message(Filters.user("self") & Filters.command(["😂"], Command))

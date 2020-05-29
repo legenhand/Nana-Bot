@@ -19,6 +19,14 @@ Please note this can cause spams on group!
 -> `mock (*text)`
 Reply someone message, and mock his/her text! This will generate spongebob mocking sticker, for text use `mocktxt` instead.
 
+──「 **Waifu Stickerizer** 」──
+-> `waifu`
+Reply someone message to Stickerize with Waifu text.
+
+──「 **Onichan Stickerizer** 」──
+-> `onichan`
+Reply someone message to Stickerize with Onichan text.
+
 ──「 **Emoji insertion** 」──
 -> `😂`
 Reply someone message, then add randoms emoji to his/her text.

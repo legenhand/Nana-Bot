@@ -1,11 +1,11 @@
-# We're using Alpine stable
-FROM alpine:edge
+# We're using Debian Slim Buster image
+FROM python:3.8-slim-buster
 
-# We have to uncomment Community repo for some packages
-RUN sed -e 's;^#http\(.*\)/v3.9/community;http\1/v3.9/community;g' -i /etc/apk/repositories
+ENV PIP_NO_CACHE_DIR 1
 
 # Installing Required Packages
-RUN apk add --no-cache=true --update \
+RUN apt update && apt upgrade -y && \
+    apt install --no-install-recommends -y \
     bash \
     build-base \
     bzip2-dev \
@@ -55,21 +55,20 @@ RUN apk add --no-cache=true --update \
     libressl-dev \
     nodejs \
     npm \
-    udev \
-    ttf-freefont
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path
 ENV CHROME_BIN=/usr/bin/chromium-browser
 
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
-RUN apk --no-cache add build-base
+RUN apt install --no-install-recommends -y build-essential
 
 # carbon.now.sh installation
 RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 
 # Added Database Postgres
-RUN apk --no-cache add postgresql-dev
+RUN apt install --no-install-recommends -y postgresql-dev
 
 # Chromium Install
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true

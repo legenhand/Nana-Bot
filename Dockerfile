@@ -57,8 +57,7 @@ RUN apk add --no-cache=true --update \
     npm
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path
-ENV CHROME_BIN=/usr/bin/chromium-browser \
-    CHROME_PATH=/usr/lib/chromium/
+ENV CHROME_BIN=/usr/bin/chromium-browser
 
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
@@ -69,6 +68,11 @@ RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 
 # Added Database Postgres
 RUN apk --no-cache add postgresql-dev
+
+# Chromium Install
+RUN apk add --nocache udev ttf-freefont chromium git
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV CHROMIUM_PATH /usr/bin/chromium-browser
 
 # Copy Python Requirements to /root/nana
 RUN git clone https://github.com/pokurt/Nana-Bot.git /root/nana

@@ -1,13 +1,10 @@
 # We're using Alpine stable
 FROM alpine:edge
 
-#
 # We have to uncomment Community repo for some packages
-#
 RUN sed -e 's;^#http\(.*\)/v3.9/community;http\1/v3.9/community;g' -i /etc/apk/repositories
 
-# Installing Python
-#
+# Installing Required Packages
 RUN apk add --no-cache=true --update \
     bash \
     build-base \
@@ -57,13 +54,16 @@ RUN apk add --no-cache=true --update \
     curl-dev \
     libressl-dev
 
+# Setting up ENV Path for Chrom-bin and Chrome-Path
 ENV CHROME_BIN=/usr/bin/chromium-browser \
     CHROME_PATH=/usr/lib/chromium/
 
+# Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
 RUN apk --no-cache add build-base
+
+# Added Database Postgres
 RUN apk --no-cache add postgresql-dev
-RUN python3 -m pip install psycopg2
 
 # Copy Python Requirements to /root/nana
 RUN git clone https://github.com/pokurt/Nana-Bot.git /root/nana
@@ -77,11 +77,8 @@ COPY ./README.md ./client_secrets.json* /root/nana/
 
 ENV PATH="/home/userbot/bin:$PATH"
 
-# Added Database Postgres
-
-#
 # Install requirements
-#
 RUN sudo pip3 install -U -r requirements.txt
 
+# Starting Worker
 CMD ["python3","-m","nana"]

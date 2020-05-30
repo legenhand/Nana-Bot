@@ -18,7 +18,7 @@ async def paste(client, message):
         await message.edit("Usage: `neko (text) or neko (reply to a text)`")
         return
     await message.edit_text("`Pasting...`")
-    if message.reply_to_message:
+    if message.reply_to_message.message_id:
         splitter = message.text.split(None, 1)
         if len(splitter) == 1:
             text = message.reply_to_message.text or message.reply_to_message.caption

@@ -1,36 +1,43 @@
+from requests import post
+import shutil
 import os
-from asyncio import sleep
-
-from pyrogram import Filters
-
 from nana import Command, app
+from pyrogram import Filters
+from time import sleep
 
-CARBON_LANG = "py"
-
-def get_carbon_lang():
-    return CARBON_LANG
+CARBON_LANG = "Python"
 
 @app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
-async def carbon(client, message):
-    carbon_text = message.text[8:]
-    # Write the code to a file cause carbon-now-cli wants a file.
-    file = "nana/downloads/carbon.{}".format(get_carbon_lang())
-    f = open(file, "w+")
-    f.write(carbon_text)
-    f.close()
-
-    await message.edit_text("Carbonizing code...")
-    # Do the thing
-    os.system("carbon-now -h -t nana/downloads/carbon {}".format(file))
-    await message.edit_text("Carbonizing completed...")
-    # Send the thing
-    await client.send_photo(message.chat.id, 'nana/downloads/carbon.png')
-    await message.delete()
+async def carbon_api(client, message):
+    json = {
+        "backgroundColor": "rgba(144, 19, 254, 100)",
+        "theme": "dracula"
+    }
+    if message.reply_to_message:
+        r = message.reply_to_message
+        json["code"] = r.text
+    else:
+        await message.edit("Usage: `carbon` (reply to a code or text)")
+    json["language"] = CARBON_LANG
+    apiUrl = "http://carbonnowsh.herokuapp.com"
+    r = post(apiUrl,json=json,stream=True)
+    filename = 'carbon.jpg'
+    if r.status_code == 200:
+        r.raw.decode_content = True
+        with open(filename,'wb') as f:
+            shutil.copyfileobj(r.raw, f)
+        await client.send_photo(message.chat.id, filename)
+        await message.delete()
+    else:
+        await message.edit('Image Couldn\'t be retreived')
+        await message.delete()
+    os.remove(filename)
 
 @app.on_message(Filters.user("self") & Filters.command(["carbonlang"], Command))
-async def carbonlang(client, message):
+async def carbon_lang(client, message):
     global CARBON_LANG
     cmd = message.command
+
     type_text = ""
     if len(cmd) > 1:
         type_text = " ".join(cmd[1:])
@@ -41,7 +48,7 @@ async def carbonlang(client, message):
         await sleep(2)
         await message.delete()
         return
-    CARBON_LANG = type_text
-    await message.edit_text("Carbon type set to {}".format(type_text))
-    await sleep(2)
-    await message.delete()
+
+def get_carbon_lang():
+    # Gets carbon language. Default py
+    return CARBON_LANG

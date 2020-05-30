@@ -8,6 +8,8 @@ RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
 # Installing Required Packages
 RUN apt update && apt upgrade -y && \
     apt install --no-install-recommends -y \
+    debian-keyring \
+    debian-archive-keyring \
     bash \
     bzip2 \
     curl \

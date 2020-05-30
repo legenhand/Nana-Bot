@@ -17,7 +17,6 @@ RUN apt update && apt upgrade -y && \
     sudo \
     util-linux \
     chromium \
-    jpeg-dev \
     libffi-dev \
     libjpeg-dev \
     libjpeg62-turbo-dev \
@@ -26,13 +25,12 @@ RUN apt update && apt upgrade -y && \
     musl-dev \
     musl \
     neofetch \
-    openssl-dev \
     php-pgsql \
     postgresql \
     postgresql-client \
-    postgresql-dev \
-    py-lxml \
-    py-pillow \
+    postgresql-server-dev-10 \
+    libxml2-dev \
+    libxslt1-dev \
     python3-pip \
     python3-requests \
     python3-sqlalchemy \
@@ -44,13 +42,14 @@ RUN apt update && apt upgrade -y && \
     wget \
     python3 \
     python3-dev \
-    readline-dev \
+    libreadline-dev \
+    libyaml-dev \
     sqlite3 \
     libsqlite3-dev \
     sudo \
     zlib1g \
     ffmpeg \
-    libressl-dev \
+    libssl-dev \
     nodejs \
     npm \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
@@ -66,7 +65,7 @@ RUN apt install --no-install-recommends -y build-essential
 RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 
 # Added Database Postgres
-RUN apt install --no-install-recommends -y postgresql-dev
+RUN apt install --no-install-recommends -y postgresql-server-dev-10
 
 # Chromium Install
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true

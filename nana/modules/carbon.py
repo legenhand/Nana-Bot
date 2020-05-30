@@ -12,7 +12,8 @@ CARBON_LANG = "Auto"
 async def carbon_api(client, message):
     json = {
         "backgroundColor": "rgba(0, 255, 230, 100)",
-        "theme": "VSCode"
+        "theme": "VSCode",
+        "exportSize": "4x"
     }
     if message.reply_to_message:
         r = message.reply_to_message

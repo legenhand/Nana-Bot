@@ -3,12 +3,13 @@ FROM python:3.8-slim-buster
 
 ENV PIP_NO_CACHE_DIR 1
 
+RUN sudo sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
+
 # Installing Required Packages
 RUN apt update && apt upgrade -y && \
     apt install --no-install-recommends -y \
     bash \
-    build-base \
-    bzip2-dev \
+    bzip2 \
     curl \
     figlet \
     gcc \
@@ -16,15 +17,13 @@ RUN apt update && apt upgrade -y && \
     sudo \
     util-linux \
     chromium \
-    chromium-chromedriver \
     jpeg-dev \
     libffi-dev \
-    libpq \
+    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libwebp-dev \
-    libxml2 \
-    libxml2-dev \
-    libxslt-dev \
-    linux-headers \
+    linux-headers-amd64 \
+    musl-dev \
     musl \
     neofetch \
     openssl-dev \
@@ -34,11 +33,11 @@ RUN apt update && apt upgrade -y && \
     postgresql-dev \
     py-lxml \
     py-pillow \
-    py-pip \
-    py-requests \
-    py-sqlalchemy \
-    py-tz \
-    py3-aiohttp \
+    python3-pip \
+    python3-requests \
+    python3-sqlalchemy \
+    python3-tz \
+    python3-aiohttp \
     openssl \
     pv \
     jq \
@@ -46,12 +45,11 @@ RUN apt update && apt upgrade -y && \
     python3 \
     python3-dev \
     readline-dev \
-    sqlite \
-    sqlite-dev \
+    sqlite3 \
+    libsqlite3-dev \
     sudo \
-    zlib-dev \
+    zlib1g \
     ffmpeg \
-    curl-dev \
     libressl-dev \
     nodejs \
     npm \

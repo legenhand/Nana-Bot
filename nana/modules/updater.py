@@ -2,7 +2,7 @@ import os
 import shutil
 import sys
 
-from git import Repo, exc
+import git
 from pyrogram import Filters
 
 from nana import app, Command, OFFICIAL_BRANCH, REPOSITORY, HEROKU_API
@@ -53,6 +53,9 @@ async def initial_git(repo):
 
 @app.on_message(Filters.user("self") & Filters.command(["update"], Command))
 async def updater(client, message):
+    repo = git.Repo(os.getcwd())
+    master = repo.head.reference
+    author = master.commit.author.name
     await message.edit("__Checking update...__")
     initial = False
     try:
@@ -130,7 +133,7 @@ async def updater(client, message):
 
     if len(message.text.split()) != 2:
         changelog_str = f'To update latest changelog, do\n-> `update now`\n\n**New UPDATE available for [{brname}]:\n' \
-                        f'\nCHANGELOG:**\n`{changelog}` '
+                        f'\nCHANGELOG:**\n`{changelog}`\n**Author:**{author} '
         if len(changelog_str) > 4096:
             await message.edit("`Changelog is too big, view the file to see it.`")
             file = open("nana/cache/output.txt", "w+")

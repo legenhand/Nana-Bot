@@ -1,5 +1,6 @@
 covid
 selenium
+psycopg2
 kbbi
 pySmartDL
 requests

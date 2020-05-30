@@ -63,6 +63,7 @@ ENV CHROME_BIN=/usr/bin/chromium-browser
 RUN pip3 install --upgrade pip setuptools
 
 # carbon.now.sh installation
+RUN sudo npm install -g puppeteer --unsafe-perm=true --allow-root
 RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 
 # # Added Database Postgres

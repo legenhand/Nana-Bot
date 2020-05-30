@@ -64,8 +64,8 @@ RUN apt install --no-install-recommends -y build-essential
 # carbon.now.sh installation
 RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
 
-# Added Database Postgres
-RUN apt install --no-install-recommends -y postgresql-server-dev-10
+# # Added Database Postgres
+# RUN apt install --no-install-recommends -y postgresql-server-dev-10
 
 # Chromium Install
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true

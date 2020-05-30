@@ -58,7 +58,6 @@ ENV CHROME_BIN=/usr/bin/chromium-browser
 
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
-RUN apt install --no-install-recommends -y build-essential
 
 # carbon.now.sh installation
 RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root

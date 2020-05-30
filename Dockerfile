@@ -54,8 +54,7 @@ RUN apt update && apt upgrade -y && \
     zlib1g \
     ffmpeg \
     libssl-dev \
-    nodejs \
-    npm \
+
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path
@@ -64,17 +63,6 @@ ENV CHROME_BIN=/usr/bin/chromium-browser \
 
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
-
-# carbon.now.sh installation
-RUN sudo npm install -g puppeteer --unsafe-perm=true --allow-root
-RUN sudo npm install -g carbon-now-cli --unsafe-perm=true --allow-root
-
-# # Added Database Postgres
-# RUN apt install --no-install-recommends -y postgresql-server-dev-10
-
-# Chromium Install
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-ENV CHROMIUM_PATH /usr/bin/chromium-browser
 
 # Copy Python Requirements to /root/nana
 RUN git clone https://github.com/pokurt/Nana-Bot.git /root/nana

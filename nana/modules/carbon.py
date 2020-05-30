@@ -22,7 +22,7 @@ async def carbon(client, message):
     await message.edit_text("Carbonizing code...")
     # Do the thing
     os.system("carbon-now -h -t nana/downloads/carbon {}".format(file))
-    # await message.edit_text("Carbonizing completed...")
+    await message.edit_text("Carbonizing completed...")
     # Send the thing
     await client.send_photo(message.chat.id, 'nana/downloads/carbon.png')
     await message.delete()

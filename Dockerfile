@@ -52,12 +52,14 @@ RUN apt update && apt upgrade -y && \
     zlib1g \
     ffmpeg \
     libssl-dev \
-    nodejs \
-    npm \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path
 ENV CHROME_BIN=/usr/bin/chromium-browser
+
+#npm upgrade
+RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+RUN sudo apt install -y nodejs
 
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools

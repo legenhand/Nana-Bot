@@ -28,6 +28,8 @@ RUN apt update && apt upgrade -y && \
     php-pgsql \
     postgresql \
     postgresql-client \
+    python3-psycopg2 \
+    libpq-dev \
     libxml2-dev \
     libxslt1-dev \
     python3-pip \

@@ -30,6 +30,7 @@ RUN apt update && apt upgrade -y && \
     postgresql-client \
     python3-psycopg2 \
     libpq-dev \
+    libcurl4-openssl-dev \
     libxml2-dev \
     libxslt1-dev \
     python3-pip \

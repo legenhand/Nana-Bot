@@ -3,7 +3,7 @@ FROM python:3.8-slim-buster
 
 ENV PIP_NO_CACHE_DIR 1
 
-RUN sudo sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
+RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
 
 # Installing Required Packages
 RUN apt update && apt upgrade -y && \

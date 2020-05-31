@@ -10,6 +10,7 @@ TgCrypto
 pydrive
 sqlalchemy
 bs4
+aiohttp
 pyDownload
 pillow
 gtts

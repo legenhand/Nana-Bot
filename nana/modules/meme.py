@@ -4,6 +4,7 @@ import shutil
 import textwrap
 from difflib import get_close_matches
 import re
+import asyncio
 
 import requests
 from PIL import Image, ImageDraw, ImageFont
@@ -111,26 +112,22 @@ async def mock_spongebob(client, message):
 
 @app.on_message(Filters.user("self") & Filters.command(["stretch"], Command))
 async def stretch(client, message):
-    if len(message.text.split()) == 1:
-        await message.edit("Usage: `neko (text) or neko (reply to a text)`")
+    cmd = message.command
+
+    stretch_text = ""
+    if len(cmd) > 1:
+        stretch_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        stretch_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Giiiiiiiv sooooooomeeeeeee teeeeeeext!`")
+        await asyncio.sleep(2)
+        await message.delete()
         return
-    await message.edit_text("`Stretching...`")
-    if message.reply_to_message:
-        splitter = message.text.split(None, 1)
-        if len(splitter) == 1:
-            text = message.reply_to_message.text or message.reply_to_message.caption
-        else:
-            text = splitter[1]
-    else:
-        splitter = message.text.split(None, 1)
-        if len(splitter) == 1:
-            return
-        else:
-            text = splitter[1]
 
     count = random.randint(3, 10)
     reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
-                        text)
+                        stretch_text)
     await message.edit(reply_text)
 
 @app.on_message(Filters.user("self") & Filters.command(["cp"], Command))

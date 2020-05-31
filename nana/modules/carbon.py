@@ -12,7 +12,7 @@ CARBON_LANG = "Auto"
 async def carbon_api(client, message):
     json = {
         "backgroundColor": "rgba(0, 255, 230, 100)",
-        "theme": "VSCode",
+        "theme": "Dracula",
         "exportSize": "4x"
     }
     if message.reply_to_message:
@@ -24,12 +24,12 @@ async def carbon_api(client, message):
     json["language"] = CARBON_LANG
     apiUrl = "http://carbonnowsh.herokuapp.com"
     r = post(apiUrl,json=json,stream=True)
-    filename = 'carbon.jpg'
+    filename = 'carbon.png'
     if r.status_code == 200:
         r.raw.decode_content = True
         with open(filename,'wb') as f:
             shutil.copyfileobj(r.raw, f)
-        await client.send_photo(message.chat.id, filename, reply_to_message_id=ReplyCheck(message))
+        await client.send_document(message.chat.id, filename, reply_to_message_id=ReplyCheck(message))
         await message.delete()
     else:
         await message.edit('Image Couldn\'t be retreived')

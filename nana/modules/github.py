@@ -4,7 +4,7 @@ from pyrogram import Filters, Message
 
 from nana import app, Command
 
-__MODULE__ = "Memes"
+__MODULE__ = "Github"
 __HELP__ = """
 This module can help you find information about a github user!
 

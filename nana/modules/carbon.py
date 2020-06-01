@@ -67,7 +67,6 @@ themes = ['3024-night', 'a11y-dark', 'blackboard', 'base16-dark', 'base16-light'
 @app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
 async def carbon(client, message):
     cmd = message.command
-
     text = ""
     if len(cmd) > 1:
         text = " ".join(cmd[1:])
@@ -94,7 +93,6 @@ async def carbon(client, message):
 async def carbonbg(client, message):
     global bg
     cmd = message.command
-
     type_text = ""
     if len(cmd) > 1:
         type_text = " ".join(cmd[1:])
@@ -104,7 +102,6 @@ async def carbonbg(client, message):
         await message.edit_text(get_carbon_bg())
         await sleep(5)
         await message.delete()
-
     bg = type_text
     await message.edit_text("Carbon background set to {}".format(type_text))
     await sleep(2)
@@ -121,9 +118,9 @@ async def carbontheme(client, message):
         type_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
         await message.edit_text(get_carbon_theme())
+        await sleep(5)
         await message.delete()
-
-    bg = type_text
+    theme = type_text
     await message.edit_text("Carbon theme set to {}".format(type_text))
     await sleep(2)
     await message.delete()

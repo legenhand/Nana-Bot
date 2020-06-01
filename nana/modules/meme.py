@@ -26,9 +26,9 @@ Reply someone message, and mock his/her text! This will generate spongebob mocki
 -> `waifu`
 Reply someone message to Stickerize with Waifu text.
 
-──「 **Onichan Stickerizer** 」──
--> `onichan`
-Reply someone message to Stickerize with Onichan text.
+──「 **Senpai Stickerizer** 」──
+-> `senpai`
+Reply someone message to Stickerize with senpai text.
 
 ──「 **Stretch Text** 」──
 -> `stretch`
@@ -63,7 +63,7 @@ Convert your text to Vaporwave/Aestethic style.
 
 # MOCK_SPONGE = "https://telegra.ph/file/c2a5d11e28168a269e136.jpg"
 waifus = [20, 32, 33, 40, 41, 42, 58]
-onichans = [37, 38, 48, 55]
+senpais = [37, 38, 48, 55]
 
 async def mocking_text(text):
     teks = list(text)
@@ -80,7 +80,18 @@ async def mocking_text(text):
 @app.on_message(Filters.user("self") & Filters.command(["waifu"], Command))
 async def waifu(client, message):
     await message.delete()
-    waifu = message.reply_to_message.text
+    cmd = message.command
+
+    waifu = ""
+    if len(cmd) > 1:
+        waifu = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        waifu = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`No text Given hence the waifu Ran Away.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(waifus)}{waifu}")
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
@@ -88,11 +99,43 @@ async def waifu(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
-@app.on_message(Filters.user("self") & Filters.command(["onichan"], Command))
-async def onichan(client, message):
+@app.on_message(Filters.user("self") & Filters.command(["f"], Command))
+async def pay_respecc(client, message):
+    cmd = message.command
+
+    paytext = ""
+    if len(cmd) > 1:
+        paytext = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        paytext = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Press F to Pay Respecc`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
+        paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 2, paytext * 2
+    )
+    await message.edit(pay)
+
+@app.on_message(Filters.user("self") & Filters.command(["senpai"], Command))
+async def senpai(client, message):
     await message.delete()
-    oni = message.reply_to_message.text
-    x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(onichans)}{oni}")
+    cmd = message.command
+
+    senpai = ""
+    if len(cmd) > 1:
+        senpai = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        senpai = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`No text Given hence the senpai Ran Away.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(senpais)}{senpai}")
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
                                         result_id = x.results[0].id,

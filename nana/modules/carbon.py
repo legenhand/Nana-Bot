@@ -55,7 +55,7 @@ Create Beautiful Snippets of your code!
 `zenburn`
 """
 
-theme = 'dracula'
+theme = "dracula"
 bg = "rgba(0, 255, 230, 100)"
 themes = ['3024-night', 'a11y-dark', 'blackboard', 'base16-dark', 'base16-light',
     'cobalt', 'dracula', 'duotone-dark', 'hopscotch', 'lucario', 'material',

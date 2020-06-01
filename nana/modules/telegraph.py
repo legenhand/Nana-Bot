@@ -5,6 +5,18 @@ from telegraph import upload_file
 from pyrogram import Filters
 from nana import Command, app
 
+__MODULE__ = "Telegra.ph"
+__HELP__ = """
+Paste Media Documents on Telegra.ph
+
+──「 **Telegra.ph** 」──
+-> `telegraph (reply to a media)`
+Reply to Media as args to upload it to telegraph.
+- Supported Media Types (.jpg, .jpeg, .png, .gif, .mp4)
+
+"""
+
+
 @app.on_message(Filters.user("self") & Filters.command(["telegraph"], Command))
 async def telegraph(client, message):
     replied = message.reply_to_message

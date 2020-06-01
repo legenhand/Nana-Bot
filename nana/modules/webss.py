@@ -55,7 +55,7 @@ async def ssweb(client, message):
 
 
 @app.on_message(Filters.user("self") & Filters.command(["ss"], Command))
-async def ssweb(client, message):
+async def ss_web(client, message):
 	if len(message.text.split()) == 1:
 		await message.edit("Usage: `print web.url`")
 		return

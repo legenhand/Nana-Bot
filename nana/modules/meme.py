@@ -3,11 +3,14 @@ import random
 import shutil
 import textwrap
 from difflib import get_close_matches
+import re
+import asyncio
 
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
 
+from nana.helpers.PyroHelpers import ReplyCheck
 from nana import app, Command
 
 __MODULE__ = "Memes"
@@ -19,8 +22,20 @@ Please note this can cause spams on group!
 -> `mock (*text)`
 Reply someone message, and mock his/her text! This will generate spongebob mocking sticker, for text use `mocktxt` instead.
 
-──「 **Emoji insertion** 」──
--> `😂`
+──「 **Waifu Stickerizer** 」──
+-> `waifu`
+Reply someone message to Stickerize with Waifu text.
+
+──「 **Senpai Stickerizer** 」──
+-> `senpai`
+Reply someone message to Stickerize with senpai text.
+
+──「 **Stretch Text** 」──
+-> `stretch`
+streeetcchhh
+
+──「 **Copy Pasta** 」──
+-> `cp`
 Reply someone message, then add randoms emoji to his/her text.
 
 ──「 **Mocking text** 」──
@@ -46,8 +61,9 @@ Convert your text to Vaporwave/Aestethic style.
 -> `3` (typing message)
 """
 
-MOCK_SPONGE = "https://telegra.ph/file/c2a5d11e28168a269e136.jpg"
-
+# MOCK_SPONGE = "https://telegra.ph/file/c2a5d11e28168a269e136.jpg"
+waifus = [20, 32, 33, 40, 41, 42, 58]
+senpais = [37, 38, 48, 55]
 
 async def mocking_text(text):
     teks = list(text)
@@ -61,59 +77,103 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
+@app.on_message(Filters.user("self") & Filters.command(["waifu"], Command))
+async def waifu(client, message):
+    await message.delete()
+    cmd = message.command
+
+    waifu = ""
+    if len(cmd) > 1:
+        waifu = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        waifu = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`No text Given hence the waifu Ran Away.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(waifus)}{waifu}")
+    await client.send_inline_bot_result(chat_id=message.chat.id,
+                                        query_id=x.query_id,
+                                        result_id = x.results[0].id,
+                                        reply_to_message_id=ReplyCheck(message),
+                                        hide_via=True)
+
+@app.on_message(Filters.user("self") & Filters.command(["f"], Command))
+async def pay_respecc(client, message):
+    cmd = message.command
+
+    paytext = ""
+    if len(cmd) > 1:
+        paytext = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        paytext = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Press F to Pay Respecc`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
+        paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
+        paytext * 2, paytext * 2
+    )
+    await message.edit(pay)
+
+@app.on_message(Filters.user("self") & Filters.command(["senpai"], Command))
+async def senpai(client, message):
+    await message.delete()
+    cmd = message.command
+
+    senpai = ""
+    if len(cmd) > 1:
+        senpai = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        senpai = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`No text Given hence the senpai Ran Away.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(senpais)}{senpai}")
+    await client.send_inline_bot_result(chat_id=message.chat.id,
+                                        query_id=x.query_id,
+                                        result_id = x.results[0].id,
+                                        reply_to_message_id=ReplyCheck(message),
+                                        hide_via=True)
 
 @app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
     await message.delete()
-    if message.reply_to_message:
-        splitter = message.text.split(None, 1)
-        if len(splitter) == 1:
-            text = message.reply_to_message.text or message.reply_to_message.caption
-        else:
-            text = splitter[1]
-    else:
-        splitter = message.text.split(None, 1)
-        if len(splitter) == 1:
-            return
-        else:
-            text = splitter[1]
+    mock = message.reply_to_message.text
+    x = await client.get_inline_bot_results("Stickerizerbot", f"#7{mock}")
+    await client.send_inline_bot_result(chat_id=message.chat.id,
+                                        query_id=x.query_id,
+                                        result_id = x.results[0].id,
+                                        reply_to_message_id=ReplyCheck(message),
+                                        hide_via=True)
 
-    getimg = requests.get(MOCK_SPONGE, stream=True)
-    with open("nana/cache/sponge.png", 'wb') as f:
-        getimg.raw.decode_content = True
-        shutil.copyfileobj(getimg.raw, f)
+@app.on_message(Filters.user("self") & Filters.command(["stretch"], Command))
+async def stretch(client, message):
+    cmd = message.command
 
-    pesan = await mocking_text(text)
-    para = textwrap.wrap(pesan, width=50)
-    im = Image.open("nana/cache/sponge.png")
-    max_w, max_h = im.size
-    draw = ImageDraw.Draw(im)
-    font = ImageFont.truetype('nana/helpers/IMPACT.TTF', 35)
-    newline = 0
-    for line in para:
-        newline += 1.25
-    current_h, pad = (max_h / 1.25) + newline, 6
-    x, y = 3, 3
-    for line in para:
-        w, h = draw.textsize(line, font=font)
-        # stroke
-        draw.text(((max_w - w) / 2 - x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
-        draw.text(((max_w - w) / 2 + x, current_h - y), line, font=font, fill=(0, 0, 0, 255))
-        draw.text(((max_w - w) / 2 - x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
-        draw.text(((max_w - w) / 2 + x, current_h + y), line, font=font, fill=(0, 0, 0, 255))
-        # Teks
-        draw.text(((max_w - w) / 2, current_h), line, font=font, fill=(255, 255, 255, 255))
-        current_h += h + pad
-    im.save('nana/cache/sponge.png')
-    if message.reply_to_message:
-        await client.send_sticker(message.chat.id, "nana/cache/sponge.png",
-                                  reply_to_message_id=message.reply_to_message.message_id)
-    else:
-        await client.send_sticker(message.chat.id, "nana/cache/sponge.png")
-    os.remove("nana/cache/sponge.png")
+    stretch_text = ""
+    if len(cmd) > 1:
+        stretch_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        stretch_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Giiiiiiiv sooooooomeeeeeee teeeeeeext!`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
 
+    count = random.randint(3, 10)
+    reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
+                        stretch_text)
+    await message.edit(reply_text)
 
-@app.on_message(Filters.user("self") & Filters.command(["😂"], Command))
+@app.on_message(Filters.user("self") & Filters.command(["cp"], Command))
 async def haha_emojis(client, message):
     if message.reply_to_message.message_id:
         teks = message.reply_to_message.text

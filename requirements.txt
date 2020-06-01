@@ -1,15 +1,18 @@
 covid
 selenium
+psycopg2
 kbbi
 pySmartDL
 requests
-https://github.com/AyraHikari/pyrogram/archive/asyncio-dev.zip
 git+https://github.com/pytube3/pytube3.git
+git+https://github.com/pyrogram/pyrogram@asyncio-dev
 TgCrypto
 pydrive
 sqlalchemy
-psycopg2
 bs4
+removebg
+telegraph
+aiohttp
 pyDownload
 pillow
 gtts
@@ -25,3 +28,4 @@ git+https://github.com/legenhand/mega.py.git
 httplib2==0.15.0
 coffeehouse
 pycurl
+PTable

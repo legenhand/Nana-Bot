@@ -1,18 +1,17 @@
 import math
 from datetime import datetime
 
-from nana import Owner, setbot
+from pyrogram import Filters
+
+from nana import Owner, setbot, app, Command
 
 __MODULE__ = "Purges"
 __HELP__ = """
 THIS FEATURE IS DISABLE DUE BUG ON DELETE ALL MESSAGE
-
 Purge many messages in less than one seconds, you need to became admin to do this.
 Except for purgeme feature
-
 Do with you own risk!
 Purges message will immediately purge that message without warning!
-
 **「 DO NOT PLAY WITH THIS FEATURE 」**
 THIS IS NOT A TROLL MODULE!
 ```
@@ -23,27 +22,22 @@ you're fucked off.
 ```
 Developer create this module only for managing group, not for trolling user!
 Read this before take an action!
-
 -> All deleted message cannot restore
 -> If you're not an admin, and purge with powerful number or reply first message of group, all of your message will deleted!
 -> **DON'T DESTROY/DELETE ALL MESSAGES**, developer will not responsible if you're nuked your chat group. Except for cleaning group purposes.
 -> This is not a joke, not funny if you're nuked a group by this feature and blame developer for made this powerful weapon!
-
 Ok look like you're understand what happened if you playing with this powerful weapon.
-
-
 ──「 **Purge** 」──
 -> `purge`
 Purge from bellow to that replyed message, you need to became admins to do this, else it only purge your message only!
 Give a number **without reply** to purge for x messages.
-
 ──「 **Purge My Messages** 」──
 -> `purgeme`
 Purge your messages only, no need admin permission.
 """
 
 
-# @app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
+@app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
 async def purge(client, message):
     if message.reply_to_message:
         is_reply = True
@@ -80,7 +74,7 @@ async def purge(client, message):
         await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-# @app.on_message(Filters.user("self") & Filters.command(["purgeme"], Command))
+@app.on_message(Filters.user("self") & Filters.command(["purgeme"], Command))
 async def purge_myself(client, message):
     if len(message.text.split()) >= 2 and message.text.split()[1].isdigit():
         target = int(message.text.split()[1])
@@ -115,7 +109,7 @@ async def purge_myself(client, message):
         await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-# @app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
+@app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
 async def purgetest(client, message):
     if message.reply_to_message:
         start_t = datetime.now()

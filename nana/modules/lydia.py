@@ -11,6 +11,14 @@ coffeehouse_api = None
 lydia = None
 session = None
 
+__MODULE__ = "Chatbot"
+__HELP__ = """
+──「 **Lydia AI** 」──
+-> `lydiapv`
+works in private messages by replying to a users message
+"""
+
+
 
 @app.on_message(Filters.user("self") & Filters.command(["lydiapv"], Command))
 async def lydia_private(client, message):

@@ -1,17 +1,17 @@
-# We're using Alpine stable
-FROM alpine:edge
+# We're using Debian Slim Buster image
+FROM python:3.8-slim-buster
 
-#
-# We have to uncomment Community repo for some packages
-#
-RUN sed -e 's;^#http\(.*\)/v3.9/community;http\1/v3.9/community;g' -i /etc/apk/repositories
+ENV PIP_NO_CACHE_DIR 1
 
-# Installing Python
-#
-RUN apk add --no-cache=true --update \
+RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
+
+# Installing Required Packages
+RUN apt update && apt upgrade -y && \
+    apt install --no-install-recommends -y \
+    debian-keyring \
+    debian-archive-keyring \
     bash \
-    build-base \
-    bzip2-dev \
+    bzip2 \
     curl \
     figlet \
     gcc \
@@ -19,55 +19,52 @@ RUN apk add --no-cache=true --update \
     sudo \
     util-linux \
     chromium \
-    chromium-chromedriver \
-    jpeg-dev \
     libffi-dev \
-    libpq \
+    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libwebp-dev \
-    libxml2 \
-    libxml2-dev \
-    libxslt-dev \
-    linux-headers \
+    linux-headers-amd64 \
+    musl-dev \
     musl \
     neofetch \
-    openssl-dev \
     php-pgsql \
     postgresql \
     postgresql-client \
-    postgresql-dev \
-    py-lxml \
-    py-pillow \
-    py-pip \
-    py-requests \
-    py-sqlalchemy \
-    py-tz \
-    py3-aiohttp \
+    python3-psycopg2 \
+    libpq-dev \
+    libcurl4-openssl-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    python3-pip \
+    python3-requests \
+    python3-sqlalchemy \
+    python3-tz \
+    python3-aiohttp \
     openssl \
     pv \
     jq \
     wget \
     python3 \
     python3-dev \
-    readline-dev \
-    sqlite \
-    sqlite-dev \
+    libreadline-dev \
+    libyaml-dev \
+    sqlite3 \
+    libsqlite3-dev \
     sudo \
-    zlib-dev \
+    zlib1g \
     ffmpeg \
-    curl-dev \
-    libressl-dev
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
+# Setting up ENV Path for Chrom-bin and Chrome-Path
 ENV CHROME_BIN=/usr/bin/chromium-browser \
     CHROME_PATH=/usr/lib/chromium/
 
+# Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
-RUN apk --no-cache add build-base
-RUN apk --no-cache add postgresql-dev
-RUN python3 -m pip install psycopg2
 
 # Copy Python Requirements to /root/nana
-
-RUN git clone https://github.com/legenhand/Nana-Bot.git /root/nana
+RUN git clone https://github.com/pokurt/Nana-Bot.git /root/nana
 WORKDIR /root/nana
 
 #Copy config file to /root/nana/nana
@@ -78,10 +75,8 @@ COPY ./README.md ./client_secrets.json* /root/nana/
 
 ENV PATH="/home/userbot/bin:$PATH"
 
-# Added Database Postgres
-
-#
 # Install requirements
-#
-RUN sudo pip3 install -r requirements.txt
+RUN sudo pip3 install -U -r requirements.txt
+
+# Starting Worker
 CMD ["python3","-m","nana"]

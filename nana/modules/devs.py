@@ -9,6 +9,7 @@ from platform import python_version
 import requests
 from pyrogram import Filters
 from speedtest import Speedtest
+import pyrogram as p
 
 from nana import Command, logging, app, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION
 from nana.helpers.deldog import deldog
@@ -45,6 +46,10 @@ Get Repo For this userbot
 ──「 **Test Your Server Internet Speed** 」──
 -> `speedtest`
 Obtain Server internet speed using speedtest
+
+──「 **Get ID** 」──
+-> `id`
+Send id of what you replied to
 
 """
 
@@ -197,8 +202,7 @@ async def dc_id(client, message):
 @app.on_message(Filters.user("self") & Filters.command(["repo"], Command))
 async def repo(client, message):
     await message.edit(
-        "Click [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here]("
-        "https://t.me/nanabotsupport) for support Group",
+        "Click [here](https://github.com/pokurt/Nana-Bot) for Nana-Bot-Remix Source.\nClick [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",
         disable_web_page_preview=True)
 
 
@@ -217,11 +221,51 @@ async def alive(client, message):
     text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
     text += "-> Database: `{}`\n".format(DB_AVAIABLE)
     text += "-> Python: `{}`\n".format(python_version())
+    text += "-> Pyrogram: `{}`\n".format(p.__version__)
     if not me:
         text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
     else:
         text += "\nBot logged in as `{}`\n Go to your assistant for more information!".format(me.first_name)
     await message.edit(text)
+
+@app.on_message(Filters.user("self") & Filters.command(["id"], Command))
+async def get_id(client, message):
+    file_id = None
+    user_id = None
+
+    if message.reply_to_message:
+        rep = message.reply_to_message
+        if rep.audio:
+            file_id = rep.audio.file_id
+        elif rep.document:
+            file_id = rep.document.file_id
+        elif rep.photo:
+            file_id = rep.photo.file_id
+        elif rep.sticker:
+            file_id = rep.sticker.file_id
+        elif rep.video:
+            file_id = rep.video.file_id
+        elif rep.animation:
+            file_id = rep.animation.file_id
+        elif rep.voice:
+            file_id = rep.voice.file_id
+        elif rep.video_note:
+            file_id = rep.video_note.file_id
+        elif rep.contact:
+            file_id = rep.contact.file_id
+        elif rep.location:
+            file_id = rep.location.file_id
+        elif rep.venue:
+            file_id = rep.venue.file_id
+        elif rep.from_user:
+            user_id = rep.from_user.id
+
+    if user_id:
+        await message.edit(user_id)
+    elif file_id:
+        await message.edit(file_id)
+    else:
+        await message.edit("This chat's ID:\n`{}`".format(message.chat.id))
 
 
 @app.on_message(Filters.user("self") & Filters.command(["speedtest"], Command))

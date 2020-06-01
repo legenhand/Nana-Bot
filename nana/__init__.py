@@ -39,7 +39,7 @@ USERBOT_VERSION = "1.1.1b"
 ASSISTANT_VERSION = "1.1.1b"
 
 OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
-REPOSITORY = "https://github.com/legenhand/Nana-Bot.git"
+REPOSITORY = "https://github.com/pokurt/Nana-Bot.git"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI",
                    "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 
@@ -92,6 +92,9 @@ if ENV:
     bitly_token = [os.environ.get('bitly_token', None)]
     gdrive_credentials = os.environ.get('gdrive_credentials', None)
     lydia_api = os.environ.get('lydia_api', None)
+    lastfm_api = os.environ.get('lastfm_api', None)
+    remove_bg_api = os.environ.get('remove_bg_api', None)
+    lastfm_username = os.environ.get('lastfm_username', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
@@ -141,6 +144,9 @@ else:
     gdrive_credentials = None
     lydia_api = Config.lydia_api
     HEROKU_API = Config.HEROKU_API
+    lastfm_api = Config.lastfm_api
+    remove_bg_api = Config.remove_bg_api
+    lastfm_username = Config.lastfm_username
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD
     USERBOT_NOLOAD = Config.USERBOT_NOLOAD

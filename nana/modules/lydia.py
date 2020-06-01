@@ -20,7 +20,7 @@ works in private messages by replying to a users message
 
 
 
-@app.on_message(Filters.user("self") & Filters.command(["lydiapv"], Command))
+@app.on_message(Filters.me & Filters.command(["lydiapv"], Command))
 async def lydia_private(client, message):
     global lydia_status, coffeehouse_api, lydia, session
     if lydia_api == "":

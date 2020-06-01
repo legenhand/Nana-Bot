@@ -10,12 +10,12 @@ __HELP__ = """
 Search for urban dictionary
 
 ──「 **Urban Dictionary** 」──
--> `ud (text)`
+-> `ud (text or reply to a word)`
 Search urban for dictionary
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["ud"], Command))
+@app.on_message(Filters.me & Filters.command(["ud"], Command))
 async def urban_dictionary(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `ud example`")

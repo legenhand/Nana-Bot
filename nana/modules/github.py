@@ -14,7 +14,7 @@ Finding information about a github user.
 
 """
 
-@app.on_message(Filters.user("self") & Filters.command(["github"], Command))
+@app.on_message(Filters.me & Filters.command(["github"], Command))
 async def github(client, message):
     if len(message.text.split()) == 1:
             await message.edit("Usage: `github (username)`")

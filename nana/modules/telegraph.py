@@ -17,7 +17,7 @@ Reply to Media as args to upload it to telegraph.
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["telegraph"], Command))
+@app.on_message(Filters.me & Filters.command(["telegraph"], Command))
 async def telegraph(client, message):
     replied = message.reply_to_message
     if not replied:

@@ -28,7 +28,7 @@ type that command and select another or create new from @Stickers!
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["kang"], Command))
+@app.on_message(Filters.me & Filters.command(["kang"], Command))
 async def kang_stickers(client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")

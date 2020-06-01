@@ -37,7 +37,7 @@ Purge your messages only, no need admin permission.
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
+@app.on_message(Filters.me & Filters.command(["purge"], Command))
 async def purge(client, message):
     if message.reply_to_message:
         is_reply = True
@@ -74,7 +74,7 @@ async def purge(client, message):
         await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["purgeme"], Command))
+@app.on_message(Filters.me & Filters.command(["purgeme"], Command))
 async def purge_myself(client, message):
     if len(message.text.split()) >= 2 and message.text.split()[1].isdigit():
         target = int(message.text.split()[1])
@@ -109,7 +109,7 @@ async def purge_myself(client, message):
         await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["purge"], Command))
+@app.on_message(Filters.me & Filters.command(["purge"], Command))
 async def purgetest(client, message):
     if message.reply_to_message:
         start_t = datetime.now()

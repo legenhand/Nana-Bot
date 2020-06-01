@@ -51,7 +51,7 @@ async def initial_git(repo):
     os.rename('nana-old/nana/session/', 'nana/session/')
 
 
-@app.on_message(Filters.user("self") & Filters.command(["update"], Command))
+@app.on_message(Filters.me & Filters.command(["update"], Command))
 async def updater(client, message):
     await message.edit("__Checking update...__")
     initial = False

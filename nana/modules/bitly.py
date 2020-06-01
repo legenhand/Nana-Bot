@@ -14,7 +14,7 @@ Shorten your url with bitly
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["bitly"], Command))
+@app.on_message(Filters.me & Filters.command(["bitly"], Command))
 async def bitly(client, message):
     args = message.text.split(None, 1)
     shortener = Shortener(tokens=bitly_token, max_cache_size=8192)

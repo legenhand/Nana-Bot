@@ -81,7 +81,7 @@ def ProfilePicUpdate(user_pic):
     return datetime.fromtimestamp(user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
 
 
-@app.on_message(Filters.user("self") & Filters.command(["whois"], Command))
+@app.on_message(Filters.me & Filters.command(["whois"], Command))
 async def whois(client, message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:

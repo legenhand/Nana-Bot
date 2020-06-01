@@ -47,7 +47,7 @@ androidfilehost.com`
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["ls"], Command))
+@app.on_message(Filters.me & Filters.command(["ls"], Command))
 async def ls(client, message):
     args = message.text.split(None, 1)
     if len(args) == 2:
@@ -65,7 +65,7 @@ async def ls(client, message):
     await message.edit("**List directory :**`{}`\n**List file :**`{}`".format(directory, listfile))
 
 
-@app.on_message(Filters.user("self") & Filters.command(["upload"], Command))
+@app.on_message(Filters.me & Filters.command(["upload"], Command))
 async def upload_file(client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
@@ -138,7 +138,7 @@ async def download_url(url, file_name):
     return downlaoded
 
 
-@app.on_message(Filters.user("self") & Filters.command(["dl"], Command))
+@app.on_message(Filters.me & Filters.command(["dl"], Command))
 async def download_from_url(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `dl <url> <filename>`")
@@ -162,7 +162,7 @@ async def download_from_url(client, message):
     await message.edit(download)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["download"], Command))
+@app.on_message(Filters.me & Filters.command(["download"], Command))
 async def dssownload_from_telegram(client, message):
     if message.reply_to_message:
         await download_file_from_tg(client, message)
@@ -170,7 +170,7 @@ async def dssownload_from_telegram(client, message):
         await message.edit("Reply document to download it")
 
 
-@app.on_message(Filters.user("self") & Filters.command(["direct"], Command))
+@app.on_message(Filters.me & Filters.command(["direct"], Command))
 async def direct_link_generator(client, message):
     args = message.text.split(None, 1)
     await message.edit("`Processing...`")

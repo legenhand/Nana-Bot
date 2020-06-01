@@ -73,7 +73,7 @@ async def separate_sed(sed_string):
         return replace, replace_with, flags.lower()
 
 
-@app.on_message(Filters.user("self") & Filters.regex("^s/(.*?)"))
+@app.on_message(Filters.me & Filters.regex("^s/(.*?)"))
 async def sed_msg(client, message):
     sed_result = await separate_sed("s/" + message.text)
     if sed_result:

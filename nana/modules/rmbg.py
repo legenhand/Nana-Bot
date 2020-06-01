@@ -17,25 +17,33 @@ from nana import app, Command, remove_bg_api
 from nana.helpers.PyroHelpers import ReplyCheck
 
 DOWN_PATH = '/root/nana/'
-rmbgimage = DOWN_PATH + "image.jpg"
+
+REMOVE_BG_API_KEY = remove_bg_api
+
+IMG_PATH = DOWN_PATH + "image.jpg"
 
 @app.on_message(Filters.user("self") & Filters.command(["rmbg"], Command))
 async def lastfm(client, message):
-    if not remove_bg_api:
+    if not REMOVE_BG_API_KEY:
         await message.edit("Get the API from [Remove.bg](https://www.remove.bg/b/background-removal-api)", disable_web_page_preview=True, parse_mode="html")
     await message.edit("Analysing...")
     replied = message.reply_to_message
     if (replied and replied.media
             and (replied.photo
                 or (replied.document and "image" in replied.document.mime_type))):
-        if os.path.exists(rmbgimage):
-            os.remove(rmbgimage)
-        await client.download_media(message=replied, file_name=rmbgimage)
+        if os.path.exists(IMG_PATH):
+            os.remove(IMG_PATH)
+        await client.download_media(message=replied, file_name=IMG_PATH)
         await message.edit(f"Removing Background...")
         try:
-            rmbg = RemoveBg(remove_bg_api, "removebg_error.log")
-            rmbg.remove_background_from_img_file(rmbgimage)
-            await client.send_photo(message.chat.id, rmbgimage, reply_to_message_id=ReplyCheck(message))
+            rmbg = RemoveBg(REMOVE_BG_API_KEY, "removebg_error.log")
+            rmbg.remove_background_from_img_file(IMG_PATH)
+            RBG_IMG_PATH = IMG_PATH + "_no_bg.png"
+            await client.send_photo(
+                chat_id=message.chat.id,
+                document=RBG_IMG_PATH,
+                reply_to_message_id=ReplyCheck(message),
+                disable_notification=True)
             await message.delete()
         except Exception:
             await message.edit("Something went wrong!\nCheck your usage.")

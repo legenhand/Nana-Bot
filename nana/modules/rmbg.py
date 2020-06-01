@@ -14,6 +14,7 @@ from datetime import datetime
 from removebg import RemoveBg
 from pyrogram import Filters
 from nana import app, Command, remove_bg_api
+from nana.helpers.PyroHelpers import ReplyCheck
 
 DOWN_PATH = '/root/nana/'
 
@@ -41,6 +42,7 @@ async def lastfm(client, message):
             await client.send_document(
                 chat_id=message.chat.id,
                 document=RBG_IMG_PATH,
+                reply_to_message_id=ReplyCheck(message),
                 disable_notification=True)
             await message.delete()
         except Exception:

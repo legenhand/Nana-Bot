@@ -35,7 +35,12 @@ async def lastfm(client, message):
         try:
             rmbg = RemoveBg(remove_bg_api, "removebg_error.log")
             rmbg.remove_background_from_img_file(rmbgimage)
-            await client.send_photo(message.chat.id, rmbgimage, reply_to_message_id=ReplyCheck(message))
+            rmbg_image = rmbgimage + "_.png"
+            await client.send_document(
+                chat_id=message.chat.id,
+                document=rmbg_image,
+                reply_to_message_id=ReplyCheck(message),
+                disable_notification=True
             await message.delete()
         except Exception:
             await message.edit("Something went wrong!\nCheck your usage.")

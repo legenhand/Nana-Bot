@@ -39,7 +39,7 @@ async def lastfm(client, message):
             rmbg = RemoveBg(REMOVE_BG_API_KEY, "removebg_error.log")
             rmbg.remove_background_from_img_file(IMG_PATH)
             RBG_IMG_PATH = IMG_PATH + "_no_bg.png"
-            await client.send_photo(
+            await client.send_document(
                 chat_id=message.chat.id,
                 document=RBG_IMG_PATH,
                 reply_to_message_id=ReplyCheck(message),

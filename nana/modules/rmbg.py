@@ -40,7 +40,7 @@ async def lastfm(client, message):
                 chat_id=message.chat.id,
                 document=rmbg_image,
                 reply_to_message_id=ReplyCheck(message),
-                disable_notification=True)
+                disable_notification=True
             await message.delete()
         except Exception:
             await message.edit("Something went wrong!\nCheck your usage.")

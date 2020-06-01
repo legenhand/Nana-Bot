@@ -11,17 +11,27 @@ MESSAGE_RECOUNTER = 0
 
 __MODULE__ = "Chats"
 __HELP__ = """
-This module is collect your chat list, when message was received from unknown chat, and that chat was not in database, then save that chat info to your database.
+This module is to manage your chats, when message was received from unknown chat, and that chat was not in database, then save that chat info to your database.
 
 ──「 **Export chats** 」──
 -> `chatlist`
-Send your chatlist to your saved messages
+Send your chatlist to your saved messages.
+
+──「 **Message Delete** 」──
+-> `del`
+Deletes a Message Replied with this command.
 """
 
 
 def get_msgc():
     return MESSAGE_RECOUNTER
 
+@app.on_message(Filters.user("self") & Filters.command(["del"], Command))
+async def delete_replied(client, message):
+    msg_ids = message.message_id
+    if message.reply_to_message:
+        msg_ids.append(message.reply_to_message.message_id)
+    await client.delete_messages(message.chat.id, msg_ids)
 
 @app.on_message(Filters.group, group=10)
 async def updatemychats(client, message):

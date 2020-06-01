@@ -75,7 +75,7 @@ async def bitly(client, message):
         img_size = img_size_div.find_all("div")
         end = datetime.now()
         ms = (end - start).seconds
-        out_str = f"""{img_size}
+        out_str = f"""
     <b>Possible Related Search</b>: <a href="{prs_url}">{prs_text}</a>
     <b>More Info</b>: Open this <a href="{the_location}">Link</a>
     <b>Time Taken</b>: {ms} seconds"""

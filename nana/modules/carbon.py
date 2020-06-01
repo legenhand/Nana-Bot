@@ -16,16 +16,43 @@ __HELP__ = """
 Create Beautiful Snippets of your code!
 
 ──「 **Carbon** 」──
--> `carbon (text or reply to msg | theme-name | colour code)`
+-> `carbon (reply to msg)`
 
-**Example:**
+-> `carbonbg (RGBA color code)`
+`Example:` __carbonbg rgba(0, 255, 230, 100)__
 
-Themes Supported:
-`3024-night`, `a11y-dark`, `blackboard`, `base16-dark`, `base16-light`,
-`cobalt`, `dracula`, `duotone-dark`, `hopscotch`, `lucario`, `material`,
-`monokai`, `night-owl`, `nord`, `oceanic-next`, `one-light`, `one-dark`,
-`panda-syntax`, `paraiso-dark`, `seti`, `shades-of-purple`, `solarized-dark`,
-`solarized-light`, `synthwave-84`, `twilight`, `verminal`, `vscode`,`yeti`, `zenburn`"
+-> `carbontheme (theme of your choice)`
+
+──「 **Themes Supported** 」──
+`3024-night`
+`a11y-dark`
+`blackboard`
+`base16-dark`
+`base16-light`
+`cobalt`
+`dracula`
+`duotone-dark`
+`hopscotch`
+`lucario`
+`material`
+`monokai`
+`night-owl`
+`nord`
+`oceanic-next`
+`one-light`
+`one-dark`
+`panda-syntax`
+`paraiso-dark`
+`seti`,
+`shades-of-purple`
+`solarized-dark`
+`solarized-light`
+`synthwave-84`
+`twilight`
+`verminal`
+`vscode`
+`yeti`
+`zenburn`
 """
 
 theme = 'dracula'
@@ -85,7 +112,7 @@ async def carbonbg(client, message):
 
 @app.on_message(Filters.user("self") & Filters.command(["carbontheme"], Command))
 async def carbontheme(client, message):
-    global bg
+    global theme
     cmd = message.command
     type_text = ""
     if len(cmd) > 1:

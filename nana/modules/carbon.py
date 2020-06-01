@@ -121,7 +121,6 @@ async def carbontheme(client, message):
         type_text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
         await message.edit_text(get_carbon_theme())
-        await sleep(5)
         await message.delete()
 
     bg = type_text

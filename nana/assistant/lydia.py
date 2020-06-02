@@ -40,7 +40,7 @@ async def lydia_stats(client, message):
 
 
 @setbot.on_message(Filters.user(AdminSettings))
-async def lydia(client, message):
+async def lydia_settings(client, message):
     global lydia_status, session
     if lydia_status:
         output = session.think_thought(message.text)

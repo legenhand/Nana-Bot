@@ -9,7 +9,13 @@ from pyrogram.errors import PeerIdInvalid
 from nana import app, Command
 from nana.helpers.PyroHelpers import ReplyCheck
 
+__MODULE__ = "CAS Scanner"
+__HELP__ = """
+──「 **Combot Anti Spam Check** 」──
+-> `cas` @username
+-> `cas` (reply to a text) To find information about a person.
 
+"""
 
 def replace_text(text):
         return text.replace("[", "").replace("]", "").replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(

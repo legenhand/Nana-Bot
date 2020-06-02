@@ -1,6 +1,7 @@
 
 import requests
 from time import sleep
+import asyncio
 
 from pyrogram import Filters, Message, User
 from pyrogram.api import functions
@@ -24,21 +25,15 @@ def replace_text(text):
 @app.on_message(Filters.me & Filters.command(["cas"], Command))
 async def cas(client, message):
     cmd = message.command
-    if not message.reply_to_message and len(cmd) == 1:
-        get_user = message.from_user.id
+
+    user = ""
+    if len(cmd) > 1:
+        user = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
-        get_user = message.reply_to_message.from_user.id
-    elif len(cmd) > 1:
-        get_user = cmd[1]
-        try:
-            get_user = int(cmd[1])
-        except ValueError:
-            pass
-    try:
-        user = await client.get_users(get_user)
-    except PeerIdInvalid:
-        await message.edit("I don't know that User.")
-        sleep(2)
+        user = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Usage: cas user_id`")
+        await asyncio.sleep(2)
         await message.delete()
         return
     results = requests.get(f'https://api.cas.chat/check?user_id={user}').json()

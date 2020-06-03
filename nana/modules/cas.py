@@ -9,6 +9,7 @@ from pyrogram.errors import PeerIdInvalid
 
 from nana import app, Command
 from nana.helpers.PyroHelpers import ReplyCheck
+from nana.helpers.string import replace_text
 
 __MODULE__ = "CAS Scanner"
 __HELP__ = """
@@ -17,10 +18,6 @@ __HELP__ = """
 -> `cas` (reply to a text) To find information about a person.
 
 """
-
-def replace_text(text):
-        return text.replace("[", "").replace("]", "").replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
-            "\\", "")
 
 @app.on_message(Filters.me & Filters.command(["cas"], Command))
 async def cas(client, message):

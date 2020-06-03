@@ -6,11 +6,11 @@ pySmartDL
 requests
 git+https://github.com/pytube3/pytube3.git
 git+https://github.com/pyrogram/pyrogram@asyncio-dev
-git+https://github.com/bakatrouble/pytgvoip_pyrogram.git@async#egg=pytgvoip_pyrogram
 TgCrypto
 pydrive
 sqlalchemy
 bs4
+jikanpy
 removebg
 telegraph
 aiohttp

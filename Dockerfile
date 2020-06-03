@@ -55,6 +55,10 @@ RUN apt update && apt upgrade -y && \
     ffmpeg \
     libssl-dev \
     cmake \
+    make \
+    g++ \
+    libopus0 \
+    libopus-dev \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path

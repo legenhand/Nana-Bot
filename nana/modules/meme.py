@@ -9,6 +9,7 @@ import asyncio
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
+from pyrogram.errors.exceptions import FloodWait
 
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana import app, Command
@@ -53,6 +54,10 @@ Usage:
 ──「 **Vaporwave/Aestethic** 」──
 -> `aes`
 Convert your text to Vaporwave/Aestethic style.
+
+──「 **Type Writer** 」──
+-> `type`
+Just a small command to make your keyboard become a typewriter.
 
 ──「 **Stylish edited text** 」──
 -> `1` (forward)
@@ -114,6 +119,38 @@ async def waifu(client, message):
                                         result_id = x.results[0].id,
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
+
+
+@app.on_message(Filters.me & Filters.command(["type"], Command))
+async def pay_respecc(client, message):
+    cmd = message.command
+    text = ""
+    if len(cmd) > 1:
+        text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`You didnt give any text to type :c`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    sleept = 0.1
+    char = '_'
+    old = ''
+    await message.edit(char)
+    await asyncio.sleep(sleept)
+    for character in text:
+        sleeptime = sleept / random.randint(1, 100)
+        old += character
+        typing_text = old + char
+        try:
+            await message.edit(typing_text)
+            await asyncio.sleep(sleeptime)
+            await message.edit(old)
+            await asyncio.sleep(sleeptime)
+        except FloodWait as y:
+            await asyncio.sleep(y.x)
+
 
 @app.on_message(Filters.me & Filters.command(["f"], Command))
 async def pay_respecc(client, message):

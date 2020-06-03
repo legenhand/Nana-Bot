@@ -139,6 +139,34 @@ async def character(client, message):
     elif message.reply_to_message and len(cmd) == 1:
         search_query = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("Usage: `anime`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    jikan = jikanpy.jikan.Jikan()
+    search_result = jikan.search("anime", search_query)
+    first_mal_id = search_result["results"][0]["mal_id"]
+    caption, image = get_anime_manga(first_mal_id, "anime_anime", message.from_user.id)
+    try:
+        await client.send_photo(photo=image,
+                                caption=caption
+                            )
+    except:
+        image = getBannerLink(first_mal_id, False)
+        await client.send_photo(message.chat.id, photo=image,
+                                caption=caption
+                            )
+
+
+@app.on_message(Filters.me & Filters.command(["character"], Command))
+async def character(client, message):
+    cmd = message.command
+    search_query = ""
+    if len(cmd) > 1:
+        search_query = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        search_query = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
         await message.edit("Usage: `character`")
         await asyncio.sleep(2)
         await message.delete()

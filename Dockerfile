@@ -59,6 +59,7 @@ RUN apt update && apt upgrade -y && \
     g++ \
     libopus0 \
     libopus-dev \
+    pkg-config \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path

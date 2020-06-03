@@ -165,3 +165,17 @@ async def character(client, message):
                             parse_mode='markdown'
                         )
 
+@app.on_message(Filters.me & Filters.command(["upcoming"], Command))
+async def upcoming(client, message):
+    jikan = jikanpy.jikan.Jikan()
+    upcoming = jikan.top('anime', page=1, subtype="upcoming")
+
+    upcoming_list = [entry['title'] for entry in upcoming['top']]
+    upcoming_message = ""
+
+    for entry_num in range(len(upcoming_list)):
+        if entry_num == 10:
+            break
+        upcoming_message += f"{entry_num + 1}. {upcoming_list[entry_num]}\n"
+
+    await message.edit(upcoming_message)

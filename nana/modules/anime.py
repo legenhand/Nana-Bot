@@ -15,6 +15,12 @@ def replace_text(text):
         return text.replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
             "\\", "")
 
+def getPosterLink(mal):
+    # grab poster from kitsu
+    kitsu = getKitsu(mal)
+    image = requests.get(f'https://kitsu.io/api/edge/anime/{kitsu}').json()
+    return image['data']['attributes']['posterImage']['original']
+
 def getKitsu(mal):
     # get kitsu id from mal id
     link = f'https://kitsu.io/api/edge/mappings?filter[external_site]=myanimelist/anime&filter[external_id]={mal}'

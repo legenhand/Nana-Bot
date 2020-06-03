@@ -10,10 +10,8 @@ from pyrogram import Filters
 
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana import app, Command
+from nana.helpers.string import replace_text
 
-def replace_text(text):
-        return text.replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
-            "\\", "")
 
 def getPosterLink(mal):
     # grab poster from kitsu
@@ -111,27 +109,32 @@ def get_anime_manga(mal_id, search_type, user_id):
         <b>Genres</b>: <code>{genre_string}</code>
         📖 <b>Synopsis</b>: {synopsis_string}
         """)
-    related = result['related']
-    mal_url = result['url']
-    prequel_id, sequel_id = None, None
-
-    if "Prequel" in related:
-        try:
-            prequel_id = related["Prequel"][0]["mal_id"]
-        except IndexError:
-            pass
-    if "Sequel" in related:
-        try:
-            sequel_id = related["Sequel"][0]["mal_id"]
-        except IndexError:
-            pass
-    if search_type == "anime_anime":
-        kaizoku = f"https://animekaizoku.com/?s={result['title']}"
-        kayo = f"https://animekayo.com/?s={result['title']}"
     return caption, image
 
-@app.on_message(Filters.me & Filters.command(["character"], Command))
-async def character(client, message):
+@app.on_message(Filters.me & Filters.command(["manga"], Command))
+async def manga(client, message):
+    cmd = message.command
+    search_query = ""
+    if len(cmd) > 1:
+        search_query = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        search_query = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("Usage: `anime`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    jikan = jikanpy.jikan.Jikan()
+    search_result = jikan.search("manga", search_query)
+    first_mal_id = search_result["results"][0]["mal_id"]
+    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.from_user.id)
+    await client.send_photo(message.chat.id, photo=image,
+                                caption=caption
+                            )
+
+
+@app.on_message(Filters.me & Filters.command(["anime"], Command))
+async def anime(client, message):
     cmd = message.command
     search_query = ""
     if len(cmd) > 1:

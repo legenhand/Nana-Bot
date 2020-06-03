@@ -15,6 +15,14 @@ def replace_text(text):
         return text.replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
             "\\", "")
 
+def getKitsu(mal):
+    # get kitsu id from mal id
+    link = f'https://kitsu.io/api/edge/mappings?filter[external_site]=myanimelist/anime&filter[external_id]={mal}'
+    result = requests.get(link).json()['data'][0]['id']
+    link = f'https://kitsu.io/api/edge/mappings/{result}/item?fields[anime]=slug'
+    kitsu = requests.get(link).json()['data']['id']
+    return kitsu
+
 def getBannerLink(mal, kitsu_search=True):
     # try getting kitsu backdrop
     if kitsu_search:

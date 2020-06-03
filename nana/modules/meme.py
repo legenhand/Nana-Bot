@@ -11,6 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
 from pyrogram.errors.exceptions import FloodWait
 
+import nana.modules.meme_strings as meme_strings
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana import app, Command
 
@@ -59,6 +60,10 @@ Convert your text to Vaporwave/Aestethic style.
 -> `type`
 Just a small command to make your keyboard become a typewriter.
 
+──「 **Shrugs** 」──
+-> `shg`
+Free Shrugs? Anyone?...
+
 ──「 **Stylish edited text** 」──
 -> `1` (forward)
 -> `1a` (backward)
@@ -81,6 +86,10 @@ async def mocking_text(text):
     for x in range(len(teks)):
         pesan += teks[x]
     return pesan
+
+@app.on_message(Filters.me & Filters.command(["shg"], Command))
+async def shg(client, message):
+    await message.edit(random.choice(meme_strings.shgs))
 
 @app.on_message(Filters.me & Filters.command(["spam"], Command))
 async def spam(client, message):
@@ -122,7 +131,7 @@ async def waifu(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["type"], Command))
-async def pay_respecc(client, message):
+async def type_writer(client, message):
     cmd = message.command
     text = ""
     if len(cmd) > 1:
@@ -230,16 +239,14 @@ async def stretch(client, message):
 async def haha_emojis(client, message):
     if message.reply_to_message.message_id:
         teks = message.reply_to_message.text
-        emojis = ["😂", "😂", "👌", "✌️", "💞", "👍", "👌", "💯", "🎶", "👀", "😂", "👓", "👏", "👐", "🍕", "💥", "🍴",
-                  "💦", "💦", "🍑", "🍆", "😩", "😏", "👉👌", "👀", "👅", "😩", "🚰"]
-        reply_text = random.choice(emojis)
+        reply_text = random.choice(meme_strings.emojis)
         b_char = random.choice(teks).lower()
         for c in teks:
             if c == " ":
-                reply_text += random.choice(emojis)
-            elif c in emojis:
+                reply_text += random.choice(meme_strings.emojis)
+            elif c in meme_strings.emojis:
                 reply_text += c
-                reply_text += random.choice(emojis)
+                reply_text += random.choice(meme_strings.emojis)
             elif c.lower() == b_char:
                 reply_text += "🅱️"
             else:
@@ -247,7 +254,7 @@ async def haha_emojis(client, message):
                     reply_text += c.upper()
                 else:
                     reply_text += c.lower()
-        reply_text += random.choice(emojis)
+        reply_text += random.choice(meme_strings.emojis)
         await message.edit(reply_text)
 
 

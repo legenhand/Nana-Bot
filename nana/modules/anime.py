@@ -29,7 +29,6 @@ async def character(client, message):
     try:
         search_result = jikan.search("character", search_query)
     except jikanpy.APIException:
-        progress_message.delete()
         await message.edit("Character not found.")
         return
     first_mal_id = search_result["results"][0]["mal_id"]

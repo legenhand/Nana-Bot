@@ -4,6 +4,7 @@ import requests
 from pyrogram import Filters
 
 from nana import app, Command
+from nana.helpers.string import replace_text
 
 __MODULE__ = "Urban Dictionary"
 __HELP__ = """
@@ -34,8 +35,3 @@ async def urban_dictionary(client, message):
         return
     elif response.status_code == 404:
         await message.edit("Cannot connect to Urban Dictionary")
-
-
-def replace_text(text):
-    return text.replace("[", "").replace("]", "").replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
-        "\\", "")

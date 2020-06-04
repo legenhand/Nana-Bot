@@ -37,6 +37,9 @@ async def paste(client, message):
         os.remove(path)
     elif not text and replied and replied.text:
         text = replied.text
+    if not text:
+        await message.err("input not found!")
+        return
     await message.edit("`Pasting text...`")
     resp = post("https://nekobin.com/" + "api/documents", json={"content": text})
     if resp.status_code == 201:
@@ -46,4 +49,4 @@ async def paste(client, message):
         reply_text = f"`Successfully pasted on` [Nekobin]({final_url})"
         await message.edit(reply_text, disable_web_page_preview=True)
     else:
-        await message.edit("Failed to reach Nekobin")
+        await message.err("Failed to reach Nekobin")

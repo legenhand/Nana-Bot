@@ -134,14 +134,13 @@ async def character(client, message):
 @app.on_message(Filters.me & Filters.command(["upcoming"], Command))
 async def upcoming(client, message):
     jikan = jikanpy.jikan.Jikan()
-    upcoming = jikan.top('anime', page=1, subtype="upcoming")
-
-    upcoming_list = [entry['title'] for entry in upcoming['top']]
-    upcoming_message = ""
-
-    for entry_num in range(len(upcoming_list)):
-        if entry_num == 10:
+    rep = "<b>Upcoming anime</b>\n"
+    later = jikan.season_later()
+    anime = later.get("anime")
+    for new in anime:
+        name = new.get("title")
+        url = new.get("url")
+        rep += f"• <a href='{url}'>{name}</a>\n"
+        if len(rep) > 1000:
             break
-        upcoming_message += f"{entry_num + 1}. {upcoming_list[entry_num]}\n"
-
-    await message.edit(upcoming_message)
+    await message.edit(rep, parse_mode='html')

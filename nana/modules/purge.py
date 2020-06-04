@@ -109,7 +109,7 @@ async def purge_myself(client, message):
         await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-@app.on_message(Filters.me & Filters.command(["purge"], Command))
+@app.on_message(Filters.me & Filters.command(["purgetest"], Command))
 async def purgetest(client, message):
     if message.reply_to_message:
         start_t = datetime.now()

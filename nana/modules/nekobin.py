@@ -1,6 +1,7 @@
 import asyncio
-import requests
-
+from requests import get, post
+from requests.exceptions import HTTPError, Timeout, TooManyRedirects
+import os
 from pyrogram import Filters, Message
 from nana import Command, app
 

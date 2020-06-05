@@ -10,6 +10,7 @@ TgCrypto
 pydrive
 sqlalchemy
 bs4
+jikanpy
 removebg
 telegraph
 aiohttp
@@ -23,6 +24,8 @@ googletrans
 currencyconverter
 bitlyshortener
 heroku3
+uptime
+py-cpuinfo
 speedtest-cli
 git+https://github.com/legenhand/mega.py.git
 httplib2==0.15.0

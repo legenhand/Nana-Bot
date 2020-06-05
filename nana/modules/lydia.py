@@ -13,14 +13,17 @@ session = None
 
 __MODULE__ = "Chatbot"
 __HELP__ = """
+An AI Powered Chat Bot Module
+
 ──「 **Lydia AI** 」──
 -> `lydiapv`
-works in private messages by replying to a users message
+Enables AI on replied user & Desables
+Powered by CoffeeHouse API created by @Intellivoid.
 """
 
 
 
-@app.on_message(Filters.user("self") & Filters.command(["lydiapv"], Command))
+@app.on_message(Filters.me & Filters.command(["lydiapv"], Command))
 async def lydia_private(client, message):
     global lydia_status, coffeehouse_api, lydia, session
     if lydia_api == "":

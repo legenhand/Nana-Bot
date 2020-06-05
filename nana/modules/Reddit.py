@@ -10,7 +10,7 @@ As long as your message starts with r/, it will automatically generate a subredd
 """
 the_regex = "^r\/([^\s\/])+"
 
-@app.on_message(Filters.user("self") & Filters.regex(the_regex))
+@app.on_message(Filters.me & Filters.regex(the_regex))
 async def reddit(client, message):
     html = "<a href='{link}'>{string}</a>"
     await message.edit(

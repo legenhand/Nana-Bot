@@ -14,6 +14,7 @@ from datetime import datetime
 from removebg import RemoveBg
 from pyrogram import Filters
 from nana import app, Command, remove_bg_api
+from nana.helpers.PyroHelpers import ReplyCheck
 
 DOWN_PATH = '/root/nana/'
 
@@ -21,7 +22,7 @@ REMOVE_BG_API_KEY = remove_bg_api
 
 IMG_PATH = DOWN_PATH + "image.jpg"
 
-@app.on_message(Filters.user("self") & Filters.command(["rmbg"], Command))
+@app.on_message(Filters.me & Filters.command(["rmbg"], Command))
 async def lastfm(client, message):
     if not REMOVE_BG_API_KEY:
         await message.edit("Get the API from [Remove.bg](https://www.remove.bg/b/background-removal-api)", disable_web_page_preview=True, parse_mode="html")
@@ -41,6 +42,7 @@ async def lastfm(client, message):
             await client.send_document(
                 chat_id=message.chat.id,
                 document=RBG_IMG_PATH,
+                reply_to_message_id=ReplyCheck(message),
                 disable_notification=True)
             await message.delete()
         except Exception:

@@ -66,7 +66,7 @@ async def get_driveinfo(driveid):
     return filename
 
 
-@app.on_message(Filters.user("self") & Filters.command(["credentials"], Command))
+@app.on_message(Filters.me & Filters.command(["credentials"], Command))
 async def credentials(client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
@@ -80,7 +80,7 @@ async def credentials(client, message):
         return
 
 
-@app.on_message(Filters.user("self") & Filters.command(["gdrive"], Command))
+@app.on_message(Filters.me & Filters.command(["gdrive"], Command))
 async def gdrive_stuff(client, message):
     gauth.LoadCredentialsFile("nana/session/drive")
     if gauth.credentials is None:

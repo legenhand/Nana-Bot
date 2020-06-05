@@ -18,7 +18,7 @@ Powered by `wttr.in`
 
 # TODO: Add more custom args?
 
-@app.on_message(Filters.user("self") & Filters.command(["weather"], Command))
+@app.on_message(Filters.me & Filters.command(["weather"], Command))
 async def weather(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `weather Maldives`")

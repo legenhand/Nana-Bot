@@ -4,18 +4,19 @@ import requests
 from pyrogram import Filters
 
 from nana import app, Command
+from nana.helpers.string import replace_text
 
 __MODULE__ = "Urban Dictionary"
 __HELP__ = """
 Search for urban dictionary
 
 ──「 **Urban Dictionary** 」──
--> `ud (text)`
+-> `ud (text or reply to a word)`
 Search urban for dictionary
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["ud"], Command))
+@app.on_message(Filters.me & Filters.command(["ud"], Command))
 async def urban_dictionary(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `ud example`")
@@ -34,8 +35,3 @@ async def urban_dictionary(client, message):
         return
     elif response.status_code == 404:
         await message.edit("Cannot connect to Urban Dictionary")
-
-
-def replace_text(text):
-    return text.replace("[", "").replace("]", "").replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
-        "\\", "")

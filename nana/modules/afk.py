@@ -32,7 +32,7 @@ AFK_RESTIRECT = {}
 DELAY_TIME = 60  # seconds
 
 
-@app.on_message(Filters.user("self") & (Filters.command(["afk"], Command) | Filters.regex("^brb ")))
+@app.on_message(Filters.me & (Filters.command(["afk"], Command) | Filters.regex("^brb ")))
 async def afk(client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
@@ -92,7 +92,7 @@ async def afk_mentioned(client, message):
             len(MENTIONED)), reply_markup=button)
 
 
-@app.on_message(Filters.user("self") & Filters.group, group=12)
+@app.on_message(Filters.me & Filters.group, group=12)
 async def no_longer_afk(client, message):
     if not DB_AVAIABLE:
         return

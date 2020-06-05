@@ -20,7 +20,7 @@ Upload image and convert to sticker, please note image from telegraph will resul
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["pic"], Command))
+@app.on_message(Filters.me & Filters.command(["pic"], Command))
 async def PictureUploader(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `.pic <url>`")
@@ -45,7 +45,7 @@ async def PictureUploader(client, message):
             await client.send_photo(message.chat.id, photo, "")
 
 
-@app.on_message(Filters.user("self") & Filters.command(["stk"], Command))
+@app.on_message(Filters.me & Filters.command(["stk"], Command))
 async def StickerUploader(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `.stk <url>`")

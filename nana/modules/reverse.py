@@ -29,7 +29,7 @@ Reverse search any supported media by google with this command
 
 """
 
-@app.on_message(Filters.user("self") & Filters.command(["reverse"], Command))
+@app.on_message(Filters.me & Filters.command(["reverse"], Command))
 async def bitly(client, message):
     start = datetime.now()
     dis_loc = ''
@@ -72,7 +72,7 @@ async def bitly(client, message):
         prs_url = base_url + prs_anchor_element.get("href")
         prs_text = prs_anchor_element.text
         img_size_div = soup.find(id="jHnbRc")
-        img_size = img_size_div.find_all("div")
+        # img_size = img_size_div.find_all("div")
         end = datetime.now()
         ms = (end - start).seconds
         out_str = f"""

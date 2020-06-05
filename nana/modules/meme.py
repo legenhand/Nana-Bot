@@ -9,7 +9,9 @@ import asyncio
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
+from pyrogram.errors.exceptions import FloodWait
 
+import nana.modules.meme_strings as meme_strings
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana import app, Command
 
@@ -54,6 +56,14 @@ Usage:
 -> `aes`
 Convert your text to Vaporwave/Aestethic style.
 
+──「 **Type Writer** 」──
+-> `type`
+Just a small command to make your keyboard become a typewriter.
+
+──「 **Shrugs** 」──
+-> `shg`
+Free Shrugs? Anyone?...
+
 ──「 **Stylish edited text** 」──
 -> `1` (forward)
 -> `1a` (backward)
@@ -77,7 +87,27 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
-@app.on_message(Filters.user("self") & Filters.command(["waifu"], Command))
+@app.on_message(Filters.me & Filters.command(["shg"], Command))
+async def shg(client, message):
+    await message.edit(random.choice(meme_strings.shgs))
+
+@app.on_message(Filters.me & Filters.command(["spam"], Command))
+async def spam(client, message):
+    await message.delete()
+    times = message.command[1]
+    to_spam = ' '.join(message.command[2:])
+
+    if message.chat.type in ['supergroup', 'group']:
+        for _ in range(int(times)):
+            await client.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
+            await asyncio.sleep(0.20)
+
+    if message.chat.type == "private":
+        for _ in range(int(times)):
+            await client.send_message(message.chat.id, to_spam)
+            await asyncio.sleep(0.20)
+
+@app.on_message(Filters.me & Filters.command(["waifu"], Command))
 async def waifu(client, message):
     await message.delete()
     cmd = message.command
@@ -99,7 +129,39 @@ async def waifu(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
-@app.on_message(Filters.user("self") & Filters.command(["f"], Command))
+
+@app.on_message(Filters.me & Filters.command(["type"], Command))
+async def type_writer(client, message):
+    cmd = message.command
+    text = ""
+    if len(cmd) > 1:
+        text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`You didnt give any text to type :c`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    sleept = 0.1
+    char = '_'
+    old = ''
+    await message.edit(char)
+    await asyncio.sleep(sleept)
+    for character in text:
+        sleeptime = sleept / random.randint(1, 100)
+        old += character
+        typing_text = old + char
+        try:
+            await message.edit(typing_text)
+            await asyncio.sleep(sleeptime)
+            await message.edit(old)
+            await asyncio.sleep(sleeptime)
+        except FloodWait as y:
+            await asyncio.sleep(y.x)
+
+
+@app.on_message(Filters.me & Filters.command(["f"], Command))
 async def pay_respecc(client, message):
     cmd = message.command
 
@@ -120,7 +182,7 @@ async def pay_respecc(client, message):
     )
     await message.edit(pay)
 
-@app.on_message(Filters.user("self") & Filters.command(["senpai"], Command))
+@app.on_message(Filters.me & Filters.command(["senpai"], Command))
 async def senpai(client, message):
     await message.delete()
     cmd = message.command
@@ -142,7 +204,7 @@ async def senpai(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
-@app.on_message(Filters.user("self") & Filters.command(["mock"], Command))
+@app.on_message(Filters.me & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
     await message.delete()
     mock = message.reply_to_message.text
@@ -153,7 +215,7 @@ async def mock_spongebob(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
-@app.on_message(Filters.user("self") & Filters.command(["stretch"], Command))
+@app.on_message(Filters.me & Filters.command(["stretch"], Command))
 async def stretch(client, message):
     cmd = message.command
 
@@ -173,20 +235,18 @@ async def stretch(client, message):
                         stretch_text)
     await message.edit(reply_text)
 
-@app.on_message(Filters.user("self") & Filters.command(["cp"], Command))
+@app.on_message(Filters.me & Filters.command(["cp"], Command))
 async def haha_emojis(client, message):
     if message.reply_to_message.message_id:
         teks = message.reply_to_message.text
-        emojis = ["😂", "😂", "👌", "✌️", "💞", "👍", "👌", "💯", "🎶", "👀", "😂", "👓", "👏", "👐", "🍕", "💥", "🍴",
-                  "💦", "💦", "🍑", "🍆", "😩", "😏", "👉👌", "👀", "👅", "😩", "🚰"]
-        reply_text = random.choice(emojis)
+        reply_text = random.choice(meme_strings.emojis)
         b_char = random.choice(teks).lower()
         for c in teks:
             if c == " ":
-                reply_text += random.choice(emojis)
-            elif c in emojis:
+                reply_text += random.choice(meme_strings.emojis)
+            elif c in meme_strings.emojis:
                 reply_text += c
-                reply_text += random.choice(emojis)
+                reply_text += random.choice(meme_strings.emojis)
             elif c.lower() == b_char:
                 reply_text += "🅱️"
             else:
@@ -194,11 +254,11 @@ async def haha_emojis(client, message):
                     reply_text += c.upper()
                 else:
                     reply_text += c.lower()
-        reply_text += random.choice(emojis)
+        reply_text += random.choice(meme_strings.emojis)
         await message.edit(reply_text)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["mocktxt"], Command))
+@app.on_message(Filters.me & Filters.command(["mocktxt"], Command))
 async def mock_text(client, message):
     if message.reply_to_message:
         teks = message.reply_to_message.text
@@ -210,7 +270,7 @@ async def mock_text(client, message):
         await client.edit_message_text(message.chat.id, message.message_id, pesan)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["1", "1a"], Command))
+@app.on_message(Filters.me & Filters.command(["1", "1a"], Command))
 async def marquee(client, message):
     teks = message.text[3:] + " "
     jumlah = teks.count('') - 1
@@ -231,7 +291,7 @@ async def marquee(client, message):
             pass
 
 
-@app.on_message(Filters.user("self") & Filters.command(["2"], Command))
+@app.on_message(Filters.me & Filters.command(["2"], Command))
 async def dancedance(client, message):
     teks = list(message.text[3:])
     for loop in range(4):
@@ -255,7 +315,7 @@ async def dancedance(client, message):
     await client.edit_message_text(message.chat.id, message.message_id, teks.capitalize())
 
 
-@app.on_message(Filters.user("self") & Filters.command(["3"], Command))
+@app.on_message(Filters.me & Filters.command(["3"], Command))
 async def typingmeme(client, message):
     teks = message.text[3:]
     total = len(teks)
@@ -266,7 +326,7 @@ async def typingmeme(client, message):
             pass
 
 
-@app.on_message(Filters.user("self") & Filters.command(["meme"], Command))
+@app.on_message(Filters.me & Filters.command(["meme"], Command))
 async def meme_gen(client, message):
     meme_types = requests.get(
         "https://raw.githubusercontent.com/legenhand/Nana-Bot/master/nana/helpers/memes.json").json()

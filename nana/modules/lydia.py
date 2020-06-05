@@ -20,9 +20,6 @@ An AI Powered Chat Bot Module
 Enables AI on replied user & Desables
 Powered by CoffeeHouse API created by @Intellivoid.
 """
-
-
-
 @app.on_message(Filters.me & Filters.command(["lydiapv"], Command))
 async def lydia_private(client, message):
     global lydia_status, coffeehouse_api, lydia, session
@@ -50,7 +47,7 @@ async def lydia_private(client, message):
         await message.edit("now Lydia will reply your message!")
 
 
-@app.on_message(Filters.incoming & Filters.private)
+@app.on_message(~Filters.me & (Filters.mentioned | Filters.private))
 async def lydia_reply(client, message):
     global lydia_status, session
     if lydia_status:

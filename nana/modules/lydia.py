@@ -13,9 +13,12 @@ session = None
 
 __MODULE__ = "Chatbot"
 __HELP__ = """
+An AI Powered Chat Bot Module
+
 ──「 **Lydia AI** 」──
 -> `lydiapv`
-works in private messages by replying to a users message
+Enables AI on replied user & Desables
+Powered by CoffeeHouse API created by @Intellivoid.
 """
 
 

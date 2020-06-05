@@ -14,8 +14,7 @@ from nana.helpers.string import replace_text
 __MODULE__ = "CAS Scanner"
 __HELP__ = """
 ──「 **Combot Anti Spam Check** 」──
--> `cas` @username
--> `cas` (reply to a text) To find information about a person.
+-> `cas` user_id
 
 """
 

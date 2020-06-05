@@ -50,7 +50,7 @@ async def lydia_private(client, message):
         await message.edit("now Lydia will reply your message!")
 
 
-@app.on_message(Filters.mentioned & Filters.private)
+@app.on_message(Filters.incoming & Filters.private)
 async def lydia_reply(client, message):
     global lydia_status, session
     if lydia_status:

@@ -5,6 +5,7 @@ from coffeehouse.lydia import LydiaAI
 from pyrogram import Filters
 
 from nana import lydia_api, app, Command
+from nana.helpers.PyroHelpers import ReplyCheck
 
 lydia_status = False
 coffeehouse_api = None
@@ -52,6 +53,6 @@ async def lydia_reply(client, message):
     global lydia_status, session
     if lydia_status:
         output = session.think_thought(message.text)
-        await message.reply_text("`{0}`".format(output), quote=True)
+        await message.reply_text("`{0}`".format(output), quote=True, reply_to_message_id=ReplyCheck(message))
     else:
         return

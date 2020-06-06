@@ -1,6 +1,7 @@
 import random
 
-from git import Repo, exc
+from git import Repo
+from git.exc import GitCommandError, NoSuchPathError, InvalidGitRepositoryError
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana import setbot, Owner, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, \
@@ -14,7 +15,7 @@ async def gen_chlog(repo, diff):
     try:
         for cl in repo.iter_commits(diff):
             changelog += f'• [{cl.committed_datetime.strftime(d_form)}]: {cl.summary} <{cl.author}>\n'
-    except exc.GitCommandError:
+    except GitCommandError:
         changelog = None
     return changelog
 
@@ -31,13 +32,13 @@ async def update_changelog(changelog):
 async def update_checker():
     try:
         repo = Repo()
-    except exc.NoSuchPathError as error:
+    except NoSuchPathError as error:
         log.warning(f"Check update failed!\nDirectory {error} is not found!")
         return
-    except exc.InvalidGitRepositoryError as error:
+    except InvalidGitRepositoryError as error:
         log.warning(f"Check update failed!\nDirectory {error} does not seems to be a git repository")
         return
-    except exc.GitCommandError as error:
+    except GitCommandError as error:
         log.warning(f"Check update failed!\n{error}")
         return
 
@@ -79,13 +80,13 @@ async def update_button(client, query):
     await query.message.edit_text("Updating, please wait...")
     try:
         repo = Repo()
-    except exc.NoSuchPathError as error:
+    except NoSuchPathError as error:
         log.warning(f"Check update failed!\nDirectory {error} is not found!")
         return
-    except exc.InvalidGitRepositoryError as error:
+    except InvalidGitRepositoryError as error:
         log.warning(f"Check update failed!\nDirectory {error} does not seems to be a git repository")
         return
-    except exc.GitCommandError as error:
+    except GitCommandError as error:
         log.warning(f"Check update failed!\n{error}")
         return
 
@@ -124,7 +125,7 @@ async def update_button(client, query):
     try:
         upstream.pull(brname)
         await query.message.edit_text('Successfully Updated!\nBot is restarting...')
-    except exc.GitCommandError:
+    except GitCommandError:
         repo.git.reset('--hard')
         repo.git.clean('-fd', 'nana/modules/')
         repo.git.clean('-fd', 'nana/assistant/')

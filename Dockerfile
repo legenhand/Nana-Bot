@@ -28,6 +28,7 @@ RUN apt update && apt upgrade -y && \
     musl \
     neofetch \
     php-pgsql \
+    python3-lxml \
     postgresql \
     postgresql-client \
     python3-psycopg2 \

@@ -45,6 +45,7 @@ async def manga(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
+    await message.delete()
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("manga", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
@@ -67,6 +68,7 @@ async def anime(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
+    await message.delete()
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("anime", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
@@ -95,6 +97,7 @@ async def character(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
+    await message.delete()
     jikan = jikanpy.jikan.Jikan()
     try:
         search_result = jikan.search("character", search_query)

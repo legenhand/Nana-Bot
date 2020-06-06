@@ -1,8 +1,21 @@
-version: 2
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
 jobs:
- build:
-   machine: true
-   steps:
-     - checkout
-     # build the application image
-     - run: docker build -t nana/bot:v1.0 .
+  build-and-test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          command: ./manage.py test
+          name: Test
+
+workflows:
+  main:
+    jobs:
+      - build-and-test

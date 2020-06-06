@@ -10,6 +10,7 @@ TgCrypto
 pydrive
 sqlalchemy
 bs4
+lxml
 jikanpy
 removebg
 telegraph

@@ -140,7 +140,7 @@ if REMINDER_UPDATE and not TEST_DEVELOP:
 
 
 async def starting_message():
-    help_button = InlineKeyboardMarkup([[InlineKeyboardButton("Help", callback_data="helpbtn")]])
+    helpbtn = InlineKeyboardMarkup([[InlineKeyboardButton("Help", callback_data="helpbtn")]])
     await setbot.send_message(Owner, "**Your Bot Ready to go!**\n\nSee /help for more information` 😉", reply_markup=helpbtn)
 
 @setbot.on_callback_query(dynamic_data_filter("helpbtn"))

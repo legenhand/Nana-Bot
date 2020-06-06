@@ -21,6 +21,7 @@ An AI Powered Chat Bot Module
 Enables AI on replied user & Desables
 Powered by CoffeeHouse API created by @Intellivoid.
 """
+
 @app.on_message(Filters.me & Filters.command(["lydiapv"], Command))
 async def lydia_private(client, message):
     global lydia_status, coffeehouse_api, lydia, session

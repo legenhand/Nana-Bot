@@ -125,7 +125,7 @@ async def inline_query_handler(client, query):
 
 	# Stylish converter
 
-	elif string.split()[0] == "#stylish":
+	elif string.split()[0] == "stylish":
 		if len(string.split()) == 1:
 			await client.answer_inline_query(query.id,
 											 results=answers,

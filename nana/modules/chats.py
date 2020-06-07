@@ -26,13 +26,6 @@ Deletes a Message Replied with this command.
 def get_msgc():
     return MESSAGE_RECOUNTER
 
-@app.on_message(Filters.user("self") & Filters.command(["del"], Command))
-async def delete_replied(client, message):
-    msg_ids = [message.message_id]
-    if message.reply_to_message:
-        msg_ids.append(message.reply_to_message.message_id)
-    await client.delete_messages(message.chat.id, msg_ids)
-
 @app.on_message(Filters.group, group=10)
 async def updatemychats(client, message):
     global MESSAGE_RECOUNTER
@@ -41,7 +34,7 @@ async def updatemychats(client, message):
     MESSAGE_RECOUNTER += 1
 
 
-@app.on_message(Filters.user("self") & Filters.command(["chatlist"], Command))
+@app.on_message(Filters.me & Filters.command(["chatlist"], Command))
 async def get_chat(client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")

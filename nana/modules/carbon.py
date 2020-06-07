@@ -1,37 +1,132 @@
-from requests import post
-import shutil
-import os
-from nana import Command, app
-from pyrogram import Filters
+# Based on https://github.com/cyberboysumanjay/Carbon-API
+# Author of Carbon API: Sumanjay (https://github.com/cyberboysumanjay) (@cyberboysumanjay)
+# All rights reserved.
+
+import requests
+import asyncio
 from time import sleep
+
+from pyrogram import Filters
+
+from nana import app, Command
 from nana.helpers.PyroHelpers import ReplyCheck
 
-CARBON_LANG = "Auto"
+__MODULE__ = "Carbon API"
+__HELP__ = """
+Create Beautiful Snippets of your code!
 
-@app.on_message(Filters.user("self") & Filters.command(["carbon"], Command))
-async def carbon_api(client, message):
-    json = {
-        "backgroundColor": "rgba(0, 255, 230, 100)",
-        "theme": "Dracula",
-        "exportSize": "4x"
-    }
-    if message.reply_to_message:
-        r = message.reply_to_message
-        json["code"] = r.text
-        await message.edit_text("Carbonizing code...")
-    else:
-        await message.edit("Usage: `carbon` (reply to a code or text)")
-    json["language"] = CARBON_LANG
-    apiUrl = "http://carbonnowsh.herokuapp.com"
-    r = post(apiUrl,json=json,stream=True)
-    filename = 'carbon.png'
-    if r.status_code == 200:
-        r.raw.decode_content = True
-        with open(filename,'wb') as f:
-            shutil.copyfileobj(r.raw, f)
-        await client.send_document(message.chat.id, filename, reply_to_message_id=ReplyCheck(message))
+──「 **Carbon** 」──
+-> `carbon (reply to msg)`
+
+-> `carbonbg (RGBA color code)`
+`Example:` __carbonbg rgba(0, 255, 230, 100)__
+
+-> `carbontheme (theme of your choice)`
+
+──「 **Themes Supported** 」──
+`3024-night`
+`a11y-dark`
+`blackboard`
+`base16-dark`
+`base16-light`
+`cobalt`
+`dracula`
+`duotone-dark`
+`hopscotch`
+`lucario`
+`material`
+`monokai`
+`night-owl`
+`nord`
+`oceanic-next`
+`one-light`
+`one-dark`
+`panda-syntax`
+`paraiso-dark`
+`seti`,
+`shades-of-purple`
+`solarized-dark`
+`solarized-light`
+`synthwave-84`
+`twilight`
+`verminal`
+`vscode`
+`yeti`
+`zenburn`
+"""
+
+theme = "dracula"
+bg = "rgba(0, 255, 230, 100)"
+themes = ['3024-night', 'a11y-dark', 'blackboard', 'base16-dark', 'base16-light',
+    'cobalt', 'dracula', 'duotone-dark', 'hopscotch', 'lucario', 'material',
+    'monokai', 'night-owl', 'nord', 'oceanic-next', 'one-light', 'one-dark',
+    'panda-syntax', 'paraiso-dark', 'seti', 'shades-of-purple', 'solarized-dark',
+    'solarized-light', 'synthwave-84', 'twilight', 'verminal', 'vscode',
+    'yeti', 'zenburn']
+
+@app.on_message(Filters.me & Filters.command(["carbon"], Command))
+async def carbon(client, message):
+    cmd = message.command
+    text = ""
+    if len(cmd) > 1:
+        text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("Usage: `carbon (reply to a text)`")
+        await asyncio.sleep(2)
         await message.delete()
-    else:
-        await message.edit('Image Couldn\'t be retreived')
+        return
+    await message.edit("Carbonizing the Code")
+    try:
+        carbon_result = requests.get(
+            "https://sjprojectsapi.herokuapp.com/carbon/?"
+            f"text={text}&theme={theme}&bg={bg}").json()
+        await client.send_photo(chat_id=message.chat.id, 
+                                reply_to_message_id=ReplyCheck(message),
+                                photo=carbon_result['link'])
         await message.delete()
-    os.remove(filename)
+    except Exception:
+        await message.edit("`api is offline please try again later.`")
+
+@app.on_message(Filters.me & Filters.command(["carbonbg"], Command))
+async def carbonbg(client, message):
+    global bg
+    cmd = message.command
+    type_text = ""
+    if len(cmd) > 1:
+        type_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        type_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit_text(get_carbon_bg())
+        await sleep(5)
+        await message.delete()
+    bg = type_text
+    await message.edit_text("Carbon background set to {}".format(type_text))
+    await sleep(2)
+    await message.delete()
+
+@app.on_message(Filters.me & Filters.command(["carbontheme"], Command))
+async def carbontheme(client, message):
+    global theme
+    cmd = message.command
+    type_text = ""
+    if len(cmd) > 1:
+        type_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        type_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit_text(get_carbon_theme())
+        await sleep(5)
+        await message.delete()
+    theme = type_text
+    await message.edit_text("Carbon theme set to {}".format(type_text))
+    await sleep(2)
+    await message.delete()
+
+def get_carbon_bg():
+    return bg
+
+def get_carbon_theme():
+    return theme

@@ -28,6 +28,7 @@ RUN apt update && apt upgrade -y && \
     musl \
     neofetch \
     php-pgsql \
+    python3-lxml \
     postgresql \
     postgresql-client \
     python3-psycopg2 \
@@ -54,6 +55,12 @@ RUN apt update && apt upgrade -y && \
     zlib1g \
     ffmpeg \
     libssl-dev \
+    cmake \
+    make \
+    g++ \
+    libopus0 \
+    libopus-dev \
+    pkg-config \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 # Setting up ENV Path for Chrom-bin and Chrome-Path

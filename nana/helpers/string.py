@@ -6,6 +6,11 @@ from pyrogram import InlineKeyboardButton
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\(buttonurl:(?:/{0,2})(.+?)(:same)?\))")
 
 
+def replace_text(text):
+        return text.replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
+            "\\", "")
+
+            
 def extract_time(message, time_val):
     if any(time_val.endswith(unit) for unit in ('m', 'h', 'd')):
         unit = time_val[-1]

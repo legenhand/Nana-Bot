@@ -84,7 +84,7 @@ async def aexec(client, message, code):
     return await locals()['__ex'](client, message)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["exec"], Command))
+@app.on_message(Filters.me & Filters.command(["exec"], Command))
 async def executor(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `exec message.edit('edited!')`")
@@ -100,7 +100,7 @@ async def executor(client, message):
         logging.exception("Execution error")
 
 
-@app.on_message(Filters.user("self") & Filters.command(["cmd"], Command))
+@app.on_message(Filters.me & Filters.command(["cmd"], Command))
 async def terminal(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `cmd ping -c 5 google.com`")
@@ -161,14 +161,14 @@ async def terminal(client, message):
         await message.edit("**Input: **\n`{}`\n\n**Output: **\n`No Output`".format(teks))
 
 
-@app.on_message(Filters.user("self") & Filters.command(["log"], Command))
+@app.on_message(Filters.me & Filters.command(["log"], Command))
 async def log(client, message):
     f = open("nana/logs/error.log", "r")
     data = await deldog(message, f.read())
     await message.edit("`Your recent logs stored here : `{}".format(data))
 
 
-@app.on_message(Filters.user("self") & Filters.command(["dc"], Command))
+@app.on_message(Filters.me & Filters.command(["dc"], Command))
 async def dc_id(client, message):
     chat = message.chat
     user = message.from_user
@@ -199,14 +199,14 @@ async def dc_id(client, message):
     await message.edit(text)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["repo"], Command))
+@app.on_message(Filters.me & Filters.command(["repo"], Command))
 async def repo(client, message):
     await message.edit(
         "Click [here](https://github.com/pokurt/Nana-Bot) for Nana-Bot-Remix Source.\nClick [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",
         disable_web_page_preview=True)
 
 
-@app.on_message(Filters.user("self") & Filters.command(["alive"], Command))
+@app.on_message(Filters.me & Filters.command(["alive"], Command))
 async def alive(client, message):
     try:
         me = await app.get_me()
@@ -228,7 +228,7 @@ async def alive(client, message):
         text += "\nBot logged in as `{}`\n Go to your assistant for more information!".format(me.first_name)
     await message.edit(text)
 
-@app.on_message(Filters.user("self") & Filters.command(["id"], Command))
+@app.on_message(Filters.me & Filters.command(["id"], Command))
 async def get_id(client, message):
     file_id = None
     user_id = None
@@ -268,7 +268,7 @@ async def get_id(client, message):
         await message.edit("This chat's ID:\n`{}`".format(message.chat.id))
 
 
-@app.on_message(Filters.user("self") & Filters.command(["speedtest"], Command))
+@app.on_message(Filters.me & Filters.command(["speedtest"], Command))
 async def speedtest(client, message):
     await message.edit("`Running speed test . . .`")
     test = Speedtest()

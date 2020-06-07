@@ -20,7 +20,7 @@ Check info of cases corona virus disease 2019
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["corona"], Command))
+@app.on_message(Filters.me & Filters.command(["corona"], Command))
 async def corona(client, message):
     await message.edit("`Processing...`")
     args = message.text.split(None, 1)

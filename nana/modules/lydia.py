@@ -5,6 +5,7 @@ from coffeehouse.lydia import LydiaAI
 from pyrogram import Filters
 
 from nana import lydia_api, app, Command
+from nana.helpers.PyroHelpers import ReplyCheck
 
 lydia_status = False
 coffeehouse_api = None
@@ -13,14 +14,15 @@ session = None
 
 __MODULE__ = "Chatbot"
 __HELP__ = """
+An AI Powered Chat Bot Module
+
 ──「 **Lydia AI** 」──
 -> `lydiapv`
-works in private messages by replying to a users message
+Enables AI on replied user & Desables
+Powered by CoffeeHouse API created by @Intellivoid.
 """
 
-
-
-@app.on_message(Filters.user("self") & Filters.command(["lydiapv"], Command))
+@app.on_message(Filters.me & Filters.command(["lydiapv"], Command))
 async def lydia_private(client, message):
     global lydia_status, coffeehouse_api, lydia, session
     if lydia_api == "":
@@ -47,11 +49,11 @@ async def lydia_private(client, message):
         await message.edit("now Lydia will reply your message!")
 
 
-@app.on_message(Filters.incoming & Filters.private)
+@app.on_message(Filters.incoming & Filters.mentioned & Filters.private)
 async def lydia_reply(client, message):
     global lydia_status, session
     if lydia_status:
         output = session.think_thought(message.text)
-        await message.reply_text("`{0}`".format(output), quote=True)
+        await message.reply_text("`{0}`".format(output), quote=True, reply_to_message_id=ReplyCheck(message))
     else:
         return

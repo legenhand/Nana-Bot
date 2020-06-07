@@ -1,8 +1,8 @@
 import time
-
 from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
 from pyrogram import Filters
+import asyncio
 
 from nana import setbot, AdminSettings, lydia_api
 
@@ -21,7 +21,7 @@ async def lydia_stats(client, message):
         return
     if lydia_status:
         await message.reply("Turning off lydia...")
-        time.sleep(0.3)
+        asyncio.sleep(0.3)
         lydia_status = False
         await message.reply("Lydia will not reply your message")
     else:
@@ -39,13 +39,13 @@ async def lydia_stats(client, message):
         await message.reply("now Lydia will reply your message!")
 
 
-@setbot.on_message(Filters.private)
+@setbot.on_message(Filters.private & Filters.incoming)
 async def lydia_settings(client, message):
     global lydia_status, session
     if lydia_status:
         await client.send_chat_action(chat_id=message.chat.id,action="typing")
         output = session.think_thought(message.text)
-        time.sleep(0.3)
+        asyncio.sleep(0.5)
         await message.reply_text("{0}".format(output), quote=True)
     else:
         return

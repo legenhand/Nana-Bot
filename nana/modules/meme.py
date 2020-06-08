@@ -107,6 +107,35 @@ async def spam(client, message):
             await client.send_message(message.chat.id, to_spam)
             await asyncio.sleep(0.20)
 
+@app.on_message(Filters.me & Filters.command(["owo"], Command))
+async def owo(client, message):
+    cmd = message.command
+    text = ""
+    if len(cmd) > 1:
+        text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        text = message.reply_to_message
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`cant uwu the void.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    reply_text = re.sub(r'[rl]', "w", text)
+    reply_text = re.sub(r'[ｒｌ]', "ｗ", text)
+    reply_text = re.sub(r'[RL]', 'W', reply_text)
+    reply_text = re.sub(r'[ＲＬ]', 'Ｗ', reply_text)
+    reply_text = re.sub(r'n([aeiouａｅｉｏｕ])', r'ny\1', reply_text)
+    reply_text = re.sub(r'r([aeiouａｅｉｏｕ])', r'w\1', reply_text)
+    reply_text = re.sub(r'ｎ([ａｅｉｏｕ])', r'ｎｙ\1', reply_text)
+    reply_text = re.sub(r'N([aeiouAEIOU])', r'Ny\1', reply_text)
+    reply_text = re.sub(r'Ｎ([ａｅｉｏｕＡＥＩＯＵ])', r'Ｎｙ\1', reply_text)
+    reply_text = re.sub(r'\!+', ' ' + random.choice(meme_strings.faces), reply_text)
+    reply_text = re.sub(r'！+', ' ' + random.choice(meme_strings.faces), reply_text)
+    reply_text = reply_text.replace("ove", "uv")
+    reply_text = reply_text.replace("ｏｖｅ", "ｕｖ")
+    reply_text += ' ' + random.choice(meme_strings.faces)
+    await message.edit(reply_text)
+
 @app.on_message(Filters.me & Filters.command(["waifu"], Command))
 async def waifu(client, message):
     await message.delete()

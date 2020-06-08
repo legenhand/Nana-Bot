@@ -49,14 +49,3 @@ async def lydia_settings(client, message):
         await message.reply_text("{0}".format(output), quote=True)
     else:
         return
-
-@setbot.on_message(Filters.incoming & Filters.mentioned)
-async def lydia_gc_settings(client, message):
-    global lydia_status, session
-    if lydia_status:
-        await client.send_chat_action(chat_id=message.chat.id,action="typing")
-        output = session.think_thought(message.text)
-        asyncio.sleep(0.3)
-        await message.reply_text("{0}".format(output), quote=True)
-    else:
-        return

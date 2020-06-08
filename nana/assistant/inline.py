@@ -1,5 +1,7 @@
 import sys
 import traceback
+import random
+from uuid import uuid4
 
 from pyrogram import InlineQueryResultArticle
 from pyrogram import errors, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
@@ -9,7 +11,6 @@ from nana.helpers.msg_types import Types
 from nana.helpers.string import parse_button, build_keyboard
 from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, \
 	CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext
-
 if DB_AVAIABLE:
 	from nana.modules.database import notes_db
 
@@ -28,7 +29,6 @@ GET_FORMAT = {
 	# Types.ANIMATED_STICKER.value: InlineQueryResultCachedSticker,
 	# Types.CONTACT: InlineQueryResultContact
 }
-
 
 @setbot.on_inline_query()
 async def inline_query_handler(client, query):
@@ -201,8 +201,29 @@ async def inline_query_handler(client, query):
 										 )
 		return
 
+	elif string.split()[0] == "engine_pm":
+		PM_BTN = []
+		button = [[InlineKeyboardButton("I want hack", callback_data="engine_pm_block")],
+		[InlineKeyboardButton("I want contact you", callback_data="engine_pm_nope")],
+		[InlineKeyboardButton("I want report bugs for bot", callback_data="engine_pm_report")],
+		[InlineKeyboardButton("Nope, never mind", callback_data="engine_pm_none")],
+		[InlineKeyboardButton("I want donate you 💖", callback_data="engine_pm_donate")]]
+		random.shuffle(button)
+		answers.append(InlineQueryResultArticle(
+      		id=uuid4(),
+      		title="Engine pm",
+      		description="Filter pm",
+      		input_message_content=InputTextMessageContent("Hello, i am Nana, Ayra's Assistant\nJust say what do you want by this button 👇👍"),
+      		reply_markup=InlineKeyboardMarkup(button)))
+		await client.answer_inline_query(query.id,
+   			results=answers,
+   			cache_time=0,
+  		)
+
 	await client.answer_inline_query(query.id,
 									 results=answers,
 									 switch_pm_text="Need help? Click here",
 									 switch_pm_parameter="help_inline"
 									 )
+
+	

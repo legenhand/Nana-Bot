@@ -13,7 +13,7 @@ import threading
 
 
 class WhitelistUsers(BASE):
-    __tablename__ = "last_fm"
+    __tablename__ = "pmapprove"
     user_id = Column(String(14), primary_key=True)
     username = Column(String(15))
     
@@ -22,7 +22,7 @@ class WhitelistUsers(BASE):
         self.username = username
         
 class ReqUsers(BASE):
-    __tablename__ = "last_fm"
+    __tablename__ = "getpmapprove"
     user_id = Column(String(14), primary_key=True)
     username = Column(String(15))
     

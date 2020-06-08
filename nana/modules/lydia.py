@@ -49,13 +49,11 @@ async def lydia_private(client, message):
         await message.edit("now Lydia will reply your message!")
 
 
-@app.on_message(Filters.private)
+@app.on_message(Filters.incoming & Filters.mentioned & Filters.private)
 async def lydia_reply(client, message):
     global lydia_status, session
     if lydia_status:
-        await client.send_chat_action(chat_id=message.chat.id,action="typing")
         output = session.think_thought(message.text)
-        asyncio.sleep(0.3)
         await message.reply_text("`{0}`".format(output), quote=True, reply_to_message_id=ReplyCheck(message))
     else:
         return

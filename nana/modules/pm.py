@@ -18,7 +18,8 @@ from nana.helpers.parser import mention_markdown
 if DB_AVAIABLE:
 	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req
 
-welc_txt = """Hello, Hello, i am Nana, Ayra's Assistant
+me = await app.get_me()
+welc_txt = f"""Hello, Hello, i am Nana, {me.first_name}'s Assistant
 Just say what do you want by this button 👇👍"""
 
 NOTIFY_ID = -1001287670948 # Owner

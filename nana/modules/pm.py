@@ -21,11 +21,11 @@ if DB_AVAIABLE:
 welc_txt = """Hello, Hello, i am Nana, Poki's Assistant
 Just say what do you want by this button 👇👍"""
 
-NOTIFY_ID = -1001287670948 # Owner
+NOTIFY_ID = 962286971 # Owner
 BLACKLIST = ["hack", "fuck", "bitch"]
 
 USER_IN_RESTRICT = []
-@app.on_message(~Filters.user("self") & Filters.private & ~Filters.bot)
+@app.on_message(~Filters.me & Filters.private & ~Filters.bot)
 async def pm_block(client, message):
 	if not get_whitelist(message.chat.id):
 		await client.read_history(message.chat.id)
@@ -48,12 +48,12 @@ async def pm_block(client, message):
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)
 
-@app.on_message(Filters.user("self") & Filters.command(["approvepm"], Command) & Filters.private)
+@app.on_message(Filters.me & Filters.command(["approvepm"], Command) & Filters.private)
 async def approve_pm(client, message):
 	set_whitelist(message.chat.id, True)
 	await message.edit("PM permission was approved!")
 
-@app.on_message(Filters.user("self") & Filters.command(["revokepm", "disapprovepm"], Command) & Filters.private)
+@app.on_message(Filters.me & Filters.command(["revokepm", "disapprovepm"], Command) & Filters.private)
 async def revoke_pm_block(client, message):
 	set_whitelist(message.chat.id, False)
 	await message.edit("PM permission was revoked!")

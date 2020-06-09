@@ -99,6 +99,10 @@ async def executor(client, message):
         await message.edit("**Execute**\n`{}`\n\n**Failed:**\n```{}```".format(code, "".join(errors)))
         logging.exception("Execution error")
 
+@app.on_message(Filters.me & Filters.command(["ip"], Command))
+async def public_ip(client, message):
+    ip = requests.get('https://api.ipify.org').text
+    await message.edit(f'<code>{ip}</code>', parse_mode='html')
 
 @app.on_message(Filters.me & Filters.command(["cmd"], Command))
 async def terminal(client, message):

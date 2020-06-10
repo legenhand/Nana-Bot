@@ -213,17 +213,24 @@ async def inline_query_handler(client, query):
       		id=uuid4(),
       		title="Engine pm",
       		description="Filter pm",
-      		input_message_content=InputTextMessageContent("Hello, i am Nana, Ayra's Assistant\nJust say what do you want by this button 👇👍"),
+      		input_message_content=InputTextMessageContent("Hello, i am Nana,\nJust say what do you want by this button 👇👍"),
       		reply_markup=InlineKeyboardMarkup(button)))
 		await client.answer_inline_query(query.id,
    			results=answers,
    			cache_time=0,
   		)
+	if query.from_user.id != Owner:
+		await client.answer_inline_query(query.id,
+										 results=answers,
+										 switch_pm_text="Sorry, this bot only for {}".format(OwnerName),
+										 switch_pm_parameter="createown"
+										 )
+		return
 
-	await client.answer_inline_query(query.id,
-									 results=answers,
-									 switch_pm_text="Need help? Click here",
-									 switch_pm_parameter="help_inline"
-									 )
-
+	if string == "":
+		await client.answer_inline_query(query.id,
+										 results=answers,
+										 switch_pm_text="Need help? Click here",
+										 switch_pm_parameter="help_inline"
+										 )
 	

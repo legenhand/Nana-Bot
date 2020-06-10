@@ -114,7 +114,7 @@ async def owo(client, message):
     if len(cmd) > 1:
         text = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
-        text = message.reply_to_message
+        text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
         await message.edit("`cant uwu the void.`")
         await asyncio.sleep(2)

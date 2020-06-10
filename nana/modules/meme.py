@@ -73,7 +73,7 @@ Free Shrugs? Anyone?...
 """
 
 # Thanks to https://t.me/FontRes for the source
-async def get_font_file(client):
+async def get_font_file():
     font_file_message_s = await client.get_history("@FontsRes")
     font_file_message = random.choice(font_file_message_s)
     return await client.download_media(font_file_message)

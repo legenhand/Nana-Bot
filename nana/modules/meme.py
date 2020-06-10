@@ -5,9 +5,8 @@ import textwrap
 from difflib import get_close_matches
 import re
 import asyncio
-import io
-import requests
 
+import requests
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
 from pyrogram.errors.exceptions import FloodWait
@@ -72,15 +71,6 @@ Free Shrugs? Anyone?...
 -> `3` (typing message)
 """
 
-# Thanks to https://t.me/FontRes for the source
-async def get_font_file():
-    font_file_message_s = await client.get_history("@FontsRes")
-    font_file_message = random.choice(font_file_message_s)
-    return await client.download_media(font_file_message)
-R = random.randint(0,256)
-G = random.randint(0,256)
-B = random.randint(0,256)
-
 # MOCK_SPONGE = "https://telegra.ph/file/c2a5d11e28168a269e136.jpg"
 waifus = [20, 32, 33, 40, 41, 42, 58]
 senpais = [37, 38, 48, 55]
@@ -96,50 +86,6 @@ async def mocking_text(text):
     for x in range(len(teks)):
         pesan += teks[x]
     return pesan
-
-@app.on_message(Filters.me & Filters.command(["stk"], Command))
-async def stk(client, message):
-    cmd = message.command
-
-    text = ""
-    if len(cmd) > 1:
-        text = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) == 1:
-        text = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("`No text Given hence no sticklet for you.`")
-        await asyncio.sleep(2)
-        await message.delete()
-        return
-    await message.delete()
-    text = textwrap.wrap(text, width=10)
-    text = '\n'.join(text)
-
-    image = Image.new("RGBA", (512, 512), (255, 255, 255, 0))
-    draw = ImageDraw.Draw(image)
-    fontsize = 230
-
-    FONT_FILE = await get_font_file()
-    font = ImageFont.truetype(FONT_FILE, size=fontsize)
-
-    while draw.multiline_textsize(text, font=font) > (512, 512):
-        fontsize -= 3
-        font = ImageFont.truetype(FONT_FILE, size=fontsize)
-    width, height = draw.multiline_textsize(text, font=font)
-    draw.multiline_text(((512-width)/2,(512-height)/2), text, font=font, fill=(R, G, B))
-
-    image_name = "rgb_sticklet.webp"
-    image.save(image_name,"WebP")
-    await client.send_sticker(chat_id=message.chat.id,
-                            sticker=image_name,
-                            reply_to_message_id=ReplyCheck(message)
-                        )
-    try:
-        os.remove(FONT_FILE)
-        os.remove(image_name)
-    except:
-        pass
-
 
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
 async def shg(client, message):

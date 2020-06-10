@@ -18,14 +18,14 @@ from nana.helpers.parser import mention_markdown
 if DB_AVAIABLE:
 	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req
 
-welc_txt = """Hello, Hello, i am Nana, Poki's Assistant
+welc_txt = """Hello, Hello, i am Nana,
 Just say what do you want by this button 👇👍"""
 
 NOTIFY_ID = 962286971 # Owner
 BLACKLIST = ["hack", "fuck", "bitch"]
 
 USER_IN_RESTRICT = []
-@app.on_message(~Filters.me & Filters.private & ~Filters.bot)
+@app.on_message(~Filters.user("self") & Filters.private & ~Filters.bot)
 async def pm_block(client, message):
 	if not get_whitelist(message.chat.id):
 		await client.read_history(message.chat.id)
@@ -37,7 +37,7 @@ async def pm_block(client, message):
 					return
 		from nana.modules.lydia import lydia_status
 		if not get_req(message.chat.id):
-			# await message.reply(welc_txt)
+			await message.reply(welc_txt)
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)
 		elif lydia_api and lydia_status:
@@ -83,7 +83,7 @@ async def pm_button(client, query):
 			await app.send_message(query.from_user.id, "During the wait for permission from my master, why do not we have a little chat?")
 	elif re.match(r"engine_pm_report", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "👍")
-		await app.send_message(query.from_user.id, "Hello, if you want to report any bugs for my bots, please report in @EmiliaOfficial\nThank you")
+		await app.send_message(query.from_user.id, "Hello, if you want to report any bugs for my bots, please report in @NanaBotSupport\nThank you")
 	elif re.match(r"engine_pm_none", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "👍")
 		await app.send_message(query.from_user.id, "Alright then, i am Ayra's bot assistant, and read the entire your messages, and make sure my master not read this disturbing message.\n\nIf you want anything from me, please contact my again. Thank you")
@@ -93,7 +93,7 @@ async def pm_button(client, query):
 	elif re.match(r"engine_pm_apr", query.data):
 		target = query.data.split("-")[1]
 		await query.message.edit_text("[Approved for PM]({})".format(target))
-		await app.send_message(target, "Hello, this is Nana, my master was approve you to PM, now feel free to PM my master again~")
+		await app.send_message(target, "Hello, this is Nana, my master approved you to PM.")
 		set_whitelist(int(target), True)
 	elif re.match(r"engine_pm_blk", query.data):
 		target = query.data.split("-")[1]

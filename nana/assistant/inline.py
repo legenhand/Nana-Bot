@@ -219,18 +219,4 @@ async def inline_query_handler(client, query):
    			results=answers,
    			cache_time=0,
   		)
-	if query.from_user.id != Owner:
-		await client.answer_inline_query(query.id,
-										 results=answers,
-										 switch_pm_text="Sorry, this bot only for {}".format(OwnerName),
-										 switch_pm_parameter="createown"
-										 )
-		return
-
-	if string == "":
-		await client.answer_inline_query(query.id,
-										 results=answers,
-										 switch_pm_text="Need help? Click here",
-										 switch_pm_parameter="help_inline"
-										 )
 	

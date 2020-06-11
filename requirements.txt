@@ -12,6 +12,7 @@ sqlalchemy
 bs4
 lxml
 jikanpy
+simplejson
 removebg
 telegraph
 aiohttp

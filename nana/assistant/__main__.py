@@ -105,7 +105,7 @@ async def settings(_client, message):
     if not me:
         pass
     else:
-        togglestart = "Stop Bot"
+        pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
                    [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]
@@ -324,7 +324,7 @@ async def back(_client, message):
     if not me:
         pass
     else:
-        togglestart = "Stop Bot"
+        pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
     if HEROKU_API:
@@ -440,7 +440,7 @@ async def set_stickers(client, message):
     if not me:
         pass
     else:
-        togglestart = "Stop Bot"
+        pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
                    [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]

@@ -40,7 +40,7 @@ Purge your messages only, no need admin permission.
 @app.on_message(Filters.me & Filters.command(["purge"], Command))
 async def purge(client, message):
     if message.reply_to_message:
-        start_t = datetime.now()
+        datetime.now()
         from_user = None
         start_message = message.reply_to_message.message_id
         end_message = message.message_id
@@ -65,7 +65,7 @@ async def purge(client, message):
                                     message_ids=list_of_messages_to_delete,
                                     revoke=True)
         purged_messages_count += len(list_of_messages_to_delete)
-        end_t = datetime.now()
+        datetime.now()
         await message.delete()
     else:
         await message.delete()

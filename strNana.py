@@ -20,7 +20,7 @@ def clear():
 	if os.name == "posix":
 		os.system("clear")
 	elif os.name == "nt":
-		a = os.system("cls")
+		os.system("cls")
 	else:
 		pass
 

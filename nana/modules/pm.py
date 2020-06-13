@@ -1,17 +1,7 @@
-import pyrogram
-import os
-import random
 import re
-import textwrap
-import requests
-import shutil
-import math
-import time
-from difflib import get_close_matches
 
 from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAIABLE, lydia_api
-from pyrogram import errors, Filters, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
-from nana.modules import lydia
+from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana.helpers.parser import mention_markdown
 

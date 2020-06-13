@@ -8,8 +8,6 @@
 # Ported to Nana by @pokurt
 
 import os
-import time
-from datetime import datetime
 
 from removebg import RemoveBg
 from pyrogram import Filters

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, UnicodeText
+from sqlalchemy import Column, String
 
 from nana import BASE, SESSION
 

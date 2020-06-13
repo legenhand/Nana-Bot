@@ -3,7 +3,7 @@
 import time
 from pyrogram import Filters
 
-from nana import Command, app, setbot
+from nana import Command, app
 
 __MODULE__ = "Metrics"
 __HELP__ = """

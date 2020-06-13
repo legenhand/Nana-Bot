@@ -1,7 +1,7 @@
 import asyncio
 import requests
 
-from pyrogram import Filters, Message
+from pyrogram import Filters
 from nana import Command, app
 
 __MODULE__ = "Nekobin"

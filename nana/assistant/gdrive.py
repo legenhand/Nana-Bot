@@ -1,7 +1,6 @@
 import os
 
 import pydrive
-from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from pyrogram import Filters
 

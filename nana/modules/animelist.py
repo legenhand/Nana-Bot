@@ -1,6 +1,4 @@
-import textwrap
 import jikanpy
-import requests
 import asyncio
 
 from pyrogram import Filters

@@ -1,13 +1,11 @@
 import os
 import random
 import shutil
-import textwrap
 from difflib import get_close_matches
 import re
 import asyncio
 
 import requests
-from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
 from pyrogram.errors.exceptions import FloodWait
 

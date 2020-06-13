@@ -1,7 +1,7 @@
 from datetime import datetime
 from time import sleep
 
-from pyrogram import Filters, Message, User
+from pyrogram import Filters, User
 from pyrogram.api import functions
 from pyrogram.errors import PeerIdInvalid
 

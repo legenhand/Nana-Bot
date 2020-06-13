@@ -1,5 +1,5 @@
 from pyrogram import Filters
-from nana import Command, app
+from nana import app
 
 __MODULE__ = "Reddit"
 __HELP__ = """

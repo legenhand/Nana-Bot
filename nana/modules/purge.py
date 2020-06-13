@@ -3,7 +3,7 @@ from datetime import datetime
 
 from pyrogram import Filters
 
-from nana import Owner, setbot, app, Command
+from nana import Owner, app, Command
 
 __MODULE__ = "Purges"
 __HELP__ = """

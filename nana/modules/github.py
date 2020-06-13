@@ -1,6 +1,6 @@
 import aiohttp
 
-from pyrogram import Filters, Message
+from pyrogram import Filters
 
 from nana import app, Command
 

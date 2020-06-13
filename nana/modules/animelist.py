@@ -133,7 +133,7 @@ async def character(client, message):
                         )
 
 @app.on_message(Filters.me & Filters.command(["upcoming"], Command))
-async def upcoming(client, message):
+async def upcoming(_client, message):
     jikan = jikanpy.jikan.Jikan()
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()

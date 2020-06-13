@@ -5,7 +5,7 @@ from pyrogram import Filters
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["ping"], Command))
-async def ping(client, message):
+async def ping(_client, message):
 	start_time = time.time()
 	await message.edit("🏓 Pong!")
 	end_time = time.time()

@@ -58,7 +58,7 @@ async def voice(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["voicelang"], Command))
-async def voicelang(client, message):
+async def voicelang(_client, message):
     global lang
     temp = lang
     lang = message.text.split(None, 1)[1]

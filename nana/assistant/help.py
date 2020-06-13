@@ -53,7 +53,7 @@ help_button_create = Filters.create(help_button_callback)
 
 
 @setbot.on_callback_query(help_button_create)
-async def help_button(client, query):
+async def help_button(_client, query):
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
     prev_match = re.match(r"help_prev\((.+?)\)", query.data)
     next_match = re.match(r"help_next\((.+?)\)", query.data)
@@ -86,7 +86,7 @@ async def help_button(client, query):
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
-async def stats(client, message):
+async def stats(_client, message):
     text = "**Here is your current stats**\n"
     text += "Notes: `0 notes`\n"
     if DB_AVAIABLE:

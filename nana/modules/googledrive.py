@@ -67,7 +67,7 @@ async def get_driveinfo(driveid):
 
 
 @app.on_message(Filters.me & Filters.command(["credentials"], Command))
-async def credentials(client, message):
+async def credentials(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
         await message.edit("Write any args here!")

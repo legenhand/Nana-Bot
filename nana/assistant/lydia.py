@@ -13,7 +13,7 @@ session = None
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["lydia"]))
-async def lydia_stats(client, message):
+async def lydia_stats(_client, message):
     global lydia_status, coffeehouse_api, lydia, session
     if lydia_api == "":
         await message.reply("`lydia API key is not set!\nSet your lydia API key by adding Config Vars in heroku with "

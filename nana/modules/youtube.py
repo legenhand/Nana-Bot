@@ -38,7 +38,7 @@ Download youtube music, and then send to tg as music.
 
 
 @app.on_message(Filters.user("self") & Filters.command(["youtube", "yt"], Command))
-async def youtube_search(client, message):
+async def youtube_search(_client, message):
 	args = message.text.split(None, 1)
 	if len(args) == 1:
 		await message.edit("Write any args here!")
@@ -63,7 +63,7 @@ async def youtube_search(client, message):
 
 
 @app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
-async def youtube_download(client, message):
+async def youtube_download(_client, message):
 	args = message.text.split(None, 2)
 	await message.edit("Checking")
 	if len(args) == 1:
@@ -111,7 +111,7 @@ async def youtube_download(client, message):
 
 
 @app.on_message(Filters.user("self") & Filters.command(["ytmusic", "ytaudio"], Command))
-async def youtube_music(client, message):
+async def youtube_music(_client, message):
 	args = message.text.split(None, 1)
 	if len(args) == 1:
 		await message.edit("Send URL here!")

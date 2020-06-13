@@ -34,7 +34,7 @@ async def subprocess_run(cmd, megadl):
 
 
 @app.on_message(Filters.me & Filters.command(["megadownload"], Command))
-async def mega_downloader(client, megadl):
+async def mega_downloader(_client, megadl):
     args = megadl.text.split(None, 1)
     await megadl.edit("`Processing...`")
     msg_link = await megadl.reply_to_message.text

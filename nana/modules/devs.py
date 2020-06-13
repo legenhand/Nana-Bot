@@ -100,7 +100,7 @@ async def executor(client, message):
         logging.exception("Execution error")
 
 @app.on_message(Filters.me & Filters.command(["ip"], Command))
-async def public_ip(client, message):
+async def public_ip(_client, message):
     ip = requests.get('https://api.ipify.org').text
     await message.edit(f'<code>{ip}</code>', parse_mode='html')
 
@@ -166,14 +166,14 @@ async def terminal(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["log"], Command))
-async def log(client, message):
+async def log(_client, message):
     f = open("nana/logs/error.log", "r")
     data = await deldog(message, f.read())
     await message.edit("`Your recent logs stored here : `{}".format(data))
 
 
 @app.on_message(Filters.me & Filters.command(["dc"], Command))
-async def dc_id(client, message):
+async def dc_id(_client, message):
     chat = message.chat
     user = message.from_user
     if message.reply_to_message:
@@ -204,14 +204,14 @@ async def dc_id(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["repo"], Command))
-async def repo(client, message):
+async def repo(_client, message):
     await message.edit(
         "Click [here](https://github.com/pokurt/Nana-Bot) for Nana-Bot-Remix Source.\nClick [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",
         disable_web_page_preview=True)
 
 
 @app.on_message(Filters.me & Filters.command(["alive"], Command))
-async def alive(client, message):
+async def alive(_client, message):
     try:
         me = await app.get_me()
     except ConnectionError:
@@ -233,7 +233,7 @@ async def alive(client, message):
     await message.edit(text)
 
 @app.on_message(Filters.me & Filters.command(["id"], Command))
-async def get_id(client, message):
+async def get_id(_client, message):
     file_id = None
     user_id = None
 
@@ -273,7 +273,7 @@ async def get_id(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["speedtest"], Command))
-async def speedtest(client, message):
+async def speedtest(_client, message):
     await message.edit("`Running speed test . . .`")
     test = Speedtest()
     test.get_best_server()

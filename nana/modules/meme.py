@@ -86,7 +86,7 @@ async def mocking_text(text):
     return pesan
 
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
-async def shg(client, message):
+async def shg(_client, message):
     await message.edit(random.choice(meme_strings.shgs))
 
 @app.on_message(Filters.me & Filters.command(["spam"], Command))
@@ -106,7 +106,7 @@ async def spam(client, message):
             await asyncio.sleep(0.20)
 
 @app.on_message(Filters.me & Filters.command(["owo"], Command))
-async def owo(client, message):
+async def owo(_client, message):
     cmd = message.command
     text = ""
     if len(cmd) > 1:
@@ -158,7 +158,7 @@ async def waifu(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["type"], Command))
-async def type_writer(client, message):
+async def type_writer(_client, message):
     cmd = message.command
     text = ""
     if len(cmd) > 1:
@@ -189,7 +189,7 @@ async def type_writer(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["f"], Command))
-async def pay_respecc(client, message):
+async def pay_respecc(_client, message):
     cmd = message.command
 
     paytext = ""
@@ -243,7 +243,7 @@ async def mock_spongebob(client, message):
                                         hide_via=True)
 
 @app.on_message(Filters.me & Filters.command(["stretch"], Command))
-async def stretch(client, message):
+async def stretch(_client, message):
     cmd = message.command
 
     stretch_text = ""
@@ -263,7 +263,7 @@ async def stretch(client, message):
     await message.edit(reply_text)
 
 @app.on_message(Filters.me & Filters.command(["cp"], Command))
-async def haha_emojis(client, message):
+async def haha_emojis(_client, message):
     if message.reply_to_message.message_id:
         teks = message.reply_to_message.text
         reply_text = random.choice(meme_strings.emojis)
@@ -343,7 +343,7 @@ async def dancedance(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["3"], Command))
-async def typingmeme(client, message):
+async def typingmeme(_client, message):
     teks = message.text[3:]
     total = len(teks)
     for loop in range(total):

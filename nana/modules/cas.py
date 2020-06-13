@@ -15,7 +15,7 @@ __HELP__ = """
 """
 
 @app.on_message(Filters.me & Filters.command(["cas"], Command))
-async def cas(client, message):
+async def cas(_client, message):
     cmd = message.command
 
     user = ""

@@ -16,7 +16,7 @@ __MODULE__ = "Last.FM"
 LASTFM_API_KEY = lastfm_api
 
 @app.on_message(Filters.me & Filters.command(["lastfm"], Command))
-async def lastfm(client, message):
+async def lastfm(_client, message):
     username = lastfm_username
     user = username
     if not username:

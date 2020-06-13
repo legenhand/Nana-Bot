@@ -27,7 +27,7 @@ def get_msgc():
     return MESSAGE_RECOUNTER
 
 @app.on_message(Filters.group, group=10)
-async def updatemychats(client, message):
+async def updatemychats(_client, message):
     global MESSAGE_RECOUNTER
     if DB_AVAIABLE:
         update_chat(message.chat)

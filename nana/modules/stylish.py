@@ -172,7 +172,7 @@ def stylish_formatting(text):
 
 
 @app.on_message(Filters.me & Filters.command(["stylish"], Command))
-async def stylish_generator(client, message):
+async def stylish_generator(_client, message):
     if message.text and len(message.text.split()) == 1 or message.caption and len(message.caption.split()) == 1:
         await message.edit("Usage: `stylish your text goes here`")
         return

@@ -61,7 +61,7 @@ GET_FORMAT = {
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["save"], Command))
-async def save_note(client, message):
+async def save_note(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return
@@ -174,7 +174,7 @@ async def get_note(client, message):
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["notes", "saved"], Command))
-async def local_notes(client, message):
+async def local_notes(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return
@@ -193,7 +193,7 @@ async def local_notes(client, message):
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["clear"], Command))
-async def clear_note(client, message):
+async def clear_note(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return

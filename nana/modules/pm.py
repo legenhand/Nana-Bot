@@ -39,12 +39,12 @@ async def pm_block(client, message):
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)
 
 @app.on_message(Filters.me & Filters.command(["approvepm"], Command) & Filters.private)
-async def approve_pm(client, message):
+async def approve_pm(_client, message):
 	set_whitelist(message.chat.id, True)
 	await message.edit("PM permission was approved!")
 
 @app.on_message(Filters.me & Filters.command(["revokepm", "disapprovepm"], Command) & Filters.private)
-async def revoke_pm_block(client, message):
+async def revoke_pm_block(_client, message):
 	set_whitelist(message.chat.id, False)
 	await message.edit("PM permission was revoked!")
 

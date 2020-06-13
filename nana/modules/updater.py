@@ -2,7 +2,8 @@ import os
 import shutil
 import sys
 
-from git import Repo, exc
+from git import Repo
+from git.exc import InvalidGitRepositoryError, GitCommandError, NoSuchPathError
 from pyrogram import Filters
 
 from nana import app, Command, OFFICIAL_BRANCH, REPOSITORY, HEROKU_API
@@ -57,13 +58,13 @@ async def updater(client, message):
     initial = False
     try:
         repo = Repo()
-    except exc.NoSuchPathError as error:
+    except NoSuchPathError as error:
         await message.edit(f"**Update failed!**\n\nError:\n`directory {error} is not found`")
         return
-    except exc.InvalidGitRepositoryError:
+    except InvalidGitRepositoryError:
         repo = Repo.init()
         initial = True
-    except exc.GitCommandError as error:
+    except GitCommandError as error:
         await message.edit(f'**Update failed!**\n\nError:\n`{error}`')
         return
 
@@ -167,7 +168,7 @@ async def updater(client, message):
         try:
             upstream.pull(brname)
             await message.edit('Successfully Updated!\nBot is restarting...')
-        except exc.GitCommandError:
+        except GitCommandError:
             repo.git.reset('--hard')
             repo.git.clean('-fd', 'nana/modules/')
             repo.git.clean('-fd', 'nana/assistant/')

@@ -43,8 +43,8 @@ def get_anime_manga(mal_id, search_type, _user_id):
     if search_type == "anime_anime":
         result = jikan.anime(mal_id)
         image = getBannerLink(mal_id)
-        studio_string = ', '.join([studio_info['name'] for studio_info in result['studios']])
-        producer_string = ', '.join([producer_info['name'] for producer_info in result['producers']])
+        studio_string = ', '.join(studio_info['name'] for studio_info in result['studios'])
+        producer_string = ', '.join(producer_info['name'] for producer_info in result['producers'])
     elif search_type == "anime_manga":
         result = jikan.manga(mal_id)
         image = result['image_url']
@@ -60,7 +60,7 @@ def get_anime_manga(mal_id, search_type, _user_id):
     if alternative_names:
         alternative_names_string = ", ".join(alternative_names)
         caption += f"\n<b>Also known as</b>: <code>{alternative_names_string}</code>"
-    genre_string = ', '.join([genre_info['name'] for genre_info in result['genres']])
+    genre_string = ', '.join(genre_info['name'] for genre_info in result['genres'])
     if result['synopsis'] is not None:
         synopsis = result['synopsis'].split(" ", 60)
         try:

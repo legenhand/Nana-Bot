@@ -41,7 +41,8 @@ async def ssweb(client, message):
 
 	await client.send_chat_action(message.chat.id, action="upload_photo")
 	r = requests.get("https://api.thumbnail.ws/api/{}/thumbnail/get?url={}&width=1280".format(thumbnail_API, teks),
-					 stream=True)
+					stream=True
+				)
 	if r.status_code != 200:
 		await message.edit(r.text, disable_web_page_preview=True)
 		return
@@ -99,7 +100,8 @@ async def ss_web(client, message):
 			stk.write(chunk)
 
 	await client.send_document(message.chat.id, document="nana/cache/web.png", caption=capt,
-							   reply_to_message_id=message.message_id)
+							reply_to_message_id=message.message_id
+						)
 	os.remove("nana/cache/web.png")
 	await client.send_chat_action(message.chat.id, action="cancel")
 	await message.edit(capt)

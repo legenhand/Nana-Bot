@@ -37,37 +37,37 @@ async def inline_query_handler(client, query):
 
 	if query.from_user.id != Owner:
 		await client.answer_inline_query(query.id,
-										 results=answers,
-										 switch_pm_text="Sorry, this bot only for {}".format(OwnerName),
-										 switch_pm_parameter="createown"
-										 )
+										results=answers,
+										switch_pm_text="Sorry, this bot only for {}".format(OwnerName),
+										switch_pm_parameter="createown"
+									)
 		return
 
 	if string == "":
 		await client.answer_inline_query(query.id,
-										 results=answers,
-										 switch_pm_text="Need help? Click here",
-										 switch_pm_parameter="help_inline"
-										 )
+										results=answers,
+										switch_pm_text="Need help? Click here",
+										switch_pm_parameter="help_inline"
+									)
 		return
 
 	# Notes
 	if string.split()[0] == "#note":
 		if not DB_AVAIABLE:
 			await client.answer_inline_query(query.id,
-											 results=answers,
-											 switch_pm_text="Your database isn't avaiable!",
-											 switch_pm_parameter="help_inline"
-											 )
+											results=answers,
+											switch_pm_text="Your database isn't avaiable!",
+											switch_pm_parameter="help_inline"
+										)
 			return
 		if len(string.split()) == 1:
 			allnotes = notes_db.get_all_selfnotes_inline(query.from_user.id)
 			if not allnotes:
 				await client.answer_inline_query(query.id,
-												 results=answers,
-												 switch_pm_text="You dont have any notes!",
-												 switch_pm_parameter="help_inline"
-												 )
+												results=answers,
+												switch_pm_text="You dont have any notes!",
+												switch_pm_parameter="help_inline"
+											)
 				return
 			if len(list(allnotes)) >= 30:
 				rng = 30
@@ -88,20 +88,20 @@ async def inline_query_handler(client, query):
 					input_message_content=InputTextMessageContent(note),
 					reply_markup=InlineKeyboardMarkup(button)))
 			await client.answer_inline_query(query.id,
-											 results=answers,
-											 switch_pm_text="Yourself notes",
-											 switch_pm_parameter="help_inline"
-											 )
+											results=answers,
+											switch_pm_text="Yourself notes",
+											switch_pm_parameter="help_inline"
+										)
 			return
 		q = string.split(None, 1)
 		notetag = q[1]
 		noteval = notes_db.get_selfnote(query.from_user.id, notetag)
 		if not noteval:
 			await client.answer_inline_query(query.id,
-											 results=answers,
-											 switch_pm_text="Note not found!",
-											 switch_pm_parameter="help_inline"
-											 )
+											results=answers,
+											switch_pm_text="Note not found!",
+											switch_pm_parameter="help_inline"
+										)
 			return
 		note, button = parse_button(noteval.get('value'))
 		button = build_keyboard(button)
@@ -112,9 +112,9 @@ async def inline_query_handler(client, query):
 			reply_markup=InlineKeyboardMarkup(button)))
 		try:
 			await client.answer_inline_query(query.id,
-											 results=answers,
-											 cache_time=5,
-											 )
+											results=answers,
+											cache_time=5
+										)
 		except errors.exceptions.bad_request_400.MessageEmpty:
 			exc_type, exc_obj, exc_tb = sys.exc_info()
 			log_errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
@@ -128,10 +128,10 @@ async def inline_query_handler(client, query):
 	elif string.split()[0] == "stylish":
 		if len(string.split()) == 1:
 			await client.answer_inline_query(query.id,
-											 results=answers,
-											 switch_pm_text="Insert any text to convert it!",
-											 switch_pm_parameter="help_inline"
-											 )
+											results=answers,
+											switch_pm_text="Insert any text to convert it!",
+											switch_pm_parameter="help_inline"
+										)
 			return
 		text = string.split(None, 1)[1]
 		upside = upsidedown_text_inline(text)
@@ -195,10 +195,10 @@ async def inline_query_handler(client, query):
 			description="Smoth Text",
 			input_message_content=InputTextMessageContent(smoth_text)))
 		await client.answer_inline_query(query.id,
-										 results=answers,
-										 switch_pm_text="Converted to stylish text",
-										 switch_pm_parameter="help_inline"
-										 )
+										results=answers,
+										switch_pm_text="Converted to stylish text",
+										switch_pm_parameter="help_inline"
+									)
 		return
 
 	elif string.split()[0] == "engine_pm":
@@ -209,13 +209,13 @@ async def inline_query_handler(client, query):
 		[InlineKeyboardButton("Nope, never mind", callback_data="engine_pm_none")]]
 		random.shuffle(button)
 		answers.append(InlineQueryResultArticle(
-      		id=uuid4(),
-      		title="Engine pm",
-      		description="Filter pm",
-      		input_message_content=InputTextMessageContent("Hello, i am Nana,\nJust say what do you want by this button 👇👍"),
-      		reply_markup=InlineKeyboardMarkup(button)))
+			id=uuid4(),
+			title="Engine pm",
+			description="Filter pm",
+			input_message_content=InputTextMessageContent("Hello, i am Nana,\nJust say what do you want by this button 👇👍"),
+			reply_markup=InlineKeyboardMarkup(button)))
 		await client.answer_inline_query(query.id,
-   			results=answers,
-   			cache_time=0,
-  		)
+		results=answers,
+			cache_time=0
+		)
 	

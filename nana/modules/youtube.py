@@ -127,8 +127,9 @@ async def youtube_music(_client, message):
 		audios.sort(key=lambda a: (int(a.quality.strip('k')) * -1))
 		music = audios[0]
 		text = "[⁣](https://i.ytimg.com/vi/{}/0.jpg)🎬 **Title:** [{}]({})\n".format(video.videoid,
-																					 escape_markdown(video.title),
-																					 video.watchv_url)
+																					escape_markdown(video.title),
+																					video.watchv_url
+																				)
 		text += "👤 **Author:** `{}`\n".format(video.author)
 		text += "🕦 **Duration:** `{}`\n".format(video.duration)
 		origtitle = re.sub(r'[\\/*?:"<>|\[\]]', "", str(music.title + "." + music._extension))
@@ -170,7 +171,7 @@ async def youtube_music(_client, message):
 			if "The system cannot find the file specified" in str(err) or "No such file or directory" in str(err):
 				await message.edit("You need to install ffmpeg first!\nCheck your assistant for more information!")
 				await setbot.send_message(message.from_user.id,
-										  "Hello 🙂\nYou need to install ffmpeg to make audio works better, here is guide how to install it:\n\n**If you're using linux**, go to your terminal, type:\n`sudo apt install ffmpeg`\n\n**If you're using Windows**, download ffmpeg here:\n`https://ffmpeg.zeranoe.com/builds/`\nAnd then extract (if was archive), and place ffmpeg.exe to workdir (in current dir)\n\n**If you're using heroku**, type this in your workdir:\n`heroku buildpacks:add https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`\nOr if you not using heroku term, follow this guide:\n1. Go to heroku.com\n2. Go to your app in heroku\n3. Change tabs/click Settings, then search for Buildpacks text\n4. Click button Add build pack, then type `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`\n5. Click Save changes, and you need to rebuild your heroku app to take changes!\n\nNeed help?\nGo @nanabotsupport and ask there")
+										"Hello 🙂\nYou need to install ffmpeg to make audio works better, here is guide how to install it:\n\n**If you're using linux**, go to your terminal, type:\n`sudo apt install ffmpeg`\n\n**If you're using Windows**, download ffmpeg here:\n`https://ffmpeg.zeranoe.com/builds/`\nAnd then extract (if was archive), and place ffmpeg.exe to workdir (in current dir)\n\n**If you're using heroku**, type this in your workdir:\n`heroku buildpacks:add https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`\nOr if you not using heroku term, follow this guide:\n1. Go to heroku.com\n2. Go to your app in heroku\n3. Change tabs/click Settings, then search for Buildpacks text\n4. Click button Add build pack, then type `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`\n5. Click Save changes, and you need to rebuild your heroku app to take changes!\n\nNeed help?\nGo @nanabotsupport and ask there")
 				return
 		if avthumb:
 			os.system(
@@ -188,8 +189,9 @@ async def youtube_music(_client, message):
 		with open("nana/cache/prev.jpg", "wb") as stk:
 			shutil.copyfileobj(getprev.raw, stk)
 		await app.send_audio(message.chat.id, audio="nana/downloads/{}.mp3".format(musictitle),
-							 thumb="nana/cache/prev.jpg", title=music.title, caption="🕦 `{}`".format(video.duration),
-							 reply_to_message_id=message.message_id)
+							thumb="nana/cache/prev.jpg", title=music.title, caption="🕦 `{}`".format(video.duration),
+							reply_to_message_id=message.message_id
+						)
 		try:
 			os.remove("nana/cache/prev.jpg")
 		except FileNotFoundError:
@@ -204,24 +206,24 @@ async def youtube_music(_client, message):
 		if "command not found" in str(err) or "is not recognized" in str(err):
 			await message.edit("You need to install ffmpeg first!\nCheck your assistant for more information!")
 			await setbot.send_message(message.from_user.id,
-									  "Hello 🙂\nYou need to install ffmpeg to make audio works better, here is guide "
-									  "how to install it:\n\n**If you're using linux**, go to your terminal, "
-									  "type:\n`sudo apt install ffmpeg`\n\n**If you're using Windows**, download "
-									  "ffmpeg here:\n`https://ffmpeg.zeranoe.com/builds/`\nAnd then extract (if was "
-									  "archive), and place ffmpeg.exe to workdir (in current dir)\n\n**If you're using "
-									  "heroku**, type this in your workdir:\n`heroku buildpacks:add "
-									  "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`\nOr if you "
-									  "not using heroku term, follow this guide:\n1. Go to heroku.com\n2. Go to your "
-									  "app in heroku\n3. Change tabs/click Settings, then search for Buildpacks "
-									  "text\n4. Click button Add build pack, then type "
-									  "`https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`\n5. Click Save "
-									  "changes, and you need to rebuild your heroku app to take changes!\n\nNeed "
-									  "help?\nGo @AyraSupport and ask there")
+									"Hello 🙂\nYou need to install ffmpeg to make audio works better, here is guide "
+									"how to install it:\n\n**If you're using linux**, go to your terminal, "
+									"type:\n`sudo apt install ffmpeg`\n\n**If you're using Windows**, download "
+									"ffmpeg here:\n`https://ffmpeg.zeranoe.com/builds/`\nAnd then extract (if was "
+									"archive), and place ffmpeg.exe to workdir (in current dir)\n\n**If you're using "
+									"heroku**, type this in your workdir:\n`heroku buildpacks:add "
+									"https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`\nOr if you "
+									"not using heroku term, follow this guide:\n1. Go to heroku.com\n2. Go to your "
+									"app in heroku\n3. Change tabs/click Settings, then search for Buildpacks "
+									"text\n4. Click button Add build pack, then type "
+									"`https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`\n5. Click Save "
+									"changes, and you need to rebuild your heroku app to take changes!\n\nNeed "
+									"help?\nGo @AyraSupport and ask there")
 			return
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
 		await message.edit("**An error has accured!**\nCheck your assistant for more information!")
 		button = InlineKeyboardMarkup([[InlineKeyboardButton("🐞 Report bugs", callback_data="report_errors")]])
 		await setbot.send_message(message.from_user.id, "**An error has accured!**\n```{}```".format("".join(errors)),
-								  reply_markup=button)
+								reply_markup=button)
 		logging.exception("Execution error")

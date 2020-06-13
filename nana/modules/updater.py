@@ -91,11 +91,8 @@ async def updater(client, message):
 
     brname = repo.active_branch.name
     if brname not in OFFICIAL_BRANCH:
-        await message.edit(f'**[UPDATER]:** Looks like you are using your own custom branch ({brname}). \
-				in that case, Updater is unable to identify which branch is to be merged. \
-				please checkout to any official branch')
+        await message.edit(f'**[UPDATER]:** Looks like you are using your own custom branch ({brname}). in that case, Updater is unable to identify which branch is to be merged. please checkout to any official branch')
         return
-
     try:
         repo.create_remote('upstream', REPOSITORY)
     except BaseException:

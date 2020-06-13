@@ -372,7 +372,7 @@ async def get_stickers(_client, message):
 # app.read_history("@Stickers")
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setanimation"]))
-async def get_stickers(_client, message):
+async def get_stickers_animation(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return

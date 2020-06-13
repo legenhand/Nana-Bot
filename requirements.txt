@@ -21,7 +21,7 @@ pillow
 gtts
 gitpython
 pafy
-youtube_dl==2020.2.16
+youtube_dl==2020.6.6
 googletrans
 currencyconverter
 bitlyshortener

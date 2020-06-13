@@ -73,6 +73,7 @@ Free Shrugs? Anyone?...
 waifus = [20, 32, 33, 40, 41, 42, 58]
 senpais = [37, 38, 48, 55]
 
+
 async def mocking_text(text):
     teks = list(text)
     for i, ele in enumerate(teks):
@@ -85,16 +86,17 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
+
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
 async def shg(_client, message):
     await message.edit(random.choice(meme_strings.shgs))
+
 
 @app.on_message(Filters.me & Filters.command(["spam"], Command))
 async def spam(client, message):
     await message.delete()
     times = message.command[1]
     to_spam = ' '.join(message.command[2:])
-
     if message.chat.type in ['supergroup', 'group']:
         for _ in range(int(times)):
             await client.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
@@ -104,6 +106,7 @@ async def spam(client, message):
         for _ in range(int(times)):
             await client.send_message(message.chat.id, to_spam)
             await asyncio.sleep(0.20)
+
 
 @app.on_message(Filters.me & Filters.command(["owo"], Command))
 async def owo(_client, message):
@@ -134,11 +137,11 @@ async def owo(_client, message):
     reply_text += ' ' + random.choice(meme_strings.faces)
     await message.edit(reply_text)
 
+
 @app.on_message(Filters.me & Filters.command(["waifu"], Command))
 async def waifu(client, message):
     await message.delete()
     cmd = message.command
-
     waifu = ""
     if len(cmd) > 1:
         waifu = " ".join(cmd[1:])
@@ -191,7 +194,6 @@ async def type_writer(_client, message):
 @app.on_message(Filters.me & Filters.command(["f"], Command))
 async def pay_respecc(_client, message):
     cmd = message.command
-
     paytext = ""
     if len(cmd) > 1:
         paytext = " ".join(cmd[1:])
@@ -209,11 +211,11 @@ async def pay_respecc(_client, message):
     )
     await message.edit(pay)
 
+
 @app.on_message(Filters.me & Filters.command(["senpai"], Command))
 async def senpai(client, message):
     await message.delete()
     cmd = message.command
-
     senpai = ""
     if len(cmd) > 1:
         senpai = " ".join(cmd[1:])
@@ -231,6 +233,7 @@ async def senpai(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
+
 @app.on_message(Filters.me & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
     await message.delete()
@@ -242,10 +245,10 @@ async def mock_spongebob(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
+
 @app.on_message(Filters.me & Filters.command(["stretch"], Command))
 async def stretch(_client, message):
     cmd = message.command
-
     stretch_text = ""
     if len(cmd) > 1:
         stretch_text = " ".join(cmd[1:])
@@ -256,11 +259,11 @@ async def stretch(_client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-
     count = random.randint(3, 10)
     reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
                         stretch_text)
     await message.edit(reply_text)
+
 
 @app.on_message(Filters.me & Filters.command(["cp"], Command))
 async def haha_emojis(_client, message):

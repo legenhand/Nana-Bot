@@ -2,11 +2,13 @@ import textwrap
 import jikanpy
 import requests
 
+
 def getPosterLink(mal):
     # grab poster from kitsu
     kitsu = getKitsu(mal)
     image = requests.get(f'https://kitsu.io/api/edge/anime/{kitsu}').json()
     return image['data']['attributes']['posterImage']['original']
+
 
 def getKitsu(mal):
     # get kitsu id from mal id
@@ -15,6 +17,7 @@ def getKitsu(mal):
     link = f'https://kitsu.io/api/edge/mappings/{result}/item?fields[anime]=slug'
     kitsu = requests.get(link).json()['data']['id']
     return kitsu
+
 
 def getBannerLink(mal, kitsu_search=True):
     # try getting kitsu backdrop
@@ -37,6 +40,7 @@ def getBannerLink(mal, kitsu_search=True):
     if image:
         return image
     return getPosterLink(mal)
+
 
 def get_anime_manga(mal_id, search_type, _user_id):
     jikan = jikanpy.jikan.Jikan()

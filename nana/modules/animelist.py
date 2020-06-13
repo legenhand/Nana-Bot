@@ -30,6 +30,7 @@ returns information about the manga.
 returns a list of new anime in the upcoming seasons.
 """
 
+
 @app.on_message(Filters.me & Filters.command(["manga"], Command))
 async def manga(client, message):
     cmd = message.command
@@ -131,6 +132,7 @@ async def character(client, message):
                             reply_to_message_id=ReplyCheck(message),
                             parse_mode='markdown'
                         )
+
 
 @app.on_message(Filters.me & Filters.command(["upcoming"], Command))
 async def upcoming(_client, message):

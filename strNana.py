@@ -16,6 +16,7 @@ try:
 except:
 	pass
 
+
 def clear():
 	if os.name == "posix":
 		os.system("clear")
@@ -25,6 +26,8 @@ def clear():
 		pass
 
 clear()
+
+
 def initial_selection(api_id, app_hash):
 	clear()
 	while True:

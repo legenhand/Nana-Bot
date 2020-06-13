@@ -20,6 +20,7 @@ REMOVE_BG_API_KEY = remove_bg_api
 
 IMG_PATH = DOWN_PATH + "image.jpg"
 
+
 @app.on_message(Filters.me & Filters.command(["rmbg"], Command))
 async def lastfm(client, message):
     if not REMOVE_BG_API_KEY:

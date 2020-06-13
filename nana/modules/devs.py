@@ -174,7 +174,6 @@ async def log(_client, message):
 
 @app.on_message(Filters.me & Filters.command(["dc"], Command))
 async def dc_id(_client, message):
-    chat = message.chat
     user = message.from_user
     if message.reply_to_message:
         if message.reply_to_message.forward_from:

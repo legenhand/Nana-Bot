@@ -165,7 +165,7 @@ async def youtube_music(_client, message):
 		titletext = "**Converting music...**\n"
 		await message.edit(titletext + text, disable_web_page_preview=False)
 		try:
-			process = subprocess.Popen("ffmpeg", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			subprocess.Popen("ffmpeg", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		except Exception as err:
 			if "The system cannot find the file specified" in str(err) or "No such file or directory" in str(err):
 				await message.edit("You need to install ffmpeg first!\nCheck your assistant for more information!")

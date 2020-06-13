@@ -307,7 +307,7 @@ async def marquee(client, message):
         maju = True
     else:
         maju = False
-    for loop in range(jumlah * 2):
+    for _ in range(jumlah * 2):
         if maju:
             teks = teks[1] + teks[2:] + teks[0]
         else:
@@ -321,7 +321,7 @@ async def marquee(client, message):
 @app.on_message(Filters.me & Filters.command(["2"], Command))
 async def dancedance(client, message):
     teks = list(message.text[3:])
-    for loop in range(4):
+    for _ in range(4):
         for i, ele in enumerate(teks):
             if i % 2 != 0:
                 teks[i] = ele.upper()

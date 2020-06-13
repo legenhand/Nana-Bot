@@ -18,7 +18,7 @@ except:
 
 def clear():
 	if os.name == "posix":
-		a = os.system("clear")
+		os.system("clear")
 	elif os.name == "nt":
 		a = os.system("cls")
 	else:

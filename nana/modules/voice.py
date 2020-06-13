@@ -63,7 +63,7 @@ async def voicelang(_client, message):
     temp = lang
     lang = message.text.split(None, 1)[1]
     try:
-        tts = gTTS("tes", lang=lang)
+        gTTS("tes", lang=lang)
     except:
         await message.edit("Wrong Language id !")
         lang = temp

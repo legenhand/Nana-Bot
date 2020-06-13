@@ -72,7 +72,7 @@ async def save_note(_client, message):
         return
 
     if data_type == Types.TEXT:
-        teks, button = parse_button(text)
+        teks, _ = parse_button(text)
         if not teks:
             await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
             return

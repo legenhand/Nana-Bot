@@ -106,7 +106,7 @@ async def gdrive_stuff(client, message):
                                       "without bracket\n\nAfter that, you can go next guide by type /gdrive")
         else:
             try:
-                authurl = gauth.GetAuthUrl()
+                gauth.GetAuthUrl()
             except:
                 await setbot.send_message(message.from_user.id,
                                           "Wrong Credentials! Check var ENV gdrive_credentials on heroku or do "

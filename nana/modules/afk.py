@@ -73,7 +73,7 @@ async def afk_mentioned(_client, message):
         else:
             await message.reply("Sorry, {} is AFK!".format(mention_markdown(Owner, OwnerName)))
 
-        content, message_type = get_message_type(message)
+        _, message_type = get_message_type(message)
         if message_type == Types.TEXT:
             if message.text:
                 text = message.text

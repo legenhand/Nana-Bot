@@ -103,7 +103,7 @@ async def settings(_client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
     if not me:
-        togglestart = "Start Bot"
+        pass
     else:
         togglestart = "Stop Bot"
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
@@ -156,7 +156,7 @@ async def get_myself_btn(client, query):
 @setbot.on_callback_query(dynamic_data_filter("toggle_startbot"))
 async def start_stop_bot(client, query):
     try:
-        me = await app.get_me()
+        pass
     except ConnectionError:
         await reload_userbot()
         text = "**⚙️ Welcome to Nana Settings!**\n"
@@ -289,8 +289,7 @@ async def vars_heroku(_client, query):
             # else:
             #     list_button.insert(0, [InlineKeyboardButton("api_id🚫", callback_data="api_id")])
             configdict = config.to_dict()
-            i = 0
-            for x, y in configdict.items():
+            for x, _ in configdict.items():
                 list_button.insert(0, [InlineKeyboardButton("{}✅".format(x), callback_data="tes")])
     button = InlineKeyboardMarkup(list_button)
     await query.message.edit_text(text, reply_markup=button)
@@ -323,7 +322,7 @@ async def back(_client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
     if not me:
-        togglestart = "Start Bot"
+        pass
     else:
         togglestart = "Stop Bot"
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
@@ -439,7 +438,7 @@ async def set_stickers(client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\n{}".format(status)
     if not me:
-        togglestart = "Start Bot"
+        pass
     else:
         togglestart = "Stop Bot"
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),

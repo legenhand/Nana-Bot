@@ -67,7 +67,7 @@ CHAR_POINTS = chr(0x0324)
 
 def text_style_generator(text, text_type):
     teks = list(text)
-    for i, ele in enumerate(teks):
+    for i, _ in enumerate(teks):
         teks[i] = text_type + teks[i]
     pesan = ""
     for x in range(len(teks)):

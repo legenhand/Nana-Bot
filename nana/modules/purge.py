@@ -41,7 +41,6 @@ Purge your messages only, no need admin permission.
 async def purge(client, message):
     if message.reply_to_message:
         start_t = datetime.now()
-        user_id = None
         from_user = None
         start_message = message.reply_to_message.message_id
         end_message = message.message_id
@@ -67,10 +66,8 @@ async def purge(client, message):
                                     revoke=True)
         purged_messages_count += len(list_of_messages_to_delete)
         end_t = datetime.now()
-        time_taken_s = (end_t - start_t).seconds
         await message.delete()
     else:
-        out = "Reply to a message to to start purge."
         await message.delete()
 
 

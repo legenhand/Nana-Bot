@@ -8,7 +8,7 @@ __HELP__ = """
 As long as your message starts with r/, it will automatically generate a subreddit link and hyperlink your message.
 
 """
-the_regex = "^r\/([^\s\/])+"
+the_regex = r"^r\/([^\s\/])+"
 
 @app.on_message(Filters.me & Filters.regex(the_regex))
 async def reddit(_client, message):

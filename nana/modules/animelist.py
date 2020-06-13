@@ -121,7 +121,7 @@ async def character(client, message):
     about_string = ' '.join(about)
     mal_url = search_result["results"][0]['url']
     for entity in character:
-        if character[entity] == None:
+        if character[entity] is None:
             character[entity] = "Unknown"
     caption += f"\n**About**: {about_string}"
     caption += f" [Read More]({mal_url})..."

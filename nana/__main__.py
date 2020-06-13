@@ -41,8 +41,6 @@ async def reboot():
     global BOT_RUNTIME, HELP_COMMANDS
     importlib.reload(importlib.import_module("nana.modules"))
     importlib.reload(importlib.import_module("nana.assistant"))
-    from nana.modules import ALL_MODULES
-    from nana.assistant import ALL_SETTINGS
     # await setbot.send_message(Owner, "Bot is restarting...")
     await setbot.restart()
     await app.restart()

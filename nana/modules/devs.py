@@ -76,7 +76,7 @@ async def pic(chat, photo, caption=None):
 async def aexec(client, message, code):
     # Make an async function with the code and `exec` it
     exec(
-        f'async def __ex(client, message): ' +
+        'async def __ex(client, message): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
 

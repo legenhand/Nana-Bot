@@ -32,7 +32,7 @@ async def lastfm(client, message):
         if os.path.exists(IMG_PATH):
             os.remove(IMG_PATH)
         await client.download_media(message=replied, file_name=IMG_PATH)
-        await message.edit(f"Removing Background...")
+        await message.edit("Removing Background...")
         try:
             rmbg = RemoveBg(REMOVE_BG_API_KEY, "removebg_error.log")
             rmbg.remove_background_from_img_file(IMG_PATH)

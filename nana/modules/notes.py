@@ -15,25 +15,19 @@ __HELP__ = """
 Save a note, get that, even you can delete that note.
 This note only avaiable for yourself only!
 Also notes support inline button powered by inline query assistant bot.
-
 ──「 **Save Note** 」──
 -> `save (note)`
 Save a note, you can get or delete that later.
-
 ──「 **Get Note** 」──
 -> `get (note)`
 Get that note, if avaiable.
-
 ──「 **Delete Note** 」──
 -> `clear (note)`
 Delete that note, if avaiable.
-
 ──「 **All Notes** 」──
 -> `saved`
 -> `notes`
 Get all your notes, if too much notes, please use this in your saved message instead!
-
-
 ── **Note Format** ──
 -> **Button**
 `[Button Text](buttonurl:google.com)`
@@ -61,7 +55,7 @@ GET_FORMAT = {
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["save"], Command))
-async def save_note(_client, message):
+async def save_note(client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return
@@ -72,7 +66,7 @@ async def save_note(_client, message):
         return
 
     if data_type == Types.TEXT:
-        teks, _ = parse_button(text)
+        teks, button = parse_button(text)
         if not teks:
             await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
             return
@@ -174,7 +168,7 @@ async def get_note(client, message):
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["notes", "saved"], Command))
-async def local_notes(_client, message):
+async def local_notes(client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return
@@ -193,7 +187,7 @@ async def local_notes(_client, message):
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["clear"], Command))
-async def clear_note(_client, message):
+async def clear_note(client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return

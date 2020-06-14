@@ -1,9 +1,15 @@
 import re
 import time
+import heroku3
+import asyncio
+import os
+import requests
+import math
 
-from __main__ import HELP_COMMANDS
+from nana.__main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
+from nana import HEROKU_API
 from nana import setbot, AdminSettings, Command, BotName, DB_AVAIABLE
 from nana.__main__ import get_runtime
 from nana.helpers.misc import paginate_modules
@@ -11,6 +17,9 @@ from nana.modules.chats import get_msgc
 
 if DB_AVAIABLE:
     from nana.modules.database.chats_db import get_all_chats
+
+Heroku = heroku3.from_key(HEROKU_API)
+heroku_api = "https://api.heroku.com"
 
 HELP_STRINGS = f"""
 Hello! I am {BotName}, your Assistant!
@@ -87,6 +96,42 @@ async def help_button(_client, query):
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
 async def stats(_client, message):
+    useragent = ('Mozilla/5.0 (Linux; Android 10; SM-G975F) '
+             'AppleWebKit/537.36 (KHTML, like Gecko) '
+             'Chrome/80.0.3987.149 Mobile Safari/537.36'
+        )
+    user_id = Heroku.account().id
+    headers = {
+    'User-Agent': useragent,
+    'Authorization': f'Bearer {HEROKU_API}',
+    'Accept': 'application/vnd.heroku+json; version=3.account-quotas',
+    }
+    path = "/accounts/" + user_id + "/actions/get-quota"
+    r = requests.get(heroku_api + path, headers=headers)
+    result = r.json()
+    quota = result['account_quota']
+    quota_used = result['quota_used']
+
+    """ - Used - """
+    remaining_quota = quota - quota_used
+    percentage = math.floor(remaining_quota / quota * 100)
+    minutes_remaining = remaining_quota / 60
+    hours = math.floor(minutes_remaining / 60)
+    minutes = math.floor(minutes_remaining % 60)
+
+    """ - Current - """
+    App = result['apps']
+    try:
+        App[0]['quota_used']
+    except IndexError:
+        AppQuotaUsed = 0
+        AppPercentage = 0
+    else:
+        AppQuotaUsed = App[0]['quota_used'] / 60
+        AppPercentage = math.floor(App[0]['quota_used'] * 100 / quota)
+    AppHours = math.floor(AppQuotaUsed / 60)
+    AppMinutes = math.floor(AppQuotaUsed % 60)
+
     text = "**Here is your current stats**\n"
     text += "Notes: `0 notes`\n"
     if DB_AVAIABLE:
@@ -113,6 +158,12 @@ async def stats(_client, message):
         alivetext += "{} minutes, ".format(minutes)
     if seconds:
         alivetext += "{} seconds".format(seconds)
+
+    text = f" -> `Dyno usage:`{AppHours}`**h** `{AppMinutes}`**m**"
+    text += f"**|**  [`{AppPercentage}`**%**]"
+    text += "\n\n"
+    text += " -> `Dyno hours quota remaining this month`:`{hours}`**h**  `{minutes}`**m**  "
+    text += f"**|**  [`{percentage}`**%**]"
 
     text += "\nBot was alive for `{}`".format(alivetext)
     await message.reply_text(text, quote=True)

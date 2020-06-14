@@ -1,10 +1,10 @@
 import re
 import time
 
-from nana.__main__ import HELP_COMMANDS
+from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, BotName, DB_AVAIABLE, StartTime
+from nana import setbot, AdminSettings, Command, BotName, DB_AVAIABLE
 from nana.__main__ import get_runtime
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
@@ -27,29 +27,6 @@ You can use {", ".join(Command)} on your userbot to execute that commands.
 Here is current modules you have
 """
 
-
-def get_readable_time(seconds: int) -> str:
-    count = 0
-    ping_time = ""
-    time_list = []
-    time_suffix_list = ["s", "m", "h", "days"]
-    while count < 4:
-        count += 1
-        if count < 3:
-            remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
-        if seconds == 0 and remainder == 0:
-            break
-        time_list.append(int(result))
-        seconds = int(remainder)
-    for x in range(len(time_list)):
-        time_list[x] = str(time_list[x]) + time_suffix_list[x]
-    if len(time_list) == 4:
-        ping_time += time_list.pop() + ", "
-    time_list.reverse()
-    ping_time += ":".join(time_list)
-    return ping_time
 
 async def help_parser(client, chat_id, text, keyboard=None):
     if not keyboard:
@@ -116,6 +93,26 @@ async def stats(_client, message):
         text += "Group joined: `{} groups`\n".format(len(get_all_chats()))
     text += "Message received: `{} messages`\n".format(get_msgc())
 
-    uptime = get_readable_time((time.time() - StartTime))
-    text += ("<b>Nana uptime:</b> <code>{}</code>".format(uptime))
+    a = await get_runtime()
+    b = int(time.time())
+    c = b - a
+    month = c // 2678400
+    days = c // 86400
+    hours = c // 3600 % 24
+    minutes = c // 60 % 60
+    seconds = c % 60
+
+    alivetext = ""
+    if month:
+        alivetext += "{} month, ".format(month)
+    if days:
+        alivetext += "{} days, ".format(days)
+    if hours:
+        alivetext += "{} hours, ".format(hours)
+    if minutes:
+        alivetext += "{} minutes, ".format(minutes)
+    if seconds:
+        alivetext += "{} seconds".format(seconds)
+
+    text += "\nBot was alive for `{}`".format(alivetext)
     await message.reply_text(text, quote=True)

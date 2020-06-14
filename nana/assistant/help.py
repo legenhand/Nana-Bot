@@ -1,7 +1,7 @@
 import re
 import time
 
-from nana.__main__ import HELP_COMMANDS
+from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana import setbot, AdminSettings, Command, BotName, DB_AVAIABLE, StartTime

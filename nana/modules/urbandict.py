@@ -17,7 +17,7 @@ Search urban for dictionary
 
 
 @app.on_message(Filters.me & Filters.command(["ud"], Command))
-async def urban_dictionary(client, message):
+async def urban_dictionary(_client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `ud example`")
         return

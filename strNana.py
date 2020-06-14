@@ -16,15 +16,18 @@ try:
 except:
 	pass
 
+
 def clear():
 	if os.name == "posix":
-		a = os.system("clear")
+		os.system("clear")
 	elif os.name == "nt":
-		a = os.system("cls")
+		os.system("cls")
 	else:
 		pass
 
 clear()
+
+
 def initial_selection(api_id, app_hash):
 	clear()
 	while True:

@@ -10,7 +10,7 @@ Generate a  hyperlink username you refer with a custom single text.
 """
 
 @app.on_message(Filters.me & Filters.command(["mention"], Command))
-async def mention(client, message):
+async def mention(_client, message):
     args = message.text.split(None, 2)
     if len(args) == 3:
         user = args[1]

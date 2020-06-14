@@ -67,7 +67,7 @@ CHAR_POINTS = chr(0x0324)
 
 def text_style_generator(text, text_type):
     teks = list(text)
-    for i, ele in enumerate(teks):
+    for i, _ in enumerate(teks):
         teks[i] = text_type + teks[i]
     pesan = ""
     for x in range(len(teks)):
@@ -81,7 +81,7 @@ def stylish_formatting(text):
     src_code = upside_compile.findall(text)
     for x in src_code:
         line = x.strip("\r\n")
-        xline = ''.join([upsidedown_dict[c] if c in upsidedown_dict else c for c in line[::-1]])
+        xline = ''.join(upsidedown_dict[c] if c in upsidedown_dict else c for c in line[::-1])
         text = re.sub(r'<upside>(.*?)</upside>', xline, text, 1)
 
     # Converting to overlined: oline
@@ -172,7 +172,7 @@ def stylish_formatting(text):
 
 
 @app.on_message(Filters.me & Filters.command(["stylish"], Command))
-async def stylish_generator(client, message):
+async def stylish_generator(_client, message):
     if message.text and len(message.text.split()) == 1 or message.caption and len(message.caption.split()) == 1:
         await message.edit("Usage: `stylish your text goes here`")
         return
@@ -199,5 +199,5 @@ def formatting_text_inline(text, text_style):
 
 def upsidedown_text_inline(text):
     line = text.strip("\r\n")
-    text = ''.join([upsidedown_dict[c] if c in upsidedown_dict else c for c in line[::-1]])
+    text = ''.join(upsidedown_dict[c] if c in upsidedown_dict else c for c in line[::-1])
     return text

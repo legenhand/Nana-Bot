@@ -12,6 +12,7 @@ sqlalchemy
 bs4
 lxml
 jikanpy
+simplejson
 removebg
 telegraph
 aiohttp
@@ -20,7 +21,7 @@ pillow
 gtts
 gitpython
 pafy
-youtube_dl==2020.2.16
+youtube_dl==2020.6.6
 googletrans
 currencyconverter
 bitlyshortener
@@ -29,7 +30,7 @@ uptime
 py-cpuinfo
 speedtest-cli
 git+https://github.com/legenhand/mega.py.git
-httplib2==0.15.0
+httplib2==0.18.1
 coffeehouse
 pycurl
 PTable

@@ -48,7 +48,7 @@ androidfilehost.com`
 
 
 @app.on_message(Filters.me & Filters.command(["ls"], Command))
-async def ls(client, message):
+async def ls(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 2:
         basepath = "/root/nana/{}".format(args[1])
@@ -139,7 +139,7 @@ async def download_url(url, file_name):
 
 
 @app.on_message(Filters.me & Filters.command(["dl"], Command))
-async def download_from_url(client, message):
+async def download_from_url(_client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `dl <url> <filename>`")
         return
@@ -171,7 +171,7 @@ async def dssownload_from_telegram(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["direct"], Command))
-async def direct_link_generator(client, message):
+async def direct_link_generator(_client, message):
     args = message.text.split(None, 1)
     await message.edit("`Processing...`")
     if len(args) == 1:
@@ -452,8 +452,8 @@ async def progressdl(current, total, event, start, type_of_ps, file_name=None):
         time_to_completion = round((total - current) / speed) * 1000
         estimated_total_time = elapsed_time + time_to_completion
         progress_str = "[{0}{1}] {2}%\n".format(
-            ''.join(["▰" for i in range(math.floor(percentage / 10))]),
-            ''.join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+            ''.join("▰" for i in range(math.floor(percentage / 10))),
+            ''.join("▱" for i in range(10 - math.floor(percentage / 10))),
             round(percentage, 2))
         tmp = progress_str + \
               "{0} of {1}\nETA: {2}".format(
@@ -541,7 +541,7 @@ async def download_file_from_tg(client, message):
     await message.edit(text)
 
 
-async def name_file(client, message):
+async def name_file(_client, message):
     if message.reply_to_message.photo:
         return "photo_{}_{}.png".format(message.reply_to_message.photo.date,
                                         message.reply_to_message.photo.date)

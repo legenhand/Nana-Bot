@@ -1,14 +1,10 @@
 
 import requests
-from time import sleep
 import asyncio
 
-from pyrogram import Filters, Message, User
-from pyrogram.api import functions
-from pyrogram.errors import PeerIdInvalid
+from pyrogram import Filters
 
 from nana import app, Command
-from nana.helpers.PyroHelpers import ReplyCheck
 from nana.helpers.string import replace_text
 
 __MODULE__ = "CAS Scanner"
@@ -19,7 +15,7 @@ __HELP__ = """
 """
 
 @app.on_message(Filters.me & Filters.command(["cas"], Command))
-async def cas(client, message):
+async def cas(_client, message):
     cmd = message.command
 
     user = ""

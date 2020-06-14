@@ -1,7 +1,6 @@
 import os
 
 import pydrive
-from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from pyrogram import Filters
 
@@ -9,7 +8,7 @@ from nana import setbot, AdminSettings, gauth, gdrive_credentials, HEROKU_API
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["gdrive"]))
-async def gdrive_helper(client, message):
+async def gdrive_helper(_client, message):
     if len(message.text.split()) == 1:
         gdriveclient = os.path.isfile("client_secrets.json")
         if HEROKU_API:

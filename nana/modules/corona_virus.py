@@ -1,5 +1,3 @@
-import os
-import shutil
 import datetime
 
 import asyncio
@@ -21,7 +19,7 @@ Check info of cases corona virus disease 2019
 
 
 @app.on_message(Filters.me & Filters.command(["corona"], Command))
-async def corona(client, message):
+async def corona(_client, message):
     await message.edit("`Processing...`")
     args = message.text.split(None, 1)
     if len(args) == 1:

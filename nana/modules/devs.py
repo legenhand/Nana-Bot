@@ -76,7 +76,7 @@ async def pic(chat, photo, caption=None):
 async def aexec(client, message, code):
     # Make an async function with the code and `exec` it
     exec(
-        f'async def __ex(client, message): ' +
+        'async def __ex(client, message): ' +
         ''.join(f'\n {l}' for l in code.split('\n'))
     )
 
@@ -98,6 +98,12 @@ async def executor(client, message):
         errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
         await message.edit("**Execute**\n`{}`\n\n**Failed:**\n```{}```".format(code, "".join(errors)))
         logging.exception("Execution error")
+
+
+@app.on_message(Filters.me & Filters.command(["ip"], Command))
+async def public_ip(_client, message):
+    ip = requests.get('https://api.ipify.org').text
+    await message.edit(f'<code>{ip}</code>', parse_mode='html')
 
 
 @app.on_message(Filters.me & Filters.command(["cmd"], Command))
@@ -162,15 +168,14 @@ async def terminal(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["log"], Command))
-async def log(client, message):
+async def log(_client, message):
     f = open("nana/logs/error.log", "r")
     data = await deldog(message, f.read())
     await message.edit("`Your recent logs stored here : `{}".format(data))
 
 
 @app.on_message(Filters.me & Filters.command(["dc"], Command))
-async def dc_id(client, message):
-    chat = message.chat
+async def dc_id(_client, message):
     user = message.from_user
     if message.reply_to_message:
         if message.reply_to_message.forward_from:
@@ -200,14 +205,14 @@ async def dc_id(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["repo"], Command))
-async def repo(client, message):
+async def repo(_client, message):
     await message.edit(
         "Click [here](https://github.com/pokurt/Nana-Bot) for Nana-Bot-Remix Source.\nClick [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",
         disable_web_page_preview=True)
 
 
 @app.on_message(Filters.me & Filters.command(["alive"], Command))
-async def alive(client, message):
+async def alive(_client, message):
     try:
         me = await app.get_me()
     except ConnectionError:
@@ -229,7 +234,7 @@ async def alive(client, message):
     await message.edit(text)
 
 @app.on_message(Filters.me & Filters.command(["id"], Command))
-async def get_id(client, message):
+async def get_id(_client, message):
     file_id = None
     user_id = None
 
@@ -269,7 +274,7 @@ async def get_id(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["speedtest"], Command))
-async def speedtest(client, message):
+async def speedtest(_client, message):
     await message.edit("`Running speed test . . .`")
     test = Speedtest()
     test.get_best_server()

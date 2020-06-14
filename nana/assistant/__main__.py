@@ -14,7 +14,7 @@ if DB_AVAIABLE:
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["start"]))
-async def start(client, message):
+async def start(_client, message):
     if len(message.text.split()) >= 2:
         helparg = message.text.split()[1]
         if helparg == "help_inline":
@@ -88,7 +88,7 @@ async def get_myself(client, message):
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["settings"]))
-async def settings(client, message):
+async def settings(_client, message):
     try:
         me = await app.get_me()
     except ConnectionError:
@@ -103,9 +103,9 @@ async def settings(client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
     if not me:
-        togglestart = "Start Bot"
+        pass
     else:
-        togglestart = "Stop Bot"
+        pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
                    [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]
@@ -156,7 +156,7 @@ async def get_myself_btn(client, query):
 @setbot.on_callback_query(dynamic_data_filter("toggle_startbot"))
 async def start_stop_bot(client, query):
     try:
-        me = await app.get_me()
+        pass
     except ConnectionError:
         await reload_userbot()
         text = "**⚙️ Welcome to Nana Settings!**\n"
@@ -273,7 +273,7 @@ async def reboot_heroku(client, query):
 
 
 @setbot.on_callback_query(dynamic_data_filter("heroku_vars"))
-async def vars_heroku(client, query):
+async def vars_heroku(_client, query):
     text = "**⚙️ Welcome to Heroku Vars Settings!**\n" \
            "`Setting your heroku config vars here!`\n"
     list_button = [[InlineKeyboardButton("⬅ back️", callback_data="back"),
@@ -289,8 +289,7 @@ async def vars_heroku(client, query):
             # else:
             #     list_button.insert(0, [InlineKeyboardButton("api_id🚫", callback_data="api_id")])
             configdict = config.to_dict()
-            i = 0
-            for x, y in configdict.items():
+            for x, _ in configdict.items():
                 list_button.insert(0, [InlineKeyboardButton("{}✅".format(x), callback_data="tes")])
     button = InlineKeyboardMarkup(list_button)
     await query.message.edit_text(text, reply_markup=button)
@@ -301,14 +300,14 @@ valuevars = ""
 
 
 @setbot.on_callback_query(dynamic_data_filter("add_vars"))
-async def add_vars(client, query):
+async def add_vars(_client, query):
     global namevars
     await query.message.edit_text("Send Name Variable :")
     setbot.on_message()
 
 
 @setbot.on_callback_query(dynamic_data_filter("back"))
-async def back(client, message):
+async def back(_client, message):
     try:
         me = await app.get_me()
     except ConnectionError:
@@ -323,9 +322,9 @@ async def back(client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
     if not me:
-        togglestart = "Start Bot"
+        pass
     else:
-        togglestart = "Stop Bot"
+        pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")]]
     if HEROKU_API:
@@ -335,7 +334,7 @@ async def back(client, message):
     await message.message.edit_text(text, reply_markup=button)
 
 
-async def name_vars(client, message):
+async def name_vars(_client, message):
     global namevars
     namevars = message.text
 
@@ -350,7 +349,7 @@ TODEL = {}
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setsticker"]))
-async def get_stickers(client, message):
+async def get_stickers(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return
@@ -373,7 +372,7 @@ async def get_stickers(client, message):
 # app.read_history("@Stickers")
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setanimation"]))
-async def get_stickers(client, message):
+async def get_stickers_animation(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return
@@ -439,9 +438,9 @@ async def set_stickers(client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\n{}".format(status)
     if not me:
-        togglestart = "Start Bot"
+        pass
     else:
-        togglestart = "Stop Bot"
+        pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
                    [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]
@@ -453,7 +452,7 @@ async def set_stickers(client, message):
 
 
 @setbot.on_callback_query(dynamic_data_filter("setsticker"))
-async def settings_sticker(client, message):
+async def settings_sticker(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return

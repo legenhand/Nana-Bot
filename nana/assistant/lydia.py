@@ -1,4 +1,4 @@
-import time
+import asyncio
 
 from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
@@ -13,7 +13,7 @@ session = None
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["lydia"]))
-async def lydia_stats(client, message):
+async def lydia_stats(_client, message):
     global lydia_status, coffeehouse_api, lydia, session
     if lydia_api == "":
         await message.reply("`lydia API key is not set!\nSet your lydia API key by adding Config Vars in heroku with "
@@ -21,7 +21,7 @@ async def lydia_stats(client, message):
         return
     if lydia_status:
         await message.reply("Turning off lydia...")
-        time.sleep(0.5)
+        asyncio.sleep(0.3)
         lydia_status = False
         await message.reply("Lydia will not reply your message")
     else:
@@ -43,7 +43,9 @@ async def lydia_stats(client, message):
 async def lydia_settings(client, message):
     global lydia_status, session
     if lydia_status:
+        await client.send_chat_action(chat_id=message.chat.id,action="typing")
         output = session.think_thought(message.text)
+        asyncio.sleep(0.3)
         await message.reply_text("{0}".format(output), quote=True)
     else:
         return

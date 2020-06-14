@@ -8,8 +8,6 @@
 # Ported to Nana by @pokurt
 
 import os
-import time
-from datetime import datetime
 
 from removebg import RemoveBg
 from pyrogram import Filters
@@ -21,6 +19,7 @@ DOWN_PATH = '/root/nana/'
 REMOVE_BG_API_KEY = remove_bg_api
 
 IMG_PATH = DOWN_PATH + "image.jpg"
+
 
 @app.on_message(Filters.me & Filters.command(["rmbg"], Command))
 async def lastfm(client, message):
@@ -34,7 +33,7 @@ async def lastfm(client, message):
         if os.path.exists(IMG_PATH):
             os.remove(IMG_PATH)
         await client.download_media(message=replied, file_name=IMG_PATH)
-        await message.edit(f"Removing Background...")
+        await message.edit("Removing Background...")
         try:
             rmbg = RemoveBg(REMOVE_BG_API_KEY, "removebg_error.log")
             rmbg.remove_background_from_img_file(IMG_PATH)

@@ -90,7 +90,7 @@ async def carbon(client, message):
         await message.edit("`api is offline please try again later.`")
 
 @app.on_message(Filters.me & Filters.command(["carbonbg"], Command))
-async def carbonbg(client, message):
+async def carbonbg(_client, message):
     global bg
     cmd = message.command
     type_text = ""
@@ -108,7 +108,7 @@ async def carbonbg(client, message):
     await message.delete()
 
 @app.on_message(Filters.me & Filters.command(["carbontheme"], Command))
-async def carbontheme(client, message):
+async def carbontheme(_client, message):
     global theme
     cmd = message.command
     type_text = ""

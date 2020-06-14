@@ -1,6 +1,4 @@
-import textwrap
 import jikanpy
-import requests
 import asyncio
 
 from pyrogram import Filters
@@ -31,6 +29,7 @@ returns information about the manga.
 -> `upcoming`
 returns a list of new anime in the upcoming seasons.
 """
+
 
 @app.on_message(Filters.me & Filters.command(["manga"], Command))
 async def manga(client, message):
@@ -123,7 +122,7 @@ async def character(client, message):
     about_string = ' '.join(about)
     mal_url = search_result["results"][0]['url']
     for entity in character:
-        if character[entity] == None:
+        if character[entity] is None:
             character[entity] = "Unknown"
     caption += f"\n**About**: {about_string}"
     caption += f" [Read More]({mal_url})..."
@@ -134,8 +133,9 @@ async def character(client, message):
                             parse_mode='markdown'
                         )
 
+
 @app.on_message(Filters.me & Filters.command(["upcoming"], Command))
-async def upcoming(client, message):
+async def upcoming(_client, message):
     jikan = jikanpy.jikan.Jikan()
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()

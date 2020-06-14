@@ -67,7 +67,7 @@ async def get_driveinfo(driveid):
 
 
 @app.on_message(Filters.me & Filters.command(["credentials"], Command))
-async def credentials(client, message):
+async def credentials(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
         await message.edit("Write any args here!")
@@ -106,7 +106,7 @@ async def gdrive_stuff(client, message):
                                       "without bracket\n\nAfter that, you can go next guide by type /gdrive")
         else:
             try:
-                authurl = gauth.GetAuthUrl()
+                gauth.GetAuthUrl()
             except:
                 await setbot.send_message(message.from_user.id,
                                           "Wrong Credentials! Check var ENV gdrive_credentials on heroku or do "

@@ -76,7 +76,7 @@ def dynamic_data_filter(data):
 
 
 @setbot.on_callback_query(dynamic_data_filter("update_now"))
-async def update_button(client, query):
+async def update_button(_client, query):
     await query.message.edit_text("Updating, please wait...")
     try:
         repo = Repo()

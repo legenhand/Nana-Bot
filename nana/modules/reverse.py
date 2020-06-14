@@ -41,7 +41,7 @@ async def bitly(client, message):
             await message.edit('Reverse search for Animated stickers are yet not implemented')
             return
         if message_.photo or message_.animation or message_.sticker:
-            dis = await client.download_media(message=message_,file_name="/root/nana/")
+            dis = await client.download_media(message=message_, file_name="/root/nana/")
             dis_loc = os.path.join("/root/nana/", os.path.basename(dis))
         if message_.animation:
             await message.edit("Converting this Gif to Image")
@@ -71,7 +71,7 @@ async def bitly(client, message):
         prs_anchor_element = prs_div.find("a")
         prs_url = base_url + prs_anchor_element.get("href")
         prs_text = prs_anchor_element.text
-        img_size_div = soup.find(id="jHnbRc")
+        soup.find(id="jHnbRc")
         # img_size = img_size_div.find_all("div")
         end = datetime.now()
         ms = (end - start).seconds

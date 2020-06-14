@@ -33,7 +33,7 @@ DELAY_TIME = 60  # seconds
 
 
 @app.on_message(Filters.me & (Filters.command(["afk"], Command) | Filters.regex("^brb ")))
-async def afk(client, message):
+async def afk(_client, message):
     if not DB_AVAIABLE:
         await message.edit("Your database is not avaiable!")
         return
@@ -52,7 +52,7 @@ async def afk(client, message):
 
 
 @app.on_message(Filters.mentioned & ~Filters.bot, group=11)
-async def afk_mentioned(client, message):
+async def afk_mentioned(_client, message):
     if not DB_AVAIABLE:
         return
     global MENTIONED
@@ -73,7 +73,7 @@ async def afk_mentioned(client, message):
         else:
             await message.reply("Sorry, {} is AFK!".format(mention_markdown(Owner, OwnerName)))
 
-        content, message_type = get_message_type(message)
+        _, message_type = get_message_type(message)
         if message_type == Types.TEXT:
             if message.text:
                 text = message.text
@@ -93,7 +93,7 @@ async def afk_mentioned(client, message):
 
 
 @app.on_message(Filters.me & Filters.group, group=12)
-async def no_longer_afk(client, message):
+async def no_longer_afk(_client, message):
     if not DB_AVAIABLE:
         return
     global MENTIONED

@@ -1,5 +1,4 @@
 import os
-import time
 from telegraph import upload_file
 
 from pyrogram import Filters

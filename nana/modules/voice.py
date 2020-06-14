@@ -58,12 +58,12 @@ async def voice(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["voicelang"], Command))
-async def voicelang(client, message):
+async def voicelang(_client, message):
     global lang
     temp = lang
     lang = message.text.split(None, 1)[1]
     try:
-        tts = gTTS("tes", lang=lang)
+        gTTS("tes", lang=lang)
     except:
         await message.edit("Wrong Language id !")
         lang = temp

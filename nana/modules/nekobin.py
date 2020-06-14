@@ -1,7 +1,7 @@
 import asyncio
 import requests
 
-from pyrogram import Filters, Message
+from pyrogram import Filters
 from nana import Command, app
 
 __MODULE__ = "Nekobin"
@@ -13,7 +13,7 @@ Create a Nekobin paste using replied to message.
 """
 
 @app.on_message(Filters.me & Filters.command(["neko"], Command))
-async def paste(client, message):
+async def paste(_client, message):
     cmd = message.command
 
     text = ""

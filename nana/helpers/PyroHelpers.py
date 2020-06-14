@@ -1,4 +1,4 @@
-from pyrogram import Message, User
+from pyrogram import Message
 
 
 def ReplyCheck(message: Message):

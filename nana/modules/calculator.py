@@ -74,7 +74,7 @@ async def evaluation(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["curr"], Command))
-async def evaluation(client, message):
+async def evaluation_curr(_client, message):
     if len(message.text.split()) <= 3:
         await message.edit("Usage: `curr 100 USD IDR`")
         return
@@ -90,7 +90,7 @@ async def evaluation(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["temp"], Command))
-async def evaluation(client, message):
+async def evaluation_temp(_client, message):
     if len(message.text.split()) <= 2:
         await message.edit("Usage: `temp 30 C` or `temp 60 F`")
         return

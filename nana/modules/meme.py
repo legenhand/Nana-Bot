@@ -1,13 +1,11 @@
 import os
 import random
 import shutil
-import textwrap
 from difflib import get_close_matches
 import re
 import asyncio
 
 import requests
-from PIL import Image, ImageDraw, ImageFont
 from pyrogram import Filters
 from pyrogram.errors.exceptions import FloodWait
 
@@ -75,6 +73,7 @@ Free Shrugs? Anyone?...
 waifus = [20, 32, 33, 40, 41, 42, 58]
 senpais = [37, 38, 48, 55]
 
+
 async def mocking_text(text):
     teks = list(text)
     for i, ele in enumerate(teks):
@@ -87,16 +86,17 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
+
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
-async def shg(client, message):
+async def shg(_client, message):
     await message.edit(random.choice(meme_strings.shgs))
+
 
 @app.on_message(Filters.me & Filters.command(["spam"], Command))
 async def spam(client, message):
     await message.delete()
     times = message.command[1]
     to_spam = ' '.join(message.command[2:])
-
     if message.chat.type in ['supergroup', 'group']:
         for _ in range(int(times)):
             await client.send_message(message.chat.id, to_spam, reply_to_message_id=ReplyCheck(message))
@@ -107,11 +107,41 @@ async def spam(client, message):
             await client.send_message(message.chat.id, to_spam)
             await asyncio.sleep(0.20)
 
+
+@app.on_message(Filters.me & Filters.command(["owo"], Command))
+async def owo(_client, message):
+    cmd = message.command
+    text = ""
+    if len(cmd) > 1:
+        text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`cant uwu the void.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
+    reply_text = re.sub(r'[rl]', "w", text)
+    reply_text = re.sub(r'[ｒｌ]', "ｗ", text)
+    reply_text = re.sub(r'[RL]', 'W', reply_text)
+    reply_text = re.sub(r'[ＲＬ]', 'Ｗ', reply_text)
+    reply_text = re.sub(r'n([aeiouａｅｉｏｕ])', r'ny\1', reply_text)
+    reply_text = re.sub(r'r([aeiouａｅｉｏｕ])', r'w\1', reply_text)
+    reply_text = re.sub(r'ｎ([ａｅｉｏｕ])', r'ｎｙ\1', reply_text)
+    reply_text = re.sub(r'N([aeiouAEIOU])', r'Ny\1', reply_text)
+    reply_text = re.sub(r'Ｎ([ａｅｉｏｕＡＥＩＯＵ])', r'Ｎｙ\1', reply_text)
+    reply_text = re.sub(r'\!+', ' ' + random.choice(meme_strings.faces), reply_text)
+    reply_text = re.sub(r'！+', ' ' + random.choice(meme_strings.faces), reply_text)
+    reply_text = reply_text.replace("ove", "uv")
+    reply_text = reply_text.replace("ｏｖｅ", "ｕｖ")
+    reply_text += ' ' + random.choice(meme_strings.faces)
+    await message.edit(reply_text)
+
+
 @app.on_message(Filters.me & Filters.command(["waifu"], Command))
 async def waifu(client, message):
     await message.delete()
     cmd = message.command
-
     waifu = ""
     if len(cmd) > 1:
         waifu = " ".join(cmd[1:])
@@ -131,7 +161,7 @@ async def waifu(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["type"], Command))
-async def type_writer(client, message):
+async def type_writer(_client, message):
     cmd = message.command
     text = ""
     if len(cmd) > 1:
@@ -162,9 +192,8 @@ async def type_writer(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["f"], Command))
-async def pay_respecc(client, message):
+async def pay_respecc(_client, message):
     cmd = message.command
-
     paytext = ""
     if len(cmd) > 1:
         paytext = " ".join(cmd[1:])
@@ -182,11 +211,11 @@ async def pay_respecc(client, message):
     )
     await message.edit(pay)
 
+
 @app.on_message(Filters.me & Filters.command(["senpai"], Command))
 async def senpai(client, message):
     await message.delete()
     cmd = message.command
-
     senpai = ""
     if len(cmd) > 1:
         senpai = " ".join(cmd[1:])
@@ -204,6 +233,7 @@ async def senpai(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
+
 @app.on_message(Filters.me & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
     await message.delete()
@@ -215,10 +245,10 @@ async def mock_spongebob(client, message):
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
-@app.on_message(Filters.me & Filters.command(["stretch"], Command))
-async def stretch(client, message):
-    cmd = message.command
 
+@app.on_message(Filters.me & Filters.command(["stretch"], Command))
+async def stretch(_client, message):
+    cmd = message.command
     stretch_text = ""
     if len(cmd) > 1:
         stretch_text = " ".join(cmd[1:])
@@ -229,14 +259,14 @@ async def stretch(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-
     count = random.randint(3, 10)
     reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count),
                         stretch_text)
     await message.edit(reply_text)
 
+
 @app.on_message(Filters.me & Filters.command(["cp"], Command))
-async def haha_emojis(client, message):
+async def haha_emojis(_client, message):
     if message.reply_to_message.message_id:
         teks = message.reply_to_message.text
         reply_text = random.choice(meme_strings.emojis)
@@ -280,7 +310,7 @@ async def marquee(client, message):
         maju = True
     else:
         maju = False
-    for loop in range(jumlah * 2):
+    for _ in range(jumlah * 2):
         if maju:
             teks = teks[1] + teks[2:] + teks[0]
         else:
@@ -294,7 +324,7 @@ async def marquee(client, message):
 @app.on_message(Filters.me & Filters.command(["2"], Command))
 async def dancedance(client, message):
     teks = list(message.text[3:])
-    for loop in range(4):
+    for _ in range(4):
         for i, ele in enumerate(teks):
             if i % 2 != 0:
                 teks[i] = ele.upper()
@@ -316,7 +346,7 @@ async def dancedance(client, message):
 
 
 @app.on_message(Filters.me & Filters.command(["3"], Command))
-async def typingmeme(client, message):
+async def typingmeme(_client, message):
     teks = message.text[3:]
     total = len(teks)
     for loop in range(total):

@@ -17,7 +17,7 @@ Reply To Message Text To Create Quote Sticker
 
 
 @app.on_message(Filters.me & Filters.command(["q"], Command))
-async def quotly(_client, message):
+async def quotly(client, message):
     if not message.reply_to_message:
         await message.edit("Reply to any users text message")
         return
@@ -28,6 +28,7 @@ async def quotly(_client, message):
     while not is_sticker:
         try:
             msg = await app.get_history("@QuotLyBot", 1)
+            check = msg[0]["sticker"]["file_id"]
             is_sticker = True
         except:
             time.sleep(0.5)

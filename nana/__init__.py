@@ -1,12 +1,15 @@
 import logging
 import os
 import sys
+import time
 
 from pydrive.auth import GoogleAuth
 from pyrogram import Client, errors
 from sqlalchemy import create_engine, exc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
+
+StartTime = time.time()
 
 # Postgresql
 

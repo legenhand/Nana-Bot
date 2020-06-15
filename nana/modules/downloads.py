@@ -563,29 +563,3 @@ async def name_file(_client, message):
     else:
         await message.edit("Unknown file!")
         return
-
-async def download_reply_nocall(client, message):
-	if message.reply_to_message.photo:
-		nama = "photo_{}_{}.png".format(message.reply_to_message.photo.file_id, message.reply_to_message.photo.date)
-		await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama)
-	elif message.reply_to_message.animation:
-		nama = "giphy_{}-{}.gif".format(message.reply_to_message.animation.date, message.reply_to_message.animation.file_size)
-		await client.download_media(message.reply_to_message.animation, file_name="nana/downloads/" + nama)
-	elif message.reply_to_message.video:
-		nama = "video_{}-{}.mp4".format(message.reply_to_message.video.date, message.reply_to_message.video.file_size)
-		await client.download_media(message.reply_to_message.video, file_name="nana/downloads/" + nama)
-	elif message.reply_to_message.sticker:
-		nama = "sticker_{}_{}.webp".format(message.reply_to_message.sticker.date, message.reply_to_message.sticker.set_name)
-		await client.download_media(message.reply_to_message.sticker, file_name="nana/downloads/" + nama)
-	elif message.reply_to_message.audio:
-		nama = "{}".format(message.reply_to_message.audio.file_name)
-		await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama)
-	elif message.reply_to_message.voice:
-		nama = "audio_{}.ogg".format(message.reply_to_message.voice)
-		await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama)
-	elif message.reply_to_message.document:
-		nama = "{}".format(message.reply_to_message.document.file_name)
-		await client.download_media(message.reply_to_message.document, file_name="nana/downloads/" + nama)
-	else:
-		return False
-	return "nana/downloads/" + nama

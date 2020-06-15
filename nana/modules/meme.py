@@ -5,6 +5,7 @@ from difflib import get_close_matches
 import re
 import asyncio
 
+import aiohttp
 import requests
 from pyrogram import Filters
 from pyrogram.errors.exceptions import FloodWait
@@ -62,6 +63,10 @@ Just a small command to make your keyboard become a typewriter.
 -> `shg`
 Free Shrugs? Anyone?...
 
+──「 **Pat** 」──
+-> `pat`
+Free pats ^_^
+
 ──「 **Stylish edited text** 」──
 -> `1` (forward)
 -> `1a` (backward)
@@ -86,6 +91,19 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
+@app.on_message(Filters.me & Filters.command(["pat"], Command))
+async def pat(client, message):
+    URL = "https://some-random-api.ml/animu/pat"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(URL) as request:
+            if request.status == 404:
+                return await message.edit("`no Pats for u :c")
+            result = await request.json()
+            url = result.get("link", None)
+            await message.delete()
+            await client.send_video(message.chat.id, url,
+                                    reply_to_message_id=ReplyCheck(message)
+                                )
 
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
 async def shg(_client, message):

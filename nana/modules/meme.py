@@ -4,7 +4,6 @@ import shutil
 from difflib import get_close_matches
 import re
 import asyncio
-
 import aiohttp
 import requests
 from pyrogram import Filters
@@ -38,6 +37,15 @@ streeetcchhh
 ──「 **Copy Pasta** 」──
 -> `cp`
 Reply someone message, then add randoms emoji to his/her text.
+
+──「 **Scam** 」──
+-> `scam`
+Let bot decide action and time
+-> `scam <action>`
+User decides time/action, bot decides the other.
+-> `scam <action> <time>`
+User decides both action and time
+Types: `'typing','upload_photo', 'record_video', 'upload_video', 'record_audio', 'upload_audio', 'upload_document', 'find_location','record_video_note', 'upload_video_note', 'choose_contact', 'playing'`
 
 ──「 **Mocking text** 」──
 -> `mocktxt`

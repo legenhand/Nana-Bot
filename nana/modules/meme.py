@@ -113,6 +113,37 @@ async def pat(client, message):
                                     reply_to_message_id=ReplyCheck(message)
                                 )
 
+@app.on_message(Filters.me & Filters.command(["scam"], Command))
+async def scam(client, message):
+    input_str = message.command
+    if len(input_str) == 1:  # Let bot decide action and time
+        scam_action = random.choice(meme_strings.option)
+        scam_time = random.randint(30, 60)
+    elif len(input_str) == 2:  # User decides time/action, bot decides the other.
+        try:
+            scam_action = str(input_str[1]).lower()
+            scam_time = random.randint(30, 60)
+        except ValueError:
+            scam_action = random.choice(meme_strings.option)
+            scam_time = int(input_str[1])
+    elif len(input_str) == 3:  # User decides both action and time
+        scam_action = str(input_str[1]).lower()
+        scam_time = int(input_str[2])
+    else:
+        await message.edit("`Invalid Syntax !!`")
+        return
+    try:
+        if scam_time > 0:
+            chat_id = message.chat.id
+            await message.delete()
+            count = 0
+            while count <= scam_time:
+                await client.send_chat_action(chat_id, scam_action)
+                await asyncio.sleep(5)
+                count += 5
+    except Exception:
+        return
+
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
 async def shg(_client, message):
     await message.edit(random.choice(meme_strings.shgs))

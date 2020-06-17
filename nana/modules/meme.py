@@ -4,7 +4,7 @@ import shutil
 from difflib import get_close_matches
 import re
 import asyncio
-
+import aiohttp
 import requests
 from pyrogram import Filters
 from pyrogram.errors.exceptions import FloodWait
@@ -38,6 +38,15 @@ streeetcchhh
 -> `cp`
 Reply someone message, then add randoms emoji to his/her text.
 
+──「 **Scam** 」──
+-> `scam`
+Let bot decide action and time
+-> `scam <action>`
+User decides time/action, bot decides the other.
+-> `scam <action> <time>`
+User decides both action and time
+Types: `'typing','upload_photo', 'record_video', 'upload_video', 'record_audio', 'upload_audio', 'upload_document', 'find_location','record_video_note', 'upload_video_note', 'choose_contact', 'playing'`
+
 ──「 **Mocking text** 」──
 -> `mocktxt`
 Mock someone message, text only.
@@ -61,6 +70,10 @@ Just a small command to make your keyboard become a typewriter.
 ──「 **Shrugs** 」──
 -> `shg`
 Free Shrugs? Anyone?...
+
+──「 **Pat** 」──
+-> `pat`
+Free pats ^_^
 
 ──「 **Stylish edited text** 」──
 -> `1` (forward)
@@ -86,6 +99,50 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
+@app.on_message(Filters.me & Filters.command(["pat"], Command))
+async def pat(client, message):
+    URL = "https://some-random-api.ml/animu/pat"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(URL) as request:
+            if request.status == 404:
+                return await message.edit("`no Pats for u :c")
+            result = await request.json()
+            url = result.get("link", None)
+            await message.delete()
+            await client.send_video(message.chat.id, url,
+                                    reply_to_message_id=ReplyCheck(message)
+                                )
+
+@app.on_message(Filters.me & Filters.command(["scam"], Command))
+async def scam(client, message):
+    input_str = message.command
+    if len(input_str) == 1:  # Let bot decide action and time
+        scam_action = random.choice(meme_strings.option)
+        scam_time = random.randint(30, 60)
+    elif len(input_str) == 2:  # User decides time/action, bot decides the other.
+        try:
+            scam_action = str(input_str[1]).lower()
+            scam_time = random.randint(30, 60)
+        except ValueError:
+            scam_action = random.choice(meme_strings.option)
+            scam_time = int(input_str[1])
+    elif len(input_str) == 3:  # User decides both action and time
+        scam_action = str(input_str[1]).lower()
+        scam_time = int(input_str[2])
+    else:
+        await message.edit("`Invalid Syntax !!`")
+        return
+    try:
+        if scam_time > 0:
+            chat_id = message.chat.id
+            await message.delete()
+            count = 0
+            while count <= scam_time:
+                await client.send_chat_action(chat_id, scam_action)
+                await asyncio.sleep(5)
+                count += 5
+    except Exception:
+        return
 
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
 async def shg(_client, message):

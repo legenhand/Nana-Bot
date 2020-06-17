@@ -1,25 +1,16 @@
 import re
 import time
-import heroku3
-import asyncio
-import os
-import requests
-import math
 
-from nana.__main__ import HELP_COMMANDS
+from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import HEROKU_API
-from nana import setbot, AdminSettings, Command, BotName, DB_AVAIABLE
+from nana import setbot, AdminSettings, Command, BotName, DB_AVAIABLE, StartTime
 from nana.__main__ import get_runtime
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
 
 if DB_AVAIABLE:
     from nana.modules.database.chats_db import get_all_chats
-
-Heroku = heroku3.from_key(HEROKU_API)
-heroku_api = "https://api.heroku.com"
 
 HELP_STRINGS = f"""
 Hello! I am {BotName}, your Assistant!
@@ -36,6 +27,29 @@ You can use {", ".join(Command)} on your userbot to execute that commands.
 Here is current modules you have
 """
 
+
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    ping_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+    while count < 4:
+        count += 1
+        if count < 3:
+            remainder, result = divmod(seconds, 60)
+        else:
+            remainder, result = divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        ping_time += time_list.pop() + ", "
+    time_list.reverse()
+    ping_time += ":".join(time_list)
+    return ping_time
 
 async def help_parser(client, chat_id, text, keyboard=None):
     if not keyboard:
@@ -96,74 +110,12 @@ async def help_button(_client, query):
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
 async def stats(_client, message):
-    useragent = ('Mozilla/5.0 (Linux; Android 10; SM-G975F) '
-             'AppleWebKit/537.36 (KHTML, like Gecko) '
-             'Chrome/80.0.3987.149 Mobile Safari/537.36'
-        )
-    user_id = Heroku.account().id
-    headers = {
-    'User-Agent': useragent,
-    'Authorization': f'Bearer {HEROKU_API}',
-    'Accept': 'application/vnd.heroku+json; version=3.account-quotas',
-    }
-    path = "/accounts/" + user_id + "/actions/get-quota"
-    r = requests.get(heroku_api + path, headers=headers)
-    result = r.json()
-    quota = result['account_quota']
-    quota_used = result['quota_used']
-
-    """ - Used - """
-    remaining_quota = quota - quota_used
-    percentage = math.floor(remaining_quota / quota * 100)
-    minutes_remaining = remaining_quota / 60
-    hours = math.floor(minutes_remaining / 60)
-    minutes = math.floor(minutes_remaining % 60)
-
-    """ - Current - """
-    App = result['apps']
-    try:
-        App[0]['quota_used']
-    except IndexError:
-        AppQuotaUsed = 0
-        AppPercentage = 0
-    else:
-        AppQuotaUsed = App[0]['quota_used'] / 60
-        AppPercentage = math.floor(App[0]['quota_used'] * 100 / quota)
-    AppHours = math.floor(AppQuotaUsed / 60)
-    AppMinutes = math.floor(AppQuotaUsed % 60)
-
     text = "**Here is your current stats**\n"
     text += "Notes: `0 notes`\n"
     if DB_AVAIABLE:
         text += "Group joined: `{} groups`\n".format(len(get_all_chats()))
     text += "Message received: `{} messages`\n".format(get_msgc())
 
-    a = await get_runtime()
-    b = int(time.time())
-    c = b - a
-    month = c // 2678400
-    days = c // 86400
-    hours = c // 3600 % 24
-    minutes = c // 60 % 60
-    seconds = c % 60
-
-    alivetext = ""
-    if month:
-        alivetext += "{} month, ".format(month)
-    if days:
-        alivetext += "{} days, ".format(days)
-    if hours:
-        alivetext += "{} hours, ".format(hours)
-    if minutes:
-        alivetext += "{} minutes, ".format(minutes)
-    if seconds:
-        alivetext += "{} seconds".format(seconds)
-
-    text = f" -> `Dyno usage:`{AppHours}`**h** `{AppMinutes}`**m**"
-    text += f"**|**  [`{AppPercentage}`**%**]"
-    text += "\n\n"
-    text += " -> `Dyno hours quota remaining this month`:`{hours}`**h**  `{minutes}`**m**  "
-    text += f"**|**  [`{percentage}`**%**]"
-
-    text += "\nBot was alive for `{}`".format(alivetext)
+    uptime = get_readable_time((time.time() - StartTime))
+    text += ("<b>Nana uptime:</b> <code>{}</code>".format(uptime))
     await message.reply_text(text, quote=True)

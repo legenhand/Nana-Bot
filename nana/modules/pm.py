@@ -6,18 +6,22 @@ from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana.helpers.parser import mention_markdown
 
 if DB_AVAIABLE:
-	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req
+	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req, del_whitelist
 
 welc_txt = """Hello, Hello, i am Nana,
 Just say what do you want by this button 👇👍"""
 
-NOTIFY_ID = 962286971 # Owner
+NOTIFY_ID = 972694835 # Owner
 BLACKLIST = ["hack", "fuck", "bitch"]
 
 USER_IN_RESTRICT = []
+
+
 @app.on_message(~Filters.user("self") & Filters.private & ~Filters.bot)
 async def pm_block(client, message):
+	print("test1")
 	if not get_whitelist(message.chat.id):
+		print("test2")
 		await client.read_history(message.chat.id)
 		if message.text:
 			for x in message.text.lower().split():
@@ -26,6 +30,7 @@ async def pm_block(client, message):
 					await client.block_user(message.chat.id)
 					return
 		from nana.modules.lydia import lydia_status
+		print(get_req(message.chat.id))
 		if not get_req(message.chat.id):
 			await message.reply(welc_txt)
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
@@ -45,7 +50,7 @@ async def approve_pm(_client, message):
 
 @app.on_message(Filters.me & Filters.command(["revokepm", "disapprovepm"], Command) & Filters.private)
 async def revoke_pm_block(_client, message):
-	set_whitelist(message.chat.id, False)
+	del_whitelist(message.chat.id)
 	await message.edit("PM permission was revoked!")
 
 def pm_button_callback(_, query):

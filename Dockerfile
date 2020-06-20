@@ -71,7 +71,7 @@ ENV CHROME_BIN=/usr/bin/chromium-browser \
 RUN pip3 install --upgrade pip setuptools
 
 # Copy Python Requirements to /root/nana
-RUN git clone https://github.com/pokurt/Nana-Bot.git /root/nana
+RUN git clone https://github.com/legenhand/Nana-Bot.git /root/nana
 WORKDIR /root/nana
 
 #Copy config file to /root/nana/nana

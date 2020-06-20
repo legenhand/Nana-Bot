@@ -11,7 +11,7 @@ if DB_AVAIABLE:
 welc_txt = f"""Hello, i am Nana, {TG_USERNAME}'s Userbot.
 Just say what do you want by this button 👇👍"""
 
-NOTIFY_ID =  AdminSettings
+NOTIFY_ID = AdminSettings[0]
 BLACKLIST = ["hack", "fuck", "bitch"]
 
 USER_IN_RESTRICT = []
@@ -71,7 +71,8 @@ async def pm_button(client, query):
 	elif re.match(r"engine_pm_nope", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "👍")
 		await app.send_message(query.from_user.id, "Hello, please wait for a reply from my master\nI've notify my master to reply your PM, thank you")
-		await setbot.send_message(NOTIFY_ID, "Hi [{}](tg://user?id={}), {} want to contact you~".format(OwnerName, Owner, mention_markdown(query.from_user.id, query.from_user.first_name)), reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Approve", callback_data="engine_pm_apr-{}".format(query.from_user.id)), InlineKeyboardButton("Block", callback_data="engine_pm_blk-{}".format(query.from_user.id))]]))
+		FromUser = mention_markdown(query.from_user.id, query.from_user.first_name)
+		await setbot.send_message(NOTIFY_ID, "Hi [ {} ](tg://user?id={}), {} want to contact you~".format(OwnerName, Owner, FromUser), reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Approve", callback_data="engine_pm_apr-{}".format(query.from_user.id)), InlineKeyboardButton("Block", callback_data="engine_pm_blk-{}".format(query.from_user.id))]]))
 		set_req(query.from_user.id, True)
 		from nana.modules.lydia import lydia_status
 		if lydia_status:

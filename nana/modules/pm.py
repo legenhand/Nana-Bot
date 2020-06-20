@@ -1,6 +1,6 @@
 import re
 
-from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAIABLE, lydia_api
+from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAIABLE, lydia_api, AdminSettings, TG_USERNAME
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana.helpers.parser import mention_markdown
@@ -8,10 +8,10 @@ from nana.helpers.parser import mention_markdown
 if DB_AVAIABLE:
 	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req, del_whitelist
 
-welc_txt = """Hello, Hello, i am Nana,
+welc_txt = f"""Hello, i am Nana, {TG_USERNAME}'s Userbot.
 Just say what do you want by this button 👇👍"""
 
-NOTIFY_ID = 972694835 # Owner
+NOTIFY_ID =  AdminSettings
 BLACKLIST = ["hack", "fuck", "bitch"]
 
 USER_IN_RESTRICT = []
@@ -81,7 +81,7 @@ async def pm_button(client, query):
 		await app.send_message(query.from_user.id, "Hello, if you want to report any bugs for my bots, please report in @NanaBotSupport\nThank you")
 	elif re.match(r"engine_pm_none", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "👍")
-		await app.send_message(query.from_user.id, "Alright then, i am Ayra's bot assistant, and read the entire your messages, and make sure my master not read this disturbing message.\n\nIf you want anything from me, please contact my again. Thank you")
+		await app.send_message(query.from_user.id, "Alright then,\nIf you want anything from me, please contact my again. Thank you")
 	elif re.match(r"engine_pm_donate", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "❤️")
 		await app.send_message(query.from_user.id, "Cool, thank you for donate me\nYou can select payment in here https://ayrahikari.github.io/donations.html\n\nIf you've donated me, please PM me again, thanks")
@@ -97,5 +97,3 @@ async def pm_button(client, query):
 		await app.block_user(target)
 	else:
 		await setbot.edit_inline_text(query.inline_message_id, "🙆‍♀️")
-	
-	

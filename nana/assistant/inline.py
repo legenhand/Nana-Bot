@@ -9,6 +9,7 @@ from pyrogram import errors, InlineKeyboardMarkup, InputTextMessageContent, Inli
 from nana import setbot, Owner, OwnerName, DB_AVAIABLE
 from nana.helpers.msg_types import Types
 from nana.helpers.string import parse_button, build_keyboard
+from nana.modules.pm import welc_txt
 from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, \
 	CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext
 if DB_AVAIABLE:
@@ -213,7 +214,7 @@ async def inline_query_handler(client, query):
 			id=uuid4(),
 			title="Engine pm",
 			description="Filter pm",
-			input_message_content=InputTextMessageContent("Hello, i am Nana,\nJust say what do you want by this button 👇👍"),
+			input_message_content=InputTextMessageContent(welc_txt),
 			reply_markup=InlineKeyboardMarkup(button)))
 		await client.answer_inline_query(query.id,
 		results=answers,

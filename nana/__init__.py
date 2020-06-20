@@ -110,6 +110,7 @@ if ENV:
     AdminSettings = [int(x) for x in os.environ.get("AdminSettings", "").split()]
     REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
     TEST_MODE = bool(os.environ.get('TEST_MODE', False))
+    TG_USERNAME = os.environ.get('TG_USERNAME', None)
 else:
     # logger
     logger = Config.LOGGER
@@ -126,7 +127,7 @@ else:
     # Session
     USERBOT_SESSION = Config.USERBOT_SESSION
     ASSISTANT_SESSION = Config.ASSISTANT_SESSION
-
+    TG_USERNAME = Config.TG_USERNAME
     # Required for some features
     # Set temp var for load later
     Owner = 0

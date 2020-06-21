@@ -4,6 +4,7 @@ from platform import python_version
 
 import heroku3
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors, ReplyKeyboardMarkup
+from nana.assistant.help import NANA_IMG
 
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, HEROKU_API, \
     Owner, OwnerName, NANA_IMG
@@ -11,6 +12,7 @@ from nana.__main__ import reload_userbot, restart_all
 
 if DB_AVAILABLE:
     from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
+    from nana.modules.database.chats_db import get_all_chats
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["start"]))
@@ -44,24 +46,25 @@ Convert a text to various style, can be used anywhere!
         me = None
     start_message = f"Hi {OwnerName},\n"
     start_message += "Nana is Ready at your Service!\n"
-    start_message += "===================\n"
+    start_message += f"===================\n"
     start_message += "-> Python: `{}`\n".format(python_version())
     if not me:
-        text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
+        start_message += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
     else:
         start_message += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
     start_message += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
     start_message += "-> Database: `{}`\n".format(DB_AVAILABLE)
     if DB_AVAILABLE:
         start_message += f"-> Group joined: `{len(get_all_chats())} groups`\n"
-    start_message += "===================\n"
-    start_message += "`For more about the bot press button down below`"
+    start_message += f"===================\n"
+    start_message += f"`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
-    if NANA_IMG:
-        await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
+    if not me:
+        start_message += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
     else:
-        await setbot.send_message(Owner, start_message, reply_markup=buttons)
+        start_message += "\nBot logged in as `{}`\nTo get more information about this user, type /getme\n".format(me.first_name)
+    await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["getme"]))

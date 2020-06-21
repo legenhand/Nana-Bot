@@ -60,10 +60,6 @@ Convert a text to various style, can be used anywhere!
     start_message += f"`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
-    if not me:
-        start_message += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
-    else:
-        start_message += "\nBot logged in as `{}`\nTo get more information about this user, type /getme\n".format(me.first_name)
     await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
 
 

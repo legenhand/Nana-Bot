@@ -6,13 +6,13 @@ from uuid import uuid4
 from pyrogram import InlineQueryResultArticle
 from pyrogram import errors, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 
-from nana import setbot, Owner, OwnerName, DB_AVAIABLE
+from nana import setbot, Owner, OwnerName, DB_AVAILABLE
 from nana.helpers.msg_types import Types
 from nana.helpers.string import parse_button, build_keyboard
 from nana.modules.pm import welc_txt
 from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, \
 	CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext
-if DB_AVAIABLE:
+if DB_AVAILABLE:
 	from nana.modules.database import notes_db
 
 # TODO: Add more inline query
@@ -55,7 +55,7 @@ async def inline_query_handler(client, query):
 
 	# Notes
 	if string.split()[0] == "#note":
-		if not DB_AVAIABLE:
+		if not DB_AVAILABLE:
 			await client.answer_inline_query(query.id,
 											results=answers,
 											switch_pm_text="Your database isn't avaiable!",

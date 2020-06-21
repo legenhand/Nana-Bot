@@ -186,21 +186,21 @@ if USERBOT_SESSION and ASSISTANT_SESSION:
 
 gauth = GoogleAuth()
 
-DB_AVAIABLE = False
+DB_AVAILABLE = False
 BOTINLINE_AVAIABLE = False
 
 
 # Postgresql
 def mulaisql() -> scoped_session:
-    global DB_AVAIABLE
+    global DB_AVAILABLE
     engine = create_engine(DATABASE_URL, client_encoding="utf8")
     BASE.metadata.bind = engine
     try:
         BASE.metadata.create_all(engine)
     except exc.OperationalError:
-        DB_AVAIABLE = False
+        DB_AVAILABLE = False
         return False
-    DB_AVAIABLE = True
+    DB_AVAILABLE = True
     return scoped_session(sessionmaker(bind=engine, autoflush=False))
 
 

@@ -2,9 +2,9 @@ import os
 
 from pyrogram import Filters
 
-from nana import app, Command, DB_AVAIABLE
+from nana import app, Command, DB_AVAILABLE
 
-if DB_AVAIABLE:
+if DB_AVAILABLE:
     from nana.modules.database.chats_db import update_chat, get_all_chats
 
 MESSAGE_RECOUNTER = 0
@@ -29,14 +29,14 @@ def get_msgc():
 @app.on_message(Filters.group, group=10)
 async def updatemychats(_client, message):
     global MESSAGE_RECOUNTER
-    if DB_AVAIABLE:
+    if DB_AVAILABLE:
         update_chat(message.chat)
     MESSAGE_RECOUNTER += 1
 
 
 @app.on_message(Filters.me & Filters.command(["chatlist"], Command))
 async def get_chat(client, message):
-    if not DB_AVAIABLE:
+    if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
         return
     all_chats = get_all_chats()

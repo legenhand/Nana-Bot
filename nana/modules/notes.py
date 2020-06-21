@@ -1,10 +1,10 @@
 from pyrogram import Filters, errors, InlineKeyboardMarkup
 
-from nana import app, setbot, Command, Owner, BotUsername, DB_AVAIABLE
+from nana import app, setbot, Command, Owner, BotUsername, DB_AVAILABLE
 from nana.helpers.msg_types import Types, get_note_type
 from nana.helpers.string import parse_button, build_keyboard
 
-if DB_AVAIABLE:
+if DB_AVAILABLE:
     from nana.modules.database import notes_db as db
 
 # TODO: Add buttons support in some types
@@ -62,7 +62,7 @@ GET_FORMAT = {
 
 @app.on_message(Filters.user(Owner) & Filters.command(["save"], Command))
 async def save_note(_client, message):
-    if not DB_AVAIABLE:
+    if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
         return
     note_name, text, data_type, content = get_note_type(message)
@@ -83,7 +83,7 @@ async def save_note(_client, message):
 
 @app.on_message(Filters.user(Owner) & Filters.command(["get"], Command))
 async def get_note(client, message):
-    if not DB_AVAIABLE:
+    if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
         return
     if len(message.text.split()) >= 2:
@@ -175,7 +175,7 @@ async def get_note(client, message):
 
 @app.on_message(Filters.user(Owner) & Filters.command(["notes", "saved"], Command))
 async def local_notes(_client, message):
-    if not DB_AVAIABLE:
+    if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
         return
     getnotes = db.get_all_selfnotes(message.from_user.id)
@@ -194,7 +194,7 @@ async def local_notes(_client, message):
 
 @app.on_message(Filters.user(Owner) & Filters.command(["clear"], Command))
 async def clear_note(_client, message):
-    if not DB_AVAIABLE:
+    if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
         return
     if len(message.text.split()) <= 1:

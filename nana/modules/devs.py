@@ -11,7 +11,7 @@ from pyrogram import Filters
 from speedtest import Speedtest
 import pyrogram as p
 
-from nana import Command, logging, app, DB_AVAIABLE, USERBOT_VERSION, ASSISTANT_VERSION
+from nana import Command, logging, app, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION
 from nana.helpers.deldog import deldog
 from nana.helpers.parser import mention_markdown
 
@@ -224,7 +224,7 @@ async def alive(_client, message):
     else:
         text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
     text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
-    text += "-> Database: `{}`\n".format(DB_AVAIABLE)
+    text += "-> Database: `{}`\n".format(DB_AVAILABLE)
     text += "-> Python: `{}`\n".format(python_version())
     text += "-> Pyrogram: `{}`\n".format(p.__version__)
     if not me:

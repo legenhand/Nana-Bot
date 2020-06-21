@@ -4,9 +4,9 @@ import time
 
 from PIL import Image
 
-from nana import app, setbot, Command, DB_AVAIABLE
+from nana import app, setbot, Command, DB_AVAILABLE
 
-if DB_AVAIABLE:
+if DB_AVAILABLE:
     from nana.assistant.database.stickers_db import get_sticker_set, get_stanim_set
 
 from pyrogram import Filters
@@ -30,7 +30,7 @@ type that command and select another or create new from @Stickers!
 
 @app.on_message(Filters.me & Filters.command(["kang"], Command))
 async def kang_stickers(client, message):
-    if not DB_AVAIABLE:
+    if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
         return
     sticker_pack = get_sticker_set(message.from_user.id)

@@ -1,11 +1,11 @@
 import re
 
-from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAIABLE, lydia_api, AdminSettings, TG_USERNAME
+from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAILABLE, lydia_api, AdminSettings, TG_USERNAME
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana.helpers.parser import mention_markdown
 
-if DB_AVAIABLE:
+if DB_AVAILABLE:
 	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req, del_whitelist
 
 welc_txt = f"""Hello, i am Nana, {TG_USERNAME}'s Userbot.
@@ -19,9 +19,7 @@ USER_IN_RESTRICT = []
 
 @app.on_message(~Filters.user("self") & Filters.private & ~Filters.bot)
 async def pm_block(client, message):
-	print("test1")
 	if not get_whitelist(message.chat.id):
-		print("test2")
 		await client.read_history(message.chat.id)
 		if message.text:
 			for x in message.text.lower().split():

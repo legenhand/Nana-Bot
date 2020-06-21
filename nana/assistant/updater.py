@@ -143,6 +143,8 @@ if REMINDER_UPDATE and not TEST_DEVELOP:
 
 
 async def starting_message():
+    start_time = time.time()
+    end_time = time.time()
     ping_time = float(end_time - start_time)
     start_message = f"Nana is Ready to go!\n**Server Ping:** {0:.2f}s".format(round(ping_time, 2) % 60)
     buttons = InlineKeyboardMarkup(

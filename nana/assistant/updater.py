@@ -1,9 +1,9 @@
 import random
+import time
 
 from git import Repo
 from git.exc import GitCommandError, NoSuchPathError, InvalidGitRepositoryError
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
-
 from nana import setbot, Owner, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, \
     REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE, TEST_DEVELOP, HEROKU_API, DB_AVAILABLE
 from nana.__main__ import restart_all, loop

@@ -4,7 +4,6 @@ from git import Repo
 from git.exc import GitCommandError, NoSuchPathError, InvalidGitRepositoryError
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana.modules.ping import ping_time
 from nana import setbot, Owner, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, \
     REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE, TEST_DEVELOP, HEROKU_API, DB_AVAILABLE
 from nana.__main__ import restart_all, loop
@@ -144,6 +143,7 @@ if REMINDER_UPDATE and not TEST_DEVELOP:
 
 
 async def starting_message():
+    ping_time = float(end_time - start_time)
     start_message = f"Nana is Ready to go!\n**Server Ping:** {0:.2f}s".format(round(ping_time, 2) % 60)
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])

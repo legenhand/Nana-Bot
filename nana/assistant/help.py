@@ -66,7 +66,8 @@ async def help_command(client, message):
             [[InlineKeyboardButton(text="Bantuan", url=f"t.me/{setbot.get_me()['username']}?start=help")]])
         await message.reply("Hubungi saya di PM untuk mendapatkan daftar perintah.", reply_markup=keyboard)
         return
-    await help_parser(client, message.chat.id, HELP_STRINGS, NANA_IMG)
+    #TODO: Add image of nana in NANA_IMG
+    await help_parser(client, message.chat.id, HELP_STRINGS)
 
 
 def help_button_callback(_, query):

@@ -1,6 +1,6 @@
 import re
 
-from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAILABLE, lydia_api, AdminSettings, TG_USERNAME
+from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAILABLE, lydia_api, AdminSettings
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana.helpers.parser import mention_markdown
@@ -8,8 +8,11 @@ from nana.helpers.parser import mention_markdown
 if DB_AVAILABLE:
 	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req, del_whitelist
 
-welc_txt = f"""Hello, i am Nana, {TG_USERNAME}'s Userbot.
-Just say what do you want by this button 👇👍"""
+async def get_welcome():
+	me = await app.get_me()
+	return f"""Hello, i am Nana, @{me.username}'s Userbot.
+			Just say what do you want by this button 👇👍"""
+
 
 NOTIFY_ID = AdminSettings[0]
 BLACKLIST = ["hack", "fuck", "bitch"]
@@ -30,7 +33,7 @@ async def pm_block(client, message):
 		from nana.modules.lydia import lydia_status
 		print(get_req(message.chat.id))
 		if not get_req(message.chat.id):
-			await message.reply(welc_txt)
+			await message.reply(await get_welcome())
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)
 		elif lydia_api and lydia_status:

@@ -89,7 +89,7 @@ async def help_button(_client, query):
 
             await query.message.edit(text=text,
                                      reply_markup=InlineKeyboardMarkup(
-                                         [[InlineKeyboardButton(text="⬅️ Back", callback_data="help_back")]]))
+                                         [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))

@@ -33,7 +33,6 @@ async def pm_block(client, message):
 		from nana.modules.lydia import lydia_status
 		print(get_req(message.chat.id))
 		if not get_req(message.chat.id):
-			await message.reply(await get_welcome())
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)
 		elif lydia_api and lydia_status:

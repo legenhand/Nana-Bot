@@ -111,8 +111,9 @@ async def help_button(_client, query):
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
 async def stats(_client, message):
     text = "**Here is your current stats**\n"
-    text += "Notes: `0 notes`\n"
     if DB_AVAILABLE:
+        from ..modules.database.notes_db import count_notes
+        text += f"Notes: `{count_notes()} notes`\n"
         text += "Group joined: `{} groups`\n".format(len(get_all_chats()))
     text += "Message received: `{} messages`\n".format(get_msgc())
 

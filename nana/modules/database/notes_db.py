@@ -111,5 +111,7 @@ def __load_allnotes():
             SELF_NOTES[x.user_id] = {}
         SELF_NOTES[x.user_id][x.name] = {'value': x.value, 'type': x.msgtype, 'file': x.file}
 
+def count_notes():
+    return SESSION.query(SelfNotes).count()
 
 __load_allnotes()

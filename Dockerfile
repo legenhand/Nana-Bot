@@ -14,7 +14,6 @@ RUN apt update && apt upgrade -y && \
     bzip2 \
     curl \
     figlet \
-    gcc \
     git \
     util-linux \
     libffi-dev \

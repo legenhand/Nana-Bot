@@ -142,7 +142,9 @@ if REMINDER_UPDATE and not TEST_DEVELOP:
 
 
 async def starting_message():
-    await setbot.send_message(Owner, "**Your Bot Ready to go!**\n\nSee /help for more information` 😉")
+    buttons = InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text="❔ Help", callback_data="help_back")]])
+    await setbot.send_message(Owner, "**Nana is ready to go!** 😉", reply_markup=buttons)
 
 
 loop.create_task(starting_message())

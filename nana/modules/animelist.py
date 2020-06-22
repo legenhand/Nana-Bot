@@ -6,7 +6,6 @@ from pyrogram import Filters
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana import app, Command
 from nana.helpers.string import replace_text
-from nana.helpers.anime import get_anime_manga, getBannerLink
 
 __MODULE__ = "MyAnimeList"
 

@@ -51,10 +51,6 @@ Types: `'typing','upload_photo', 'record_video', 'upload_video', 'record_audio',
 -> `mocktxt`
 Mock someone message, text only.
 
-──「 **Google Search Sticker** 」──
--> `ggl`
-google search with a sticker.
-
 ──「 **Meme generator** 」──
 -> `meme`
 For get avaiable type, just send `meme`, to get example image of type, just send `meme (type)`.

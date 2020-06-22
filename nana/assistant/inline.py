@@ -196,26 +196,6 @@ async def inline_query_handler(client, query):
 			title=smoth_text,
 			description="Smoth Text",
 			input_message_content=InputTextMessageContent(smoth_text)))
-		graffiti_text = formatting_text_inline(text, graffiti)
-		answers.append(InlineQueryResultArticle(
-			title=graffiti_text,
-			description="Graffiti Text",
-			input_message_content=InputTextMessageContent(graffiti_text)))
-		graffitib_text = formatting_text_inline(text, graffitib)
-		answers.append(InlineQueryResultArticle(
-			title=graffitib_text,
-			description="Graffiti Bold Text",
-			input_message_content=InputTextMessageContent(graffitib_text)))
-		handwriting_text = formatting_text_inline(text, handwriting)
-		answers.append(InlineQueryResultArticle(
-			title=handwriting_text,
-			description="Handwriting Text",
-			input_message_content=InputTextMessageContent(handwriting_text)))
-		handwritingb_text = formatting_text_inline(text, handwritingb)
-		answers.append(InlineQueryResultArticle(
-			title=handwritingb_text,
-			description="Handwriting Bold Text",
-			input_message_content=InputTextMessageContent(handwritingb_text)))
 		await client.answer_inline_query(query.id,
 										results=answers,
 										switch_pm_text="Converted to stylish text",

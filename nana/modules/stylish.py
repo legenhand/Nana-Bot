@@ -22,10 +22,6 @@ Use this custom format:
 -> `<bubble>Bubbles text</bubble>` = `ⒷⓊⒷⒷⓁⒺⓈ ⓉⒺⓍⓉ`
 -> `<bubble2>Bubbles black text</bubble2>` = `🅑🅤🅑🅑🅛🅔🅢 🅑🅛🅐🅒🅚 🅣🅔🅧🅣`
 -> `<smoth>Smoth text</smoth>` = `ᔑᗰᝪᎢᕼ Ꭲᗴ᙭Ꭲ`
--> `<graffiti>Graffiti text</graffiti>` = `𝔊𝔯𝔞𝔣𝔣𝔦𝔱𝔦 𝔱𝔢𝔵𝔱`
--> `<graffitib>Graffiti Bold text</graffitib>` = `𝕲𝖗𝖆𝖋𝖋𝖎𝖙𝖎 𝕭𝖔𝖑𝖉 𝖙𝖊𝖝𝖙`
--> `<handwriting>Handwaritng text</handwriting>` = `𝐻𝒶𝓃𝒹𝓌𝓇𝒾𝓉𝒾𝓃𝑔 𝓉𝑒𝓍𝓉`
--> `<handwritingb>Handwriting Bold text</handwritingb>` = `𝓗𝓪𝓷𝓭𝔀𝓻𝓲𝓽𝓲𝓷𝓰 𝓑𝓸𝓵𝓭 𝓽𝓮𝔁𝓽`
 
 ──「 **Stylish Generator** 」──
 -> `stylish Your text here <upside>with</upside> <strike>formatted</strike> <unline>style</unline>`
@@ -62,10 +58,6 @@ wide = u'　ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶ�
 bubbles = u" ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ1234567890\"'#$%&()*+,-./:;<=>?@[\\]^_`{|}~"
 bubblesblack = u" 🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩1234567890\"'#$%&()*+,-./:;<=>?@[\\]^_`{|}~"
 smothtext = u" ᗩᗷᑕᗞᗴᖴᏀᕼᏆᒍᏦᏞᗰᑎᝪᑭᑫᖇᔑᎢᑌᐯᗯ᙭ᎩᏃᗩᗷᑕᗞᗴᖴᏀᕼᏆᒍᏦᏞᗰᑎᝪᑭᑫᖇᔑᎢᑌᐯᗯ᙭ᎩᏃ1234567890\"'#$%&()*+,-./:;<=>?@[\\]^_`{|}~"
-graffiti = u" 𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷\"'#$%&()*+,-./:;<=>?@[\\]^_`{|}~"
-graffitib = u" 𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟\"'#$%&()*+,-./:;<=>?@[\\]^_`{|}~"
-handwriting = u" 𝒜𝐵𝒞𝒟𝐸𝐹𝒢𝐻𝐼𝒥𝒦𝐿𝑀𝒩𝒪𝒫𝒬𝑅𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏\"'#$%&()*+,-./:;<=>?@[\\]^_`{|}~"
-handwritingb = u" 𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃\"'#$%&()*+,-./:;<=>?@[\\]^_`{|}~"
 
 CHAR_OVER = chr(0x0305)
 CHAR_UNDER = chr(0x0332)
@@ -175,25 +167,7 @@ def stylish_formatting(text):
         unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, smothtext))
         convtext = x.translate(unic)
         text = re.sub(r'<smoth>(.*?)</smoth>', convtext, text, 1)
-    graffiti_compile = re.compile(r'<graffiti>(.*?)</graffiti>')
-    src_code = graffiti_compile.findall(text)
-    for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, graffiti))
-        convtext = x.translate(unic)
-        text = re.sub(r'<graffiti>(.*?)</graffiti>', convtext, text, 1)
-    handwriting_compile = re.compile(r'<handwriting>(.*?)</handwriting>')
-    src_code = handwriting_compile.findall(text)
-    for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, handwriting))
-        convtext = x.translate(unic)
-        text = re.sub(r'<handwriting>(.*?)</handwriting>', convtext, text, 1)
 
-    handwritingb_compile = re.compile(r'<handwritingb>(.*?)</handwritingb>')
-    src_code = handwritingb_compile.findall(text)
-    for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, handwritingb))
-        convtext = x.translate(unic)
-        text = re.sub(r'<handwritingb>(.*?)</handwritingb>', convtext, text, 1)
     return text
 
 

@@ -289,7 +289,7 @@ async def vars_heroku(_client, query):
             # else:
             #     list_button.insert(0, [InlineKeyboardButton("api_id🚫", callback_data="api_id")])
             configdict = config.to_dict()
-            for x, _ in configdict.items():
+            for x, y in configdict.items():
                 list_button.insert(0, [InlineKeyboardButton("{}✅".format(x), callback_data="tes")])
     button = InlineKeyboardMarkup(list_button)
     await query.message.edit_text(text, reply_markup=button)
@@ -322,7 +322,7 @@ async def back(_client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
     if not me:
-        pass
+        togglestart = "Start Bot"
     else:
         pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
@@ -438,7 +438,7 @@ async def set_stickers(client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\n{}".format(status)
     if not me:
-        pass
+        togglestart = "Start Bot"
     else:
         pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),

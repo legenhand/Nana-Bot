@@ -7,7 +7,7 @@ BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\(buttonurl:(?:/{0,2})(.+?)(:same)?\)
 
 
 def replace_text(text):
-        return text.replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
+        return text.replace("\"", "").replace("\\r", "").replace("\\n", "").replace(
             "\\", "")
 
             

@@ -103,7 +103,7 @@ async def settings(_client, message):
     text += "-> Python: `{}`\n".format(python_version())
     text += "\nJust setup what you need here"
     if not me:
-        pass
+        togglestart = "Start Bot"
     else:
         pass
     list_button = [[InlineKeyboardButton("Stop Bot", callback_data="toggle_startbot"),
@@ -156,7 +156,7 @@ async def get_myself_btn(client, query):
 @setbot.on_callback_query(dynamic_data_filter("toggle_startbot"))
 async def start_stop_bot(client, query):
     try:
-        pass
+        me = await app.get_me()
     except ConnectionError:
         await reload_userbot()
         text = "**⚙️ Welcome to Nana Settings!**\n"

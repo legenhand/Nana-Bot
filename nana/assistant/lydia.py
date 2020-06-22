@@ -39,7 +39,7 @@ async def lydia_stats(_client, message):
         await message.reply("now Lydia will reply your message!")
 
 
-@setbot.on_message(~Filters.me & ~Filters.edited & (Filters.mentioned | Filters.private), group=2)
+@setbot.on_message(Filters.private)
 async def lydia_settings(client, message):
     global lydia_status, session
     if lydia_status:

@@ -49,11 +49,11 @@ async def lydia_private(_client, message):
         await message.edit("now Lydia will reply your message!")
 
 
-@app.on_message(~Filters.me & ~Filters.edited & (Filters.mentioned | Filters.private), group=6)
-async def lydia_reply(_client, message):
-    global lydia_status, session
-    if lydia_status:
-        output = session.think_thought(message.text)
-        await message.reply_text(f"`{output}`", quote=True, reply_to_message_id=ReplyCheck(message))
-    else:
-        return
+# @app.on_message(Filters.incoming & Filters.private)
+# async def lydia_reply(_client, message):
+#     global lydia_status, session
+#     if lydia_status:
+#         output = session.think_thought(message.text)
+#         await message.reply_text("`{0}`".format(output), quote=True, reply_to_message_id=ReplyCheck(message))
+#     else:
+#         return

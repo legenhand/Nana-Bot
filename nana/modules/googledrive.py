@@ -189,7 +189,7 @@ async def gdrive_stuff(client, message):
             await message.edit("__Downloading...__")
             c_time = time.time()
             if message.reply_to_message.photo:
-                nama = "photo_{}_{}.png".format(message.reply_to_message.photo, message.reply_to_message.photo.date)
+                nama = "photo_{}.png".format(message.reply_to_message.photo.date)
                 await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
@@ -212,12 +212,12 @@ async def gdrive_stuff(client, message):
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.audio:
-                nama = "{}".format(message.reply_to_message.audio.file_name)
+                nama = "audio_{}.mp3".format(message.reply_to_message.audio.date)
                 await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.voice:
-                nama = "audio_{}.ogg".format(message.reply_to_message.voice)
+                nama = "audio_{}.ogg".format(message.reply_to_message.voice.date)
                 await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))

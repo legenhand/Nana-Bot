@@ -307,19 +307,7 @@ async def mock_spongebob(client, message):
                                         hide_via=True)
 
 
-@app.on_message(Filters.me & Filters.command(["ggl"], Command))
-async def google_search(client, message):
-    await message.delete()
-    googles = message.reply_to_message.text
-    x = await client.get_inline_bot_results("Stickerizerbot", f"#12{googles}")
-    await client.send_inline_bot_result(chat_id=message.chat.id,
-                                        query_id=x.query_id,
-                                        result_id = x.results[0].id,
-                                        reply_to_message_id=ReplyCheck(message),
-                                        hide_via=True)
-
-
-@app.on_message(Filters.me & Filters.command(["str"], Command))
+@app.on_message(Filters.me & Filters.command(["stretch"], Command))
 async def stretch(_client, message):
     cmd = message.command
     stretch_text = ""

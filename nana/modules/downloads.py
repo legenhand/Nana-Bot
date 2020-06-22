@@ -51,9 +51,9 @@ androidfilehost.com`
 async def ls(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 2:
-        basepath = "/root/nana/{}".format(args[1])
+        basepath = "nana/{}".format(args[1])
     else:
-        basepath = "/root/nana/"
+        basepath = "nana/"
     directory = ""
     listfile = ""
     for entry in os.listdir(basepath):
@@ -71,7 +71,7 @@ async def upload_file(client, message):
     if len(args) == 1:
         await message.edit("usage : upload (path)")
         return
-    path = "/root/nana/{}".format(args[1])
+    path = "nana/downloads{}".format(args[1])
     try:
         await app.send_document(message.chat.id, path, progress=lambda d, t: asyncio.get_event_loop().create_task(
             progressdl(d, t, message, time.time(), "Uploading...")))

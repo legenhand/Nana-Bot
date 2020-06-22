@@ -54,8 +54,8 @@ async def inline_query_handler(client, query):
 		return
 
 	# Notes
-	if string.split()[0] == "#note":
-		if not DB_AVAILABLE:
+	if string.split()[0] == "note":
+		if not DB_AVAIABLE:
 			await client.answer_inline_query(query.id,
 											results=answers,
 											switch_pm_text="Your database isn't avaiable!",
@@ -203,6 +203,7 @@ async def inline_query_handler(client, query):
 									)
 		return
 
+	#PM_Permit
 	elif string.split()[0] == "engine_pm":
 		# PM_BTN = []
 		button = [[InlineKeyboardButton("To Scam", callback_data="engine_pm_block")],
@@ -220,4 +221,3 @@ async def inline_query_handler(client, query):
 		results=answers,
 			cache_time=0
 		)
-	

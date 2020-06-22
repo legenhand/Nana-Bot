@@ -9,6 +9,9 @@ Currently work fine perfectly, but some features may give you error. Please repo
 ```
 Q: Why need Assistant (Real bot)?
 A: Because real bot will help you a lot for many things, and make user easy to use it.
+
+Q: Why Nana Unique?
+A: What Nana makes a Unique userbot is because of the assistant to control your userbot.
 ```
 
 ### Installation Guide

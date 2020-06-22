@@ -117,14 +117,14 @@ async def pat(client, message):
 async def scam(client, message):
     input_str = message.command
     if len(input_str) == 1:  # Let bot decide action and time
-        scam_action = random.choice(meme_strings.option)
+        scam_action = random.choice(meme_strings.options)
         scam_time = random.randint(30, 60)
     elif len(input_str) == 2:  # User decides time/action, bot decides the other.
         try:
             scam_action = str(input_str[1]).lower()
             scam_time = random.randint(30, 60)
         except ValueError:
-            scam_action = random.choice(meme_strings.option)
+            scam_action = random.choice(meme_strings.options)
             scam_time = int(input_str[1])
     elif len(input_str) == 3:  # User decides both action and time
         scam_action = str(input_str[1]).lower()

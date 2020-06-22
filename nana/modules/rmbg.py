@@ -14,7 +14,7 @@ from pyrogram import Filters
 from nana import app, Command, remove_bg_api
 from nana.helpers.PyroHelpers import ReplyCheck
 
-DOWN_PATH = '/root/nana/'
+DOWN_PATH = 'nana/'
 
 REMOVE_BG_API_KEY = remove_bg_api
 

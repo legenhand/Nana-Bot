@@ -1,4 +1,4 @@
-# Nana-TgBot
+# Nana-UserBot
 
 [![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)](https://circleci.com/gh/legenhand/Nana-Bot)[![Codacy Badge](https://app.codacy.com/project/badge/Grade/60a0afaac7e74c309b4b21178b7338cf)](https://www.codacy.com/manual/AmaanAhmed/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pokurt/Nana-Bot&amp;utm_campaign=Badge_Grade)
 ### Userbot + Assistant for Telegram

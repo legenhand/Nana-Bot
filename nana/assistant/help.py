@@ -21,10 +21,8 @@ I can help you for many things.
  - /stats: get your userbot status
  - /settings: settings your userbot
  - /getme: get your userbot profile info
- - /help: get all modules help
-
-You can use {", ".join(Command)} on your userbot to execute that commands.
-Here is current modules you have
+ - /help: get this menu
+>>>>>>> 969616d... fixed help text
 """
 
 

@@ -189,7 +189,7 @@ async def manga(client, message):
         rep += f"<b>Chapters:</b> <code>{chapters}</code>\n\n"
         rep += f"<a href='{image}'>\u200c</a>"
         rep += f"<i>{synopsis}</i>"
-        rep += f'Read More: <a href="{url}">MyAnimeList</a>'
+        rep += f'Read More: {url}'
         await message.edit(rep)
 
 @app.on_message(Filters.me & Filters.command(["upcoming"], Command))

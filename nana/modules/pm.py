@@ -36,9 +36,8 @@ async def pm_block(client, message):
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)
 		elif lydia_api and lydia_status:
-			reply = await message.reply(message.text)
-			footer = "\n\n- Nana AI"
-			await message.reply(reply + footer)
+			from .lydia import lydia_reply
+			await lydia_reply(client, message)
 		else:
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)

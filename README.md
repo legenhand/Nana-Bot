@@ -16,7 +16,6 @@ A: What Nana makes a Unique userbot is because of the assistant to control your 
 
 ### Installation Guide
 
-<<<<<<< HEAD
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/legenhand/Nana-Bot)
 
 See our wikis to get [Installation Guide](https://sagita.tech/2020/02/02/tutorial-install-userbot-di-linux-server-nana-bot/).

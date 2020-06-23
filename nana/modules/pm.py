@@ -1,6 +1,6 @@
 import re
 
-from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAIABLE, lydia_api, AdminSettings, OwnerName
+from nana import app, setbot, Command, Owner, OwnerName, BotUsername, AdminSettings, DB_AVAILABLE, lydia_api, AdminSettings, OwnerName
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana.helpers.parser import mention_markdown
@@ -8,18 +8,8 @@ from nana.helpers.parser import mention_markdown
 if DB_AVAILABLE:
 	from nana.modules.database.pm_db import set_whitelist, get_whitelist, set_req, get_req, del_whitelist
 
-<<<<<<< HEAD
-async def get_welcome():
-	me = await app.get_me()
-	return f"""Hello, i am Nana, @{me.username}'s Userbot.
-			Just say what do you want by this button 👇👍"""
-||||||| parent of 30f7218... pm permit in a unique way
-welc_txt = f"""Hello, i am Nana, {TG_USERNAME}'s Userbot.
-Just say what do you want by this button 👇👍"""
-=======
 welc_txt = f"""Hello, I'm {OwnerName}'s Userbot.
 Try contacting me by pressing buttons down bellow"""
->>>>>>> 30f7218... pm permit in a unique way
 
 
 NOTIFY_ID = AdminSettings[0]

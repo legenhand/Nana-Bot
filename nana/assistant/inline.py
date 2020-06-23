@@ -12,7 +12,7 @@ from nana.helpers.string import parse_button, build_keyboard
 from nana.modules.pm import get_welcome
 from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, \
 	CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext, handwriting, handwritingb, graffiti, graffitib
-if DB_AVAIABLE:
+if DB_AVAILABLE:
 	from nana.modules.database import notes_db
 
 # TODO: Add more inline query
@@ -233,7 +233,7 @@ async def inline_query_handler(client, query):
 			id=uuid4(),
 			title="Engine pm",
 			description="Filter pm",
-			input_message_content=InputTextMessageContent(await get_welcome()),
+			input_message_content=InputTextMessageContent(welc_txt, parse_mode="markdown"),
 			reply_markup=InlineKeyboardMarkup(button)))
 		await client.answer_inline_query(query.id,
 		results=answers,

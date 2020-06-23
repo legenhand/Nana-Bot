@@ -160,6 +160,7 @@ else:
     AdminSettings = Config.AdminSettings
     REMINDER_UPDATE = Config.REMINDER_UPDATE
     TEST_MODE = Config.TEST_MODE
+    TERMUX_USER = Config.TERMUX_USER
 if os.path.exists("nana/logs/error.log"):
     f = open("nana/logs/error.log", "w")
     f.write("PEAK OF THE LOGS FILE")

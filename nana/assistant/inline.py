@@ -226,10 +226,8 @@ async def inline_query_handler(client, query):
 	#PM_Permit
 	elif string.split()[0] == "engine_pm":
 		# PM_BTN = []
-		button = [[InlineKeyboardButton("To Scam", callback_data="engine_pm_block")],
-		[InlineKeyboardButton("I want to contact you", callback_data="engine_pm_nope")],
-		[InlineKeyboardButton("I want to report something", callback_data="engine_pm_report")],
-		[InlineKeyboardButton("Nope, never mind", callback_data="engine_pm_none")]]
+		button = [[InlineKeyboardButton("Ask for porn", callback_data="engine_pm_block"), InlineKeyboardButton("Contact me", callback_data="engine_pm_nope")],
+		[InlineKeyboardButton("Report", callback_data="engine_pm_report"), InlineKeyboardButton("Passing by", callback_data="engine_pm_none")]]
 		random.shuffle(button)
 		answers.append(InlineQueryResultArticle(
 			id=uuid4(),

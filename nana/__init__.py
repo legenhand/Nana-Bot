@@ -110,6 +110,7 @@ if ENV:
     AdminSettings = [int(x) for x in os.environ.get("AdminSettings", "").split()]
     REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
     TEST_MODE = bool(os.environ.get('TEST_MODE', False))
+    TERMUX_USER = os.environ.get('TERMUX_USER', False)
 else:
     # logger
     logger = Config.LOGGER

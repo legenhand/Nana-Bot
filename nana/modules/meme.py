@@ -201,7 +201,6 @@ async def owo(_client, message):
 
 @app.on_message(Filters.me & Filters.command(["waifu"], Command))
 async def waifu(client, message):
-    await message.delete()
     cmd = message.command
     waifu = ""
     if len(cmd) > 1:
@@ -214,6 +213,7 @@ async def waifu(client, message):
         await message.delete()
         return
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(waifus)}{waifu}")
+    await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
                                         result_id = x.results[0].id,
@@ -275,7 +275,6 @@ async def pay_respecc(_client, message):
 
 @app.on_message(Filters.me & Filters.command(["senpai"], Command))
 async def senpai(client, message):
-    await message.delete()
     cmd = message.command
     senpai = ""
     if len(cmd) > 1:
@@ -288,6 +287,7 @@ async def senpai(client, message):
         await message.delete()
         return
     x = await client.get_inline_bot_results("Stickerizerbot", f"#{random.choice(senpais)}{senpai}")
+    await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
                                         result_id = x.results[0].id,
@@ -297,9 +297,9 @@ async def senpai(client, message):
 
 @app.on_message(Filters.me & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
-    await message.delete()
     mock = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#7{mock}")
+    await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
                                         result_id = x.results[0].id,
@@ -309,9 +309,9 @@ async def mock_spongebob(client, message):
 
 @app.on_message(Filters.me & Filters.command(["ggl"], Command))
 async def google_search(client, message):
-    await message.delete()
     googles = message.reply_to_message.text
     x = await client.get_inline_bot_results("Stickerizerbot", f"#12{googles}")
+    await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
                                         result_id = x.results[0].id,

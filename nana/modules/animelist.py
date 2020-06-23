@@ -157,7 +157,7 @@ async def manga(client, message):
     try:
         res = jikan.search("manga", query).get("results")[0].get("mal_id")
     except APIException:
-        message.edit("Error connecting to the API. Please try again!")
+        await message.edit("Error connecting to the API. Please try again!")
         return ""
     if res:
         try:

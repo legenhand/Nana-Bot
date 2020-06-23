@@ -72,7 +72,7 @@ async def save_note(_client, message):
         return
 
     if data_type == Types.TEXT:
-        teks, button = parse_button(text)
+        teks, _ = parse_button(text)
         if not teks:
             await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
             return
@@ -109,7 +109,7 @@ async def get_note(client, message):
             button = None
         if button:
             try:
-                inlineresult = await app.get_inline_bot_results(f"@{BotUsername}", f"#note {note}")
+                inlineresult = await app.get_inline_bot_results(f"@{BotUsername}", f"note {note}")
             except errors.exceptions.bad_request_400.BotInlineDisabled:
                 await message.edit("Your bot inline isn't available!\nCheck your bot for more information!")
                 await setbot.send_message(Owner, "Hello, your notes is look like include button, but i can't do that "
@@ -147,7 +147,7 @@ async def get_note(client, message):
             button = None
         if button:
             try:
-                inlineresult = await app.get_inline_bot_results(f"@{BotUsername}", f"#note {note}")
+                inlineresult = await app.get_inline_bot_results(f"@{BotUsername}", f"note {note}")
             except errors.exceptions.bad_request_400.BotInlineDisabled:
                 await message.edit("Your bot inline isn't available!\nCheck your bot for more information!")
                 await setbot.send_message(Owner,

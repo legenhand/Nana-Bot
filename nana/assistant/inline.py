@@ -9,9 +9,9 @@ from pyrogram import errors, InlineKeyboardMarkup, InputTextMessageContent, Inli
 from nana import setbot, Owner, OwnerName, DB_AVAILABLE
 from nana.helpers.msg_types import Types
 from nana.helpers.string import parse_button, build_keyboard
-from nana.modules.pm import get_welcome
-from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, \
-	CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext, handwriting, handwritingb, graffiti, graffitib
+from nana.modules.pm import welc_txt
+from nana.modules.stylish import text_style_generator, formatting_text_inline, CHAR_OVER, CHAR_UNDER, CHAR_STRIKE, graffiti, graffitib,\
+	CHAR_POINTS, upsidedown_text_inline, smallcaps, superscript, subscript, wide, bubbles, bubblesblack, smothtext, handwriting, handwritingb
 if DB_AVAILABLE:
 	from nana.modules.database import notes_db
 
@@ -196,6 +196,7 @@ async def inline_query_handler(client, query):
 			title=smoth_text,
 			description="Smoth Text",
 			input_message_content=InputTextMessageContent(smoth_text)))
+
 		graffiti_text = formatting_text_inline(text, graffiti)
 		answers.append(InlineQueryResultArticle(
 			title=graffiti_text,
@@ -223,9 +224,8 @@ async def inline_query_handler(client, query):
 									)
 		return
 
-	#PM_Permit
+	#PM_PERMIT
 	elif string.split()[0] == "engine_pm":
-		# PM_BTN = []
 		button = [[InlineKeyboardButton("Ask for porn", callback_data="engine_pm_block"), InlineKeyboardButton("Contact me", callback_data="engine_pm_nope")],
 		[InlineKeyboardButton("Report", callback_data="engine_pm_report"), InlineKeyboardButton("Passing by", callback_data="engine_pm_none")]]
 		random.shuffle(button)
@@ -239,3 +239,4 @@ async def inline_query_handler(client, query):
 		results=answers,
 			cache_time=0
 		)
+	

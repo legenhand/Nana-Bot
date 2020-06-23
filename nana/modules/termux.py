@@ -19,7 +19,7 @@ get yout phone's Battery Status.
 """
 
 @app.on_message(Filters.me & Filters.command(["bstats"], Command))
-async def bstat(message):
+async def bstat(_client, message):
     if TERMUX_USER:
         termux_command = subprocess.Popen("termux-battery-status", shell=True, stdout=subprocess.PIPE)
         my_bytes_value = termux_command.stdout.read()

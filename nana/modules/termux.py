@@ -18,7 +18,7 @@ get yout phone's Battery Status.
 
 ──「 **Torch** 」──
 -> `torch`
-Turn your Device's Torch on & off.
+Turn your Device's Torch on & off   .
 
 """
 torch = False
@@ -58,3 +58,5 @@ async def termux_torch(_client, message):
             return
         torch = True
         await message.edit("Torch turned on!")
+        await sleep(2.0)
+        await message.delete()

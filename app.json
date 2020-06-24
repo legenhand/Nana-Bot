@@ -80,6 +80,11 @@
       "value": "False",
       "required": false
     },
+    "lydia_api": {
+      "description": "(optional) Fill in your Coffeehouse API, get from https://coffeehouse.intellivoid.net",
+      "value": "False",
+      "required": false
+    },
     "bitly_token": {
       "description": "(optional) Register at : https://http://app.bitly.com/ profile settings -> generic access token",
       "required": false
@@ -106,6 +111,14 @@
     },
     "ASSISTANT_NOLOAD": {
       "description": "(optional) Fill if you dont want to load that module",
+      "required": false
+    },
+    "lastfm_username": {
+      "description": "(optional) Your Last.fm username",
+      "required": false
+    },
+    "lastfm_api": {
+      "description": "(optional) Lastfm Api, get from last.fm",
       "required": false
     },
     "USERBOT_SESSION": {

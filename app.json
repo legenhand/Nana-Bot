@@ -56,6 +56,11 @@
       "value": "True",
       "required": false
     },
+    "NANA_IMG": {
+      "description": "(optional) Url of a photo to show up in your Assistant",
+      "value": "",
+      "required": false
+    },
     "lang_code": {
       "description": "(optional) Your language code",
       "value": "en",

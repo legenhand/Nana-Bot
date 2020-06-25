@@ -111,6 +111,7 @@ if ENV:
     REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
     TEST_MODE = bool(os.environ.get('TEST_MODE', False))
     TERMUX_USER = os.environ.get('TERMUX_USER', False)
+    NANA_IMG = os.environ.get('NANA_IMG', False)
 else:
     # logger
     logger = Config.LOGGER
@@ -150,6 +151,7 @@ else:
     lastfm_api = Config.lastfm_api
     remove_bg_api = Config.remove_bg_api
     lastfm_username = Config.lastfm_username
+    NANA_IMG = Config.NANA_IMG
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD
     USERBOT_NOLOAD = Config.USERBOT_NOLOAD

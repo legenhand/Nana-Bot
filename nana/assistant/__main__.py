@@ -6,7 +6,7 @@ import heroku3
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors, ReplyKeyboardMarkup
 
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, HEROKU_API, \
-    Owner, OwnerName
+    Owner, OwnerName, NANA_IMG
 from nana.__main__ import reload_userbot, restart_all
 
 if DB_AVAILABLE:
@@ -63,7 +63,10 @@ Convert a text to various style, can be used anywhere!
     start_message += f"`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
-    await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
+    if NANA_IMG:
+        await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
+    else:
+        await setbot.send_message(Owner, start_message, reply_markup=buttons)
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["getme"]))

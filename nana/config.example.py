@@ -5,7 +5,7 @@ class Config(object):
 	# Register here: https://my.telegram.org/apps
 	api_id = 1234 # Your API_ID
 	api_hash = "" # Your API_HASH
-	DATABASE_URL = ""  # Your database URL
+	DB_URI = ""  # Your database URL
 
 	# Version
 	lang_code = "en"  # Your language code

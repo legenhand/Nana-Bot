@@ -11,13 +11,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 StartTime = time.time()
 
-# Postgresql
 
-# logging
-# 
-# -> Advanced logging, for debugging purposes
-
-#
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
     TEST_DEVELOP = bool(os.environ.get('TEST_DEVELOP', False))
@@ -41,7 +35,7 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
 USERBOT_VERSION = "2.1"
 ASSISTANT_VERSION = "2.1"
 
-OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
+OFFICIAL_BRANCH = ('master')
 REPOSITORY = "https://github.com/pokurt/Nana-Remix.git"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI",
                    "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
@@ -180,7 +174,6 @@ console.setFormatter(formatter)
 logging.getLogger('').addHandler(console)
 
 log = logging.getLogger()
-log.error("THIS IS PEAK OF LOG ERROR, IGNORE THIS MESSAGE LOG")
 
 if USERBOT_SESSION and ASSISTANT_SESSION:
     BOT_SESSION = ASSISTANT_SESSION

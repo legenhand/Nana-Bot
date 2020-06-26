@@ -99,7 +99,7 @@ if ENV:
     ASSISTANT_LOAD = os.environ.get("ASSISTANT_LOAD", "").split()
     ASSISTANT_NOLOAD = os.environ.get("ASSISTANT_NOLOAD", "").split()
 
-    DATABASE_URL = os.environ.get('DATABASE_URL', "postgres://username:password@localhost:5432/database")
+    DB_URI = os.environ.get('DB_URI', "postgres://username:password@localhost:5432/database")
     ASSISTANT_BOT_TOKEN = os.environ.get('ASSISTANT_BOT_TOKEN', None)
     AdminSettings = [int(x) for x in os.environ.get("AdminSettings", "").split()]
     REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
@@ -152,7 +152,7 @@ else:
     ASSISTANT_LOAD = Config.ASSISTANT_LOAD
     ASSISTANT_NOLOAD = Config.ASSISTANT_NOLOAD
 
-    DATABASE_URL = Config.DATABASE_URL
+    DB_URI = Config.DB_URI
     ASSISTANT_BOT_TOKEN = Config.ASSISTANT_BOT_TOKEN
     AdminSettings = Config.AdminSettings
     REMINDER_UPDATE = Config.REMINDER_UPDATE
@@ -188,7 +188,7 @@ BOTINLINE_AVAIABLE = False
 # Postgresql
 def mulaisql() -> scoped_session:
     global DB_AVAILABLE
-    engine = create_engine(DATABASE_URL, client_encoding="utf8")
+    engine = create_engine(DB_URI, client_encoding="utf8")
     BASE.metadata.bind = engine
     try:
         BASE.metadata.create_all(engine)

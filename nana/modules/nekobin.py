@@ -1,5 +1,5 @@
 import asyncio
-import requests
+import aiohttp
 
 from pyrogram import Filters
 from nana import Command, app
@@ -13,7 +13,7 @@ Create a Nekobin paste using replied to message.
 """
 
 @app.on_message(Filters.me & Filters.command(["neko"], Command))
-async def paste(_client, message):
+async def paste(client, message):
     cmd = message.command
 
     text = ""
@@ -26,15 +26,33 @@ async def paste(_client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    # await message.edit_text("`Pasting...`")
     try:
-        key = requests.post('https://nekobin.com/api/documents', json={"content": text}).json().get('result').get('key')
-    except requests.exceptions.RequestException:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                    'https://nekobin.com/api/documents',
+                    json={"content": text},
+                    timeout=3
+            ) as response:
+                key = (await response.json())["result"]["key"]
+    except Exception:
+        await message.edit_text("`Pasting failed`")
         await asyncio.sleep(2)
         await message.delete()
+        return
     else:
-        reply_text = f'`Successfully pasted on` [Nekobin](https://nekobin.com/{key})'
-        await message.edit_text(
-            reply_text,
-            disable_web_page_preview=True,
-        )
+        url = f'https://nekobin.com/{key}'
+        reply_text = f'Nekofied to [Nekobin]({url})'
+        delete = True if len(message.command) > 1 and \
+                         message.command[1] in ['d', 'del'] and \
+                         message.reply_to_message.from_user.is_self else False
+        if delete:
+            await asyncio.gather(
+                client.send_message(message.chat.id, reply_text, disable_web_page_preview=True),
+                message.reply_to_message.delete(),
+                message.delete()
+            )
+        else:
+            await message.edit_text(
+                reply_text,
+                disable_web_page_preview=True,
+            )

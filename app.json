@@ -41,6 +41,10 @@
       "description": "Fill your telegram id",
       "value": ""
     },
+    "DB_URI": {
+      "description": "Required to use an external db, try ElephantSQL: https://customer.elephantsql.com/login",
+      "value": ""
+    },
     "ASSISTANT_WORKER": {
       "description": "(optional) Worker for Assistant bot",
       "value": "2",

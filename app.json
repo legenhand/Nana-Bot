@@ -37,11 +37,6 @@
       "description": "Prefix command, separate by space.",
       "value": "! ."
     },
-    "DB_URI": {
-      "description": "(optional) but recommended to use an external db, try ElephantSQL: https://customer.elephantsql.com/login",
-      "value": "",
-      "required": false
-    },
     "AdminSettings": {
       "description": "Fill your telegram id",
       "value": ""

@@ -41,14 +41,13 @@ Purge your messages only, no need admin permission.
 @app.on_message(Filters.me & Filters.command(["purge"], Command))
 async def purge_message(client, message):
     if message.chat.type in (("supergroup", "channel")):
-        await message.delete()
-        return
-    is_admin = await admin_check(message)
-    if not is_admin:
-        await message.delete()
+        is_admin = await admin_check(message)
+        if not is_admin:
+            await message.delete()
+            return
+    else:
         return
     start_t = datetime.now()
-    status_message = await message.reply_text("purging", quote=True)
     await message.delete()
     message_ids = []
     count_del_etion_s = 0
@@ -72,11 +71,10 @@ async def purge_message(client, message):
             count_del_etion_s += len(message_ids)
     end_t = datetime.now()
     time_taken_ms = (end_t - start_t).seconds
-    await status_message.edit_text(
+    await client.send_message(
+        message.chat.id,
         f"Purged {count_del_etion_s} messages in {time_taken_ms} seconds"
         )
-    await asyncio.sleep(5)
-    await status_message.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["purgeme"], Command))

@@ -84,7 +84,7 @@ async def aexec(client, message, code):
     return await locals()['__ex'](client, message)
 
 
-@app.on_message(Filters.me & Filters.command(["exec"], Command))
+@app.on_message(Filters.me & Filters.command(["py"], Command))
 async def executor(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `exec message.edit('edited!')`")
@@ -106,7 +106,7 @@ async def public_ip(_client, message):
     await message.edit(f'<code>{ip}</code>', parse_mode='html')
 
 
-@app.on_message(Filters.me & Filters.command(["cmd"], Command))
+@app.on_message(Filters.me & Filters.command(["sh"], Command))
 async def terminal(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `cmd ping -c 5 google.com`")

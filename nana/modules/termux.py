@@ -28,7 +28,7 @@ async def bstat(_client, message):
     if TERMUX_USER:
         termux_command = subprocess.Popen("termux-battery-status", shell=True, stdout=subprocess.PIPE)
         my_bytes_value = termux_command.stdout.read()
-        my_json = my_bytes_value.decode('utf8').replace("'", '').replace('"', '').replace("{", '').replace("}", '').replace(",", '').replace(" ", '')
+        my_json = my_bytes_value.decode('utf8').replace("'", '').replace('"', '').replace("{", '').replace("}", '').replace(",", '').replace(" ", '').replace(":", ': ')
         await message.edit(f"<b>Battery Status:</b>{my_json}")
     else:
         await message.edit("This command is only for Termux users!")

@@ -1,7 +1,7 @@
 import os
 import shutil
 import sys
-from datetime import datetime
+
 from git import Repo
 from git.exc import InvalidGitRepositoryError, GitCommandError, NoSuchPathError
 from pyrogram import Filters
@@ -88,19 +88,6 @@ async def updater(client, message):
                 "nana-old")
             await restart_all()
             return
-        elif len(message.text.split()) == 2 and message.text.split()[1] == "last":
-            repo = Repo(os.getcwd())
-            master = repo.head.reference
-            commit = master.commit.message.strip()
-            commit_id = master.commit.hexsha
-            commit_link = f"<a href='https://github.com/pokurt/Nana-Remix/commit/{commit_id}'>{commit_id[:7]}</a>"
-            author = master.commit.author.name
-            date_time = datetime.fromtimestamp(master.commit.committed_date)
-            commit_msg = f"**Latest commit**: {commit_link}\n\n**Commit Message**:\n```{commit.strip()}```\n\n" \
-                        f"**By**: `{author}`\n\n**On**: `{date_time}`"
-            await message.edit(commit_msg, disable_web_page_preview=True)
-
-
 
     brname = repo.active_branch.name
     if brname not in OFFICIAL_BRANCH:

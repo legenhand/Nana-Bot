@@ -297,7 +297,17 @@ async def senpai(client, message):
 
 @app.on_message(Filters.me & Filters.command(["mock"], Command))
 async def mock_spongebob(client, message):
-    mock = message.reply_to_message.text
+    cmd = message.command
+    mock = ""
+    if len(cmd) > 1:
+        mock = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        mock = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`Can't mock the void.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
     x = await client.get_inline_bot_results("Stickerizerbot", f"#7{mock}")
     await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,

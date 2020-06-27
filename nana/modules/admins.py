@@ -1,12 +1,18 @@
-
-""" set permissions to users """
-
 import os
+import asyncio
+from emoji import get_emoji_regexp
 
-from pyrogram import ChatPermissions, Filters, Message
+from pyrogram import ChatPermissions, Filters
+from pyrogram.errors import (FloodWait,
+                             UserAdminInvalid,
+                             UsernameInvalid,
+                             ChatAdminRequired,
+                             PeerIdInvalid,
+                             UserIdInvalid,
+                             )
 
 from nana import app, Command
-from nana.helpers.admincheck import admin_check
+from nana.helpers.admincheck import admin_check, is_sudoadmin
 
 __MODULE__ = "Admin"
 __HELP__ = """
@@ -19,13 +25,108 @@ locks permission in the group
 -> `unlock`
 unlocks permission in the group
 
-Supported Locks/Unlocks:
+Supported Locks / Unlocks:
 `msg` | `media` | `stickers` | `animations` | `games` | `inlinebots` |
 `webprev` | `polls` | `info`  | `invite` | `pin` | `all`
 
 -> `vlock`
 view group permissions
+
+──「 **Promote/Demote** 」──
+-> `promote`
+Reply to a user to promote
+
+-> `demote`
+Reply to a user to demote
 """
+
+
+@app.on_message(Filters.me & Filters.command(["promote"], Command))
+async def promote_usr(client, message):
+    cmd = message.command
+    custom_rank = ""
+    chat_id = message.chat.id
+    can_promo = await is_sudoadmin(message)
+
+    if can_promo:
+        if message.reply_to_message:
+            user_id = message.reply_to_message.from_user.id
+            custom_rank = get_emoji_regexp().sub(u'', " ".join(cmd[1:]))
+
+            if len(custom_rank) > 15:
+                custom_rank = custom_rank[:15]
+        else:
+            await message.edit("`reply to a user to promote`")
+            return
+
+        if user_id:
+            try:
+                await client.promote_chat_member(chat_id, user_id,
+                                                 can_change_info=True,
+                                                 can_delete_messages=True,
+                                                 can_restrict_members=True,
+                                                 can_invite_users=True,
+                                                 can_pin_messages=True)
+
+                await asyncio.sleep(2)
+                await client.set_administrator_title(chat_id, user_id, custom_rank)
+                await message.edit(f"`promoted {message.reply_to_message.from_user.first_name} successfully!`")
+
+            except UsernameInvalid:
+                await message.edit("`invalid username`")
+                return
+            except PeerIdInvalid:
+                await message.edit("`invalid username or userid`")
+                return
+            except UserIdInvalid:
+                await message.edit("`invalid userid`")
+                return
+
+            except ChatAdminRequired:
+                await message.edit("`permission denied`")
+                return
+
+            except Exception as e:
+                await message.edit(f"**ERROR:** `{e}`")
+                return
+
+    else:
+        await message.edit("`permission denied`")
+
+
+@app.on_message(Filters.me & Filters.command(["demote"], Command))
+async def demote_usr(client, message):
+    chat_id = message.chat.id
+    can_demote = await is_sudoadmin(message)
+
+    if can_demote:
+        if message.reply_to_message:
+            try:
+                get_mem = await client.get_chat_member(
+                    chat_id,
+                    message.reply_to_message.from_user.id
+                    )
+                await client.promote_chat_member(chat_id, get_mem.user.id,
+                                                 can_change_info=False,
+                                                 can_delete_messages=False,
+                                                 can_restrict_members=False,
+                                                 can_invite_users=False,
+                                                 can_pin_messages=False)
+
+                await message.edit(f"`demoted {message.reply_to_message.from_user.first_name} successfully!`")
+            except ChatAdminRequired:
+                await message.edit("`permission denied`")
+                return
+
+            except Exception as e:
+                await message.edit(f"**ERROR:** `{e}`")
+                return
+
+        if not message.reply_to_message:
+            await message.edit("`reply to a user to demote.`")
+            return
+    else:
+        await message.edit("``permission denied`")
 
 
 @app.on_message(Filters.me & Filters.command(["lock"], Command))

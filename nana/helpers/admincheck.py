@@ -19,3 +19,16 @@ async def admin_check(message: Message) -> bool:
         return False
     else:
         return True
+
+async def is_sudoadmin(message: Message) -> bool:
+    client = message._client
+    check_user = await client.get_chat_member(message.chat.id, message.from_user.id)
+    user_type = check_user.status
+    if user_type == "member":
+        return False
+    if user_type == "administrator":
+        add_adminperm = check_user.can_promote_members
+        if add_adminperm:
+            return True
+        return False
+    return True

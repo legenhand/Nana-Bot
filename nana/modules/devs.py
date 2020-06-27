@@ -218,20 +218,15 @@ async def alive(_client, message):
         me = await app.get_me()
     except ConnectionError:
         me = None
-    text = "Hello {}!\n".format(message.from_user.first_name)
-    text += "**Here is your current stats:**\n"
+    text = "[Nana-Remix](https://github.com/pokurt/Nana-Remix)** Up and Running:**\n"
     if not me:
-        text += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
+        text += "- Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
     else:
-        text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
-    text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
-    text += "-> Database: `{}`\n".format(DB_AVAILABLE)
-    text += "-> Python: `{}`\n".format(python_version())
-    text += "-> Pyrogram: `{}`\n".format(p.__version__)
-    if not me:
-        text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
-    else:
-        text += "\nBot logged in as `{}`\n Go to your assistant for more information!".format(me.first_name)
+        text += "- Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
+    text += "- Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
+    text += "- Database: `{}`\n".format(DB_AVAILABLE)
+    text += "- Python: `{}`\n".format(python_version())
+    text += "- Pyrogram: `{}`\n".format(p.__version__)
     await message.edit(text)
 
 @app.on_message(Filters.me & Filters.command(["id"], Command))

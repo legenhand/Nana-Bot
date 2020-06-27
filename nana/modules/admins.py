@@ -60,6 +60,8 @@ async def ban_usr(client, message):
             user_id = message.reply_to_message.from_user.id
         else:
             await message.edit("`reply to a user to ban.`")
+            await asyncio.sleep(5)
+            await message.delete()
 
         if user_id:
             try:
@@ -74,20 +76,26 @@ async def ban_usr(client, message):
 
             except UsernameInvalid:
                 await message.edit("`invalid username`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
 
             except PeerIdInvalid:
                 await message.edit("`invalid username or userid`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
 
             except UserIdInvalid:
                 await message.edit("`invalid userid`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
 
             except ChatAdminRequired:
-                await message.edit(
-                    text=r"`i don't have permission to do that ＞︿＜`", del_in=0
-                    )
+                await message.edit("`permission denied`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
 
             except Exception as e:
@@ -96,6 +104,8 @@ async def ban_usr(client, message):
 
     else:
         await message.edit("`permission denied`")
+        await asyncio.sleep(5)
+        await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["unban"], Command))
@@ -118,9 +128,13 @@ async def unban_usr(client, message):
 
         else:
             await message.edit("`Reply to a user to unban`")
+            await asyncio.sleep(5)
+            await message.delete()
             return
     else:
         await message.edit("`permission denied`")
+        await asyncio.sleep(5)
+        await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["promote"], Command))
@@ -139,6 +153,8 @@ async def promote_usr(client, message):
                 custom_rank = custom_rank[:15]
         else:
             await message.edit("`reply to a user to promote`")
+            await asyncio.sleep(5)
+            await message.delete()
             return
 
         if user_id:
@@ -156,16 +172,24 @@ async def promote_usr(client, message):
 
             except UsernameInvalid:
                 await message.edit("`invalid username`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
             except PeerIdInvalid:
                 await message.edit("`invalid username or userid`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
             except UserIdInvalid:
                 await message.edit("`invalid userid`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
 
             except ChatAdminRequired:
                 await message.edit("`permission denied`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
 
             except Exception as e:
@@ -174,6 +198,8 @@ async def promote_usr(client, message):
 
     else:
         await message.edit("`permission denied`")
+        await asyncio.sleep(5)
+        await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["demote"], Command))
@@ -198,6 +224,8 @@ async def demote_usr(client, message):
                 await message.edit(f"`demoted {message.reply_to_message.from_user.first_name} successfully!`")
             except ChatAdminRequired:
                 await message.edit("`permission denied`")
+                await asyncio.sleep(5)
+                await message.delete()
                 return
 
             except Exception as e:
@@ -239,6 +267,8 @@ async def lock_permission(client, message):
 
     if not lock_type:
         await message.edit("`can't lock the void`")
+        await asyncio.sleep(5)
+        await message.delete()
         return
 
     get_perm = await client.get_chat(chat_id)
@@ -259,10 +289,12 @@ async def lock_permission(client, message):
         try:
             await client.set_chat_permissions(chat_id, ChatPermissions())
             await message.edit("`Locked all permission from this Chat!`")
+            await asyncio.sleep(5)
+            await message.delete()
 
         except Exception as e:
             await message.edit(
-                text="`permission denied`\n\n"
+                text="`permission denied`\n"
                 f"**Log:** `{e}`")
 
         return
@@ -330,10 +362,11 @@ async def lock_permission(client, message):
                                                           can_pin_messages=pin))
 
         await message.edit(text=f"`Locked {perm} for this chat!`")
+        await asyncio.sleep(5)
+        await message.delete()
 
     except Exception as e:
-        await message.edit(
-            text=r"`permission denied`\n\n"
+        await message.edit("`permission denied`\n"
             f"**Log:** `{e}`")
 
 
@@ -365,6 +398,8 @@ async def unlock_permission(client, message):
 
     if not unlock_type:
         await message.edit("`can't lock the void`")
+        await asyncio.sleep(5)
+        await message.delete()
         return
 
     get_uperm = await client.get_chat(chat_id)
@@ -397,6 +432,8 @@ async def unlock_permission(client, message):
                                                               can_add_web_page_previews=True))
 
             await message.edit("`Unlocked all permission from this Chat!`")
+            await asyncio.sleep(5)
+            await message.delete()
 
         except Exception as e:
             await message.edit("`permission denied`\n"
@@ -449,6 +486,8 @@ async def unlock_permission(client, message):
 
     else:
         await message.edit("`Invalid Unlock Type!`")
+        await asyncio.sleep(5)
+        await message.delete()
         return
 
     try:
@@ -466,10 +505,12 @@ async def unlock_permission(client, message):
                                                           can_pin_messages=upin))
 
         await message.edit(f"`Unlocked {uperm} for this chat!`")
+        await asyncio.sleep(5)
+        await message.delete()
 
     except Exception as e:
         await message.edit(
-            text="`permission denied`\n\n"
+            text="`permission denied`\n"
             f"**Log:** `{e}`")
 
 
@@ -534,5 +575,5 @@ async def view_perm(client, message):
 
         except Exception as e:
             await message.edit(
-                text="`Something went wrong!`\n\n"
+                text="`Something went wrong!`\n"
                 f"**Log:** `{e}`")

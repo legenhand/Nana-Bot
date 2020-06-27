@@ -91,7 +91,7 @@ async def ban_usr(client, message):
                 return
 
             except Exception as e:
-                await message.edit(f"**ERROR:** `{e}`")
+                await message.edit(f"**Log:** `{e}`")
                 return
 
     else:
@@ -113,7 +113,7 @@ async def unban_usr(client, message):
                 await message.edit(f"`Successfully Unbanned {message.reply_to_message.from_user.first_name}`")
 
             except Exception as e:
-                await message.edit(f"**ERROR:** `{e}`")
+                await message.edit(f"**Log:** `{e}`")
                 return
 
         else:
@@ -169,7 +169,7 @@ async def promote_usr(client, message):
                 return
 
             except Exception as e:
-                await message.edit(f"**ERROR:** `{e}`")
+                await message.edit(f"**Log:** `{e}`")
                 return
 
     else:
@@ -201,7 +201,7 @@ async def demote_usr(client, message):
                 return
 
             except Exception as e:
-                await message.edit(f"**ERROR:** `{e}`")
+                await message.edit(f"**Log:** `{e}`")
                 return
 
         if not message.reply_to_message:
@@ -263,7 +263,7 @@ async def lock_permission(client, message):
         except Exception as e:
             await message.edit(
                 text="`permission denied`\n\n"
-                f"**ERROR:** `{e}`")
+                f"**Log:** `{e}`")
 
         return
 
@@ -334,7 +334,7 @@ async def lock_permission(client, message):
     except Exception as e:
         await message.edit(
             text=r"`permission denied`\n\n"
-            f"**ERROR:** `{e}`")
+            f"**Log:** `{e}`")
 
 
 
@@ -399,9 +399,8 @@ async def unlock_permission(client, message):
             await message.edit("`Unlocked all permission from this Chat!`")
 
         except Exception as e:
-            await message.edit(
-                text=r"`permission denied`\n\n"
-                f"**ERROR:** `{e}`")
+            await message.edit("`permission denied`\n"
+                f"**Log:** `{e}`")
         return
 
     if unlock_type == "msg":
@@ -466,12 +465,12 @@ async def unlock_permission(client, message):
                                                           can_invite_users=uinvite,
                                                           can_pin_messages=upin))
 
-        await message.edit("`Unlocked {uperm} for this chat!`")
+        await message.edit(f"`Unlocked {uperm} for this chat!`")
 
     except Exception as e:
         await message.edit(
             text="`permission denied`\n\n"
-            f"**ERROR:** `{e}`")
+            f"**Log:** `{e}`")
 
 
 @app.on_message(Filters.me & Filters.command(["vlock"], Command))
@@ -536,4 +535,4 @@ async def view_perm(client, message):
         except Exception as e:
             await message.edit(
                 text="`Something went wrong!`\n\n"
-                f"**ERROR:** `{e}`")
+                f"**Log:** `{e}`")

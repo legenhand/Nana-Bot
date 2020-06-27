@@ -24,7 +24,7 @@ async def corona(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
         try:
-            r = await AioHttp().get_json(f"https://corona.lmao.ninja/v2/all")
+            r = await AioHttp().get_json("https://corona.lmao.ninja/v2/all")
             reply_text = f"**Global Cases 🦠:**\nCases: `{r['cases']:,}`\nCases Today: `{r['todayCases']:,}`\nDeaths: `{r['deaths']:,}`\nDeaths Today: `{r['todayDeaths']:,}`\nRecovered: `{r['recovered']:,}`\nActive: `{r['active']:,}`\nCritical: `{r['critical']:,}`\nCases/Mil: `{r['casesPerOneMillion']}`\nDeaths/Mil: `{r['deathsPerOneMillion']}``"
             await message.edit(f"{reply_text}")
         except Exception as e:

@@ -14,6 +14,7 @@ import pyrogram as p
 from nana import Command, logging, app, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION
 from nana.helpers.deldog import deldog
 from nana.helpers.parser import mention_markdown
+from nana.helpers.aiohttp_helper import AioHttp
 
 __MODULE__ = "Devs"
 __HELP__ = """
@@ -102,7 +103,7 @@ async def executor(client, message):
 
 @app.on_message(Filters.me & Filters.command(["ip"], Command))
 async def public_ip(_client, message):
-    ip = requests.get('https://api.ipify.org').text
+    ip = await AioHttp().get_text("https://api.ipify.org")
     await message.edit(f'<code>{ip}</code>', parse_mode='html')
 
 

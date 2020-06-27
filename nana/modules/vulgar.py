@@ -22,7 +22,7 @@ vulgar_filter = False
 bad_words = ['nigga', 'nigger', 'coon', 'fuck', 'bitch']
 
 
-@app.on_message(~Filters.regex(r"^\.\w*") & Filters.me, group=10)
+@app.on_message(~Filters.regex(r"^\.\w*") & Filters.me)
 async def vulgar_filtr(_client, message):
     if vulgar_filter:
         try:

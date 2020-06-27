@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:dependabot" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:pip" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:upstream" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="17821370-a063-4fef-a4ab-7bdf43e17c3b" name="Default Changelist" comment="NANA VERSION v1.1.1b">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1aD2Tmu6Z1a4S2UJzKaoHuksWlr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/nana" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/nana" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="Nana-Bot" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/nana" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="nana" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Nana-Bot" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/nana" />
+      <option name="PARAMETERS" value="python3 -m" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="17821370-a063-4fef-a4ab-7bdf43e17c3b" name="Default Changelist" comment="" />
+      <created>1586255854334</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586255854334</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Fix : lydia now working properly">
+      <created>1586259018064</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586259018064</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Fix : disapprovepm now working properly">
+      <created>1592501134325</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592501134325</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix : lydia now working properly">
+      <created>1592902693460</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1592902693460</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Modules : Added Spotify, usage : sp">
+      <created>1593878522536</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1593878522536</updated>
+    </task>
+    <task id="LOCAL-00005" summary="NANA VERSION v1.1.1b">
+      <created>1593881277101</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1593881277101</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fix : disapprovepm now working properly" />
+    <MESSAGE value="Fix : lydia now working properly" />
+    <MESSAGE value="Modules : Added Spotify, usage : sp" />
+    <MESSAGE value="NANA VERSION v1.1.1b" />
+    <option name="LAST_COMMIT_MESSAGE" value="NANA VERSION v1.1.1b" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="147" y="0" width="1071" height="729" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592840979240">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="147" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1592840979240" />
+    <state x="147" y="0" width="1071" height="729" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.729@0.0.1366.729" timestamp="1592639319122" />
+    <state x="391" y="157" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1593350968176">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="391" y="157" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593350968176" />
+    <state x="421" y="114" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1593351004618">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="421" y="114" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593351004618" />
+    <state x="321" y="0" key="CommitChangelistDialog2" timestamp="1592639214693">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="321" y="0" key="CommitChangelistDialog2/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1592501133560" />
+    <state x="321" y="0" key="CommitChangelistDialog2/0.0.1366.729@0.0.1366.729" timestamp="1592639214693" />
+    <state x="117" y="200" width="1166" height="529" maximized="true" key="DiffContextDialog" timestamp="1593882714413">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="117" y="200" width="1166" height="529" maximized="true" key="DiffContextDialog/0.0.1366.729@0.0.1366.729" timestamp="1592818596186" />
+    <state x="470" y="123" key="FileChooserDialogImpl" timestamp="1586257231871">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="470" y="123" key="FileChooserDialogImpl/0.0.1366.729@0.0.1366.729" timestamp="1586257231871" />
+    <state width="1343" height="178" key="GridCell.Tab.0.bottom" timestamp="1593886822936">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state width="1343" height="178" key="GridCell.Tab.0.bottom/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593886822936" />
+    <state width="1343" height="178" key="GridCell.Tab.0.bottom/0.0.1366.729/1366.0.1366.768@1366.0.1366.768" timestamp="1592961541172" />
+    <state width="1343" height="178" key="GridCell.Tab.0.bottom/0.0.1366.729@0.0.1366.729" timestamp="1593512124396" />
+    <state width="1343" height="178" key="GridCell.Tab.0.bottom/0.0.2732.729@0.0.2732.729" timestamp="1593552388501" />
+    <state width="1343" height="178" key="GridCell.Tab.0.center" timestamp="1593886822936">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state width="1343" height="178" key="GridCell.Tab.0.center/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593886822936" />
+    <state width="1343" height="178" key="GridCell.Tab.0.center/0.0.1366.729/1366.0.1366.768@1366.0.1366.768" timestamp="1592961541172" />
+    <state width="1343" height="178" key="GridCell.Tab.0.center/0.0.1366.729@0.0.1366.729" timestamp="1593512124392" />
+    <state width="1343" height="178" key="GridCell.Tab.0.center/0.0.2732.729@0.0.2732.729" timestamp="1593552388500" />
+    <state width="1343" height="178" key="GridCell.Tab.0.left" timestamp="1593886822935">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state width="1343" height="178" key="GridCell.Tab.0.left/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593886822935" />
+    <state width="1343" height="178" key="GridCell.Tab.0.left/0.0.1366.729/1366.0.1366.768@1366.0.1366.768" timestamp="1592961541171" />
+    <state width="1343" height="178" key="GridCell.Tab.0.left/0.0.1366.729@0.0.1366.729" timestamp="1593512124391" />
+    <state width="1343" height="178" key="GridCell.Tab.0.left/0.0.2732.729@0.0.2732.729" timestamp="1593552388500" />
+    <state width="1343" height="178" key="GridCell.Tab.0.right" timestamp="1593886822936">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state width="1343" height="178" key="GridCell.Tab.0.right/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593886822936" />
+    <state width="1343" height="178" key="GridCell.Tab.0.right/0.0.1366.729/1366.0.1366.768@1366.0.1366.768" timestamp="1592961541172" />
+    <state width="1343" height="178" key="GridCell.Tab.0.right/0.0.1366.729@0.0.1366.729" timestamp="1593512124395" />
+    <state width="1343" height="178" key="GridCell.Tab.0.right/0.0.2732.729@0.0.2732.729" timestamp="1593552388501" />
+    <state x="309" y="119" width="728" height="489" key="MultipleFileMergeDialog" timestamp="1593884204212">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="309" y="119" key="MultipleFileMergeDialog/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593884204212" />
+    <state x="309" y="119" width="728" height="489" key="MultipleFileMergeDialog/0.0.1366.729@0.0.1366.729" timestamp="1592639051594" />
+    <state x="184" y="0" key="SettingsEditor" timestamp="1592496393117">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="184" y="0" key="SettingsEditor/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1592496393117" />
+    <state x="184" y="0" key="SettingsEditor/0.0.1366.729@0.0.1366.729" timestamp="1586256275299" />
+    <state x="283" y="97" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1593881337977">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="283" y="97" width="800" height="535" key="Vcs.Push.Dialog.v2/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593881337977" />
+    <state x="283" y="97" width="800" height="535" key="Vcs.Push.Dialog.v2/0.0.1366.729@0.0.1366.729" timestamp="1592902699224" />
+    <state x="351" y="193" key="com.intellij.ide.util.TipDialog" timestamp="1586255887560">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="351" y="193" key="com.intellij.ide.util.TipDialog/0.0.1366.729@0.0.1366.729" timestamp="1586255887560" />
+    <state x="340" y="27" width="676" height="674" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1593875372109">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="340" y="27" width="676" height="674" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593875372109" />
+    <state x="481" y="280" width="406" height="173" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1593878442976">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="481" y="280" width="406" height="173" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593878442976" />
+    <state x="481" y="280" width="416" height="174" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.729@0.0.1366.729" timestamp="1592639246535" />
+    <state x="388" y="87" width="590" height="554" key="find.popup" timestamp="1593889272136">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="388" y="87" width="590" height="554" key="find.popup/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593889272136" />
+    <state x="388" y="87" width="590" height="612" key="find.popup/0.0.1366.729@0.0.1366.729" timestamp="1593509637429" />
+    <state x="457" y="145" key="git4idea.merge.GitMergeDialog" timestamp="1593884070532">
+      <screen x="0" y="0" width="1366" height="729" />
+    </state>
+    <state x="457" y="145" key="git4idea.merge.GitMergeDialog/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593884070532" />
+  </component>
+</project>

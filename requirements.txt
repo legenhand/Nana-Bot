@@ -32,3 +32,4 @@ httplib2==0.15.0
 coffeehouse
 pycurl
 PTable
+emoji

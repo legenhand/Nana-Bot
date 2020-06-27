@@ -32,13 +32,95 @@ Supported Locks / Unlocks:
 -> `vlock`
 view group permissions
 
-──「 **Promote/Demote** 」──
+──「 **Promote / Demote** 」──
 -> `promote`
 Reply to a user to promote
 
 -> `demote`
 Reply to a user to demote
+
+──「 **Ban / Unban** 」──
+-> `ban`
+Reply to a user to perform ban
+
+-> `unban`
+Reply to a user to perform unban
+
 """
+
+
+@app.on_message(Filters.me & Filters.command(["ban"], Command))
+async def ban_usr(client, message):
+    chat_id = message.chat.id
+    get_group = await client.get_chat(chat_id)
+    can_ban = await admin_check(message)
+
+    if can_ban:
+        if message.reply_to_message:
+            user_id = message.reply_to_message.from_user.id
+        else:
+            await message.edit("`reply to a user to ban.`")
+
+        if user_id:
+            try:
+                get_mem = await client.get_chat_member(chat_id, user_id)
+                await client.kick_chat_member(chat_id, user_id)
+                await message.edit(
+                    f"**User Banned**\n"
+                    f"User: [{get_mem.user.first_name}](tg://user?id={get_mem.user.id}) "
+                    f"(`{get_mem.user.id}`)\n"
+                    f"Chat: `{get_group.title}` (`{chat_id}`)"
+                    )
+
+            except UsernameInvalid:
+                await message.edit("`invalid username`")
+                return
+
+            except PeerIdInvalid:
+                await message.edit("`invalid username or userid`")
+                return
+
+            except UserIdInvalid:
+                await message.edit("`invalid userid`")
+                return
+
+            except ChatAdminRequired:
+                await message.edit(
+                    text=r"`i don't have permission to do that ＞︿＜`", del_in=0
+                    )
+                return
+
+            except Exception as e:
+                await message.edit(f"**ERROR:** `{e}`")
+                return
+
+    else:
+        await message.edit("`permission denied`")
+
+
+@app.on_message(Filters.me & Filters.command(["unban"], Command))
+async def unban_usr(client, message):
+    chat_id = message.chat.id
+    can_unban = await admin_check(message)
+    if can_unban:
+        if message.reply_to_message:
+            try:
+                get_mem = await client.get_chat_member(
+                    chat_id,
+                    message.reply_to_message.from_user.id
+                    )
+                await client.unban_chat_member(chat_id, get_mem.user.id)
+                await message.edit(f"`Successfully Unbanned {message.reply_to_message.from_user.first_name}`")
+
+            except Exception as e:
+                await message.edit(f"**ERROR:** `{e}`")
+                return
+
+        else:
+            await message.edit("`Reply to a user to unban`")
+            return
+    else:
+        await message.edit("`permission denied`")
 
 
 @app.on_message(Filters.me & Filters.command(["promote"], Command))
@@ -230,7 +312,7 @@ async def lock_permission(client, message):
         perm = "pin"
 
     else:
-        await message.edit(text=r"`Invalid Lock Type!`")
+        await message.edit("`Invalid Lock Type!`")
         return
 
     try:
@@ -276,7 +358,7 @@ async def unlock_permission(client, message):
     uinfo = ""
     uinvite = ""
     upin = ""
-    uperm = ""
+    uperm = "" # pylint:disable=E0602
 
     unlock_type = " ".join(cmd[1:])
     chat_id = message.chat.id

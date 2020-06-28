@@ -20,7 +20,7 @@ __MODULE__ = "Admin"
 __HELP__ = """
 Module for Group Admins
 
-──「 **Locks/Unlocks** 」──
+──「 **Locks / Unlocks** 」──
 -> `lock`
 locks permission in the group
 
@@ -64,6 +64,12 @@ Reply to a user to mute them for 24 hours
 
 -> `unmute`
 Reply to a user to unmute them
+
+──「 **Message Pin** 」──
+-> `pin`
+Reply to a user to mute them forever
+
+Supported pin types: `alert`, `notify`, `loud`
 """
 
 # Mute permissions
@@ -95,6 +101,45 @@ unmute_permissions = ChatPermissions(
     can_invite_users=True,
     can_pin_messages=False
 )
+
+
+@app.on_message(Filters.me & Filters.command(["pin"], Command))
+async def pin_message(client, message):
+    if message.chat.type in ['group', 'supergroup']:
+        chat_id = message.chat.id
+        get_group = await client.get_chat(chat_id)
+        can_pin = await admin_check(message)
+        if can_pin:
+            try:
+                if message.reply_to_message:
+                    disable_notification = True
+                    if len(message.command) >= 2 and message.command[1] in ['alert', 'notify', 'loud']:
+                        disable_notification = False
+                    await client.pin_chat_message(
+                        message.chat.id,
+                        message.reply_to_message.message_id,
+                        disable_notification=disable_notification
+                    )
+                    await message.edit(
+                            f"**Message Pinned**\n"
+                            f"Chat: `{get_group.title}` (`{chat_id}`)"
+                            )
+                else:
+                    await message.edit("`Reply to a message to pin`")
+                    await asyncio.sleep(5)
+                    await message.delete()
+            except Exception as e:
+                await message.edit("`Error!`\n"
+                            f"**Log:** `{e}`"
+                        )
+                return
+        else:
+            await message.edit("`permission denied`")
+            await asyncio.sleep(5)
+            await message.delete()   
+    else:
+        await message.delete()
+
 
 @app.on_message(Filters.me & Filters.command(["mute"], Command))
 async def mute_hammer(client, message):

@@ -9,12 +9,17 @@
 
 import os
 from datetime import datetime
+import shlex
+
 import requests
 from bs4 import BeautifulSoup
+from typing import Tuple, Optional
+from os.path import isfile, relpath, basename
+import asyncio
 
 from pyrogram import Filters
 
-from nana import app, Command
+from nana import app, Command, logging
 
 __MODULE__ = "Reverse Search"
 __HELP__ = """
@@ -29,26 +34,59 @@ Reverse search any supported media by google with this command
 
 """
 
+screen_shot = "nana/downloads/"
+
+_LOG = logging.getLogger(__name__)
+
+async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
+    """run command in terminal"""
+    args = shlex.split(cmd)
+    process = await asyncio.create_subprocess_exec(*args,
+                                                   stdout=asyncio.subprocess.PIPE,
+                                                   stderr=asyncio.subprocess.PIPE)
+    stdout, stderr = await process.communicate()
+    return (stdout.decode('utf-8', 'replace').strip(),
+            stderr.decode('utf-8', 'replace').strip(),
+            process.returncode,
+            process.pid)
+
+async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Optional[str]:
+    """take a screenshot"""
+    ttl = duration // 2
+    thumb_image_path = path or os.path.join(screen_shot, f"{basename(video_file)}.jpg")
+    command = f"ffmpeg -ss {ttl} -i '{video_file}' -vframes 1 '{thumb_image_path}'"
+    err = (await runcmd(command))[1]
+    if err:
+        _LOG.error(err)
+    return thumb_image_path if os.path.exists(thumb_image_path) else None
+
+
 @app.on_message(Filters.me & Filters.command(["reverse"], Command))
-async def bitly(client, message):
+async def google_rs(client, message):
     start = datetime.now()
     dis_loc = ''
     base_url = "http://www.google.com"
-    out_str = "Reply to an image to do Google Reverse Search"
+    out_str = "`Reply to an image`"
     if message.reply_to_message:
         message_ = message.reply_to_message
         if message_.sticker and message_.sticker.file_name.endswith('.tgs'):
-            await message.edit('Reverse search for Animated stickers are yet not implemented')
+            await message.delete()
             return
         if message_.photo or message_.animation or message_.sticker:
-            dis = await client.download_media(message=message_, file_name="/root/nana/")
-            dis_loc = os.path.join("/root/nana/", os.path.basename(dis))
+            dis = await client.download_media(
+                message=message_,
+                file_name=screen_shot
+            )
+            dis_loc = os.path.join(screen_shot, os.path.basename(dis))
         if message_.animation:
-            await message.edit("Converting this Gif to Image")
-            img_file = os.path.join("/root/nana/", "grs.jpg")
-            # await take_screen_shot(dis_loc, 0, img_file)
+            await message.edit("`Converting this Gif`")
+            img_file = os.path.join(screen_shot, "grs.jpg")
+            await take_screen_shot(dis_loc, 0, img_file)
             if not os.path.lexists(img_file):
-                await message.edit("Something went wrong in Conversion")
+                await message.edit("`Something went wrong in Conversion`")
+                await asyncio.sleep(5)
+                await message.delete()
+                return
             dis_loc = img_file
         if dis_loc:
             search_url = "{}/searchbyimage/upload".format(base_url)
@@ -60,8 +98,9 @@ async def bitly(client, message):
             the_location = google_rs_response.headers.get("Location")
             os.remove(dis_loc)
         else:
-            await message.edit("No Results will pass")
-        await message.edit("Found Google Result.")
+            await message.delete()
+            return
+        await message.edit("`Found Google Result.`")
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
@@ -71,12 +110,10 @@ async def bitly(client, message):
         prs_anchor_element = prs_div.find("a")
         prs_url = base_url + prs_anchor_element.get("href")
         prs_text = prs_anchor_element.text
-        soup.find(id="jHnbRc")
-        # img_size = img_size_div.find_all("div")
         end = datetime.now()
         ms = (end - start).seconds
-        out_str = f"""
-    <b>Possible Related Search</b>: <a href="{prs_url}">{prs_text}</a>
-    <b>More Info</b>: Open this <a href="{the_location}">Link</a>
-    <b>Time Taken</b>: {ms} seconds"""
+        out_str = f"""<b>Time Taken</b>: {ms} seconds
+<b>Possible Related Search</b>: <a href="{prs_url}">{prs_text}</a>
+<b>More Info</b>: Open this <a href="{the_location}">Link</a>
+"""
     await message.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)

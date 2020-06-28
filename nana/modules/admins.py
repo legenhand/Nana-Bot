@@ -14,6 +14,7 @@ from pyrogram.errors import (FloodWait,
 
 from nana import app, Command
 from nana.helpers.admincheck import admin_check, is_sudoadmin
+from nana.helpers.PyroHelpers import GetUserMentionable
 
 __MODULE__ = "Admin"
 __HELP__ = """
@@ -27,8 +28,11 @@ locks permission in the group
 unlocks permission in the group
 
 Supported Locks / Unlocks:
-`msg` | `media` | `stickers` | `animations` | `games` | `inlinebots` |
-`webprev` | `polls` | `info`  | `invite` | `pin` | `all`
+ `msg` | `media` | `stickers`
+ `polls` | `info`  | `invite` |
+ `animations` | `games` |
+ `inlinebots` | `webprev` |
+ `pin` | `all`
 
 -> `vlock`
 view group permissions
@@ -50,7 +54,137 @@ Reply to a user to perform unban
 ──「 **Kick User** 」──
 -> `kick`
 Reply to a user to kick from chat
+
+──「 **Mute / Unmute** 」──
+-> `mute`
+Reply to a user to mute them forever
+
+-> `mute 24`
+Reply to a user to mute them for 24 hours
+
+-> `unmute`
+Reply to a user to unmute them
 """
+
+# Mute permissions
+mute_permission = ChatPermissions(
+    can_send_messages=False,
+    can_send_media_messages=False,
+    can_send_stickers=False,
+    can_send_animations=False,
+    can_send_games=False,
+    can_use_inline_bots=False,
+    can_add_web_page_previews=False,
+    can_send_polls=False,
+    can_change_info=False,
+    can_invite_users=True,
+    can_pin_messages=False
+)
+
+# Unmute permissions
+unmute_permissions = ChatPermissions(
+    can_send_messages=True,
+    can_send_media_messages=True,
+    can_send_stickers=True,
+    can_send_animations=True,
+    can_send_games=True,
+    can_use_inline_bots=True,
+    can_add_web_page_previews=True,
+    can_send_polls=True,
+    can_change_info=False,
+    can_invite_users=True,
+    can_pin_messages=False
+)
+
+@app.on_message(Filters.me & Filters.command(["mute"], Command))
+async def mute_hammer(client, message):
+    chat_id = message.chat.id
+    get_group = await client.get_chat(chat_id)
+    can_mute = await admin_check(message)
+    if can_mute:
+        if message.reply_to_message:
+            try:
+                get_mem = await client.get_chat_member(
+                        chat_id,
+                        message.reply_to_message.from_user.id
+                        )
+                if len(message.text.split()) == 2 and message.text.split()[1] == "24":
+                    await client.restrict_chat_member(
+                        chat_id=message.chat.id,
+                        user_id=message.reply_to_message.from_user.id,
+                        permissions=mute_permission,
+                        until_date=int(time.time() + 86400)
+                    )
+                    await message.edit(
+                        f"**User Muted for 24 hours**\n"
+                        f"User: [{get_mem.user.first_name}](tg://user?id={get_mem.user.id}) "
+                        f"(`{get_mem.user.id}`)\n"
+                        f"Chat: `{get_group.title}` (`{chat_id}`)"
+                        )
+                else:
+                    await client.restrict_chat_member(
+                        chat_id=message.chat.id,
+                        user_id=message.reply_to_message.from_user.id,
+                        permissions=mute_permission
+                    )
+                    await message.edit(
+                        f"**User Muted Indefinitely**\n"
+                        f"User: [{get_mem.user.first_name}](tg://user?id={get_mem.user.id}) "
+                        f"(`{get_mem.user.id}`)\n"
+                        f"Chat: `{get_group.title}` (`{chat_id}`)"
+                        )
+            except Exception as e:
+                await message.edit("`Error!`\n"
+                        f"**Log:** `{e}`"
+                    )
+                return
+        else:
+            await message.edit("`Reply to a user to mute them`")
+            await asyncio.sleep(5)
+            await message.delete()
+    else:
+        await message.edit("`permission denied`")
+        await asyncio.sleep(5)
+        await message.delete()
+
+@app.on_message(Filters.me & Filters.command(["unmute"], Command))
+async def unmute(client, message):
+    chat_id = message.chat.id
+    get_group = await client.get_chat(chat_id)
+    can_unmute = await admin_check(message)
+    if can_unmute:
+        try:
+            if message.reply_to_message:
+                get_mem = await client.get_chat_member(
+                        chat_id,
+                        message.reply_to_message.from_user.id
+                        )
+                await client.restrict_chat_member(
+                    chat_id=message.chat.id,
+                    user_id=message.reply_to_message.from_user.id,
+                    permissions=unmute_permissions
+                )
+                await message.edit(
+                        f"**User Unmuted**\n"
+                        f"User: [{get_mem.user.first_name}](tg://user?id={get_mem.user.id}) "
+                        f"(`{get_mem.user.id}`)\n"
+                        f"Chat: `{get_group.title}` (`{chat_id}`)"
+                        )
+            else:
+                await message.edit("`Reply to a user to mute them`")
+                await asyncio.sleep(5)
+                await message.delete()
+        except Exception as e:
+            await message.edit("`Error!`\n"
+                    f"**Log:** `{e}`"
+                )
+            return
+    else:
+        await message.edit("`permission denied`")
+        await asyncio.sleep(5)
+        await message.delete()
+
+
 
 @app.on_message(Filters.me & Filters.command(["kick"], Command))
 async def kick_user(client, message):
@@ -93,6 +227,8 @@ async def kick_user(client, message):
 
     else:
         await message.edit("`permission denied`")
+        await asyncio.sleep(5)
+        await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["ban"], Command))
@@ -392,6 +528,8 @@ async def lock_permission(client, message):
 
     else:
         await message.edit("`Invalid Lock Type!`")
+        await asyncio.sleep(5)
+        await message.delete()
         return
 
     try:

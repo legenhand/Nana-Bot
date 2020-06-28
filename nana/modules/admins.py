@@ -1,5 +1,6 @@
 import os
 import asyncio
+import time
 from emoji import get_emoji_regexp
 
 from pyrogram import ChatPermissions, Filters
@@ -46,7 +47,52 @@ Reply to a user to perform ban
 -> `unban`
 Reply to a user to perform unban
 
+──「 **Kick User** 」──
+-> `kick`
+Reply to a user to kick from chat
 """
+
+@app.on_message(Filters.me & Filters.command(["kick"], Command))
+async def kick_user(client, message):
+    chat_id = message.chat.id
+    get_group = await client.get_chat(chat_id)
+    can_kick = await admin_check(message)
+    if can_kick:
+        if message.reply_to_message:
+
+            try:
+                get_mem = await client.get_chat_member(
+                    chat_id,
+                    message.reply_to_message.from_user.id
+                    )
+                await client.kick_chat_member(chat_id, get_mem.user.id, int(time.time() + 45))
+                await message.edit(
+                    f"**User Kicked**\n"
+                    f"User: [{get_mem.user.first_name}](tg://user?id={get_mem.user.id}) "
+                    f"(`{get_mem.user.id}`)\n"
+                    f"Chat: `{get_group.title}` (`{chat_id}`)"
+                    )
+
+            except ChatAdminRequired:
+                await message.edit("`permission denied`")
+                await asyncio.sleep(5)
+                await message.delete()
+                return
+
+            except Exception as e:
+                await message.edit("`Error!`\n"
+                    f"**Log:** `{e}`"
+                )
+                return
+
+        else:
+            await message.edit("`Reply to a user to kick`")
+            await asyncio.sleep(5)
+            await message.delete()
+            return
+
+    else:
+        await message.edit("`permission denied`")
 
 
 @app.on_message(Filters.me & Filters.command(["ban"], Command))
@@ -106,6 +152,7 @@ async def ban_usr(client, message):
         await message.edit("`permission denied`")
         await asyncio.sleep(5)
         await message.delete()
+        return
 
 
 @app.on_message(Filters.me & Filters.command(["unban"], Command))
@@ -366,7 +413,7 @@ async def lock_permission(client, message):
         await message.delete()
 
     except Exception as e:
-        await message.edit("`permission denied`\n"
+        await message.edit("`Error!`\n"
             f"**Log:** `{e}`")
 
 
@@ -397,7 +444,7 @@ async def unlock_permission(client, message):
     chat_id = message.chat.id
 
     if not unlock_type:
-        await message.edit("`can't lock the void`")
+        await message.edit("`can't unlock the void`")
         await asyncio.sleep(5)
         await message.delete()
         return
@@ -509,8 +556,7 @@ async def unlock_permission(client, message):
         await message.delete()
 
     except Exception as e:
-        await message.edit(
-            text="`permission denied`\n"
+        await message.edit("`Error!`\n"
             f"**Log:** `{e}`")
 
 
@@ -575,5 +621,5 @@ async def view_perm(client, message):
 
         except Exception as e:
             await message.edit(
-                text="`Something went wrong!`\n"
+                text="`Error!`\n"
                 f"**Log:** `{e}`")

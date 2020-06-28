@@ -88,7 +88,7 @@ async def aexec(client, message, code):
 @app.on_message(Filters.me & Filters.command(["py"], Command))
 async def executor(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `exec message.edit('edited!')`")
+        await message.edit("Usage: `py message.edit('edited!')`")
         return
     args = message.text.split(None, 1)
     code = args[1]
@@ -110,7 +110,7 @@ async def public_ip(_client, message):
 @app.on_message(Filters.me & Filters.command(["sh"], Command))
 async def terminal(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `cmd ping -c 5 google.com`")
+        await message.edit("Usage: `sh ping -c 5 google.com`")
         return
     args = message.text.split(None, 1)
     teks = args[1]
@@ -205,12 +205,6 @@ async def dc_id(_client, message):
     await message.edit(text)
 
 
-@app.on_message(Filters.me & Filters.command(["repo"], Command))
-async def repo(_client, message):
-    await message.edit(
-        "Click [here](https://github.com/legenhand/Nana-Bot) for Nana-Bot-Remix Source.\nClick [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",
-        disable_web_page_preview=True)
-
 
 @app.on_message(Filters.me & Filters.command(["alive"], Command))
 async def alive(_client, message):
@@ -227,7 +221,7 @@ async def alive(_client, message):
     text += "- Database: `{}`\n".format(DB_AVAILABLE)
     text += "- Python: `{}`\n".format(python_version())
     text += "- Pyrogram: `{}`\n".format(p.__version__)
-    await message.edit(text)
+    await message.edit(text, disable_web_page_preview=True)
 
 @app.on_message(Filters.me & Filters.command(["id"], Command))
 async def get_id(_client, message):

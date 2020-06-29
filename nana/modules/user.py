@@ -1,6 +1,14 @@
 import os
+import math
+
 from nana import app, Command
+
+from pyrogram.api import functions
 from pyrogram import Filters
+from nana import app, Owner, Command, DB_AVAILABLE
+if DB_AVAILABLE:
+	from nana.modules.database.cloner_db import backup_indentity, restore_identity
+
 
 __MODULE__ = "User"
 __HELP__ = """
@@ -13,6 +21,14 @@ Reply to any photo to set as pfp
 -> `vpfp`
 View current pfp of user
 
+-> `clone`
+clone user identity without original backup
+
+-> `clone origin`
+clone user identity with original backup
+
+-> `revert`
+revert to original identity
 """
 
 profile_photo = "nana/downloads/pfp.jpg"
@@ -59,3 +75,54 @@ async def view_pfp(client, message):
     await message.delete()
     if os.path.exists(profile_photo):
         os.remove(profile_photo)
+
+
+@app.on_message(Filters.me & Filters.command(["clone"], Command))
+async def clone(client, message):
+	if message.reply_to_message:
+		target = message.reply_to_message.from_user.id
+	elif len(message.text.split()) >= 2 and message.text.split()[1].isdigit():
+		# TODO
+		await message.edit("Select target user to clone their identity!")
+	else:
+		await message.edit("Select target user to clone their identity!")
+
+	if "origin" in message.text:
+		# Backup yours current identity
+		my_self = await app.get_me()
+		my_self = await client.send(functions.users.GetFullUser(id=await client.resolve_peer(my_self['id'])))
+
+		# Backup my first name, last name, and bio
+		backup_indentity(my_self['user']['first_name'], my_self['user']['last_name'], my_self['about'])
+
+	# Get target pp
+	q = await app.get_profile_photos(target)
+
+	# Download it
+	await client.download_media(q[0], file_name="nana/downloads/pp.png")
+
+	# Set new pp
+	await app.set_profile_photo("nana/downloads/pp.png")
+
+	# Get target profile
+	t = await app.get_users(target)
+	t = await client.send(functions.users.GetFullUser(id=await client.resolve_peer(t['id'])))
+
+	# Set new name
+	await client.send(functions.account.UpdateProfile(first_name=t['user']['first_name'] if t['user']['first_name'] != None else "", last_name=t['user']['last_name'] if t['user']['last_name'] != None else "", about=t['about'] if t['about'] != None else ""))
+
+	# Kaboom! Done!
+	await message.edit("Kaboom!\nNew identity has changed!")
+
+
+@app.on_message(Filters.me & Filters.command(["revert"], Command))
+async def revert(client, message):
+	first_name, last_name, bio = restore_identity()
+
+	await client.send(functions.account.UpdateProfile(first_name=first_name if first_name != None else "", last_name=last_name if last_name != None else "", about=bio if bio != None else ""))
+
+	photos = await app.get_profile_photos("me")
+
+	await app.delete_profile_photos(photos[0].file_id)
+
+	await message.edit("Kaboom!\nIts me again!")

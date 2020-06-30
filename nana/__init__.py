@@ -58,7 +58,7 @@ if ENV:
 
     # Session
     USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
-    ASSISTANT_SESSION = os.environ.get('ASSISTANT_SESSION', None)
+    ASSISTANT_USERNAME = os.environ.get('ASSISTANT_USERNAME', None)
 
     # Required for some features
     # Set temp var for load later
@@ -121,7 +121,7 @@ else:
 
     # Session
     USERBOT_SESSION = Config.USERBOT_SESSION
-    ASSISTANT_SESSION = Config.ASSISTANT_SESSION
+    ASSISTANT_USERNAME = Config.ASSISTANT_USERNAME
     # Required for some features
     # Set temp var for load later
     Owner = 0
@@ -175,8 +175,8 @@ logging.getLogger('').addHandler(console)
 
 log = logging.getLogger()
 
-if USERBOT_SESSION and ASSISTANT_SESSION:
-    BOT_SESSION = ASSISTANT_SESSION
+if USERBOT_SESSION and ASSISTANT_USERNAME:
+    BOT_SESSION = ASSISTANT_USERNAME
     APP_SESSION = USERBOT_SESSION
 
 gauth = GoogleAuth()

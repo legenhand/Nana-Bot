@@ -38,7 +38,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17821370-a063-4fef-a4ab-7bdf43e17c3b" name="Default Changelist" comment="NANA VERSION v1.1.1b">
-      <change beforePath="$PROJECT_DIR$/nana/modules/devs.py" beforeDir="false" afterPath="$PROJECT_DIR$/nana/modules/devs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nana/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/nana/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nana/config.example.py" beforeDir="false" afterPath="$PROJECT_DIR$/nana/config.example.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,10 +278,10 @@
     </state>
     <state x="481" y="280" width="406" height="173" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593878442976" />
     <state x="481" y="280" width="416" height="174" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.729@0.0.1366.729" timestamp="1592639246535" />
-    <state x="388" y="87" width="590" height="554" key="find.popup" timestamp="1593889360189">
+    <state x="388" y="87" width="590" height="554" key="find.popup" timestamp="1593889401125">
       <screen x="0" y="0" width="1366" height="729" />
     </state>
-    <state x="388" y="87" width="590" height="554" key="find.popup/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593889360189" />
+    <state x="388" y="87" width="590" height="554" key="find.popup/0.0.1366.729/1366.0.1366.768@0.0.1366.729" timestamp="1593889401125" />
     <state x="388" y="87" width="590" height="612" key="find.popup/0.0.1366.729@0.0.1366.729" timestamp="1593509637429" />
     <state x="457" y="145" key="git4idea.merge.GitMergeDialog" timestamp="1593884070532">
       <screen x="0" y="0" width="1366" height="729" />

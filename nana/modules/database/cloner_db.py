@@ -1,6 +1,6 @@
 
 from nana import BASE, SESSION, Owner
-from sqlalchemy import Column, String, Boolean, UnicodeText
+from sqlalchemy import Column, String, UnicodeText
 
 
 class Cloner(BASE):

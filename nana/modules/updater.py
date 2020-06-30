@@ -79,7 +79,7 @@ async def updater(client, message):
                 await initial_git(repo)
             except Exception as err:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
-                await message.edit('An error has accured!\nPlease see your Assistant for more information!')
+                await message.edit(f'**Error:**\n{err}')
                 await except_hook(exc_type, exc_obj, exc_tb)
                 return
             await message.edit('Successfully Updated!\nBot is restarting...')
@@ -108,7 +108,7 @@ async def updater(client, message):
                 await initial_git(repo)
             except Exception as err:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
-                await message.edit('An error has accured!\nPlease see your Assistant for more information!')
+                await message.edit(f'**Error:**\n{err}')
                 await except_hook(exc_type, exc_obj, exc_tb)
                 return
             await message.edit('Successfully Updated!\nBot is restarting...')

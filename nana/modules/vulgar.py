@@ -1,7 +1,7 @@
 import re
 
 from asyncio import sleep
-from pyrogram import Filters, Message
+from pyrogram import Filters
 from pyrogram.errors import MessageNotModified
 from nana import app, Command
 

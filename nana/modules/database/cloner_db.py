@@ -1,4 +1,3 @@
-import threading
 
 from nana import BASE, SESSION, Owner
 from sqlalchemy import Column, String, Boolean, UnicodeText

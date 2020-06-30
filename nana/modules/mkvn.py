@@ -4,20 +4,9 @@
 from asyncio import sleep
 import subprocess
 import os
-import logging
-import time
-import pafy
-import re
-import shutil
-import traceback
-import sys
-
-from bs4 import BeautifulSoup
-from pathlib import Path
 
 from nana import setbot, app, Command, Owner
-from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
-from nana.helpers.parser import cleanhtml, escape_markdown
+from pyrogram import Filters
 from nana.modules.downloads import download_reply_nocall
 from nana.helpers.PyroHelpers import ReplyCheck
 

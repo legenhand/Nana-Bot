@@ -1,9 +1,5 @@
-import datetime
 
 import asyncio
-
-from prettytable import PrettyTable
-import requests
 from pyrogram import Filters
 
 from nana import Command, app

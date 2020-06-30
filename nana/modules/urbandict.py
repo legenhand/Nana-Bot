@@ -1,4 +1,3 @@
-import json
 from pyrogram import Filters
 from asyncio import sleep
 

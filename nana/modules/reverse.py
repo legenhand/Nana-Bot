@@ -14,7 +14,7 @@ import shlex
 import requests
 from bs4 import BeautifulSoup
 from typing import Tuple, Optional
-from os.path import isfile, relpath, basename
+from os.path import basename
 import asyncio
 
 from pyrogram import Filters

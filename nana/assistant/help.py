@@ -4,8 +4,7 @@ import time
 from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, BotName, DB_AVAILABLE, StartTime, NANA_IMG
-from nana.__main__ import get_runtime
+from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
 

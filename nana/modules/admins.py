@@ -1,20 +1,15 @@
-import os
 import asyncio
 import time
 from emoji import get_emoji_regexp
 
 from pyrogram import ChatPermissions, Filters
-from pyrogram.errors import (FloodWait,
-                             UserAdminInvalid,
-                             UsernameInvalid,
+from pyrogram.errors import (UsernameInvalid,
                              ChatAdminRequired,
                              PeerIdInvalid,
-                             UserIdInvalid,
-                             )
+                             UserIdInvalid)
 
 from nana import app, Command
 from nana.helpers.admincheck import admin_check, is_sudoadmin
-from nana.helpers.PyroHelpers import GetUserMentionable
 
 __MODULE__ = "Admin"
 __HELP__ = """

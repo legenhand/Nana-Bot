@@ -1,7 +1,6 @@
 
 
 from pyrogram import Filters
-import json
 from asyncio import sleep
 import subprocess
 

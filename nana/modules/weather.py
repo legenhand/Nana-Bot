@@ -5,7 +5,7 @@ from html import escape
 
 from pyrogram import Filters
 
-from nana import app, Command, lang_code
+from nana import app, Command
 
 
 __MODULE__ = "Weather"

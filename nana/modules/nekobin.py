@@ -20,7 +20,7 @@ async def paste(client, message):
     if message.reply_to_message:
         text = message.reply_to_message.text
     if message.reply_to_message.document and message.reply_to_message.document.file_size < 2 ** 20 * 10:
-        os.path.splitext(message.reply_to_message.document.file_name)[1]
+        var = os.path.splitext(message.reply_to_message.document.file_name)[1]
         path = await message.reply_to_message.download("nana/")
         with open(path, 'r') as doc:
             text = doc.read()

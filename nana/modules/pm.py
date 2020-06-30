@@ -11,25 +11,23 @@ if DB_AVAILABLE:
 welc_txt = f"""Hello, I'm {OwnerName}'s Userbot.
 Try contacting me by pressing buttons down bellow"""
 
-
-NOTIFY_ID = AdminSettings[0]
-BLACKLIST = ["hack", "fuck", "bitch"]
+NOTIFY_ID =  Owner
+BLACKLIST = ["hack", "fuck", "bitch", "pubg", "sex"]
 
 USER_IN_RESTRICT = []
 
 
-@app.on_message(~Filters.user("self") & Filters.private & ~Filters.bot)
+@app.on_message(~Filters.me & Filters.private & ~Filters.bot)
 async def pm_block(client, message):
 	if not get_whitelist(message.chat.id):
 		await client.read_history(message.chat.id)
 		if message.text:
 			for x in message.text.lower().split():
 				if x in BLACKLIST:
-					# await message.reply("Fuck you too!")
+					await message.reply("Naah im blocking you and reporting you to TAbuse,\nwith that being said fuck you OwO")
 					await client.block_user(message.chat.id)
 					return
 		from nana.modules.lydia import lydia_status
-		print(get_req(message.chat.id))
 		if not get_req(message.chat.id):
 			result = await client.get_inline_bot_results(BotUsername, "engine_pm")
 			result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id, result_id=result.results[0].id, hide_via=True)
@@ -63,7 +61,7 @@ async def pm_button(client, query):
 		return
 	if re.match(r"engine_pm_block", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "💩")
-		# await app.send_message(query.from_user.id, "I dont share any hack or any illegal things, if you PM me for this, then you are retard and does not have a brain.\nContact your admin and ask that illegal things, not me\n\nGood bye you fucking retard!")
+		await app.send_message(query.from_user.id, "Opps, no nudes for you")
 		await app.block_user(query.from_user.id)
 	elif re.match(r"engine_pm_nope", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "👍")
@@ -80,9 +78,6 @@ async def pm_button(client, query):
 	elif re.match(r"engine_pm_none", query.data):
 		await setbot.edit_inline_text(query.inline_message_id, "👍")
 		await app.send_message(query.from_user.id, "Alright then,\nIf you want anything from me, please contact my again. Thank you")
-	elif re.match(r"engine_pm_donate", query.data):
-		await setbot.edit_inline_text(query.inline_message_id, "❤️")
-		await app.send_message(query.from_user.id, "Cool, thank you for donate me\nYou can select payment in here https://ayrahikari.github.io/donations.html\n\nIf you've donated me, please PM me again, thanks")
 	elif re.match(r"engine_pm_apr", query.data):
 		target = query.data.split("-")[1]
 		await query.message.edit_text("[Approved for PM]({})".format(target))

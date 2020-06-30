@@ -40,11 +40,19 @@ lang = "en"  # Default Language for voice
 @app.on_message(Filters.me & Filters.command(["voice"], Command))
 async def voice(client, message):
     global lang
-    if len(message.text.split()) == 1:
-        await message.edit("Send text then change to audio")
+    cmd = message.command
+    if len(cmd) > 1:
+        v_text = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        v_text = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("Usage: `reply to a message or send text arg to convert to voice`")
+        await asyncio.sleep(2)
+        await message.delete()
         return
     await client.send_chat_action(message.chat.id, "record_audio")
-    tts = gTTS(text, lang=lang)
+    # noinspection PyUnboundLocalVariable
+    tts = gTTS(v_text, lang=lang)
     tts.save('nana/cache/voice.mp3')
     await message.delete()
     if message.reply_to_message:
@@ -63,7 +71,8 @@ async def voicelang(_client, message):
     lang = message.text.split(None, 1)[1]
     try:
         gTTS("tes", lang=lang)
-    except:
+    except Exception as e:
+        print(e)
         await message.edit("Wrong Language id !")
         lang = temp
         return

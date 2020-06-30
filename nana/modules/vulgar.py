@@ -23,7 +23,7 @@ bad_words = ['nigga', 'nigger', 'coon', 'fuck', 'bitch']
 
 
 @app.on_message(~Filters.regex(r"^\.\w*") & Filters.me)
-async def vulgar_filtr(_client, message):
+async def vulgar_f(_client, message):
     if vulgar_filter:
         try:
             txt = None
@@ -45,6 +45,7 @@ async def vulgar_filtr(_client, message):
             return
     else:
         return
+
 
 @app.on_message(Filters.me & Filters.command(["vulgar"], Command))
 async def vulgar_trigger(_client, message):

@@ -96,10 +96,11 @@ async def clone(client, message):
     await app.set_profile_photo("nana/downloads/pp.png")
     t = await app.get_users(target)
     t = await client.send(functions.users.GetFullUser(id=await client.resolve_peer(t['id'])))
+    p_file = functions.account
     await client.send(
-        functions.account.UpdateProfile(first_name=t['user']['first_name'] if t['user']['first_name'] != None else "",
-                                        last_name=t['user']['last_name'] if t['user']['last_name'] != None else "",
-                                        about=t['about'] if t['about'] != None else ""))
+        p_file.UpdateProfile(first_name=t['user']['first_name'] if t['user']['first_name'] is not None else "",
+                             last_name=t['user']['last_name'] if t['user']['last_name'] is not None else "",
+                             about=t['about'] if t['about'] is not None else ""))
     await message.edit("`New identity has changed!`")
     await sleep(5)
     await message.delete()

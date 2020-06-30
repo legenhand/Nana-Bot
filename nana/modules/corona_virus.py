@@ -1,5 +1,6 @@
 
 import asyncio
+
 from pyrogram import Filters
 
 from nana import Command, app
@@ -21,13 +22,25 @@ async def corona(_client, message):
     if len(args) == 1:
         try:
             r = await AioHttp().get_json("https://corona.lmao.ninja/v2/all")
-            reply_text = f"**Global Cases 🦠:**\nCases: `{r['cases']:,}`\nCases Today: `{r['todayCases']:,}`\nDeaths: `{r['deaths']:,}`\nDeaths Today: `{r['todayDeaths']:,}`\nRecovered: `{r['recovered']:,}`\nActive: `{r['active']:,}`\nCritical: `{r['critical']:,}`\nCases/Mil: `{r['casesPerOneMillion']}`\nDeaths/Mil: `{r['deathsPerOneMillion']}``"
+            reply_text = f"""**Global Cases 🦠:**
+Cases: `{r['cases']:,}`
+Cases Today: `{r['todayCases']:,}`
+Deaths: `{r['deaths']:,}`
+Deaths Today: `{r['todayDeaths']:,}`
+Recovered: `{r['recovered']:,}`
+Active: `{r['active']:,}`
+Critical: `{r['critical']:,}`
+Cases/Mil: `{r['casesPerOneMillion']}`
+Deaths/Mil: `{r['deathsPerOneMillion']}``
+"""
             await message.edit(f"{reply_text}")
+            return
         except Exception as e:
             await message.edit("`The corona API could not be reached`")
             print(e)
             await asyncio.sleep(3)
             await message.delete()
+            return
     country = args[1]
     r = await AioHttp().get_json(f"https://corona.lmao.ninja/v2/countries/{country}")
     if "cases" not in r:
@@ -36,7 +49,17 @@ async def corona(_client, message):
         await message.delete()
     else:
         try:
-            reply_text = f"**Cases for {r['country']} 🦠**\nCases: `{r['cases']:,}`\nCases Today: `{r['todayCases']:,}`\nDeaths: `{r['deaths']:,}`\nDeaths Today: `{r['todayDeaths']:,}`\nRecovered: `{r['recovered']:,}`\nActive: `{r['active']:,}`\nCritical: `{r['critical']:,}`\nCases/Mil: `{r['casesPerOneMillion']}`\nDeaths/Mil: `{r['deathsPerOneMillion']}``"
+            reply_text = f"""**Cases for {r['country']} 🦠:**
+Cases: `{r['cases']:,}`
+Cases Today: `{r['todayCases']:,}`
+Deaths: `{r['deaths']:,}`
+Deaths Today: `{r['todayDeaths']:,}`
+Recovered: `{r['recovered']:,}`
+Active: `{r['active']:,}`
+Critical: `{r['critical']:,}`
+Cases/Mil: `{r['casesPerOneMillion']}`
+Deaths/Mil: `{r['deathsPerOneMillion']}`
+"""
             await message.edit(f"{reply_text}")
         except Exception as e:
             await message.edit("`The corona API could not be reached`")

@@ -103,6 +103,7 @@ async def mocking_text(text):
         pesan += teks[x]
     return pesan
 
+
 @app.on_message(Filters.me & Filters.command(["pat"], Command))
 async def pat(client, message):
     URL = "https://some-random-api.ml/animu/pat"
@@ -115,7 +116,8 @@ async def pat(client, message):
             await message.delete()
             await client.send_video(message.chat.id, url,
                                     reply_to_message_id=ReplyCheck(message)
-                                )
+                                    )
+
 
 @app.on_message(Filters.me & Filters.command(["scam"], Command))
 async def scam(client, message):
@@ -147,6 +149,7 @@ async def scam(client, message):
                 count += 5
     except Exception:
         return
+
 
 @app.on_message(Filters.me & Filters.command(["shg"], Command))
 async def shg(_client, message):
@@ -216,7 +219,7 @@ async def waifu(client, message):
     await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
-                                        result_id = x.results[0].id,
+                                        result_id=x.results[0].id,
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
@@ -290,7 +293,7 @@ async def senpai(client, message):
     await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
-                                        result_id = x.results[0].id,
+                                        result_id=x.results[0].id,
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
@@ -312,7 +315,7 @@ async def mock_spongebob(client, message):
     await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
-                                        result_id = x.results[0].id,
+                                        result_id=x.results[0].id,
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 
@@ -324,7 +327,7 @@ async def google_search(client, message):
     await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
                                         query_id=x.query_id,
-                                        result_id = x.results[0].id,
+                                        result_id=x.results[0].id,
                                         reply_to_message_id=ReplyCheck(message),
                                         hide_via=True)
 

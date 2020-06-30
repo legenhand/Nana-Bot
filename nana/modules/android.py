@@ -25,7 +25,6 @@ async def get_device(_client, message):
         return
     getlist = requests.get(DEVICE_LIST).json()
     target_device = message.text.split()[1].lower()
-    found = False
     if target_device in list(getlist):
         device = getlist.get(target_device)
         text = ""

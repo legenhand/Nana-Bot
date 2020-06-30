@@ -46,7 +46,7 @@ def ping_func(to_ping: List[str]) -> List[str]:
 
         start_time = time.time()
         site_to_ping = sites_list[each_ping]
-        r = requests.get(site_to_ping)
+        requests.get(site_to_ping)
         end_time = time.time()
         ping_time = str(round((end_time - start_time), 2)) + "s"
 

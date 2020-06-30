@@ -113,3 +113,8 @@ unknown_errors.txt
 nana/logs/*
 !nana/logs/README.md
 nana/modules/test_admin.py
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/Nana-Remix.iml

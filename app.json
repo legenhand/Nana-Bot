@@ -133,8 +133,8 @@
     "USERBOT_SESSION": {
       "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
     },
-    "ASSISTANT_USERNAME": {
-      "description": "[REQUIRED] insert the username of the bot you created, Example: @pokirobot"
+    "ASSISTANT_SESSION": {
+      "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
     }
   },
   "addons": [

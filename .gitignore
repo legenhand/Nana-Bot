@@ -113,4 +113,3 @@ unknown_errors.txt
 nana/logs/*
 !nana/logs/README.md
 nana/modules/test_admin.py
-*.session

@@ -13,7 +13,7 @@ class EqInlineKeyboardButton(InlineKeyboardButton):
         return self.text > other.text
 
 
-def paginate_modules(page_n, module_dict, prefix, chat=None):
+def paginate_modules(_page_n, module_dict, prefix, chat=None):
     if not chat:
         modules = sorted(
             [EqInlineKeyboardButton(x.__MODULE__,

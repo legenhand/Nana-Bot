@@ -30,7 +30,7 @@ returns a list of new anime in the upcoming seasons.
 jikan = Jikan()
 
 @app.on_message(Filters.me & Filters.command(["anime"], Command))
-async def anime(client, message):
+async def anime(_client, message):
     cmd = message.command
     query = ""
     if len(cmd) > 1:
@@ -99,7 +99,7 @@ async def anime(client, message):
     await message.edit(rep)
 
 @app.on_message(Filters.me & Filters.command(["character"], Command))
-async def character(client, message):
+async def character(_client, message):
     res = ""
     cmd = message.command
     query = ""
@@ -138,7 +138,7 @@ async def character(client, message):
         await message.edit(replace_text(rep))
 
 @app.on_message(Filters.me & Filters.command(["manga"], Command))
-async def manga(client, message):
+async def manga(_client, message):
     cmd = message.command
     query = ""
     if len(cmd) > 1:

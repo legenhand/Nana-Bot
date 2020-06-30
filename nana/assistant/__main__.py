@@ -42,15 +42,10 @@ Convert a text to various style, can be used anywhere!
         me = await app.get_me()
     except ConnectionError:
         me = None
-    text = "Hello {}!\n".format(message.from_user.first_name)
-    text += "**Here is your current stats:**\n"
-    if not me:
-        text += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
-    else:
-        text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
-    text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
-    text += "-> Database: `{}`\n".format(DB_AVAILABLE)
-    text += "-> Python: `{}`\n".format(python_version())
+    start_message = f"Hi {OwnerName},\n"
+    start_message += "Nana is Ready at your Service!\n"
+    start_message += "===================\n"
+    start_message += "-> Python: `{}`\n".format(python_version())
     if not me:
         text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
     else:
@@ -59,8 +54,8 @@ Convert a text to various style, can be used anywhere!
     start_message += "-> Database: `{}`\n".format(DB_AVAILABLE)
     if DB_AVAILABLE:
         start_message += f"-> Group joined: `{len(get_all_chats())} groups`\n"
-    start_message += f"===================\n"
-    start_message += f"`For more about the bot press button down below`"
+    start_message += "===================\n"
+    start_message += "`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
     if NANA_IMG:

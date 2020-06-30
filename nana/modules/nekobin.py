@@ -65,7 +65,7 @@ async def get_paste_(_client, message):
         await message.edit("input not found!")
         return
     await message.edit("`Getting paste content...`")
-    format_view = f'https://del.dog/v/'
+    format_view = 'https://del.dog/v/'
     if link.startswith(format_view):
         link = link[len(format_view):]
         raw_link = f'https://del.dog/raw/{link}'

@@ -3,6 +3,7 @@ from pyrogram import Filters, errors, InlineKeyboardMarkup
 from nana import app, setbot, Command, Owner, BotUsername, DB_AVAILABLE
 from nana.helpers.msg_types import Types, get_note_type
 from nana.helpers.string import parse_button, build_keyboard
+from nana.helpers.PyroHelpers import ReplyCheck
 
 if DB_AVAILABLE:
     from nana.modules.database import notes_db as db
@@ -96,10 +97,6 @@ async def get_note(client, message):
         await message.edit("This note does not exist!")
         return
 
-    replyid = message.message_id
-    if message.reply_to_message:
-        replyid = message.reply_to_message.message_id
-
     if getnotes['type'] == Types.TEXT:
         teks, button = parse_button(getnotes.get('value'))
         button = build_keyboard(button)
@@ -121,11 +118,12 @@ async def get_note(client, message):
                                                  "that note!")
                 return
             try:
+                await message.delete()
                 await client.send_inline_bot_result(
                     message.chat.id,
                     inlineresult.query_id,
                     inlineresult.results[0].id,
-                    reply_to_message_id=replyid
+                    reply_to_message_id=ReplyCheck(message)
                 )
             except IndexError:
                 await message.edit("An error has accured! Check your assistant for more information!")
@@ -133,7 +131,7 @@ async def get_note(client, message):
         else:
             await message.edit(teks)
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
-        await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], reply_to_message_id=replyid)
+        await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], reply_to_message_id=ReplyCheck(message))
     else:
         if getnotes.get('value'):
             teks, button = parse_button(getnotes.get('value'))
@@ -159,18 +157,19 @@ async def get_note(client, message):
                                           "you can try again to get that note!")
                 return
             try:
+                await message.delete()
                 await client.send_inline_bot_result(
                     message.chat.id,
                     inlineresult.query_id,
                     inlineresult.results[0].id,
-                    reply_to_message_id=replyid
+                    reply_to_message_id=ReplyCheck(message)
                 )
             except IndexError:
                 message.edit("An error has accured! Check your assistant for more information!")
                 return
         else:
             await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks,
-                                               reply_to_message_id=replyid)
+                                               reply_to_message_id=ReplyCheck(message))
 
 
 @app.on_message(Filters.user(Owner) & Filters.command(["notes", "saved"], Command))

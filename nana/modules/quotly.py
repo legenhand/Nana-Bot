@@ -30,18 +30,14 @@ async def q_maker(_client, message):
             msg = await app.get_history("@QuotLyBot", 1)
             check = msg[0]["sticker"]["file_id"]
             is_sticker = True
-        except Exception as e:
-            print(e)
+        except:
             await sleep(0.5)
             progress += random.randint(0, 10)
             try:
-                await message.edit("```Making a Quote```")
-            except Exception as e:
-                await message.edit(f'**ERROR:**\n{e}')
-                await sleep(5)
-                await message.delete()
-                return
+                await message.edit("```Making a Quote```\nProcessing {}%".format(progress))
+            except:
+                await message.edit("ERROR")
     await message.edit("```Complete !```")
-    await message.delete()
     msg_id = msg[0]["message_id"]
+    await message.delete()
     await app.forward_messages(message.chat.id, "@QuotLyBot", msg_id)

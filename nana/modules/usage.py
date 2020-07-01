@@ -51,13 +51,8 @@ async def usage(client, message):
         AppPercentage = math.floor(App[0]['quota_used'] * 100 / quota)
     AppHours = math.floor(AppQuotaUsed / 60)
     AppMinutes = math.floor(AppQuotaUsed % 60)
-
+    message_usage = f"**Total Dyno Usage:** `{AppHours}`**h**  `{AppMinutes}`**m** |  `{AppPercentage}`**%**\n"
+    message_usage += f"**Available in month**: `{hours}`**h**  `{minutes}`**m** |  `{percentage}`**%**"
     await asyncio.sleep(1.5)
 
-    await message.edit("`Dyno Usage:`\n\n"
-                       f"     -  `{AppHours}`**h**  `{AppMinutes}`**m**  "
-                       f"**|**  [`{AppPercentage}`**%**]"
-                       "\n"
-                       "`Dyno hours quota remaining this month`:\n"
-                       f"     -  `{hours}`**h**  `{minutes}`**m**  "
-                       f"**|**  [`{percentage}`**%**]")
+    await message.edit(message_usage)

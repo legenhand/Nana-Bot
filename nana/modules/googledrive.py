@@ -151,7 +151,7 @@ async def gdrive_stuff(client, message):
         await message.edit("Downloaded!\nFile saved to `{}`".format("nana/downloads/" + filename))
     elif len(message.text.split()) == 3 and message.text.split()[1] == "upload":
         filerealname = message.text.split()[2].split(None, 1)[0]
-        filename = "nana/downloads/{}".format(filerealname)
+        filename = "nana/downloads/{}".format(filerealname.replace(' ', '_'))
         checkfile = os.path.isfile(filename)
         if not checkfile:
             await message.edit("File `{}` was not found!".format(filerealname))

@@ -1,5 +1,5 @@
 import random
-import time
+from asyncio import sleep
 
 from pyrogram import Filters
 
@@ -32,12 +32,16 @@ async def q_maker(_client, message):
             is_sticker = True
         except Exception as e:
             print(e)
-            time.sleep(0.5)
+            await sleep(0.5)
             progress += random.randint(0, 10)
             try:
-                await message.edit(f"```Making a Quote```\nProcessing {progress}%")
+                await message.edit("```Making a Quote```")
             except Exception as e:
                 await message.edit(f'**ERROR:**\n{e}')
+                await sleep(5)
+                await message.delete()
+                return
     await message.edit("```Complete !```")
+    await message.delete()
     msg_id = msg[0]["message_id"]
     await app.forward_messages(message.chat.id, "@QuotLyBot", msg_id)

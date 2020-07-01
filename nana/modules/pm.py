@@ -1,5 +1,4 @@
 import re
-from asyncio import sleep
 
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -29,35 +28,26 @@ async def pm_block(client, message):
                         "Naah im blocking you and reporting you to TAbuse,\nwith that being said fuck you OwO")
                     await client.block_user(message.chat.id)
                     return
-        from nana.modules.lydia import lydia_status
         if not get_req(message.chat.id):
-            result = await client.get_inline_bot_results(BotUsername, "engine_pm")
-            result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id,
-                                                         result_id=result.results[0].id, hide_via=True)
-        elif lydia_api and lydia_status:
-            reply = await message.reply(message.text)
-            footer = "\n\n- Nana AI"
-            await message.reply(reply + footer)
+            x = await client.get_inline_bot_results(BotUsername, "engine_pm")
+            await client.send_inline_bot_result(message.chat.id, query_id=x.query_id,
+                                                result_id=x.results[0].id, hide_via=True)
         else:
-            result = await client.get_inline_bot_results(BotUsername, "engine_pm")
-            result = await client.send_inline_bot_result(message.chat.id, query_id=result.query_id,
-                                                         result_id=result.results[0].id, hide_via=True)
+            x = await client.get_inline_bot_results(BotUsername, "engine_pm")
+            await client.send_inline_bot_result(message.chat.id, query_id=x.query_id,
+                                                result_id=x.results[0].id, hide_via=True)
 
 
 @app.on_message(Filters.me & Filters.command(["approve"], Command) & Filters.private)
 async def approve_pm(_client, message):
     set_whitelist(message.chat.id, True)
     await message.edit("`PM permission was approved!`")
-    await sleep(5)
-    await message.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["revoke", "disapprove"], Command) & Filters.private)
 async def revoke_pm_block(_client, message):
     del_whitelist(message.chat.id)
     await message.edit("`PM permission was revoked!`")
-    await sleep(5)
-    await message.delete()
 
 
 def pm_button_callback(_, query):

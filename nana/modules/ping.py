@@ -1,7 +1,6 @@
 import requests
 from typing import List
 import time
-from asyncio import sleep
 
 from nana import app, Owner, Command, StartTime
 from pyrogram import Filters
@@ -64,7 +63,4 @@ async def ping(client, message):
     uptime = get_readable_time((time.time() - StartTime))
     reply_msg = (
         f"<b>Time Taken:</b> <code>{telegram_ping}</code>\n<b>Userbot uptime:</b> <code>{uptime}</code>")
-    await message.delete()
-    await client.send_message(message.chat.id, reply_msg, parse_mode="html")
-    await sleep(5.0)
-    await message.delete()
+    await message.edit(reply_msg, parse_mode="html")

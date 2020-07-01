@@ -31,8 +31,6 @@ class Config(object):
 	screenshotlayer_API = ""  # Register free here: https://screenshotlayer.com/
 	bitly_token = ""  # register here : bitly.com
 	lydia_api = ""
-	lastfm_api = ""
-	lastfm_username = ""
 	remove_bg_api = ""
 	HEROKU_API = ""  # if you're using heroku this field must filled, get from here : https://dashboard.heroku.com/account
 

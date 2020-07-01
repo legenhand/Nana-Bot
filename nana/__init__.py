@@ -89,9 +89,7 @@ if ENV:
     bitly_token = [os.environ.get('bitly_token', None)]
     gdrive_credentials = os.environ.get('gdrive_credentials', None)
     lydia_api = os.environ.get('lydia_api', None)
-    lastfm_api = os.environ.get('lastfm_api', None)
     remove_bg_api = os.environ.get('remove_bg_api', None)
-    lastfm_username = os.environ.get('lastfm_username', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
@@ -142,9 +140,7 @@ else:
     gdrive_credentials = None
     lydia_api = Config.lydia_api
     HEROKU_API = Config.HEROKU_API
-    lastfm_api = Config.lastfm_api
     remove_bg_api = Config.remove_bg_api
-    lastfm_username = Config.lastfm_username
     NANA_IMG = Config.NANA_IMG
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD

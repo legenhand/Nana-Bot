@@ -98,7 +98,6 @@ async def pm_button(client, query):
         target = query.data.split("-")[1]
         await query.message.edit_text(f"[Approved for PM]({target})")
         await app.send_message(target, "Hello, this is Nana, my master approved you to PM.")
-        await query.delete()
         set_whitelist(int(target), True)
     elif re.match(r"engine_pm_blk", query.data):
         target = query.data.split("-")[1]

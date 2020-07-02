@@ -6,7 +6,7 @@ from nana.helpers.PyroHelpers import ReplyCheck
 
 __HELP__ = """
 ──「 **LastFM** 」──
--> `lastfm`
+-> `lastfm` or `lf`
 Share what you're what listening to with the help of this module!
 
 Note: you need to go to @lastfmrobot and set your username there
@@ -15,7 +15,7 @@ Note: you need to go to @lastfmrobot and set your username there
 __MODULE__ = "Last.FM"
 
 
-@app.on_message(Filters.me & Filters.command(["lastfm"], Command))
+@app.on_message(Filters.me & Filters.command(["lastfm", "lf"], Command))
 async def lastfm(client, message):
     x = await client.get_inline_bot_results("lastfmrobot", "")
     await message.delete()

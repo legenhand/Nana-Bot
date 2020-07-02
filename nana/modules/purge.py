@@ -8,33 +8,28 @@ from nana import Owner, app, Command
 
 __MODULE__ = "Purges"
 __HELP__ = """
-THIS FEATURE IS DISABLE DUE BUG ON DELETE ALL MESSAGE
 Purge many messages in less than one seconds, you need to became admin to do this.
 Except for purgeme feature
 Do with you own risk!
-Purges message will immediately purge that message without warning!
-**「 DO NOT PLAY WITH THIS FEATURE 」**
-THIS IS NOT A TROLL MODULE!
-```
-I am not responsible if you nuke all messages in your group, when purges
-is running, none can stop that except restart your bot in terminal, but
-that was too late, 1 second will purge over than 10000 messages, and
-you're fucked off.
-```
+
 Developer create this module only for managing group, not for trolling user!
 Read this before take an action!
 -> All deleted message cannot restore
--> If you're not an admin, and purge with powerful number or reply first message of group, all of your message will deleted!
 -> **DON'T DESTROY/DELETE ALL MESSAGES**, developer will not responsible if you're nuked your chat group. Except for cleaning group purposes.
--> This is not a joke, not funny if you're nuked a group by this feature and blame developer for made this powerful weapon!
 Ok look like you're understand what happened if you playing with this powerful weapon.
 ──「 **Purge** 」──
 -> `purge`
-Purge from bellow to that replyed message, you need to became admins to do this, else it only purge your message only!
+Purge from bellow to that replyed message, you need to became admins to do this!
 Give a number **without reply** to purge for x messages.
+
 ──「 **Purge My Messages** 」──
 -> `purgeme`
 Purge your messages only, no need admin permission.
+
+──「 **Delete** 」─
+-> `del`
+Delete's a message that you reply to
+
 """
 
 

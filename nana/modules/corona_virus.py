@@ -6,7 +6,7 @@ from pyrogram import Filters
 from nana import Command, app
 from nana.helpers.aiohttp_helper import AioHttp
 
-__MODULE__ = "Covid Info"
+__MODULE__ = "Covid"
 __HELP__ = """
 Check info of cases corona virus disease 2019
 

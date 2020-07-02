@@ -20,6 +20,7 @@ async def admin_check(message: Message) -> bool:
     else:
         return True
 
+
 async def is_sudoadmin(message: Message) -> bool:
     client = message._client
     check_user = await client.get_chat_member(message.chat.id, message.from_user.id)

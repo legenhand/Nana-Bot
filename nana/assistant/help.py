@@ -109,7 +109,7 @@ async def help_button(_client, query):
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")))
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]) & (Filters.group | Filters.private))
 async def stats(_client, message):
     text = "**Here is your current stats**\n"
     if DB_AVAILABLE:

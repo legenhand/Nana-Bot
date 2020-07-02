@@ -93,7 +93,7 @@ async def get_myself(client, message):
         await message.reply(text, reply_markup=button)
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["settings"]))
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["settings"]) & Filters.private)
 async def settings(_client, message):
     try:
         me = await app.get_me()

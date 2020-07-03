@@ -17,7 +17,7 @@ from nana.helpers.PyroHelpers import ReplyCheck
 
 __MODULE__ = "Reverse Search"
 __HELP__ = """
-This module will help you Reverse Ssearch Media from Google
+This module will help you Reverse Search Media
 
 ──「 **Google Reverse Search** 」──
 -> `reverse (reply to a media)`
@@ -144,20 +144,25 @@ async def tracemoe_rs(client, message):
         await asyncio.sleep(5)
         await message.delete()
         return
-    tracemoe = tracemoepy.async_trace.Async_Trace()
-    search = await tracemoe.search(dis_loc, encode=True)
-    os.remove(dis_loc)
-    result = search['docs'][0]
-    msg = f"**Title**: {result['title_english']}"\
-          f"\n**Similarity**: {str(result['similarity'])[1:2]}"\
-          f"\n**Episode**: {result['episode']}"
-    preview = await tracemoe.video_preview(search)
-    with open('preview.mp4', 'wb') as f:
-        f.write(preview)
-    await message.delete()
-    await client.send_video(message.chat.id,
-                            'preview.mp4',
-                            caption=msg,
-                            reply_to_message_id=ReplyCheck(message)
-                            )
+    try:
+        tracemoe = tracemoepy.async_trace.Async_Trace()
+        search = await tracemoe.search(dis_loc, encode=True)
+        os.remove(dis_loc)
+        result = search['docs'][0]
+        msg = f"**Title**: {result['title_english']}"\
+            f"\n**Similarity**: {str(result['similarity'])[1:2]}"\
+            f"\n**Episode**: {result['episode']}"
+        preview = await tracemoe.video_preview(search)
+        with open('preview.mp4', 'wb') as f:
+            f.write(preview)
+        await message.delete()
+        await client.send_video(message.chat.id,
+                                'preview.mp4',
+                                caption=msg,
+                                reply_to_message_id=ReplyCheck(message)
+                                )
+    except Exception as e:
+        await message.edit(f"**Error:**{e}")
+        await asyncio.sleep(5)
+        await message.delete()
     os.remove('preview.mp4')

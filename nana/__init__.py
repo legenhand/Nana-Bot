@@ -22,6 +22,7 @@ else:
         logging.error("You need to place config.py in nana dir!")
         quit(1)
     TEST_DEVELOP = Config.TEST_MODE
+    PM_PERMIT = Config.PM_PERMIT
 
 if TEST_DEVELOP:
     logging.warning("Testing mode activated!")
@@ -104,6 +105,7 @@ if ENV:
     TEST_MODE = bool(os.environ.get('TEST_MODE', False))
     TERMUX_USER = os.environ.get('TERMUX_USER', False)
     NANA_IMG = os.environ.get('NANA_IMG', False)
+    PM_PERMIT = os.environ.get('PM_PERMIT', False)
 else:
     # logger
     logger = Config.LOGGER

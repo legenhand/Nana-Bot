@@ -159,3 +159,4 @@ async def tracemoe_rs(client, message):
                             caption=msg,
                             reply_to_message_id=ReplyCheck(message)
                             )
+    os.remove('preview.mp4')

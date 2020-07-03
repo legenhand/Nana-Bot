@@ -146,6 +146,7 @@ async def tracemoe_rs(client, message):
         return
     tracemoe = tracemoepy.async_trace.Async_Trace()
     search = await tracemoe.search(dis_loc, encode=True)
+    os.remove(dis_loc)
     result = search['docs'][0]
     msg = f"**Title**: {result['title_english']}"\
           f"\n**Similarity**: {str(result['similarity'])[1:2]}"\

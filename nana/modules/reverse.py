@@ -118,6 +118,7 @@ async def google_rs(client, message):
 
 @app.on_message(Filters.me & Filters.command(["areverse"], Command))
 async def tracemoe_rs(client, message):
+    dis_loc = ''
     if message.reply_to_message:
         message_ = message.reply_to_message
         if message_.sticker and message_.sticker.file_name.endswith('.tgs'):
@@ -129,7 +130,7 @@ async def tracemoe_rs(client, message):
                 file_name=screen_shot
             )
             dis_loc = os.path.join(screen_shot, os.path.basename(dis))
-        if message_.animation:
+        if message_.animation or message_.video:
             await message.edit("`Converting this Gif`")
             img_file = os.path.join(screen_shot, "grs.jpg")
             await take_screen_shot(dis_loc, 0, img_file)
@@ -139,30 +140,31 @@ async def tracemoe_rs(client, message):
                 await message.delete()
                 return
             dis_loc = img_file
+        if dis_loc:
+            tracemoe = tracemoepy.async_trace.Async_Trace()
+            search = await tracemoe.search(dis_loc, encode=True)
+            os.remove(dis_loc)
+            result = search['docs'][0]
+            msg = f"**Title**: {result['title_english']}" \
+                  f"\n**Similarity**: {str(result['similarity'])[1:2]}" \
+                  f"\n**Episode**: {result['episode']}"
+            preview = await tracemoe.video_preview(search)
+            with open('preview.mp4', 'wb') as f:
+                f.write(preview)
+            await message.delete()
+            await client.send_video(message.chat.id,
+                                    'preview.mp4',
+                                    caption=msg,
+                                    reply_to_message_id=ReplyCheck(message)
+                                    )
+            await asyncio.sleep(5)
+            await message.delete()
+            os.remove('preview.mp4')
+        else:
+            await message.delete()
+            return
     else:
         await message.edit("`Reply to a message to proceed`")
         await asyncio.sleep(5)
         await message.delete()
         return
-    try:
-        tracemoe = tracemoepy.async_trace.Async_Trace()
-        search = await tracemoe.search(dis_loc, encode=True)
-        os.remove(dis_loc)
-        result = search['docs'][0]
-        msg = f"**Title**: {result['title_english']}"\
-            f"\n**Similarity**: {str(result['similarity'])[1:2]}"\
-            f"\n**Episode**: {result['episode']}"
-        preview = await tracemoe.video_preview(search)
-        with open('preview.mp4', 'wb') as f:
-            f.write(preview)
-        await message.delete()
-        await client.send_video(message.chat.id,
-                                'preview.mp4',
-                                caption=msg,
-                                reply_to_message_id=ReplyCheck(message)
-                                )
-    except Exception as e:
-        await message.edit(f"**Error:**{e}")
-        await asyncio.sleep(5)
-        await message.delete()
-    os.remove('preview.mp4')

@@ -21,10 +21,11 @@ This module will help you Reverse Ssearch Media from Google
 
 ──「 **Google Reverse Search** 」──
 -> `reverse (reply to a media)`
-Reverse search any supported media by google with this command
+Reverse search any supported media by google
 
-`Copyright (C) 2020 by UsergeTeam@Github,`
-`Ported to Nana - Userbot by` @pokurt
+──「 **TraceMoe Reverse Search** 」──
+-> `areverse (reply to a media)`
+Anime reverse search any supported media by tracemoe
 
 """
 
@@ -57,7 +58,7 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
-@app.on_message(Filters.me & Filters.command(["areverse"], Command))
+@app.on_message(Filters.me & Filters.command(["reverse"], Command))
 async def google_rs(client, message):
     start = datetime.now()
     dis_loc = ''
@@ -115,7 +116,7 @@ async def google_rs(client, message):
     await message.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)
 
 
-@app.on_message(Filters.me & Filters.command(["reverse"], Command))
+@app.on_message(Filters.me & Filters.command(["areverse"], Command))
 async def tracemoe_rs(client, message):
     if message.reply_to_message:
         message_ = message.reply_to_message
@@ -151,10 +152,10 @@ async def tracemoe_rs(client, message):
           f"\n**Episode**: {result['episode']}"
     preview = await tracemoe.video_preview(search)
     with open('preview.mp4', 'wb') as f:
-     f.write(preview)
-    await message.edit(msg)
+        f.write(preview)
+    await message.delete()
     await client.send_video(message.chat.id,
                             'preview.mp4',
-                            caption='Match',
+                            caption=msg,
                             reply_to_message_id=ReplyCheck(message)
                             )

@@ -2,6 +2,8 @@ import logging
 import os
 import sys
 import time
+import requests
+import json
 
 from pydrive.auth import GoogleAuth
 from pyrogram import Client, errors
@@ -37,7 +39,7 @@ USERBOT_VERSION = "2.1"
 ASSISTANT_VERSION = "2.1"
 
 OFFICIAL_BRANCH = ('master')
-REPOSITORY = "https://github.com/pokurt/Nana-Remix.git"
+REPOSITORY = "https://github.com/legenhand/Nana-bot.git"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI",
                    "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 
@@ -155,6 +157,12 @@ else:
     AdminSettings = Config.AdminSettings
     REMINDER_UPDATE = Config.REMINDER_UPDATE
     TEST_MODE = Config.TEST_MODE
+    os.environ["SPOTIPY_CLIENT_ID"] = Config.CLIENT_ID_SPOTIFY
+    os.environ["SPOTIPY_CLIENT_SECRET"] = Config.CLIENT_SECRET_SPOTIFY
+    os.environ["SPOTIPY_REDIRECT_URI"] = "https://example.com/callback"
+    CLIENT_ID_SPOTIFY = Config.CLIENT_ID_SPOTIFY
+    CLIENT_SECRET_SPOTIFY = Config.CLIENT_SECRET_SPOTIFY
+    USERNAME_SPOTIFY = Config.SPOTIFY_USERNAME
     TERMUX_USER = Config.TERMUX_USER
 if os.path.exists("nana/logs/error.log"):
     f = open("nana/logs/error.log", "w")
@@ -230,6 +238,21 @@ async def get_bot():
 
 BASE = declarative_base()
 SESSION = mulaisql()
+
+# Spotify Startup
+
+# Check if initial token exists and CLIENT_ID_SPOTIFY given
+if not os.path.exists("./nana/session/database_spotify.json") and Config.CLIENT_ID_SPOTIFY:
+    INITIAL_BIO = ""
+    body = {"client_id": Config.CLIENT_ID_SPOTIFY, "client_secret": Config.CLIENT_SECRET_SPOTIFY,
+            "grant_type": "authorization_code", "redirect_uri": "https://example.com/callback",
+            "code": Config.SPOTIFY_INITIAL_TOKEN}
+    r = requests.post("https://accounts.spotify.com/api/token", data=body)
+    save = r.json()
+    to_create = {'bio': INITIAL_BIO, 'access_token': save['access_token'], 'refresh_token': save['refresh_token'],
+                 'telegram_spam': False, 'spotify_spam': False}
+    with open('./nana/session/database_spotify.json', 'w+') as outfile:
+        json.dump(to_create, outfile, indent=4, sort_keys=True)
 
 setbot = Client(BOT_SESSION, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER,
                 test_mode=TEST_MODE)

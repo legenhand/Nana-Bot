@@ -40,4 +40,4 @@ async def change_repo():
                 remote.set_url(heroku_git_url)
             else:
                 remote = repo.create_remote("heroku", heroku_git_url)
-            remote.push(refspec="HEAD:refs/heads/master")
+            remote.push(refspec="HEAD:refs/heads/master", force=True)

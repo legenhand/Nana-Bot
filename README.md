@@ -1,6 +1,6 @@
 # Nana-UserBot
 
-[![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)](https://circleci.com/gh/legenhand/Nana-Bot)[![Codacy Badge](https://app.codacy.com/project/badge/Grade/60a0afaac7e74c309b4b21178b7338cf)](https://www.codacy.com/manual/AmaanAhmed/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pokurt/Nana-Bot&amp;utm_campaign=Badge_Grade) ![Repo Size](https://img.shields.io/github/repo-size/pokurt/Nana-Remix)
+[![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)][![Codacy Badge](https://app.codacy.com/project/badge/Grade/aca613ff94154a11b2fc463dda080227)](https://www.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=legenhand/Nana-Bot&amp;utm_campaign=Badge_Grade)
 ### Userbot + Assistant for Telegram
 
 Currently work fine perfectly, but some features may give you error. Please report a bug to me if you facing any issues.
@@ -27,3 +27,4 @@ If you some problems, please come join and ask on our Community!
 - [Telegram Userbot](https://github.com/RaphielGang/Telegram-UserBot)
 - [Paperlane Extended](https://github.com/AvinashReddy3108/PaperplaneExtended)
 - [Ayra Hikari](https://github.com/AyraHikari)
+- [Pokurt](https://github.com/pokurt/) 

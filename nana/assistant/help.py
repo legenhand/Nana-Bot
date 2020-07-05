@@ -4,7 +4,7 @@ import time
 from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG
+from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, BotName
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
 
@@ -22,7 +22,6 @@ I can help you for many things.
  - /settings: settings your userbot
  - /getme: get your userbot profile info
  - /help: get this menu
->>>>>>> 969616d... fixed help text
 """
 
 

@@ -51,9 +51,9 @@ androidfilehost.com`
 async def ls(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 2:
-        basepath = "/root/nana/{}".format(args[1])
+        basepath = "nana/{}".format(args[1])
     else:
-        basepath = "/root/nana/"
+        basepath = "nana/"
     directory = ""
     listfile = ""
     for entry in os.listdir(basepath):
@@ -71,7 +71,7 @@ async def upload_file(client, message):
     if len(args) == 1:
         await message.edit("usage : upload (path)")
         return
-    path = "/root/nana/{}".format(args[1])
+    path = "nana/{}".format(args[1])
     try:
         await app.send_document(message.chat.id, path, progress=lambda d, t: asyncio.get_event_loop().create_task(
             progressdl(d, t, message, time.time(), "Uploading...")))
@@ -497,6 +497,33 @@ def time_formatter(milliseconds: int) -> str:
           ((str(seconds) + " second(s), ") if seconds else "") + \
           ((str(milliseconds) + " millisecond(s), ") if milliseconds else "")
     return tmp[:-2]
+
+
+async def download_reply_nocall(client, message):
+	if message.reply_to_message.photo:
+		nama = "photo_{}_{}.png".format(message.reply_to_message.photo.file_id, message.reply_to_message.photo.date)
+		await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama)
+	elif message.reply_to_message.animation:
+		nama = "giphy_{}-{}.gif".format(message.reply_to_message.animation.date, message.reply_to_message.animation.file_size)
+		await client.download_media(message.reply_to_message.animation, file_name="nana/downloads/" + nama)
+	elif message.reply_to_message.video:
+		nama = "video_{}-{}.mp4".format(message.reply_to_message.video.date, message.reply_to_message.video.file_size)
+		await client.download_media(message.reply_to_message.video, file_name="nana/downloads/" + nama)
+	elif message.reply_to_message.sticker:
+		nama = "sticker_{}_{}.webp".format(message.reply_to_message.sticker.date, message.reply_to_message.sticker.set_name)
+		await client.download_media(message.reply_to_message.sticker, file_name="nana/downloads/" + nama)
+	elif message.reply_to_message.audio:
+		nama = "{}".format(message.reply_to_message.audio.file_name)
+		await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama)
+	elif message.reply_to_message.voice:
+		nama = "audio_{}.ogg".format(message.reply_to_message.voice)
+		await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama)
+	elif message.reply_to_message.document:
+		nama = "{}".format(message.reply_to_message.document.file_name)
+		await client.download_media(message.reply_to_message.document, file_name="nana/downloads/" + nama)
+	else:
+		return False
+	return "nana/downloads/" + nama
 
 
 async def download_file_from_tg(client, message):

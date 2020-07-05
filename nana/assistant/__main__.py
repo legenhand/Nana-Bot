@@ -6,7 +6,7 @@ import heroku3
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors, ReplyKeyboardMarkup
 
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, HEROKU_API, \
-    Owner
+    Owner, OwnerName, NANA_IMG
 from nana.__main__ import reload_userbot, restart_all
 
 if DB_AVAILABLE:
@@ -42,20 +42,26 @@ Convert a text to various style, can be used anywhere!
         me = await app.get_me()
     except ConnectionError:
         me = None
-    text = "Hello {}!\n".format(message.from_user.first_name)
-    text += "**Here is your current stats:**\n"
-    if not me:
-        text += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
-    else:
-        text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
-    text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
-    text += "-> Database: `{}`\n".format(DB_AVAILABLE)
-    text += "-> Python: `{}`\n".format(python_version())
+    start_message = f"Hi {OwnerName},\n"
+    start_message += "Nana is Ready at your Service!\n"
+    start_message += "===================\n"
+    start_message += "-> Python: `{}`\n".format(python_version())
     if not me:
         text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
     else:
-        text += "\nBot logged in as `{}`\nTo get more information about this user, type /getme\n".format(me.first_name)
-    await message.reply(text)
+        start_message += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
+    start_message += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
+    start_message += "-> Database: `{}`\n".format(DB_AVAILABLE)
+    if DB_AVAILABLE:
+        start_message += f"-> Group joined: `{len(get_all_chats())} groups`\n"
+    start_message += "===================\n"
+    start_message += "`For more about the bot press button down below`"
+    buttons = InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
+    if NANA_IMG:
+        await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
+    else:
+        await setbot.send_message(Owner, start_message, reply_markup=buttons)
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["getme"]))
@@ -87,7 +93,7 @@ async def get_myself(client, message):
         await message.reply(text, reply_markup=button)
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["settings"]))
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["settings"]) & Filters.private)
 async def settings(_client, message):
     try:
         me = await app.get_me()

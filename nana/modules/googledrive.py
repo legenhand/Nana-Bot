@@ -141,17 +141,17 @@ async def gdrive_stuff(client, message):
             await message.edit(
                 "Invaild URL!\nIf you think this is bug, please go to your Assistant bot and type `/reportbug`")
             return
-        await message.edit("Downloading for `{}`\nPlease wait...".format(filename))
+        await message.edit("Downloading for `{}`\nPlease wait...".format(filename.replace(' ', '_')))
         download = drive.CreateFile({'id': driveid})
         download.GetContentFile(filename)
         try:
-            os.rename(filename, "nana/downloads/" + filename)
+            os.rename(filename, "nana/downloads/" + filename.replace(' ', '_'))
         except FileExistsError:
-            os.rename(filename, "nana/downloads/" + filename + ".2")
-        await message.edit("Downloaded!\nFile saved to `{}`".format("nana/downloads/" + filename))
+            os.rename(filename, "nana/downloads/" + filename.replace(' ', '_') + ".2")
+        await message.edit("Downloaded!\nFile saved to `{}`".format("nana/downloads/" + filename.replace(' ', '_')))
     elif len(message.text.split()) == 3 and message.text.split()[1] == "upload":
         filerealname = message.text.split()[2].split(None, 1)[0]
-        filename = "nana/downloads/{}".format(filerealname)
+        filename = "nana/downloads/{}".format(filerealname.replace(' ', '_'))
         checkfile = os.path.isfile(filename)
         if not checkfile:
             await message.edit("File `{}` was not found!".format(filerealname))
@@ -189,7 +189,7 @@ async def gdrive_stuff(client, message):
             await message.edit("__Downloading...__")
             c_time = time.time()
             if message.reply_to_message.photo:
-                nama = "photo_{}_{}.png".format(message.reply_to_message.photo, message.reply_to_message.photo.date)
+                nama = "photo_{}.png".format(message.reply_to_message.photo.date)
                 await client.download_media(message.reply_to_message.photo, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
@@ -212,12 +212,12 @@ async def gdrive_stuff(client, message):
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.audio:
-                nama = "{}".format(message.reply_to_message.audio.file_name)
+                nama = "audio_{}.mp3".format(message.reply_to_message.audio.date)
                 await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))
             elif message.reply_to_message.voice:
-                nama = "audio_{}.ogg".format(message.reply_to_message.voice)
+                nama = "audio_{}.ogg".format(message.reply_to_message.voice.date)
                 await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama,
                                             progress=lambda d, t: asyncio.get_event_loop().create_task(
                                                 progressdl(d, t, message, c_time, "Downloading...")))

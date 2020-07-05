@@ -4,13 +4,13 @@ import time
 from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, BotName, DB_AVAILABLE, StartTime
-from nana.__main__ import get_runtime
+from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, BotName
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
 
 if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats
+    from nana.modules.database.notes_db import get_all_selfnotes
 
 HELP_STRINGS = f"""
 Hello! I am {BotName}, your Assistant!
@@ -21,10 +21,7 @@ I can help you for many things.
  - /stats: get your userbot status
  - /settings: settings your userbot
  - /getme: get your userbot profile info
- - /help: get all modules help
-
-You can use {", ".join(Command)} on your userbot to execute that commands.
-Here is current modules you have
+ - /help: get this menu
 """
 
 
@@ -54,7 +51,10 @@ def get_readable_time(seconds: int) -> str:
 async def help_parser(client, chat_id, text, keyboard=None):
     if not keyboard:
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help"))
-    await client.send_message(chat_id, text, reply_markup=keyboard)
+    if NANA_IMG:
+        await client.send_photo(chat_id, NANA_IMG, caption=text, reply_markup=keyboard)
+    else:
+        await client.send_message(chat_id, text, reply_markup=keyboard)
 
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["help"]))
@@ -89,7 +89,7 @@ async def help_button(_client, query):
 
             await query.message.edit(text=text,
                                      reply_markup=InlineKeyboardMarkup(
-                                         [[InlineKeyboardButton(text="⬅️ Back", callback_data="help_back")]]))
+                                         [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
@@ -108,14 +108,13 @@ async def help_button(_client, query):
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")))
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]))
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]) & (Filters.group | Filters.private))
 async def stats(_client, message):
     text = "**Here is your current stats**\n"
     if DB_AVAILABLE:
-        from ..modules.database.notes_db import count_notes
-        text += f"Notes: `{count_notes()} notes`\n"
-        text += "Group joined: `{} groups`\n".format(len(get_all_chats()))
-    text += "Message received: `{} messages`\n".format(get_msgc())
+        text += "<b>Notes:</b> `{} notes`\n".format(len(get_all_selfnotes(message.from_user.id)))
+        text += "<b>Group joined:</b> `{} groups`\n".format(len(get_all_chats()))
+    text += "<b>Message received:</b> `{} messages`\n".format(get_msgc())
 
     uptime = get_readable_time((time.time() - StartTime))
     text += ("<b>Nana uptime:</b> <code>{}</code>".format(uptime))

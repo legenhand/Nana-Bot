@@ -1,25 +1,7 @@
 # Nana-UserBot
 
-[![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)](https://circleci.com/gh/legenhand/Nana-Bot)[![Codacy Badge](https://app.codacy.com/project/badge/Grade/60a0afaac7e74c309b4b21178b7338cf)](https://www.codacy.com/manual/AmaanAhmed/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pokurt/Nana-Bot&amp;utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)][![Codacy Badge](https://app.codacy.com/project/badge/Grade/aca613ff94154a11b2fc463dda080227)](https://www.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=legenhand/Nana-Bot&amp;utm_campaign=Badge_Grade)
 ### Userbot + Assistant for Telegram
-
-```
-#include <std/disclaimer.h>
-/**
-	I am no responsible about your account.
-	I made this for fun only, if you get banned, reported, or even Banned by Telegram itself,
-	Then blame yourself.
-
-	This is not copy-pasta project!
-	I am make this from scratch with Pyrogram!
-	See Credits bellow before you say i am kanger!
-
-	If you blame me if something wrong with your account after use this bot,
-	See me in my group chat, i'll laught at you!
-
-	DO WITH YOU OWN RISK!
-*/
-```
 
 Currently work fine perfectly, but some features may give you error. Please report a bug to me if you facing any issues.
 > Go to our group support if you want to ask something [@nanabotsupport](https://t.me/nanabotsupport)
@@ -27,6 +9,9 @@ Currently work fine perfectly, but some features may give you error. Please repo
 ```
 Q: Why need Assistant (Real bot)?
 A: Because real bot will help you a lot for many things, and make user easy to use it.
+
+Q: Why Nana Unique?
+A: What Nana makes a Unique userbot is because of the assistant to control your userbot.
 ```
 
 ### Installation Guide
@@ -42,3 +27,4 @@ If you some problems, please come join and ask on our Community!
 - [Telegram Userbot](https://github.com/RaphielGang/Telegram-UserBot)
 - [Paperlane Extended](https://github.com/AvinashReddy3108/PaperplaneExtended)
 - [Ayra Hikari](https://github.com/AyraHikari)
+- [Pokurt](https://github.com/pokurt/) 

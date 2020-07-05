@@ -13,13 +13,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 StartTime = time.time()
 
-# Postgresql
 
-# logging
-# 
-# -> Advanced logging, for debugging purposes
-
-#
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
     TEST_DEVELOP = bool(os.environ.get('TEST_DEVELOP', False))
@@ -30,6 +24,7 @@ else:
         logging.error("You need to place config.py in nana dir!")
         quit(1)
     TEST_DEVELOP = Config.TEST_MODE
+    PM_PERMIT = Config.PM_PERMIT
 
 if TEST_DEVELOP:
     logging.warning("Testing mode activated!")
@@ -40,11 +35,11 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     logging.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
     quit(1)
 
-USERBOT_VERSION = "1.1.1b"
-ASSISTANT_VERSION = "1.1.1b"
+USERBOT_VERSION = "2.1"
+ASSISTANT_VERSION = "2.1"
 
-OFFICIAL_BRANCH = ('master', 'dev', 'asyncio')
-REPOSITORY = "https://github.com/legenhand/Nana-Bot.git"
+OFFICIAL_BRANCH = ('master')
+REPOSITORY = "https://github.com/legenhand/Nana-bot.git"
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI",
                    "CAADAgADaV0AAuCjggfi51NV8GUiRwI"]
 
@@ -97,9 +92,7 @@ if ENV:
     bitly_token = [os.environ.get('bitly_token', None)]
     gdrive_credentials = os.environ.get('gdrive_credentials', None)
     lydia_api = os.environ.get('lydia_api', None)
-    lastfm_api = os.environ.get('lastfm_api', None)
     remove_bg_api = os.environ.get('remove_bg_api', None)
-    lastfm_username = os.environ.get('lastfm_username', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
@@ -107,11 +100,14 @@ if ENV:
     ASSISTANT_LOAD = os.environ.get("ASSISTANT_LOAD", "").split()
     ASSISTANT_NOLOAD = os.environ.get("ASSISTANT_NOLOAD", "").split()
 
-    DATABASE_URL = os.environ.get('DATABASE_URL', "postgres://username:password@localhost:5432/database")
+    DB_URI = os.environ.get('DB_URI', "postgres://username:password@localhost:5432/database")
     ASSISTANT_BOT_TOKEN = os.environ.get('ASSISTANT_BOT_TOKEN', None)
     AdminSettings = [int(x) for x in os.environ.get("AdminSettings", "").split()]
     REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
     TEST_MODE = bool(os.environ.get('TEST_MODE', False))
+    TERMUX_USER = os.environ.get('TERMUX_USER', False)
+    NANA_IMG = os.environ.get('NANA_IMG', False)
+    PM_PERMIT = os.environ.get('PM_PERMIT', False)
 else:
     # logger
     logger = Config.LOGGER
@@ -148,16 +144,15 @@ else:
     gdrive_credentials = None
     lydia_api = Config.lydia_api
     HEROKU_API = Config.HEROKU_API
-    lastfm_api = Config.lastfm_api
     remove_bg_api = Config.remove_bg_api
-    lastfm_username = Config.lastfm_username
+    NANA_IMG = Config.NANA_IMG
     # LOADER
     USERBOT_LOAD = Config.USERBOT_LOAD
     USERBOT_NOLOAD = Config.USERBOT_NOLOAD
     ASSISTANT_LOAD = Config.ASSISTANT_LOAD
     ASSISTANT_NOLOAD = Config.ASSISTANT_NOLOAD
 
-    DATABASE_URL = Config.DATABASE_URL
+    DB_URI = Config.DB_URI
     ASSISTANT_BOT_TOKEN = Config.ASSISTANT_BOT_TOKEN
     AdminSettings = Config.AdminSettings
     REMINDER_UPDATE = Config.REMINDER_UPDATE
@@ -168,6 +163,7 @@ else:
     CLIENT_ID_SPOTIFY = Config.CLIENT_ID_SPOTIFY
     CLIENT_SECRET_SPOTIFY = Config.CLIENT_SECRET_SPOTIFY
     USERNAME_SPOTIFY = Config.SPOTIFY_USERNAME
+    TERMUX_USER = Config.TERMUX_USER
 if os.path.exists("nana/logs/error.log"):
     f = open("nana/logs/error.log", "w")
     f.write("PEAK OF THE LOGS FILE")
@@ -184,7 +180,6 @@ console.setFormatter(formatter)
 logging.getLogger('').addHandler(console)
 
 log = logging.getLogger()
-log.error("THIS IS PEAK OF LOG ERROR, IGNORE THIS MESSAGE LOG")
 
 if USERBOT_SESSION and ASSISTANT_SESSION:
     BOT_SESSION = ASSISTANT_SESSION
@@ -199,7 +194,7 @@ BOTINLINE_AVAIABLE = False
 # Postgresql
 def mulaisql() -> scoped_session:
     global DB_AVAILABLE
-    engine = create_engine(DATABASE_URL, client_encoding="utf8")
+    engine = create_engine(DB_URI, client_encoding="utf8")
     BASE.metadata.bind = engine
     try:
         BASE.metadata.create_all(engine)

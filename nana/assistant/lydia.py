@@ -1,18 +1,21 @@
 import asyncio
+import random
+import re
 
 from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
 from pyrogram import Filters
 
 from nana import setbot, AdminSettings, lydia_api
+import nana.modules.meme_strings as meme_strings
 
 lydia_status = False
 coffeehouse_api = None
 lydia = None
 session = None
+poki_uwu = False
 
-
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["lydia"]))
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["lydia"]) & (Filters.group | Filters.private))
 async def lydia_stats(_client, message):
     global lydia_status, coffeehouse_api, lydia, session
     if lydia_api == "":
@@ -39,13 +42,42 @@ async def lydia_stats(_client, message):
         await message.reply("now Lydia will reply your message!")
 
 
-@setbot.on_message(Filters.private)
+@setbot.on_message(~Filters.me & ~Filters.edited & (Filters.mentioned | Filters.private), group=2)
 async def lydia_settings(client, message):
     global lydia_status, session
     if lydia_status:
         await client.send_chat_action(chat_id=message.chat.id,action="typing")
         output = session.think_thought(message.text)
-        asyncio.sleep(0.3)
-        await message.reply_text("{0}".format(output), quote=True)
+        await asyncio.sleep(0.3)
+        if poki_uwu:
+            reply_text = re.sub(r'[rl]', "w", output)
+            reply_text = re.sub(r'[ｒｌ]', "ｗ", output)
+            reply_text = re.sub(r'[RL]', 'W', reply_text)
+            reply_text = re.sub(r'[ＲＬ]', 'Ｗ', reply_text)
+            reply_text = re.sub(r'n([aeiouａｅｉｏｕ])', r'ny\1', reply_text)
+            reply_text = re.sub(r'r([aeiouａｅｉｏｕ])', r'w\1', reply_text)
+            reply_text = re.sub(r'ｎ([ａｅｉｏｕ])', r'ｎｙ\1', reply_text)
+            reply_text = re.sub(r'N([aeiouAEIOU])', r'Ny\1', reply_text)
+            reply_text = re.sub(r'Ｎ([ａｅｉｏｕＡＥＩＯＵ])', r'Ｎｙ\1', reply_text)
+            reply_text = re.sub(r'\!+', ' ' + random.choice(meme_strings.faces), reply_text)
+            reply_text = re.sub(r'！+', ' ' + random.choice(meme_strings.faces), reply_text)
+            reply_text = reply_text.replace("ove", "uv")
+            reply_text = reply_text.replace("ｏｖｅ", "ｕｖ")
+            reply_text = reply_text.replace(".", ",,.")
+            reply_text += ' ' + random.choice(meme_strings.faces)
+            await message.reply_text(f"{reply_text.lower()}", quote=True)
+        else:
+            await message.reply_text(f"{output}", quote=True)
     else:
         return
+
+
+@setbot.on_message(Filters.user(AdminSettings) & Filters.regex("^pokichan") & (Filters.mentioned | Filters.private))
+async def lydia_uwu(client, message):
+    global poki_uwu
+    if poki_uwu:
+        poki_uwu = False
+    else:
+        poki_uwu = True
+
+

@@ -1,12 +1,9 @@
-import jikanpy
-import asyncio
-
+from jikanpy import Jikan
+from jikanpy.exceptions import APIException
 from pyrogram import Filters
-
-from nana.helpers.PyroHelpers import ReplyCheck
+import asyncio
 from nana import app, Command
 from nana.helpers.string import replace_text
-from nana.helpers.anime import get_anime_manga, getBannerLink
 
 __MODULE__ = "MyAnimeList"
 
@@ -30,113 +27,171 @@ returns information about the manga.
 returns a list of new anime in the upcoming seasons.
 """
 
-
-@app.on_message(Filters.me & Filters.command(["manga"], Command))
-async def manga(client, message):
-    cmd = message.command
-    search_query = ""
-    if len(cmd) > 1:
-        search_query = " ".join(cmd[1:])
-    elif message.reply_to_message and len(cmd) == 1:
-        search_query = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("Usage: `anime`")
-        await asyncio.sleep(2)
-        await message.delete()
-        return
-    await message.delete()
-    jikan = jikanpy.jikan.Jikan()
-    search_result = jikan.search("manga", search_query)
-    first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.from_user.id)
-    await client.send_photo(message.chat.id, photo=image,
-                                caption=caption
-                            )
-
+jikan = Jikan()
 
 @app.on_message(Filters.me & Filters.command(["anime"], Command))
-async def anime(client, message):
+async def anime(_client, message):
     cmd = message.command
-    search_query = ""
+    query = ""
     if len(cmd) > 1:
-        search_query = " ".join(cmd[1:])
+        query = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
-        search_query = message.reply_to_message.text
+        query = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("Usage: `anime`")
+        await message.edit("`cant find anime.`")
         await asyncio.sleep(2)
         await message.delete()
         return
-    await message.delete()
-    jikan = jikanpy.jikan.Jikan()
-    search_result = jikan.search("anime", search_query)
-    first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_anime", message.from_user.id)
+    res = ""
     try:
-        await client.send_photo(photo=image,
-                                caption=caption
-                            )
-    except:
-        image = getBannerLink(first_mal_id, False)
-        await client.send_photo(message.chat.id, photo=image,
-                                caption=caption
-                            )
-
+        res = jikan.search("anime", query)
+    except APIException:
+        await message.edit("Error connecting to the API. Please try again!")
+        return ""
+    try:
+        res = res.get("results")[0].get("mal_id") # Grab first result
+    except APIException:
+        await message.edit("Error connecting to the API. Please try again!")
+        return ""
+    if res:
+        anime = jikan.anime(res)
+        title = anime.get("title")
+        japanese = anime.get("title_japanese")
+        type = anime.get("type")
+        duration = anime.get("duration")
+        synopsis = anime.get("synopsis")
+        source = anime.get("source")
+        status = anime.get("status")
+        episodes = anime.get("episodes")
+        score = anime.get("score")
+        rating = anime.get("rating")
+        genre_lst = anime.get("genres")
+        genres = ""
+        for genre in genre_lst:
+            genres += genre.get("name") + ", "
+        genres = genres[:-2]
+        studios = ""
+        studio_lst = anime.get("studios")
+        for studio in studio_lst:
+            studios += studio.get("name") + ", "
+        studios = studios[:-2]
+        duration = anime.get("duration")
+        premiered = anime.get("premiered")
+        image_url = anime.get("image_url")
+        url = anime.get("url")
+    else:
+        await message.edit("No results found!")
+        return
+    rep = f"<b>{title} ({japanese})</b>\n"
+    rep += f"<b>Type:</b> <code>{type}</code>\n"
+    rep += f"<b>Source:</b> <code>{source}</code>\n"
+    rep += f"<b>Status:</b> <code>{status}</code>\n"
+    rep += f"<b>Genres:</b> <code>{genres}</code>\n"
+    rep += f"<b>Episodes:</b> <code>{episodes}</code>\n"
+    rep += f"<b>Duration:</b> <code>{duration}</code>\n"
+    rep += f"<b>Score:</b> <code>{score}</code>\n"
+    rep += f"<b>Studio(s):</b> <code>{studios}</code>\n"
+    rep += f"<b>Premiered:</b> <code>{premiered}</code>\n"
+    rep += f"<b>Rating:</b> <code>{rating}</code>\n\n"
+    rep += f"<a href='{image_url}'>\u200c</a>"
+    rep += f"<i>{synopsis}</i>\n"
+    rep += f'Read More: <a href="{url}">MyAnimeList</a>'
+    await message.edit(rep)
 
 @app.on_message(Filters.me & Filters.command(["character"], Command))
-async def character(client, message):
+async def character(_client, message):
+    res = ""
     cmd = message.command
-    search_query = ""
+    query = ""
     if len(cmd) > 1:
-        search_query = " ".join(cmd[1:])
+        query = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
-        search_query = message.reply_to_message.text
+        query = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("Usage: `character`")
+        await message.edit("`cant find character.`")
         await asyncio.sleep(2)
         await message.delete()
         return
-    await message.delete()
-    jikan = jikanpy.jikan.Jikan()
     try:
-        search_result = jikan.search("character", search_query)
-    except jikanpy.APIException:
-        await message.edit("Character not found.")
+        search = jikan.search("character", query).get("results")[0].get("mal_id")
+    except APIException:
+        message.edit("No results found!")
+        return ""
+    if search:
+        try:
+            res = jikan.character(search)
+        except APIException:
+            message.edit("Error connecting to the API. Please try again!")
+            return ""
+    if res:
+        name = res.get("name")
+        kanji = res.get("name_kanji")
+        about = res.get("about")
+        if len(about) > 4096:
+            about = about[:4000] + "..."
+        image = res.get("image_url")
+        url = res.get("url")
+        rep = f"<b>{name} ({kanji})</b>\n\n"
+        rep += f"<a href='{image}'>\u200c</a>"
+        rep += f"<i>{about}</i>\n"
+        rep += f'Read More: <a href="{url}">MyAnimeList</a>'
+        await message.edit(replace_text(rep))
+
+@app.on_message(Filters.me & Filters.command(["manga"], Command))
+async def manga(_client, message):
+    cmd = message.command
+    query = ""
+    if len(cmd) > 1:
+        query = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        query = message.reply_to_message.text
+    elif not message.reply_to_message and len(cmd) == 1:
+        await message.edit("`cant find manga.`")
+        await asyncio.sleep(2)
+        await message.delete()
         return
-    first_mal_id = search_result["results"][0]["mal_id"]
-    character = jikan.character(first_mal_id)
-    caption = f"[{character['name']}]({character['url']})"
-    if character['name_kanji'] != "Japanese":
-        caption += f" ({character['name_kanji']})\n"
-    else:
-        caption += "\n"
-
-    if character['nicknames']:
-        nicknames_string = ", ".join(character['nicknames'])
-        caption += f"\n**Nicknames** : `{nicknames_string}`"
-    about = character['about'].split(" ", 60)
+    res = ""
+    manga = ""
     try:
-        about.pop(60)
-    except IndexError:
-        pass
-    about_string = ' '.join(about)
-    mal_url = search_result["results"][0]['url']
-    for entity in character:
-        if character[entity] is None:
-            character[entity] = "Unknown"
-    caption += f"\n**About**: {about_string}"
-    caption += f" [Read More]({mal_url})..."
-    await client.send_photo(message.chat.id,
-                            photo=character['image_url'],
-                            caption=replace_text(caption),
-                            reply_to_message_id=ReplyCheck(message),
-                            parse_mode='markdown'
-                        )
-
+        res = jikan.search("manga", query).get("results")[0].get("mal_id")
+    except APIException:
+        await message.edit("Error connecting to the API. Please try again!")
+        return ""
+    if res:
+        try:
+            manga = jikan.manga(res)
+        except APIException:
+            message.edit("Error connecting to the API. Please try again!")
+            return ""
+        title = manga.get("title")
+        japanese = manga.get("title_japanese")
+        type = manga.get("type")
+        status = manga.get("status")
+        score = manga.get("score")
+        volumes = manga.get("volumes")
+        chapters = manga.get("chapters")
+        genre_lst = manga.get("genres")
+        genres = ""
+        for genre in genre_lst:
+            genres += genre.get("name") + ", "
+        genres = genres[:-2]
+        synopsis = manga.get("synopsis")
+        image = manga.get("image_url")
+        url = manga.get("url")
+        rep = f"<b>{title} ({japanese})</b>\n"
+        rep += f"<b>Type:</b> <code>{type}</code>\n"
+        rep += f"<b>Status:</b> <code>{status}</code>\n"
+        rep += f"<b>Genres:</b> <code>{genres}</code>\n"
+        rep += f"<b>Score:</b> <code>{score}</code>\n"
+        rep += f"<b>Volumes:</b> <code>{volumes}</code>\n"
+        rep += f"<b>Chapters:</b> <code>{chapters}</code>\n\n"
+        rep += f"<a href='{image}'>\u200c</a>"
+        rep += f"<i>{synopsis}</i>"
+        rep += f'Read More: {url}'
+        await message.edit(rep)
 
 @app.on_message(Filters.me & Filters.command(["upcoming"], Command))
 async def upcoming(_client, message):
-    jikan = jikanpy.jikan.Jikan()
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()
     anime = later.get("anime")

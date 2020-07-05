@@ -14,6 +14,7 @@ import pyrogram as p
 from nana import Command, logging, app, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION
 from nana.helpers.deldog import deldog
 from nana.helpers.parser import mention_markdown
+from nana.helpers.aiohttp_helper import AioHttp
 
 __MODULE__ = "Devs"
 __HELP__ = """
@@ -84,10 +85,10 @@ async def aexec(client, message, code):
     return await locals()['__ex'](client, message)
 
 
-@app.on_message(Filters.me & Filters.command(["exec"], Command))
+@app.on_message(Filters.me & Filters.command(["py"], Command))
 async def executor(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `exec message.edit('edited!')`")
+        await message.edit("Usage: `py message.edit('edited!')`")
         return
     args = message.text.split(None, 1)
     code = args[1]
@@ -102,14 +103,14 @@ async def executor(client, message):
 
 @app.on_message(Filters.me & Filters.command(["ip"], Command))
 async def public_ip(_client, message):
-    ip = requests.get('https://api.ipify.org').text
+    ip = await AioHttp().get_text("https://api.ipify.org")
     await message.edit(f'<code>{ip}</code>', parse_mode='html')
 
 
-@app.on_message(Filters.me & Filters.command(["cmd"], Command))
+@app.on_message(Filters.me & Filters.command(["sh"], Command))
 async def terminal(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `cmd ping -c 5 google.com`")
+        await message.edit("Usage: `sh ping -c 5 google.com`")
         return
     args = message.text.split(None, 1)
     teks = args[1]
@@ -204,12 +205,6 @@ async def dc_id(_client, message):
     await message.edit(text)
 
 
-@app.on_message(Filters.me & Filters.command(["repo"], Command))
-async def repo(_client, message):
-    await message.edit(
-        "Click [here](https://github.com/legenhand/Nana-Bot) for Nana-Bot-Remix Source.\nClick [here](https://github.com/legenhand/Nana-Bot) to open Nana-Bot GitHub page.\nClick [here](https://t.me/nanabotsupport) for support Group",
-        disable_web_page_preview=True)
-
 
 @app.on_message(Filters.me & Filters.command(["alive"], Command))
 async def alive(_client, message):
@@ -217,21 +212,16 @@ async def alive(_client, message):
         me = await app.get_me()
     except ConnectionError:
         me = None
-    text = "Hello {}!\n".format(message.from_user.first_name)
-    text += "**Here is your current stats:**\n"
+    text = "[Nana-Remix](https://github.com/legenhand/Nana-Bot)** Up and Running:**\n"
     if not me:
-        text += "-> Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
+        text += "- Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
     else:
-        text += "-> Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
-    text += "-> Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
-    text += "-> Database: `{}`\n".format(DB_AVAILABLE)
-    text += "-> Python: `{}`\n".format(python_version())
-    text += "-> Pyrogram: `{}`\n".format(p.__version__)
-    if not me:
-        text += "\nBot is currently turned off, to start bot again, type /settings and click **Start Bot** button"
-    else:
-        text += "\nBot logged in as `{}`\n Go to your assistant for more information!".format(me.first_name)
-    await message.edit(text)
+        text += "- Userbot: `Running (v{})`\n".format(USERBOT_VERSION)
+    text += "- Assistant: `Running (v{})`\n".format(ASSISTANT_VERSION)
+    text += "- Database: `{}`\n".format(DB_AVAILABLE)
+    text += "- Python: `{}`\n".format(python_version())
+    text += "- Pyrogram: `{}`\n".format(p.__version__)
+    await message.edit(text, disable_web_page_preview=True)
 
 @app.on_message(Filters.me & Filters.command(["id"], Command))
 async def get_id(_client, message):

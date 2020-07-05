@@ -1,74 +1,77 @@
 import math
 from datetime import datetime
-
+import asyncio
 from pyrogram import Filters
 
+from nana.helpers.admincheck import admin_check
 from nana import Owner, app, Command
 
 __MODULE__ = "Purges"
 __HELP__ = """
-THIS FEATURE IS DISABLE DUE BUG ON DELETE ALL MESSAGE
 Purge many messages in less than one seconds, you need to became admin to do this.
 Except for purgeme feature
 Do with you own risk!
-Purges message will immediately purge that message without warning!
-**「 DO NOT PLAY WITH THIS FEATURE 」**
-THIS IS NOT A TROLL MODULE!
-```
-I am not responsible if you nuke all messages in your group, when purges
-is running, none can stop that except restart your bot in terminal, but
-that was too late, 1 second will purge over than 10000 messages, and
-you're fucked off.
-```
+
 Developer create this module only for managing group, not for trolling user!
 Read this before take an action!
 -> All deleted message cannot restore
--> If you're not an admin, and purge with powerful number or reply first message of group, all of your message will deleted!
 -> **DON'T DESTROY/DELETE ALL MESSAGES**, developer will not responsible if you're nuked your chat group. Except for cleaning group purposes.
--> This is not a joke, not funny if you're nuked a group by this feature and blame developer for made this powerful weapon!
 Ok look like you're understand what happened if you playing with this powerful weapon.
 ──「 **Purge** 」──
 -> `purge`
-Purge from bellow to that replyed message, you need to became admins to do this, else it only purge your message only!
+Purge from bellow to that replyed message, you need to became admins to do this!
 Give a number **without reply** to purge for x messages.
+
 ──「 **Purge My Messages** 」──
 -> `purgeme`
 Purge your messages only, no need admin permission.
+
+──「 **Delete** 」─
+-> `del`
+Delete's a message that you reply to
+
 """
 
 
 @app.on_message(Filters.me & Filters.command(["purge"], Command))
-async def purge(client, message):
-    if message.reply_to_message:
-        datetime.now()
-        from_user = None
-        start_message = message.reply_to_message.message_id
-        end_message = message.message_id
-        list_of_messages = await client.get_messages(chat_id=message.chat.id,
-                                                    message_ids=range(start_message, end_message),
-                                                    replies=0)
-        list_of_messages_to_delete = []
-        purged_messages_count = 0
-        for a_message in list_of_messages:
-            if len(list_of_messages_to_delete) == 100:
-                await client.delete_messages(chat_id=message.chat.id,
-                                            message_ids=list_of_messages_to_delete,
-                                            revoke=True)
-                purged_messages_count += len(list_of_messages_to_delete)
-                list_of_messages_to_delete = []
-            if from_user is not None:
-                if a_message.from_user == from_user:
-                    list_of_messages_to_delete.append(a_message.message_id)
-            else:
-                list_of_messages_to_delete.append(a_message.message_id)
-        await client.delete_messages(chat_id=message.chat.id,
-                                    message_ids=list_of_messages_to_delete,
-                                    revoke=True)
-        purged_messages_count += len(list_of_messages_to_delete)
-        datetime.now()
-        await message.delete()
+async def purge_message(client, message):
+    if message.chat.type in (("supergroup", "channel")):
+        is_admin = await admin_check(message)
+        if not is_admin:
+            await message.delete()
+            return
     else:
-        await message.delete()
+        return
+    start_t = datetime.now()
+    await message.delete()
+    message_ids = []
+    count_del_etion_s = 0
+    if message.reply_to_message:
+        for a_s_message_id in range(message.reply_to_message.message_id, message.message_id):
+            message_ids.append(a_s_message_id)
+            if len(message_ids) == 100:
+                await client.delete_messages(
+                    chat_id=message.chat.id,
+                    message_ids=message_ids,
+                    revoke=True
+                )
+                count_del_etion_s += len(message_ids)
+                message_ids = []
+        if len(message_ids) > 0:
+            await client.delete_messages(
+                chat_id=message.chat.id,
+                message_ids=message_ids,
+                revoke=True
+            )
+            count_del_etion_s += len(message_ids)
+    end_t = datetime.now()
+    time_taken_ms = (end_t - start_t).seconds
+    msg = await client.send_message(
+        message.chat.id,
+        f"Purged {count_del_etion_s} messages in {time_taken_ms} seconds"
+        )
+    await asyncio.sleep(5)
+    await msg.delete()
 
 
 @app.on_message(Filters.me & Filters.command(["purgeme"], Command))

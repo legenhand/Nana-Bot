@@ -14,10 +14,10 @@ Finding information about a github user.
 
 """
 
-@app.on_message(Filters.me & Filters.command(["github"], Command))
+@app.on_message(Filters.me & Filters.command(["git"], Command))
 async def github(_client, message):
     if len(message.text.split()) == 1:
-            await message.edit("Usage: `github (username)`")
+            await message.edit("Usage: `git (username)`")
             return
     username = message.text.split(None, 1)[1]
     URL = f"https://api.github.com/users/{username}"

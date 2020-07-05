@@ -41,6 +41,10 @@
       "description": "Fill your telegram id",
       "value": ""
     },
+    "DB_URI": {
+      "description": "Required to use an external db, try ElephantSQL: https://customer.elephantsql.com/login",
+      "value": ""
+    },
     "ASSISTANT_WORKER": {
       "description": "(optional) Worker for Assistant bot",
       "value": "2",
@@ -54,6 +58,11 @@
     "REMINDER_UPDATE": {
       "description": "(optional) Pass False to disable reminder update every running script",
       "value": "True",
+      "required": false
+    },
+    "NANA_IMG": {
+      "description": "(optional) Url of a photo to show up in your Assistant",
+      "value": "",
       "required": false
     },
     "lang_code": {
@@ -77,6 +86,11 @@
     },
     "screenshotlayer_API": {
       "description": "(optional) Register free here: https://screenshotlayer.com/",
+      "value": "False",
+      "required": false
+    },
+    "lydia_api": {
+      "description": "(optional) Fill in your Coffeehouse API, get from https://coffeehouse.intellivoid.net",
       "value": "False",
       "required": false
     },

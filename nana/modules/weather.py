@@ -1,33 +1,45 @@
+
+import asyncio
+import aiohttp
 from html import escape
 
-import requests
 from pyrogram import Filters
 
-from nana import app, Command, lang_code
+from nana import app, Command
+
 
 __MODULE__ = "Weather"
 __HELP__ = """
 Get current weather in your location
 
 ──「 **Weather** 」──
--> `weather (location)`
+-> `wttr (location)`
 Get current weather in your location.
 Powered by `wttr.in`
 """
 
 
-# TODO: Add more custom args?
-
-@app.on_message(Filters.me & Filters.command(["weather"], Command))
+@app.on_message(Filters.me & Filters.command(["wttr"], Command))
 async def weather(_client, message):
-    if len(message.text.split()) == 1:
-        await message.edit("Usage: `weather Maldives`")
-        return
-    location = message.text.split(None, 1)[1]
-    h = {'user-agent': 'httpie'}
-    a = requests.get(f"https://wttr.in/{location}?mnTC0&lang={lang_code}", headers=h)
-    if "Sorry, we processed more than 1M requests today and we ran out of our datasource capacity." in a.text:
-        await message.edit("Sorry, location not found!")
-        return
-    weather = f"<code>{escape(a.text)}</code>"
-    await message.edit(weather, parse_mode='html')
+    if len(message.command) == 1:
+        await message.edit("Usage: `wttr Maldives`")
+        await asyncio.sleep(3)
+        await message.delete()
+
+    if len(message.command) > 1:
+        location = message.command[1]
+        headers = {'user-agent': 'httpie'}
+        url = f"https://wttr.in/{location}?mnTC0&lang=en"
+        try:
+            async with aiohttp.ClientSession(headers=headers) as session:
+                async with session.get(url) as resp:
+                    data = await resp.text()
+        except Exception as e:
+            print(e)
+            await message.edit("Failed to get the weather forecast")
+
+        if 'we processed more than 1M requests today' in data:
+            await message.edit("`Sorry, we cannot process this request today!`")
+        else:
+            weather_data = f"<code>{escape(data.replace('report', 'Report'))}</code>"
+            await message.edit(weather_data, parse_mode='html')

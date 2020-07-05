@@ -1,0 +1,8 @@
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+     # build the application image
+     - run: docker build -t nana/bot:v1.0 .

@@ -14,7 +14,6 @@ RUN apt update && apt upgrade -y && \
     bzip2 \
     curl \
     figlet \
-    gcc \
     git \
     util-linux \
     libffi-dev \
@@ -47,6 +46,7 @@ RUN apt update && apt upgrade -y && \
     python3-dev \
     libreadline-dev \
     libyaml-dev \
+    gcc \
     sqlite3 \
     libsqlite3-dev \
     sudo \

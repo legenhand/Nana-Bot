@@ -1,14 +1,18 @@
 import random
+import time
 
 from git import Repo
 from git.exc import GitCommandError, NoSuchPathError, InvalidGitRepositoryError
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
-
 from nana import setbot, Owner, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, \
-    REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE, TEST_DEVELOP, HEROKU_API, DB_AVAILABLE
+    REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE, TEST_DEVELOP, HEROKU_API, DB_AVAILABLE, OwnerName
 from nana.__main__ import restart_all, loop
 if DB_AVAILABLE:
     pass
+from nana.assistant.help import NANA_IMG
+from nana.modules.chats import get_msgc
+if DB_AVAILABLE:
+    from nana.modules.database.chats_db import get_all_chats
 
 
 async def gen_chlog(repo, diff):
@@ -142,7 +146,17 @@ if REMINDER_UPDATE and not TEST_DEVELOP:
 
 
 async def starting_message():
-    await setbot.send_message(Owner, "**Your Bot Ready to go!**\n\nSee /help for more information` 😉")
+    start_message = f"Hi {OwnerName},\n"
+    start_message += "Nana is Ready at your Service!\n"
+    start_message += f"===================\n"
+    if DB_AVAILABLE:
+        start_message += f"**Group joined:** `{len(get_all_chats())} groups`\n"
+        start_message += f"**Message received:** `{get_msgc()} messages`\n"
+        start_message += f"===================\n"
+        start_message += f"`For more about the bot press button down below`"
+    buttons = InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
+    await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
 
 
 loop.create_task(starting_message())

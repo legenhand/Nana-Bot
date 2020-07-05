@@ -12,16 +12,18 @@ if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats
     from nana.modules.database.notes_db import get_all_selfnotes
 
-HELP_STRINGS = f"""
-Hello! I am {BotName}, your Assistant!
-I can help you for many things.
+NANA_IMG = "https://telegra.ph/file/2c8278c78c5404cdf0e53.jpg"
 
-**Main** commands available::
+HELP_STRINGS = f"""
+You can use {", ".join(Command)} on your userbot to execute that commands.
+Here is current modules you have
+
+**Main** commands available:
  - /start: get your bot status
  - /stats: get your userbot status
  - /settings: settings your userbot
- - /getme: get your userbot profile info
- - /help: get this menu
+ - /getme: get your userbot profile info=======
+ - /help: get all modules help
 """
 
 
@@ -64,6 +66,7 @@ async def help_command(client, message):
             [[InlineKeyboardButton(text="Bantuan", url=f"t.me/{setbot.get_me()['username']}?start=help")]])
         await message.reply("Hubungi saya di PM untuk mendapatkan daftar perintah.", reply_markup=keyboard)
         return
+    #TODO: Add image of nana in NANA_IMG
     await help_parser(client, message.chat.id, HELP_STRINGS)
 
 
@@ -78,8 +81,6 @@ help_button_create = Filters.create(help_button_callback)
 @setbot.on_callback_query(help_button_create)
 async def help_button(_client, query):
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
-    prev_match = re.match(r"help_prev\((.+?)\)", query.data)
-    next_match = re.match(r"help_next\((.+?)\)", query.data)
     back_match = re.match(r"help_back", query.data)
     if True:
         if mod_match:
@@ -90,18 +91,6 @@ async def help_button(_client, query):
             await query.message.edit(text=text,
                                      reply_markup=InlineKeyboardMarkup(
                                          [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
-
-        elif prev_match:
-            curr_page = int(prev_match.group(1))
-            await query.message.edit_text(text=HELP_STRINGS,
-                                          reply_markup=InlineKeyboardMarkup(
-                                              paginate_modules(curr_page - 1, HELP_COMMANDS, "help")))
-
-        elif next_match:
-            next_page = int(next_match.group(1))
-            await query.message.edit(text=HELP_STRINGS,
-                                     reply_markup=InlineKeyboardMarkup(
-                                         paginate_modules(next_page + 1, HELP_COMMANDS, "help")))
 
         elif back_match:
             await query.message.edit(text=HELP_STRINGS,

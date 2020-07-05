@@ -24,7 +24,7 @@ async def change_repo():
     author = Actor("Nana", "nana@harumi.tech")
     committer = Actor("Nana", "nana@harumi.tech")
     # commit by commit message and author and committer
-    index.commit("my commit message", author=author, committer=committer)
+    index.commit("update Nana", author=author, committer=committer)
     if HEROKU_API is not None:
         import heroku3
         heroku = heroku3.from_key(HEROKU_API)

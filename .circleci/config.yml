@@ -6,3 +6,8 @@ jobs:
      - checkout
      # build the application image
      - run: docker build -t nana/bot:v1.0 .
+  test-bot:
+     machine: true
+     steps:
+       # run the docker image
+       - run: docker run -e ENV=Yes -e TEST_DEVELOP=True -e api_id=$api_id -e api_hash=$api_hash -e DB_URI=$DB_URI -e ASSISTANT_BOT_TOKEN=$ASSISTANT_BOT_TOKEN -e AdminSettings=$AdminSettings -e USERBOT_SESSION=$USERBOT_SESSION -e ASSISTANT_SESSION=$ASSISTANT_SESSION nana/bot:v1.0

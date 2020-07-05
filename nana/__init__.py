@@ -242,7 +242,7 @@ SESSION = mulaisql()
 # Spotify Startup
 
 # Check if initial token exists and CLIENT_ID_SPOTIFY given
-if not os.path.exists("./nana/session/database_spotify.json") and Config.CLIENT_ID_SPOTIFY:
+if not os.path.exists("./nana/session/database_spotify.json") and Config.CLIENT_ID_SPOTIFY or os.environ["SPOTIPY_CLIENT_ID"]:
     INITIAL_BIO = ""
     body = {"client_id": Config.CLIENT_ID_SPOTIFY, "client_secret": Config.CLIENT_SECRET_SPOTIFY,
             "grant_type": "authorization_code", "redirect_uri": "https://example.com/callback",

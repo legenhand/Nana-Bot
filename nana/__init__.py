@@ -94,9 +94,12 @@ if ENV:
     lydia_api = os.environ.get('lydia_api', None)
     remove_bg_api = os.environ.get('remove_bg_api', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
+    # Spotify
     SPOTIPY_CLIENT_ID = os.environ.get('SPOTIPY_CLIENT_ID', None)
     SPOTIPY_CLIENT_SECRET = os.environ.get('SPOTIPY_CLIENT_SECRET', None)
     SPOTIPY_REDIRECT_URI = os.environ.get('SPOTIPY_CLIENT_URI', "https://example.com/callback")
+    SPOTIPY_INITIAL_TOKEN = os.environ.get('SPOTIFY_INITIAL_TOKEN', None)
+    USERNAME_SPOTIFY = os.environ.get('SPOTIFY_USERNAME', None)
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
     USERBOT_NOLOAD = os.environ.get("USERBOT_NOLOAD", "").split()
@@ -163,8 +166,7 @@ else:
     SPOTIPY_CLIENT_ID = Config.CLIENT_ID_SPOTIFY
     SPOTIPY_CLIENT_SECRET = Config.CLIENT_SECRET_SPOTIFY
     SPOTIPY_REDIRECT_URI = "https://example.com/callback"
-    CLIENT_ID_SPOTIFY = Config.CLIENT_ID_SPOTIFY
-    CLIENT_SECRET_SPOTIFY = Config.CLIENT_SECRET_SPOTIFY
+    SPOTIPY_INITIAL_TOKEN = Config.SPOTIFY_INITIAL_TOKEN
     USERNAME_SPOTIFY = Config.SPOTIFY_USERNAME
     TERMUX_USER = Config.TERMUX_USER
 if os.path.exists("nana/logs/error.log"):
@@ -245,11 +247,11 @@ SESSION = mulaisql()
 # Spotify Startup
 
 # Check if initial token exists and CLIENT_ID_SPOTIFY given
-if not os.path.exists("./nana/session/database_spotify.json") and CLIENT_ID_SPOTIFY:
+if not os.path.exists("./nana/session/database_spotify.json") and SPOTIPY_CLIENT_ID:
     INITIAL_BIO = ""
-    body = {"client_id": Config.CLIENT_ID_SPOTIFY, "client_secret": Config.CLIENT_SECRET_SPOTIFY,
+    body = {"client_id": SPOTIPY_CLIENT_ID, "client_secret": SPOTIPY_CLIENT_SECRET,
             "grant_type": "authorization_code", "redirect_uri": "https://example.com/callback",
-            "code": Config.SPOTIFY_INITIAL_TOKEN}
+            "code": SPOTIPY_INITIAL_TOKEN}
     r = requests.post("https://accounts.spotify.com/api/token", data=body)
     save = r.json()
     to_create = {'bio': INITIAL_BIO, 'access_token': save['access_token'], 'refresh_token': save['refresh_token'],

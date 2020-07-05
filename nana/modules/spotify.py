@@ -2,7 +2,7 @@
 # Ported By : Legenhand
 from pyrogram import Filters
 
-from nana import app, Command, setbot, Owner, log, CLIENT_ID_SPOTIFY, CLIENT_SECRET_SPOTIFY
+from nana import app, Command, setbot, Owner, log, SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET
 from pyrogram.errors import FloodWait, AboutTooLong
 import asyncio
 import requests
@@ -10,6 +10,9 @@ import json
 
 __MODULE__ = "spotify"
 __HELP__ = """
+Too Lazy to write in this
+USAGEEEEE : sp
+
 """
 
 
@@ -171,7 +174,7 @@ async def spotify_bio():
             pass
         # 401 means our access token is expired, so we need to refresh it
         elif r.status_code == 401:
-            data = {"client_id": CLIENT_ID_SPOTIFY, "client_secret": CLIENT_SECRET_SPOTIFY,
+            data = {"client_id": SPOTIPY_CLIENT_ID, "client_secret": SPOTIPY_CLIENT_SECRET,
                     "grant_type": "refresh_token",
                     "refresh_token": database.return_refresh()}
             r = requests.post("https://accounts.spotify.com/api/token", data=data)
@@ -292,4 +295,4 @@ async def spotify_bio():
             await asyncio.sleep(int(to_wait[0]))
         # skip means a flood error stopped the whole program, no need to wait another 10 seconds after that
         if not skip:
-            await asyncio.sleep(1)
+            await asyncio.sleep(10)

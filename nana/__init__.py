@@ -94,6 +94,9 @@ if ENV:
     lydia_api = os.environ.get('lydia_api', None)
     remove_bg_api = os.environ.get('remove_bg_api', None)
     HEROKU_API = os.environ.get('HEROKU_API', None)
+    SPOTIPY_CLIENT_ID = os.environ.get('SPOTIPY_CLIENT_ID', None)
+    SPOTIPY_CLIENT_SECRET = os.environ.get('SPOTIPY_CLIENT_SECRET', None)
+    SPOTIPY_REDIRECT_URI = os.environ.get('SPOTIPY_CLIENT_URI', "https://example.com/callback")
     # LOADER
     USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
     USERBOT_NOLOAD = os.environ.get("USERBOT_NOLOAD", "").split()
@@ -157,9 +160,9 @@ else:
     AdminSettings = Config.AdminSettings
     REMINDER_UPDATE = Config.REMINDER_UPDATE
     TEST_MODE = Config.TEST_MODE
-    os.environ["SPOTIPY_CLIENT_ID"] = Config.CLIENT_ID_SPOTIFY
-    os.environ["SPOTIPY_CLIENT_SECRET"] = Config.CLIENT_SECRET_SPOTIFY
-    os.environ["SPOTIPY_REDIRECT_URI"] = "https://example.com/callback"
+    SPOTIPY_CLIENT_ID = Config.CLIENT_ID_SPOTIFY
+    SPOTIPY_CLIENT_SECRET = Config.CLIENT_SECRET_SPOTIFY
+    SPOTIPY_REDIRECT_URI = "https://example.com/callback"
     CLIENT_ID_SPOTIFY = Config.CLIENT_ID_SPOTIFY
     CLIENT_SECRET_SPOTIFY = Config.CLIENT_SECRET_SPOTIFY
     USERNAME_SPOTIFY = Config.SPOTIFY_USERNAME
@@ -242,7 +245,7 @@ SESSION = mulaisql()
 # Spotify Startup
 
 # Check if initial token exists and CLIENT_ID_SPOTIFY given
-if not os.path.exists("./nana/session/database_spotify.json") and Config.CLIENT_ID_SPOTIFY or os.environ["SPOTIPY_CLIENT_ID"]:
+if not os.path.exists("./nana/session/database_spotify.json") and CLIENT_ID_SPOTIFY:
     INITIAL_BIO = ""
     body = {"client_id": Config.CLIENT_ID_SPOTIFY, "client_secret": Config.CLIENT_SECRET_SPOTIFY,
             "grant_type": "authorization_code", "redirect_uri": "https://example.com/callback",

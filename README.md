@@ -1,6 +1,7 @@
 # Nana-UserBot
 
-[![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)][![Codacy Badge](https://app.codacy.com/project/badge/Grade/aca613ff94154a11b2fc463dda080227)](https://www.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=legenhand/Nana-Bot&amp;utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)](https://app.circleci.com/pipelines/github/legenhand)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/aca613ff94154a11b2fc463dda080227)](https://www.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=legenhand/Nana-Bot&amp;utm_campaign=Badge_Grade)
 ### Userbot + Assistant for Telegram
 
 Currently work fine perfectly, but some features may give you error. Please report a bug to me if you facing any issues.

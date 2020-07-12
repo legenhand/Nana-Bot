@@ -1,11 +1,12 @@
 import os
 import time
+import json
 from platform import python_version
 
 import heroku3
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton, errors, ReplyKeyboardMarkup
 from nana.assistant.help import NANA_IMG
-
+from .repo_changer import change_repo
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, HEROKU_API, \
     Owner, OwnerName, NANA_IMG
 from nana.__main__ import reload_userbot, restart_all
@@ -117,6 +118,7 @@ async def settings(_client, message):
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     await message.reply(text, reply_markup=button)
 
@@ -452,6 +454,7 @@ async def set_stickers(client, message):
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
+        list_button.append([InlineKeyboardButton("Change Repo Source", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
     await message.reply(text, reply_markup=button)
 
@@ -480,3 +483,6 @@ async def settings_sticker(_client, message):
                                     reply_markup=ReplyKeyboardMarkup(keyboard))
     USER_SET[message.from_user.id] = msg.message_id
     USER_SET["type"] = 2
+
+
+

@@ -1,19 +1,24 @@
+import json
 import os
 import urllib.request
 from git import Repo
-from nana import HEROKU_API, Command, app
-from pyrogram import Filters
+from nana import HEROKU_API, setbot
+from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
 
-@app.on_message(Filters.me & Filters.command(["changerepo"], Command))
-async def _(client, message):
-    await change_repo()
-    await message.edit("Repo Changed!, it will take 5 minutes to build. Please wait...")
+repo_name = ""
+repo_docker = ""
+
+# For callback query button
+def dynamic_data_filter(data):
+    return Filters.create(
+        lambda flt, query: flt.data == query.data,
+        data=data  # "data" kwarg is accessed with "flt.data" above
+    )
 
 
-async def change_repo():
+async def change_repo(url):
     # Remove Default Dockerfile then download New Dockerfile
     os.remove("Dockerfile")
-    url = 'https://raw.githubusercontent.com/pokurt/Nana-Remix/master/Dockerfile'
     urllib.request.urlretrieve(url, "Dockerfile")
 
     # Commit Changes
@@ -24,7 +29,7 @@ async def change_repo():
     author = Actor("Nana", "nana@harumi.tech")
     committer = Actor("Nana", "nana@harumi.tech")
     # commit by commit message and author and committer
-    index.commit("update Nana", author=author, committer=committer)
+    index.commit("Change Repo", author=author, committer=committer)
     if HEROKU_API is not None:
         import heroku3
         heroku = heroku3.from_key(HEROKU_API)
@@ -41,3 +46,70 @@ async def change_repo():
             else:
                 remote = repo.create_remote("heroku", heroku_git_url)
             remote.push(refspec="HEAD:refs/heads/master", force=True)
+
+
+async def configrepo():
+    config_url = "https://raw.githubusercontent.com/legenhand/Nana-bot-file/master/config/repo.json"
+    cache_path = "nana/cache/repo.json"
+    if not os.path.exists(cache_path):
+        urllib.request.urlretrieve(config_url, cache_path)
+    f = open("nana/cache/repo.json")
+    data_repo = json.load(f)
+    f.close()
+    return data_repo
+
+
+@setbot.on_callback_query(dynamic_data_filter("change_repo"))
+async def chgrepo(_client, query):
+    text = "**⚙️ Repository Configuration **\n" \
+           "`Change Your Repo Source Here! `\n"
+
+    data_repo = await configrepo()
+
+    list_button = []
+    for r in data_repo.items():
+        list_button.append([InlineKeyboardButton(r[0], callback_data=r[0])])
+    list_button.append([InlineKeyboardButton("⬅ back️", callback_data="back")])
+    button = InlineKeyboardMarkup(list_button)
+    await query.message.edit_text(text, reply_markup=button)
+
+
+@setbot.on_callback_query(Filters.regex("^Nana"))
+async def chgrepoo(_client, query):
+    rp = await configrepo()
+    global repo_name
+    repo_name = query.data
+    list_button = []
+    for version in rp[query.data]["version"]:
+        list_button.append([InlineKeyboardButton(version, callback_data=f"vs{version}")])
+    list_button.append([InlineKeyboardButton("⬅ back️", callback_data="change_repo")])
+    text = "**⚙️ Repository Configuration **\n" \
+           "`Change Your Repo Source Here! `\n"
+    text += f"""**Author** : {rp[query.data]["Author"]}
+**Repository** : {rp[query.data]["repo-link"]}
+    """
+    button = InlineKeyboardMarkup(list_button)
+    await query.message.edit_text(text, reply_markup=button)
+
+
+@setbot.on_callback_query(Filters.regex("^vs"))
+async def selectversion(_client, query):
+    ver = query.data[2:]
+    rp = await configrepo()
+    list_button = []
+    global repo_name, repo_docker
+    print(rp[repo_name]["version"][ver])
+    repo_docker = rp[repo_name]["version"][ver]["dockerfile"]
+    text = "**⚙️ Repository Configuration **\n" \
+           "`Change Your Repo Source Here! `\n"
+    list_button.append([InlineKeyboardButton("Yes️", callback_data="chg_repo")])
+    list_button.append([InlineKeyboardButton("⬅ back️", callback_data="change_repo")])
+    button = InlineKeyboardMarkup(list_button)
+    await query.message.edit_text(text, reply_markup=button)
+
+@setbot.on_callback_query(Filters.regex("chg_repo"))
+async def selectversion(_client, query):
+    global repo_docker
+    text = "Repo Changed! It will take up to 5 minutes, Please Wait...."
+    await query.message.edit_text(text)
+    change_repo(repo_docker)

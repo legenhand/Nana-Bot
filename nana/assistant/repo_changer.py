@@ -98,10 +98,15 @@ async def selectversion(_client, query):
     rp = await configrepo()
     list_button = []
     global repo_name, repo_docker
+    desc = rp[repo_name]["version"][ver]["description"]
     print(rp[repo_name]["version"][ver])
     repo_docker = rp[repo_name]["version"][ver]["dockerfile"]
     text = "**⚙️ Repository Configuration **\n" \
-           "`Change Your Repo Source Here! `\n"
+           "`description : {} `\n".format(desc)
+    text += "** Warning ! **" \
+            "This Feature still experimental! \n " \
+            "Your bot might broken after change repo \n" \
+            "Use at your own risk! "
     list_button.append([InlineKeyboardButton("Yes️", callback_data="chg_repo")])
     list_button.append([InlineKeyboardButton("⬅ back️", callback_data="change_repo")])
     button = InlineKeyboardMarkup(list_button)
@@ -112,4 +117,4 @@ async def selectversion(_client, query):
     global repo_docker
     text = "Repo Changed! It will take up to 5 minutes, Please Wait...."
     await query.message.edit_text(text)
-    change_repo(repo_docker)
+    await change_repo(repo_docker)

@@ -4,7 +4,8 @@ import time
 from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, BotName
+from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, Owner
+from nana.assistant.theme.theme import get_theme
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
 
@@ -12,7 +13,6 @@ if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats
     from nana.modules.database.notes_db import get_all_selfnotes
 
-NANA_IMG = "https://telegra.ph/file/2c8278c78c5404cdf0e53.jpg"
 
 HELP_STRINGS = f"""
 You can use {", ".join(Command)} on your userbot to execute that commands.
@@ -99,7 +99,7 @@ async def help_button(_client, query):
 
 @setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]) & (Filters.group | Filters.private))
 async def stats(_client, message):
-    text = "**Here is your current stats**\n"
+    text = ""
     if DB_AVAILABLE:
         text += "<b>Notes:</b> `{} notes`\n".format(len(get_all_selfnotes(message.from_user.id)))
         text += "<b>Group joined:</b> `{} groups`\n".format(len(get_all_chats()))
@@ -107,4 +107,5 @@ async def stats(_client, message):
 
     uptime = get_readable_time((time.time() - StartTime))
     text += ("<b>Nana uptime:</b> <code>{}</code>".format(uptime))
-    await message.reply_text(text, quote=True)
+    img = await get_theme("Nana-Official", "stats")
+    await setbot.send_photo(Owner, img, caption=text)

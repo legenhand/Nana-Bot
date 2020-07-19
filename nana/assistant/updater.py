@@ -7,6 +7,8 @@ from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana import setbot, Owner, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, \
     REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE, TEST_DEVELOP, HEROKU_API, DB_AVAILABLE, OwnerName
 from nana.__main__ import restart_all, loop
+from nana.assistant.theme.theme import get_theme
+
 if DB_AVAILABLE:
     pass
 from nana.assistant.help import NANA_IMG
@@ -156,7 +158,8 @@ async def starting_message():
         start_message += f"`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
-    await setbot.send_photo(Owner, NANA_IMG, caption=start_message, reply_markup=buttons)
+    img = await get_theme("Nana-Official", "welcome")
+    await setbot.send_photo(Owner, img, caption=start_message, reply_markup=buttons)
 
 
 loop.create_task(starting_message())

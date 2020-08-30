@@ -5,6 +5,7 @@ import time
 import requests
 import json
 
+from .startup.var import get_var
 from pydrive.auth import GoogleAuth
 from pyrogram import Client, errors
 from sqlalchemy import create_engine, exc
@@ -46,129 +47,75 @@ RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQn
 BOT_SESSION = "nana/session/ManageBot"
 APP_SESSION = "nana/session/Nana"
 
-if ENV:
-    # Logger
-    logger = os.environ.get('LOGGER', False)
-    # Version
-    lang_code = os.environ.get('lang_code', "en")
-    device_model = os.environ.get('device_model', "PC")
-    app_version = "💝 Nana v{}".format(USERBOT_VERSION)
-    system_version = os.environ.get('system_version', "Linux")
+# Logger
+logger = get_var('LOGGER', False)
+# Version
+lang_code = get_var('lang_code', "en")
+device_model = get_var('device_model', "PC")
+app_version = "💝 Nana v{}".format(USERBOT_VERSION)
+system_version = get_var('system_version', "Linux")
 
-    # Must be filled
-    api_id = os.environ.get('api_id', None)
-    api_hash = os.environ.get('api_hash', None)
+# Must be filled
+api_id = get_var('api_id', None)
+api_hash = get_var('api_hash', None)
 
-    # Session
-    USERBOT_SESSION = os.environ.get('USERBOT_SESSION', None)
-    ASSISTANT_SESSION = os.environ.get('ASSISTANT_SESSION', None)
+# Session
+USERBOT_SESSION = get_var('USERBOT_SESSION', None)
+ASSISTANT_SESSION = get_var('ASSISTANT_SESSION', None)
 
-    # Required for some features
-    # Set temp var for load later
-    Owner = 0
-    OwnerName = ""
-    OwnerUsername = ""
-    BotID = 0
-    BotName = ""
-    BotUsername = ""
-    # From config
-    Command = os.environ.get("Command", "! . - ^").split()
-    NANA_WORKER = int(os.environ.get('NANA_WORKER', 8))
-    ASSISTANT_WORKER = int(os.environ.get('ASSISTANT_WORKER', 2))
+# Required for some features
+# Set temp var for load later
+Owner = 0
+OwnerName = ""
+OwnerUsername = ""
+BotID = 0
+BotName = ""
+BotUsername = ""
+# From config
+Command = get_var("Command", "! . - ^").split()
+NANA_WORKER = int(get_var('NANA_WORKER', 8))
+ASSISTANT_WORKER = int(get_var('ASSISTANT_WORKER', 2))
 
-    try:
-        TEST_DEVELOP = bool(os.environ.get('TEST_DEVELOP', False))
-        if TEST_DEVELOP:
-            BOT_SESSION = os.environ.get('BOT_SESSION', None)
-            APP_SESSION = os.environ.get('APP_SESSION', None)
-        else:
-            raise AttributeError
-    except AttributeError:
-        pass
+try:
+    TEST_DEVELOP = bool(get_var('TEST_DEVELOP', False))
+    if TEST_DEVELOP:
+        BOT_SESSION = get_var('BOT_SESSION', None)
+        APP_SESSION = get_var('APP_SESSION', None)
+    else:
+        raise AttributeError
+except AttributeError:
+    pass
 
-    # APIs
-    thumbnail_API = os.environ.get('thumbnail_API', None)
-    screenshotlayer_API = os.environ.get('screenshotlayer_API', None)
-    bitly_token = [os.environ.get('bitly_token', None)]
-    gdrive_credentials = os.environ.get('gdrive_credentials', None)
-    lydia_api = os.environ.get('lydia_api', None)
-    remove_bg_api = os.environ.get('remove_bg_api', None)
-    HEROKU_API = os.environ.get('HEROKU_API', None)
-    # Spotify
-    SPOTIPY_CLIENT_ID = os.environ.get('SPOTIPY_CLIENT_ID', None)
-    SPOTIPY_CLIENT_SECRET = os.environ.get('SPOTIPY_CLIENT_SECRET', None)
-    SPOTIPY_REDIRECT_URI = os.environ.get('SPOTIPY_CLIENT_URI', "https://example.com/callback")
-    SPOTIPY_INITIAL_TOKEN = os.environ.get('SPOTIFY_INITIAL_TOKEN', None)
-    USERNAME_SPOTIFY = os.environ.get('SPOTIFY_USERNAME', None)
-    # LOADER
-    USERBOT_LOAD = os.environ.get("USERBOT_LOAD", "").split()
-    USERBOT_NOLOAD = os.environ.get("USERBOT_NOLOAD", "").split()
-    ASSISTANT_LOAD = os.environ.get("ASSISTANT_LOAD", "").split()
-    ASSISTANT_NOLOAD = os.environ.get("ASSISTANT_NOLOAD", "").split()
+# APIs
+thumbnail_API = get_var('thumbnail_API', None)
+screenshotlayer_API = get_var('screenshotlayer_API', None)
+bitly_token = [get_var('bitly_token', None)]
+gdrive_credentials = get_var('gdrive_credentials', None)
+lydia_api = get_var('lydia_api', None)
+remove_bg_api = get_var('remove_bg_api', None)
+HEROKU_API = get_var('HEROKU_API', None)
+BINDERBYTE_API = get_var('BINDERBYTE_API', None)
+# Spotify
+SPOTIPY_CLIENT_ID = get_var('SPOTIPY_CLIENT_ID', None)
+SPOTIPY_CLIENT_SECRET = get_var('SPOTIPY_CLIENT_SECRET', None)
+SPOTIPY_REDIRECT_URI = get_var('SPOTIPY_CLIENT_URI', "https://example.com/callback")
+SPOTIPY_INITIAL_TOKEN = get_var('SPOTIFY_INITIAL_TOKEN', None)
+USERNAME_SPOTIFY = get_var('SPOTIFY_USERNAME', None)
+# LOADER
+USERBOT_LOAD = get_var("USERBOT_LOAD", "").split()
+USERBOT_NOLOAD = get_var("USERBOT_NOLOAD", "").split()
+ASSISTANT_LOAD = get_var("ASSISTANT_LOAD", "").split()
+ASSISTANT_NOLOAD = get_var("ASSISTANT_NOLOAD", "").split()
 
-    DB_URI = os.environ.get('DB_URI', "postgres://username:password@localhost:5432/database")
-    ASSISTANT_BOT_TOKEN = os.environ.get('ASSISTANT_BOT_TOKEN', None)
-    AdminSettings = [int(x) for x in os.environ.get("AdminSettings", "").split()]
-    REMINDER_UPDATE = bool(os.environ.get('REMINDER_UPDATE', True))
-    TEST_MODE = bool(os.environ.get('TEST_MODE', False))
-    TERMUX_USER = os.environ.get('TERMUX_USER', False)
-    NANA_IMG = os.environ.get('NANA_IMG', False)
-    PM_PERMIT = os.environ.get('PM_PERMIT', False)
-else:
-    # logger
-    logger = Config.LOGGER
-    # Version
-    lang_code = Config.lang_code
-    device_model = Config.device_model
-    app_version = "💝 Nana v{}".format(USERBOT_VERSION)
-    system_version = Config.system_version
+DB_URI = get_var('DB_URI', "postgres://username:password@localhost:5432/database")
+ASSISTANT_BOT_TOKEN = get_var('ASSISTANT_BOT_TOKEN', None)
+AdminSettings = [int(x) for x in get_var("AdminSettings", "").split()]
+REMINDER_UPDATE = bool(get_var('REMINDER_UPDATE', True))
+TEST_MODE = bool(get_var('TEST_MODE', False))
+TERMUX_USER = get_var('TERMUX_USER', False)
+NANA_IMG = get_var('NANA_IMG', False)
+PM_PERMIT = get_var('PM_PERMIT', False)
 
-    # Must be filled
-    api_id = Config.api_id
-    api_hash = Config.api_hash
-
-    # Session
-    USERBOT_SESSION = Config.USERBOT_SESSION
-    ASSISTANT_SESSION = Config.ASSISTANT_SESSION
-    # Required for some features
-    # Set temp var for load later
-    Owner = 0
-    OwnerName = ""
-    OwnerUsername = ""
-    BotID = 0
-    BotName = ""
-    BotUsername = ""
-    # From config
-    Command = Config.Command
-    NANA_WORKER = Config.NANA_WORKER
-    ASSISTANT_WORKER = Config.ASSISTANT_WORKER
-
-    # APIs
-    thumbnail_API = Config.thumbnail_API
-    screenshotlayer_API = Config.screenshotlayer_API
-    bitly_token = [Config.bitly_token]
-    gdrive_credentials = None
-    lydia_api = Config.lydia_api
-    HEROKU_API = Config.HEROKU_API
-    remove_bg_api = Config.remove_bg_api
-    NANA_IMG = Config.NANA_IMG
-    # LOADER
-    USERBOT_LOAD = Config.USERBOT_LOAD
-    USERBOT_NOLOAD = Config.USERBOT_NOLOAD
-    ASSISTANT_LOAD = Config.ASSISTANT_LOAD
-    ASSISTANT_NOLOAD = Config.ASSISTANT_NOLOAD
-
-    DB_URI = Config.DB_URI
-    ASSISTANT_BOT_TOKEN = Config.ASSISTANT_BOT_TOKEN
-    AdminSettings = Config.AdminSettings
-    REMINDER_UPDATE = Config.REMINDER_UPDATE
-    TEST_MODE = Config.TEST_MODE
-    SPOTIPY_CLIENT_ID = Config.CLIENT_ID_SPOTIFY
-    SPOTIPY_CLIENT_SECRET = Config.CLIENT_SECRET_SPOTIFY
-    SPOTIPY_REDIRECT_URI = "https://example.com/callback"
-    SPOTIPY_INITIAL_TOKEN = Config.SPOTIFY_INITIAL_TOKEN
-    USERNAME_SPOTIFY = Config.SPOTIFY_USERNAME
-    TERMUX_USER = Config.TERMUX_USER
 if os.path.exists("nana/logs/error.log"):
     f = open("nana/logs/error.log", "w")
     f.write("PEAK OF THE LOGS FILE")

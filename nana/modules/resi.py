@@ -11,7 +11,7 @@ async def resi(client, message):
     msg = message.command
     result = await cek_resi(msg[1], msg[2])
     parsed_result = await parse_pos(result)
-    await message.edit("`{}`".format(parsed_result))
+    await message.edit("{}".format(parsed_result))
     return
 
 
@@ -29,13 +29,24 @@ async def parse_pos(r):
         tracking = r['data']['tracking']
         hasil_track = ""
         for i in tracking:
-            hasil_track += f"Tanggal : {i['date']}\n" \
-                           f"Status : {i['desc']}\n"
-        result = f"{msg} \n" \
-                 f"No Resi : {no_resi} \n" \
-                 f"Ekspedisi : {ekspedisi} \n" \
-                 f"Hasil Pelacakan : \n" \
-                 f"{hasil_track}"
+            hasil_track += await track_pos(i)
+        result = f"💬 : {msg} \n\n" \
+                 f"📄 : {no_resi} \n\n" \
+                 f"📦 : {ekspedisi} \n\n" \
+                 f"📝 Hasil Pelacakan : \n\n" \
+                 f"`{hasil_track}`"
     else:
         result = "No Resi Tidak Ditemukan !"
     return result
+
+
+async def track_pos(tr):
+    desc = tr['desc'].split(';')
+    if 'LAYANAN' in desc[0]:
+        detail = ""
+        for i in desc:
+            detail += f'{i}\n'
+        return detail
+    print(desc)
+    return f"🕔 : {tr['date']}\n" \
+           f"📍 : {tr['desc']}\n\n"

@@ -1,16 +1,17 @@
 import requests
-import json
-
 from pyrogram import Filters
 
 from nana import app, Command, BINDERBYTE_API
 
 
 @app.on_message(Filters.me & Filters.command(["lacak"], Command))
-async def resi(client, message):
+async def resi(_, message):
     msg = message.command
     result = await cek_resi(msg[1], msg[2])
-    parsed_result = await parse_pos(result)
+    if msg[1] == 'pos':
+        parsed_result = await parse_pos(result)
+    else:
+        parsed_result = str(result)
     await message.edit("{}".format(parsed_result))
     return
 
@@ -31,7 +32,7 @@ async def parse_pos(r):
         for i in tracking:
             hasil_track += await track_pos(i)
         result = f"💬 : {msg} \n\n" \
-                 f"📄 : {no_resi} \n\n" \
+                 f"📄 : {no_resi} \n" \
                  f"📦 : {ekspedisi} \n\n" \
                  f"📝 Hasil Pelacakan : \n\n" \
                  f"`{hasil_track}`"
@@ -40,13 +41,25 @@ async def parse_pos(r):
     return result
 
 
+ktr_tujuan = ""
+
+
 async def track_pos(tr):
     desc = tr['desc'].split(';')
+    detail = ""
+    global ktr_tujuan
     if 'LAYANAN' in desc[0]:
-        detail = ""
         for i in desc:
             detail += f'{i}\n'
-        return detail
+    elif 'NO. DO' in desc[0]:
+        detail = "Proses Antar Ke alamat Tujuan"
+    elif 'KANTOR TUJUAN' in desc[2]:
+        detail = f'diteruskan ke :{desc[2]}'
+        ktr_tujuan = desc[2].replace('KANTOR TUJUAN :', '')
+    elif 'KANTOR ASAL' in desc[2]:
+        detail = f'Tiba Di :{ktr_tujuan}'
+    elif 'STATUS' in desc[1]:
+        detail = f'{desc[1]} \n {desc[2]}'
     print(desc)
     return f"🕔 : {tr['date']}\n" \
-           f"📍 : {tr['desc']}\n\n"
+           f"📍 : {detail}\n\n"

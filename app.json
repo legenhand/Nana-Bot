@@ -128,18 +128,5 @@
     "ASSISTANT_SESSION": {
       "description": "[REQUIRED] For make a session: https://sagita.tech/2020/02/03/cara-mendapatkan-userbot-session-dan-assistant-session/"
     }
-  },
-  "addons": [
-    {
-      "plan": "heroku-postgresql",
-      "options": {
-        "version": "9.5"
-      }
-    }
-  ],
-  "buildpacks": [
-    {
-      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-    }
-  ]
+  }
 }

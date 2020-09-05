@@ -119,11 +119,34 @@ async def start_bot():
                 raise Exception("Can't have two modules with the same name! Please change one")
         if hasattr(imported_module, "__HELP__") and imported_module.__HELP__:
             HELP_COMMANDS[imported_module.__MODULE__.lower()] = imported_module
-    print("-----------------------")
-    print("Userbot modules: " + str(ALL_MODULES))
-    print("-----------------------")
-    print("Assistant modules: " + str(ALL_SETTINGS))
-    print("-----------------------")
+    userbot_modules = ""
+    assistant_modules = ""
+    j = 1
+    for i in ALL_MODULES:
+        if j == 4:
+            userbot_modules += "|{:<15}|\n".format(i)
+            j = 0
+        else:
+            userbot_modules += "|{:<15}".format(i)
+        j += 1
+    j = 1
+    for i in ALL_SETTINGS:
+        if j == 4:
+            assistant_modules += "|{:<15}|\n".format(i)
+            j = 0
+        else:
+            assistant_modules += "|{:<15}".format(i)
+        j += 1
+    print("+===============================================================+")
+    print("|                      Userbot Modules                          |")
+    print("+===============+===============+===============+===============+")
+    print(userbot_modules)
+    print("+===============+===============+===============+===============+\n")
+    print("+===============================================================+")
+    print("|                    Assistant Modules                          |")
+    print("+===============+===============+===============+===============+")
+    print(assistant_modules)
+    print("+===============+===============+===============+===============+")
     print("Bot run successfully!")
     if TEST_DEVELOP:
         log.warning("Test is passed!")

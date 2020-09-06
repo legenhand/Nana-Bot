@@ -1,12 +1,11 @@
-# Buat file config.py baru dalam dir dan impor yang sama, kemudian perpanjang kelas ini.
 class Config(object):
-	LOGGER = True
+	LOGGER = False
 	# Must be filled!
 	# Register here: https://my.telegram.org/apps
-	api_id = 1234 # Your API_ID
-	api_hash = "" # Your API_HASH
-	DB_URI = ""  # Your database URL
-
+	api_id = 123
+	api_hash = ""
+	DB_URI = "postgres://nanauser:nanapw@localhost:5432/nanadb"  # Your database URL
+	PM_PERMIT = True
 	# Version
 	lang_code = "en"  # Your language code
 	device_model = "PC"  # Device model
@@ -16,10 +15,11 @@ class Config(object):
 	# Pass False if you dont want
 	ASSISTANT_BOT = True
 	ASSISTANT_BOT_TOKEN = ""
-	NANA_IMG = ""
+
 	# Required for some features
-	AdminSettings = []  # Insert int id, Add someone so they can access your assistant, leave it blank if you dont want!
-	Command = ["!", "."]  # Insert command prefix, if you insert "!" then you can do !ping
+	AdminSettings = ""  # Add someone id telegram, so they can access your assistant,separate with spaces, leave it blank if you dont want!
+	Command = "! ."  # Insert command prefix, separate with space, if you insert "!" then you can do !ping
+	TG_USERNAME = "@blablabla" # Insert Your Telegram Username
 	# WORKER must be int (number)
 	NANA_WORKER = 8
 	ASSISTANT_WORKER = 2
@@ -30,8 +30,7 @@ class Config(object):
 	thumbnail_API = ""  # Register free here: https://thumbnail.ws/
 	screenshotlayer_API = ""  # Register free here: https://screenshotlayer.com/
 	bitly_token = ""  # register here : bitly.com
-	lydia_api = ""
-	remove_bg_api = ""
+	lydia_api = ""  # register here : https://coffeehouse.intellivoid.info/
 	HEROKU_API = ""  # if you're using heroku this field must filled, get from here : https://dashboard.heroku.com/account
 
 	# Last Fm API
@@ -41,23 +40,34 @@ class Config(object):
 	# Remove Bg API
 	remove_bg_api = ""
 
+	# Spotify API
+
+	CLIENT_ID_SPOTIFY = ""
+	CLIENT_SECRET_SPOTIFY = ""
+	SPOTIFY_USERNAME = ""
+	SPOTIFY_INITIAL_TOKEN = ""
+
 	# Load or no load plugins
+	# Separate Name With Spaces
 	# userbot
 
-	USERBOT_LOAD = []
-	USERBOT_NOLOAD = []
+	USERBOT_LOAD = ""
+	USERBOT_NOLOAD = ""
 
-	# manager bot
+	# manager
 
-	ASSISTANT_LOAD = []
-	ASSISTANT_NOLOAD = []
+	ASSISTANT_LOAD = ""
+	ASSISTANT_NOLOAD = ""
 
 	# Fill this if you want to login using session code, else leave it blank
 	USERBOT_SESSION = ""
 	ASSISTANT_SESSION = ""
+
 	# Pass True if you want to use test mode
 	TEST_MODE = False
 
+	# test var config
+	BINDERBYTE_API = ""
 
 class Production(Config):
 	LOGGER = False

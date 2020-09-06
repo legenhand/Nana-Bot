@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/legenhand/Nana-Bot.svg?style=svg)](https://app.circleci.com/pipelines/github/legenhand)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/aca613ff94154a11b2fc463dda080227)](https://www.codacy.com/manual/legenhand/Nana-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=legenhand/Nana-Bot&amp;utm_campaign=Badge_Grade)
+[![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](https://docs.harumi.tech)
 ### Userbot + Assistant for Telegram
 
 Currently work fine perfectly, but some features may give you error. Please report a bug to me if you facing any issues.
@@ -19,7 +20,7 @@ A: What Nana makes a Unique userbot is because of the assistant to control your 
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/legenhand/Nana-Bot)
 
-See our wikis to get [Installation Guide](https://sagita.tech/2020/02/02/tutorial-install-userbot-di-linux-server-nana-bot/).
+See our wikis to get [Installation Guide](https://docs.harumi.tech/).
 
 If you some problems, please come join and ask on our Community!
 

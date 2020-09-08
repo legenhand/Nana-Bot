@@ -1,6 +1,8 @@
 import json
 import os
 import urllib.request
+
+import requests
 from git import Repo
 from nana import HEROKU_API, setbot
 from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
@@ -49,15 +51,16 @@ async def change_repo(url):
 
 
 async def configrepo():
-    config_url = "https://raw.githubusercontent.com/legenhand/Nana-bot-file/master/config/repo.json"
-    cache_path = "nana/cache/repo.json"
-    if not os.path.exists(cache_path):
-        urllib.request.urlretrieve(config_url, cache_path)
-    f = open("nana/cache/repo.json")
-    data_repo = json.load(f)
-    f.close()
-    return data_repo
-
+    # config_url = "https://raw.githubusercontent.com/legenhand/Nana-bot-file/master/config/repo.json"
+    # cache_path = "nana/cache/repo.json"
+    # if not os.path.exists(cache_path):
+    #     urllib.request.urlretrieve(config_url, cache_path)
+    # f = open("nana/cache/repo.json")
+    # data_repo = json.load(f)
+    # f.close()
+    # return data_repo
+    r = requests.get('http://api.harumi.tech/repo')
+    return r.json()
 
 @setbot.on_callback_query(dynamic_data_filter("change_repo"))
 async def chgrepo(_client, query):

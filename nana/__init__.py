@@ -102,10 +102,10 @@ SPOTIPY_REDIRECT_URI = get_var('SPOTIPY_CLIENT_URI', "https://example.com/callba
 SPOTIPY_INITIAL_TOKEN = get_var('SPOTIFY_INITIAL_TOKEN', None)
 USERNAME_SPOTIFY = get_var('SPOTIFY_USERNAME', None)
 # LOADER
-USERBOT_LOAD = get_var("USERBOT_LOAD", False).split()
-USERBOT_NOLOAD = get_var("USERBOT_NOLOAD", False).split()
-ASSISTANT_LOAD = get_var("ASSISTANT_LOAD", False).split()
-ASSISTANT_NOLOAD = get_var("ASSISTANT_NOLOAD", False).split()
+USERBOT_LOAD = get_var("USERBOT_LOAD", "").split()
+USERBOT_NOLOAD = get_var("USERBOT_NOLOAD", "").split()
+ASSISTANT_LOAD = get_var("ASSISTANT_LOAD", "").split()
+ASSISTANT_NOLOAD = get_var("ASSISTANT_NOLOAD", "").split()
 
 DB_URI = get_var('DB_URI', "postgres://username:password@localhost:5432/database")
 ASSISTANT_BOT_TOKEN = get_var('ASSISTANT_BOT_TOKEN', None)

@@ -5,6 +5,7 @@ import urllib.request
 import requests
 from git import Repo
 from nana import HEROKU_API, setbot
+from nana.helpers.aiohttp_helper import AioHttp
 from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
 
 repo_name = ""
@@ -59,8 +60,8 @@ async def configrepo():
     # data_repo = json.load(f)
     # f.close()
     # return data_repo
-    r = requests.get('http://api.harumi.tech/repo')
-    return r.json()
+    r = await AioHttp().get_json('http://api.harumi.tech/repo')
+    return r
 
 @setbot.on_callback_query(dynamic_data_filter("change_repo"))
 async def chgrepo(_client, query):

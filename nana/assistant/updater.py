@@ -7,7 +7,7 @@ from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana import setbot, Owner, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, \
     REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE, TEST_DEVELOP, HEROKU_API, DB_AVAILABLE, OwnerName
 from nana.__main__ import restart_all, loop
-from nana.assistant.theme.theme import get_theme
+from nana.assistant.theme.theme_helper import get_theme
 
 if DB_AVAILABLE:
     pass

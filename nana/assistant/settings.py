@@ -2,7 +2,7 @@ from platform import python_version
 
 import heroku3
 from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup, errors
-from .theme.theme import get_theme
+from .theme.theme_helper import get_theme, theme_list
 from nana import AdminSettings, setbot, app, USERBOT_VERSION, ASSISTANT_VERSION, DB_AVAILABLE, HEROKU_API, Owner
 from nana.__main__ import reload_userbot, restart_all
 from nana.assistant.__main__ import dynamic_data_filter
@@ -35,7 +35,8 @@ async def get_button_settings():
         toggle = "Start Bot"
     list_button = [[InlineKeyboardButton(toggle, callback_data="toggle_startbot"),
                     InlineKeyboardButton("Restart Bot", callback_data="restart_bot")],
-                   [InlineKeyboardButton("Set Sticker", callback_data="setsticker")]]
+                   [InlineKeyboardButton("Set Sticker", callback_data="setsticker")],
+                   [InlineKeyboardButton("Set Theme", callback_data="theme")]]
     if HEROKU_API:
         list_button.append([InlineKeyboardButton("Heroku Config Vars", callback_data="heroku_vars")])
         list_button.append([InlineKeyboardButton("Restart Heroku app", callback_data="restart_heroku")])
@@ -144,3 +145,4 @@ async def back(_client, message):
     button = await get_button_settings()
     img = await get_theme("Nana-Official", "settings")
     await setbot.send_photo(Owner, img, caption=text, reply_markup=button)
+

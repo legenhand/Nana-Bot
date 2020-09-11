@@ -1,8 +1,6 @@
-import json
 import os
 import urllib.request
 
-import requests
 from git import Repo
 from nana import HEROKU_API, setbot
 from nana.helpers.aiohttp_helper import AioHttp

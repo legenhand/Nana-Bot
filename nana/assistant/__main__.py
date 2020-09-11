@@ -4,7 +4,7 @@ from platform import python_version
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, Owner, \
     OwnerName, NANA_IMG
-from nana.assistant.theme.theme import get_theme
+from nana.assistant.theme.theme_helper import get_theme
 
 if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats

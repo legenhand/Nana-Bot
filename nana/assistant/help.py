@@ -5,7 +5,7 @@ from __main__ import HELP_COMMANDS
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, Owner
-from nana.assistant.theme.theme import get_theme
+from nana.assistant.theme.theme_helper import get_theme
 from nana.helpers.misc import paginate_modules
 from nana.modules.chats import get_msgc
 

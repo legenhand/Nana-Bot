@@ -48,7 +48,7 @@ async def get_button_settings():
 async def settings(_client, message):
     text = await get_text_settings()
     button = await get_button_settings()
-    img = await get_theme("Nana-Official", "settings")
+    img = await get_theme("settings")
     await setbot.send_photo(Owner, img, caption=text, reply_markup=button)
 
 
@@ -143,6 +143,6 @@ async def vars_heroku(_client, query):
 async def back(_client, message):
     text = await get_text_settings()
     button = await get_button_settings()
-    img = await get_theme("Nana-Official", "settings")
+    img = await get_theme("settings")
     await setbot.send_photo(Owner, img, caption=text, reply_markup=button)
 

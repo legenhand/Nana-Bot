@@ -107,5 +107,5 @@ async def stats(_client, message):
 
     uptime = get_readable_time((time.time() - StartTime))
     text += ("<b>Nana uptime:</b> <code>{}</code>".format(uptime))
-    img = await get_theme("Nana-Official", "stats")
+    img = await get_theme("stats")
     await setbot.send_photo(Owner, img, caption=text)

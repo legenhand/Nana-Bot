@@ -4,7 +4,7 @@ from nana import Owner
 from pyrogram import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-async def get_theme(name, type):
+async def get_theme(type):
     theme = await AioHttp().get_json('http://api.harumi.tech/theme')
     name = await get_name_theme_set(Owner)
     return theme[name][type]
@@ -12,6 +12,7 @@ async def get_theme(name, type):
 
 async def theme_list():
     theme = await AioHttp().get_json('http://api.harumi.tech/theme')
+    print(theme)
     list_button = []
     for i in theme:
         theme_code = theme[i]["theme-code"]

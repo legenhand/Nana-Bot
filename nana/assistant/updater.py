@@ -158,7 +158,7 @@ async def starting_message():
         start_message += f"`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
-    img = await get_theme("Nana-Official", "welcome")
+    img = await get_theme("welcome")
     await setbot.send_photo(Owner, img, caption=start_message, reply_markup=buttons)
 
 

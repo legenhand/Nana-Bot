@@ -55,7 +55,7 @@ Convert a text to various style, can be used anywhere!
     start_message += f"`For more about the bot press button down below`"
     buttons = InlineKeyboardMarkup(
         [[InlineKeyboardButton(text="Help", callback_data="help_back")]])
-    img = await get_theme("Nana-Official", "start")
+    img = await get_theme("start")
     await setbot.send_photo(Owner, img, caption=start_message, reply_markup=buttons)
 
 

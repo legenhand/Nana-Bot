@@ -18,7 +18,8 @@ async def theme_list():
         theme_code = theme[i]["theme-code"]
         call_code = f"thm-{theme_code}"
         list_button.append([InlineKeyboardButton(i, callback_data=call_code)])
-    list_button.append([InlineKeyboardButton("⬅ back️", callback_data="back")])
+    list_button.append([InlineKeyboardButton("⬅ back ", callback_data="back"),
+                        InlineKeyboardButton("⬅ Add Theme ", callback_data="addtheme")])
     return InlineKeyboardMarkup(list_button)
 
 
@@ -27,3 +28,4 @@ async def name_theme(theme_code):
     for i in theme:
         if theme_code == theme[i]["theme-code"]:
             return i
+

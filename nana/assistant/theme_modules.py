@@ -12,7 +12,7 @@ temp_client = ""
 
 @setbot.on_callback_query(Filters.regex("^theme"))
 async def chgtheme(_client, query):
-    text = "**⚙️Theme Configuration **\n" \
+    text = "**⚙ Theme Configuration **\n" \
            "`Change Your Nana Theme Here! `\n"
 
     button = await theme_list()
@@ -26,6 +26,16 @@ async def chgtheme(_client, query):
     await set_name_theme_set(Owner, name)
     text = "**⚙️Theme Configuration **\n" \
            f"Theme Changed To `{name}`\n"
+
+    await query.message.edit_text(text)
+
+
+@setbot.on_callback_query(Filters.regex("^cthm"))
+async def chg_custom_theme(_client, query):
+    code_theme = query.data
+    await set_name_theme_set(Owner, code_theme)
+    text = "**⚙️Theme Configuration **\n" \
+           f"Theme Changed !\n"
 
     await query.message.edit_text(text)
 

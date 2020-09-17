@@ -1,6 +1,6 @@
 from sqlalchemy import Column, UnicodeText, Integer
-
-from nana import BASE, SESSION, Owner
+from pyrogram import InlineKeyboardButton
+from nana import BASE, SESSION
 
 
 class CustomThemeSet(BASE):
@@ -19,7 +19,6 @@ class CustomThemeSet(BASE):
         self.settings = str(settings)
         self.stats = str(stats)
 
-
     def __repr__(self):
         return "{}".format(self.name)
 
@@ -33,10 +32,12 @@ async def add_custom_theme(name, welcome, start, settings, stats):
     SESSION.commit()
 
 
-async def get_list_costum_them(id_theme):
+async def get_list_costum_theme():
     try:
-        name = SESSION.query(CustomThemeSet).get(id_theme)
-
-
+        list_theme = SESSION.query(CustomThemeSet).all()
+        list_thm = []
+        for i in list_theme:
+            list_thm.append([i.name, f"cthm-{i.id_theme}"])
+        return list_thm
     finally:
         SESSION.close()

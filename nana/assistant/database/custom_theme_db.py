@@ -41,3 +41,7 @@ async def get_list_costum_theme():
         return list_thm
     finally:
         SESSION.close()
+
+def get_custom_theme(name):
+    a = SESSION.query(CustomThemeSet).filter(CustomThemeSet.name == name).first()
+    return a

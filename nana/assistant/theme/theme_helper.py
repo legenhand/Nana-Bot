@@ -38,11 +38,14 @@ async def caching_theme():
 
 async def get_theme(type):
     global cache_theme
+    a = await is_custom_theme()
     if not cache_theme:
-        theme = await AioHttp().get_json('http://api.harumi.tech/theme')
-        name = await get_name_theme_set(Owner)
-        await is_custom_theme()
-        return theme[name][type]
+        if a:
+            return
+        else:
+            theme = await AioHttp().get_json('http://api.harumi.tech/theme')
+            name = await get_name_theme_set(Owner)
+            return theme[name][type]
     return cache_theme[type]
 
 

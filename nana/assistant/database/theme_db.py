@@ -9,9 +9,10 @@ class ThemeSet(BASE):
     name_theme = Column(UnicodeText)
     is_custom = Column(Boolean)
 
-    def __init__(self, my_id, name_theme):
+    def __init__(self, my_id, name_theme, is_custom):
         self.my_id = my_id
         self.name_theme = str(name_theme)
+        self.is_custom = is_custom
 
     def __repr__(self):
         return "{}".format(self.name_theme)
@@ -42,6 +43,6 @@ async def get_name_theme_set(my_id):
         SESSION.close()
 
 
-async def is_custom_theme():
-    is_custom = SESSION.query(ThemeSet).all()
-    print(is_custom)
+def is_custom_theme():
+    a = SESSION.query(ThemeSet.is_custom).first()
+    return a.is_custom

@@ -23,7 +23,7 @@ async def chgtheme(_client, query):
 async def chgtheme(_client, query):
     code_theme = query.data[4:]
     name = await name_theme(code_theme)
-    await set_name_theme_set(Owner, name)
+    await set_name_theme_set(Owner, name, False)
     text = "**⚙️Theme Configuration **\n" \
            f"Theme Changed To `{name}`\n"
 
@@ -33,7 +33,7 @@ async def chgtheme(_client, query):
 @setbot.on_callback_query(Filters.regex("^cthm"))
 async def chg_custom_theme(_client, query):
     code_theme = query.data
-    await set_name_theme_set(Owner, code_theme)
+    await set_name_theme_set(Owner, code_theme, True)
     text = "**⚙️Theme Configuration **\n" \
            f"Theme Changed !\n"
 

@@ -42,6 +42,12 @@ async def get_list_costum_theme():
     finally:
         SESSION.close()
 
-def get_custom_theme(name):
-    a = SESSION.query(CustomThemeSet).filter(CustomThemeSet.name == name).first()
-    return a
+
+async def get_custom_theme(id_theme):
+    a = SESSION.query(CustomThemeSet).filter(CustomThemeSet.id_theme == id_theme).first()
+    return {
+        "welcome": a.welcome,
+        "start": a.start,
+        "settings": a.settings,
+        "stats": a.stats
+    }

@@ -43,6 +43,6 @@ async def get_name_theme_set(my_id):
         SESSION.close()
 
 
-def is_custom_theme():
+async def is_custom_theme():
     a = SESSION.query(ThemeSet.is_custom).first()
     return a.is_custom

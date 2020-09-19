@@ -2,7 +2,7 @@ import asyncio
 import re
 
 from nana.__main__ import loop
-from nana.assistant.database.custom_theme_db import get_list_costum_theme
+from nana.assistant.database.custom_theme_db import get_list_costum_theme, get_custom_theme
 from nana.helpers.aiohttp_helper import AioHttp
 from nana.assistant.database.theme_db import get_name_theme_set, is_custom_theme
 from nana import Owner
@@ -25,26 +25,34 @@ loop.create_task(clear_theme_cache())
 
 async def caching_theme():
     global cache_theme
+
     if not cache_theme:
-        theme = await AioHttp().get_json('http://api.harumi.tech/theme')
         name = await get_name_theme_set(Owner)
-        cache_theme = {
-            "welcome": theme[name]["welcome"],
-            "start": theme[name]["start"],
-            "settings": theme[name]["settings"],
-            "stats": theme[name]["stats"]
-        }
+        a = await is_custom_theme()
+        if a:
+            name = int(name[5:])
+            cache_theme = await get_custom_theme(name)
+        else:
+            theme = await AioHttp().get_json('http://api.harumi.tech/theme')
+            cache_theme = {
+                "welcome": theme[name]["welcome"],
+                "start": theme[name]["start"],
+                "settings": theme[name]["settings"],
+                "stats": theme[name]["stats"]
+            }
 
 
 async def get_theme(type):
     global cache_theme
-    a = await is_custom_theme()
     if not cache_theme:
+        name = await get_name_theme_set(Owner)
+        a = await is_custom_theme()
         if a:
-            return
+            name = int(name[5:])
+            theme = await get_custom_theme(name)
+            return theme[type]
         else:
             theme = await AioHttp().get_json('http://api.harumi.tech/theme')
-            name = await get_name_theme_set(Owner)
             return theme[name][type]
     return cache_theme[type]
 

@@ -1,5 +1,4 @@
 from sqlalchemy import Column, UnicodeText, Integer
-from pyrogram import InlineKeyboardButton
 from nana import BASE, SESSION
 
 
@@ -51,3 +50,4 @@ async def get_custom_theme(id_theme):
         "settings": a.settings,
         "stats": a.stats
     }
+

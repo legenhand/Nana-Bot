@@ -1,6 +1,7 @@
+from pyrogram import Filters
 from sqlalchemy import Column, UnicodeText, Integer, Boolean
 
-from nana import BASE, SESSION, Owner
+from nana import BASE, SESSION, Owner, setbot, AdminSettings
 
 
 class ThemeSet(BASE):
@@ -46,3 +47,9 @@ async def get_name_theme_set(my_id):
 async def is_custom_theme():
     a = SESSION.query(ThemeSet.is_custom).first()
     return a.is_custom
+
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["fixtheme"]) & Filters.private)
+async def fixtheme(_client, _message):
+    ThemeSet.__table__.drop()
+    ThemeSet.__table__.create(checkfirst=True)
+    await setbot.send_message(Owner, "Success!")

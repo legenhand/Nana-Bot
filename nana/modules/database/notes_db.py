@@ -69,7 +69,7 @@ def get_selfnote(user_id, note_name):
 def get_all_selfnotes(user_id):
     if not SELF_NOTES.get(user_id):
         SELF_NOTES[user_id] = {}
-        return None
+        return []
     allnotes = list(SELF_NOTES[user_id])
     allnotes.sort()
     return allnotes

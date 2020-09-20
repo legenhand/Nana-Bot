@@ -61,7 +61,7 @@ def LastOnline(user: User):
     elif user.status == 'online':
         return "Currently Online"
     elif user.status == 'offline':
-        return datetime.fromtimestamp(user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
+        return datetime.fromtimestamp(user.last_online_date).strftime("%a, %d %b %Y, %H:%M:%S")
 
 
 async def GetCommon(client, get_user):

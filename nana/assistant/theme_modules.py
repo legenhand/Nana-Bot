@@ -50,6 +50,15 @@ async def addtheme(client, query):
     await client.send_message(Owner, text)
 
 
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["cancel"]) & Filters.private)
+async def cancel(client, _message):
+    global temp_input, theme_format
+    if temp_input:
+        temp_input = False
+        theme_format = []
+        await client.send_message(Owner, "Operation canceled!")
+
+
 @setbot.on_message(Filters.user(AdminSettings))
 async def theme_input_handlers(client, message):
     global temp_input, theme_format, temp_query, temp_client
@@ -81,4 +90,4 @@ async def theme_input_handlers(client, message):
 
         await client.send_message(Owner, text)
 
-# TODO : Added User Theme Customization
+

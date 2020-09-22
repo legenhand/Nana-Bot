@@ -71,7 +71,7 @@ async def theme_list():
         list_button.append([InlineKeyboardButton(cus_theme[i][0], callback_data=cus_theme[i][1])])
 
     list_button.append([InlineKeyboardButton("⬅ back ", callback_data="back"),
-                        InlineKeyboardButton("⬅ Add Theme ", callback_data="addtheme")])
+                        InlineKeyboardButton("➕ Add Theme ", callback_data="addtheme")])
     return InlineKeyboardMarkup(list_button)
 
 

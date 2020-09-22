@@ -54,23 +54,27 @@ async def addtheme(client, query):
 async def theme_input_handlers(client, message):
     global temp_input, theme_format, temp_query, temp_client
     if temp_input:
-        theme_format.append(message.text)
-        print(theme_format)
+        text = "**⚙️Add Theme **\n"
+        if len(theme_format) >= 1:
+            try:
+                cap = "Image has been set!"
+                await setbot.send_photo(Owner, message.text, caption=cap)
+                theme_format.append(message.text)
+            except:
+                text += "**Wrong URL image !** \n"
+        else:
+            theme_format.append(message.text)
+
         if len(theme_format) == 1:
-            text = "**⚙️Add Theme **\n" \
-                   f"Set URL image for welcome image \n"
+            text += f"Set URL image for welcome image \n"
         elif len(theme_format) == 2:
-            text = "**⚙️Add Theme **\n" \
-                   f"Set URL image for start image \n"
+            text += f"Set URL image for start image \n"
         elif len(theme_format) == 3:
-            text = "**⚙️Add Theme **\n" \
-                   f"Set URL image for settings image \n"
+            text += f"Set URL image for settings image \n"
         elif len(theme_format) == 4:
-            text = "**⚙️Add Theme **\n" \
-                   f"Set URL image for stats image \n"
+            text += f"Set URL image for stats image \n"
         elif len(theme_format) == 5:
-            text = "**⚙️Add Theme **\n" \
-                   f"Custom Theme has successfully added \n"
+            text += f"Custom Theme has successfully added \n"
             temp_input = False
             await add_custom_theme(theme_format[0], theme_format[1], theme_format[2], theme_format[3], theme_format[4])
             theme_format = []

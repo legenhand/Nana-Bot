@@ -1,4 +1,4 @@
-from pyrogram import Filters
+from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
 from nana import setbot, Owner, AdminSettings
 from .database.custom_theme_db import add_custom_theme
 from .database.theme_db import set_name_theme_set
@@ -47,16 +47,17 @@ async def addtheme(client, query):
     temp_input = True
     text = "**⚙️Add Theme **\n" \
            f"Set Name theme \n"
-    await client.send_message(Owner, text)
+    list_button = [[InlineKeyboardButton("❌ Cancel", callback_data="cancel")]]
+    button = InlineKeyboardMarkup(list_button)
+    await client.send_message(Owner, text, reply_markup=button)
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["cancel"]) & Filters.private)
-async def cancel(client, _message):
+@setbot.on_callback_query(Filters.regex("^cancel"))
+async def addtheme(client, query):
     global temp_input, theme_format
     if temp_input:
         temp_input = False
         theme_format = []
-        await client.send_message(Owner, "Operation canceled!")
 
 
 @setbot.on_message(Filters.user(AdminSettings))
@@ -87,7 +88,8 @@ async def theme_input_handlers(client, message):
             temp_input = False
             await add_custom_theme(theme_format[0], theme_format[1], theme_format[2], theme_format[3], theme_format[4])
             theme_format = []
-
-        await client.send_message(Owner, text)
+        list_button = [[InlineKeyboardButton("❌ Cancel", callback_data="cancel")]]
+        button = InlineKeyboardMarkup(list_button)
+        await client.send_message(Owner, text, reply_markup=button)
 
 

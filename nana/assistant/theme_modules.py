@@ -58,6 +58,8 @@ async def addtheme(client, query):
     if temp_input:
         temp_input = False
         theme_format = []
+        await client.answer_callback_query(query.id, "Operation Canceled!")
+        await query.message.delete()
 
 
 @setbot.on_message(Filters.user(AdminSettings))

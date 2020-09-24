@@ -4,6 +4,7 @@ from platform import python_version
 from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, Owner, \
     OwnerName, NANA_IMG
+from nana.assistant.settings import get_text_settings, get_button_settings
 from nana.assistant.theme.theme_helper import get_theme
 
 if DB_AVAILABLE:
@@ -136,17 +137,9 @@ async def report_some_errors(client, query):
     await client.answer_callback_query(query.id, "Report was sent!")
 
 
-namevars = ""
-valuevars = ""
-
-
-@setbot.on_callback_query(dynamic_data_filter("add_vars"))
-async def add_vars(_client, query):
-    global namevars
-    await query.message.edit_text("Send Name Variable :")
-    setbot.on_message()
-
-
-async def name_vars(_client, message):
-    global namevars
-    namevars = message.text
+@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["settings"]) & Filters.private)
+async def settings(_client, message):
+    text = await get_text_settings()
+    button = await get_button_settings()
+    img = await get_theme("settings")
+    await setbot.send_photo(Owner, img, caption=text, reply_markup=button)

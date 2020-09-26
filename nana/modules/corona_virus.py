@@ -37,7 +37,6 @@ Deaths/Mil: `{r['deathsPerOneMillion']}``
             return
         except Exception as e:
             await message.edit("`The corona API could not be reached`")
-            print(e)
             await asyncio.sleep(3)
             await message.delete()
             return
@@ -63,6 +62,5 @@ Deaths/Mil: `{r['deathsPerOneMillion']}`
             await message.edit(f"{reply_text}")
         except Exception as e:
             await message.edit("`The corona API could not be reached`")
-            print(e)
             await asyncio.sleep(3)
             await message.delete()

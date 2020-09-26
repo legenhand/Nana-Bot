@@ -72,7 +72,6 @@ async def voicelang(_client, message):
     try:
         gTTS("tes", lang=lang)
     except Exception as e:
-        print(e)
         await message.edit("Wrong Language id !")
         lang = temp
         return

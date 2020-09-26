@@ -101,7 +101,6 @@ async def selectversion(_client, query):
     list_button = []
     global repo_name, repo_docker
     desc = rp[repo_name]["version"][ver]["description"]
-    print(rp[repo_name]["version"][ver])
     repo_docker = rp[repo_name]["version"][ver]["dockerfile"]
     text = "**⚙️ Repository Configuration **\n" \
            "`description : {} `\n".format(desc)

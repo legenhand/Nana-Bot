@@ -36,8 +36,8 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     logging.error("You MUST have a python version of at least 3.6! Multiple features depend on this. Bot quitting.")
     quit(1)
 
-USERBOT_VERSION = "2.1"
-ASSISTANT_VERSION = "2.1"
+USERBOT_VERSION = "2.2"
+ASSISTANT_VERSION = "2.2"
 
 OFFICIAL_BRANCH = ('master')
 REPOSITORY = "https://github.com/legenhand/Nana-bot.git"

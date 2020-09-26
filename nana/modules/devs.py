@@ -212,7 +212,7 @@ async def alive(_client, message):
         me = await app.get_me()
     except ConnectionError:
         me = None
-    text = "[Nana-Remix](https://github.com/legenhand/Nana-Bot)** Up and Running:**\n"
+    text = "[Nana-Bot](https://github.com/legenhand/Nana-Bot)** Up and Running:**\n"
     if not me:
         text += "- Userbot: `Stopped (v{})`\n".format(USERBOT_VERSION)
     else:

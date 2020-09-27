@@ -89,15 +89,7 @@ async def get_myself(client, message):
         await message.reply(text, reply_markup=button)
 
 
-# For callback query button
-def dynamic_data_filter(data):
-    return Filters.create(
-        lambda flt, query: flt.data == query.data,
-        data=data  # "data" kwarg is accessed with "flt.data" above
-    )
-
-
-@setbot.on_callback_query(dynamic_data_filter("hide_number"))
+@setbot.on_callback_query(Filters.regex("^hide_number"))
 async def get_myself_btn(client, query):
     try:
         me = await app.get_me()
@@ -125,7 +117,7 @@ async def get_myself_btn(client, query):
         await query.message.edit(text, reply_markup=button)
 
 
-@setbot.on_callback_query(dynamic_data_filter("report_errors"))
+@setbot.on_callback_query(Filters.regex("^report_errors"))
 async def report_some_errors(client, query):
     app.join_chat("@AyraSupport")
     text = "Hi @AyraHikari, i got an error for you.\nPlease take a look and fix it if possible.\n\nThank you ❤️"

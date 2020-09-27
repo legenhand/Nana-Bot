@@ -11,7 +11,6 @@ from nana.assistant.theme.theme_helper import get_theme
 
 if DB_AVAILABLE:
     pass
-from nana.assistant.help import NANA_IMG
 from nana.modules.chats import get_msgc
 if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats
@@ -75,15 +74,7 @@ async def update_checker():
     await setbot.send_message(Owner, text, reply_markup=button, parse_mode="markdown")
 
 
-# For callback query button
-def dynamic_data_filter(data):
-    return Filters.create(
-        lambda flt, query: flt.data == query.data,
-        data=data  # "data" kwarg is accessed with "flt.data" above
-    )
-
-
-@setbot.on_callback_query(dynamic_data_filter("update_now"))
+@setbot.on_callback_query(Filters.regex("^update_now"))
 async def update_button(_client, query):
     await query.message.edit_text("Updating, please wait...")
     try:

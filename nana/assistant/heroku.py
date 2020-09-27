@@ -3,11 +3,10 @@ from pyrogram import errors, InlineKeyboardButton, InlineKeyboardMarkup, Filters
 
 from nana import setbot, HEROKU_API
 from nana.assistant.input_handler import temp_vars
-from nana.assistant.repo_changer import dynamic_data_filter
 from nana.assistant.settings import get_text_settings, get_button_settings
 
 
-@setbot.on_callback_query(dynamic_data_filter("restart_heroku"))
+@setbot.on_callback_query(Filters.regex("^restart_heroku"))
 async def reboot_heroku(client, query):
     text = await get_text_settings()
     button = await get_button_settings()
@@ -32,7 +31,7 @@ async def reboot_heroku(client, query):
     await client.answer_callback_query(query.id, "No heroku application found, but a key given?")
 
 
-@setbot.on_callback_query(dynamic_data_filter("heroku_vars"))
+@setbot.on_callback_query(Filters.regex("^heroku_vars"))
 async def vars_heroku(_client, query):
     text = "**⚙️ Welcome to Heroku Vars Settings!**\n" \
            "`Setting your heroku config vars here!`\n"

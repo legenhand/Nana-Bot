@@ -9,13 +9,6 @@ from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
 repo_name = ""
 repo_docker = ""
 
-# For callback query button
-def dynamic_data_filter(data):
-    return Filters.create(
-        lambda flt, query: flt.data == query.data,
-        data=data  # "data" kwarg is accessed with "flt.data" above
-    )
-
 
 async def change_repo(url):
     # Remove Default Dockerfile then download New Dockerfile
@@ -61,7 +54,7 @@ async def configrepo():
     r = await AioHttp().get_json('http://api.harumi.tech/repo')
     return r
 
-@setbot.on_callback_query(dynamic_data_filter("change_repo"))
+@setbot.on_callback_query(Filters.regex("^change_repo"))
 async def chgrepo(_client, query):
     text = "**⚙️ Repository Configuration **\n" \
            "`Change Your Repo Source Here! `\n"

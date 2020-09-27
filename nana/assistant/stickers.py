@@ -7,7 +7,6 @@ from pyrogram import Filters, ReplyKeyboardMarkup
 
 from nana import setbot, AdminSettings, DB_AVAILABLE, app, Owner
 from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
-from nana.assistant.repo_changer import dynamic_data_filter
 
 TEMP_KEYBOARD = []
 USER_SET = {}
@@ -96,7 +95,7 @@ async def set_stickers(client, message):
     await setbot.send_photo(Owner, "https://raw.githubusercontent.com/legenhand/Nana-bot-file/master/image/bannernanasettings.jpeg", caption=text, reply_markup=button)
 
 
-@setbot.on_callback_query(dynamic_data_filter("setsticker"))
+@setbot.on_callback_query(Filters.regex("^setsticker"))
 async def settings_sticker(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")

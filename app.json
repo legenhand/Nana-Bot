@@ -70,16 +70,6 @@
       "value": "en",
       "required": false
     },
-    "device_model": {
-      "description": "(optional) Your device mode for userbot",
-      "value": "PC",
-      "required": false
-    },
-    "system_version": {
-      "description": "(optional) Your System version for userbot",
-      "value": "Linux",
-      "required": false
-    },
     "thumbnail_API": {
       "description": "(optional) Register free here: https://thumbnail.ws/",
       "required": false

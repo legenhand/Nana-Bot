@@ -8,8 +8,6 @@ class Config(object):
 	PM_PERMIT = True
 	# Version
 	lang_code = "en"  # Your language code
-	device_model = "PC"  # Device model
-	system_version = "Linux"  # OS system type
 
 	# Use real bot for Assistant
 	# Pass False if you dont want

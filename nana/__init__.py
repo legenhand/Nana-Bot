@@ -1,5 +1,6 @@
 import logging
 import os
+import platform
 import sys
 import time
 import requests
@@ -51,9 +52,9 @@ APP_SESSION = "nana/session/Nana"
 logger = get_var('LOGGER', False)
 # Version
 lang_code = get_var('lang_code', "en")
-device_model = get_var('device_model', "PC")
+device_model = platform.machine()
 app_version = "💝 Nana v{}".format(USERBOT_VERSION)
-system_version = get_var('system_version', "Linux")
+system_version = platform.platform()
 
 # Must be filled
 api_id = get_var('api_id', None)

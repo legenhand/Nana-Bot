@@ -1,13 +1,13 @@
 import re
 
 from asyncio import sleep
-from pyrogram import Filters
+from pyrogram import filters
 from pyrogram.errors import MessageNotModified
 from nana import app, Command
 
 __MODULE__ = "Vulgar"
 __HELP__ = """
-Filters Bad Words
+filters Bad Words
 
 ──「 **Vulgar Filter** 」──
 -> `vulgar`
@@ -22,7 +22,7 @@ vulgar_filter = False
 bad_words = ['nigga', 'nigger', 'coon', 'fuck', 'bitch']
 
 
-@app.on_message(~Filters.regex(r"^\.\w*") & Filters.me)
+@app.on_message(~filters.regex(r"^\.\w*") & filters.me)
 async def vulgar_f(_client, message):
     if vulgar_filter:
         try:
@@ -47,7 +47,7 @@ async def vulgar_f(_client, message):
         return
 
 
-@app.on_message(Filters.me & Filters.command(["vulgar"], Command))
+@app.on_message(filters.me & filters.command(["vulgar"], Command))
 async def vulgar_trigger(_client, message):
     global vulgar_filter
     if vulgar_filter:

@@ -3,7 +3,7 @@ import sys
 import traceback
 
 from currency_converter import CurrencyConverter
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, logging
 
@@ -43,7 +43,7 @@ def convert_c(celsius):
     return cel
 
 
-@app.on_message(Filters.me & Filters.command(["eval"], Command))
+@app.on_message(filters.me & filters.command(["eval"], Command))
 async def evaluation(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `eval 1000-7`")
@@ -73,7 +73,7 @@ async def evaluation(client, message):
         logging.exception("Evaluation error")
 
 
-@app.on_message(Filters.me & Filters.command(["curr"], Command))
+@app.on_message(filters.me & filters.command(["curr"], Command))
 async def evaluation_curr(_client, message):
     if len(message.text.split()) <= 3:
         await message.edit("Usage: `curr 100 USD IDR`")
@@ -89,7 +89,7 @@ async def evaluation_curr(_client, message):
         await message.edit(str(err))
 
 
-@app.on_message(Filters.me & Filters.command(["temp"], Command))
+@app.on_message(filters.me & filters.command(["temp"], Command))
 async def evaluation_temp(_client, message):
     if len(message.text.split()) <= 2:
         await message.edit("Usage: `temp 30 C` or `temp 60 F`")

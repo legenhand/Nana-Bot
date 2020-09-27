@@ -1,6 +1,6 @@
 import heroku3
-from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
-
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nana import AdminSettings, setbot, Owner, HEROKU_API
 from nana.assistant.database.custom_theme_db import add_custom_theme
 
@@ -10,7 +10,7 @@ temp_query = {}
 temp_vars = []
 
 
-@setbot.on_message(Filters.user(AdminSettings))
+@setbot.on_message(filters.user(AdminSettings))
 async def theme_input_handlers(client, message):
     global temp_input, theme_format, temp_query, temp_vars
     if temp_input:
@@ -56,7 +56,7 @@ async def theme_input_handlers(client, message):
             temp_vars = []
 
 
-@setbot.on_callback_query(Filters.regex("^cancel"))
+@setbot.on_callback_query(filters.regex("^cancel"))
 async def cancel_input(client, query):
     global temp_input, theme_format, temp_vars
     temp_input = False

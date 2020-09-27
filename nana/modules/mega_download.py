@@ -11,7 +11,7 @@ from subprocess import PIPE, Popen
 from urllib.error import HTTPError
 
 from pySmartDL import SmartDL
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 from .downloads import humanbytes
@@ -33,7 +33,7 @@ async def subprocess_run(cmd, megadl):
     return talk
 
 
-@app.on_message(Filters.me & Filters.command(["megadownload"], Command))
+@app.on_message(filters.me & filters.command(["megadownload"], Command))
 async def mega_downloader(_client, megadl):
     args = megadl.text.split(None, 1)
     await megadl.edit("`Processing...`")

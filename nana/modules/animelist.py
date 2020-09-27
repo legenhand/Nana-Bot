@@ -1,6 +1,6 @@
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
-from pyrogram import Filters
+from pyrogram import filters
 import asyncio
 from nana import app, Command
 from nana.helpers.string import replace_text
@@ -29,7 +29,7 @@ returns a list of new anime in the upcoming seasons.
 
 jikan = Jikan()
 
-@app.on_message(Filters.me & Filters.command(["anime"], Command))
+@app.on_message(filters.me & filters.command(["anime"], Command))
 async def anime(_client, message):
     cmd = message.command
     query = ""
@@ -98,7 +98,7 @@ async def anime(_client, message):
     rep += f'Read More: <a href="{url}">MyAnimeList</a>'
     await message.edit(rep)
 
-@app.on_message(Filters.me & Filters.command(["character"], Command))
+@app.on_message(filters.me & filters.command(["character"], Command))
 async def character(_client, message):
     res = ""
     cmd = message.command
@@ -137,7 +137,7 @@ async def character(_client, message):
         rep += f'Read More: <a href="{url}">MyAnimeList</a>'
         await message.edit(replace_text(rep))
 
-@app.on_message(Filters.me & Filters.command(["manga"], Command))
+@app.on_message(filters.me & filters.command(["manga"], Command))
 async def manga(_client, message):
     cmd = message.command
     query = ""
@@ -190,7 +190,7 @@ async def manga(_client, message):
         rep += f'Read More: {url}'
         await message.edit(rep)
 
-@app.on_message(Filters.me & Filters.command(["upcoming"], Command))
+@app.on_message(filters.me & filters.command(["upcoming"], Command))
 async def upcoming(_client, message):
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()

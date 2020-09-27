@@ -1,6 +1,7 @@
 import re
 
-from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana import app, setbot, Command, Owner, BotUsername, DB_AVAILABLE, lydia_api, AdminSettings, OwnerName, PM_PERMIT
 from nana.helpers.parser import mention_markdown
@@ -17,7 +18,7 @@ BLACKLIST = ["hack", "fuck", "bitch", "pubg", "sex"]
 USER_IN_RESTRICT = []
 
 
-@app.on_message(~Filters.me & Filters.private & ~Filters.bot)
+@app.on_message(~filters.me & filters.private & ~filters.bot)
 async def pm_block(client, message):
     if PM_PERMIT:
         if not get_whitelist(message.chat.id):
@@ -41,24 +42,24 @@ async def pm_block(client, message):
         return
 
 
-@app.on_message(Filters.me & Filters.command(["approve"], Command) & Filters.private)
+@app.on_message(filters.me & filters.command(["approve"], Command) & filters.private)
 async def approve_pm(_client, message):
     set_whitelist(message.chat.id, True)
     await message.edit("`PM permission was approved!`")
 
 
-@app.on_message(Filters.me & Filters.command(["revoke", "disapprove"], Command) & Filters.private)
+@app.on_message(filters.me & filters.command(["revoke", "disapprove"], Command) & filters.private)
 async def revoke_pm_block(_client, message):
     del_whitelist(message.chat.id)
     await message.edit("`PM permission was revoked!`")
 
 
-def pm_button_callback(_, query):
+def pm_button_callback(_, __, query):
     if re.match("engine_pm", query.data):
         return True
 
 
-pm_button_create = Filters.create(pm_button_callback)
+pm_button_create = filters.create(pm_button_callback)
 
 
 @setbot.on_callback_query(pm_button_create)

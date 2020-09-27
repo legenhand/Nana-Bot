@@ -1,7 +1,7 @@
 import os
 
 from mega import Mega
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 
@@ -20,7 +20,7 @@ List of file that have downloaded with mega.
 """
 
 
-@app.on_message(Filters.me & Filters.command(["mega"], Command))
+@app.on_message(filters.me & filters.command(["mega"], Command))
 async def mega_download(_client, msg):
     args = msg.text.split(None, 1)
     if len(args) == 1:
@@ -34,7 +34,7 @@ async def mega_download(_client, msg):
     await msg.edit("Success! file was downloaded at nana/downloads")
 
 
-@app.on_message(Filters.me & Filters.command(["megafile"], Command))
+@app.on_message(filters.me & filters.command(["megafile"], Command))
 async def mega_downloaded_file(_client, message):
     filelist = os.listdir("nana/downloads/mega")
     print(len(filelist))

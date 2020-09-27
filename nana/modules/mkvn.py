@@ -6,7 +6,7 @@ import subprocess
 import os
 
 from nana import setbot, app, Command, Owner
-from pyrogram import Filters
+from pyrogram import filters
 from nana.modules.downloads import download_reply_nocall
 from nana.helpers.PyroHelpers import ReplyCheck
 
@@ -19,7 +19,7 @@ Reply a video to make it as video note
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["mkvn"], Command))
+@app.on_message(filters.user("self") & filters.command(["mkvn"], Command))
 async def vn_maker(client, message):
 	if message.reply_to_message and message.reply_to_message.video:
 		dlvid = await download_reply_nocall(client, message)

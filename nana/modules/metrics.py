@@ -1,7 +1,7 @@
 # Thanks to @Athfan for a Base Plugin.
 # Go and Do a star on his repo: https://github.com/athphane/userbot
 import time
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import Command, app
 
@@ -21,7 +21,7 @@ class Custom(dict):
         return 0
 
 
-@app.on_message(Filters.me & Filters.command(["wordcount"], Command))
+@app.on_message(filters.me & filters.command(["wordcount"], Command))
 async def word_count(client, message):
     await message.delete()
     words = Custom()

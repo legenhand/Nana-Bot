@@ -1,5 +1,5 @@
 from asyncio import sleep
-from pyrogram import Filters
+from pyrogram import filters
 from nana import Command, app
 from functools import partial
 
@@ -23,7 +23,7 @@ hmention = partial(
 )
 
 
-@app.on_message(Filters.me & Filters.command(["mention"], Command))
+@app.on_message(filters.me & filters.command(["mention"], Command))
 async def mention_user(client, message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: mention @pokurt CTO")
@@ -42,7 +42,7 @@ async def mention_user(client, message):
     await message.edit(_mention)
 
 
-@app.on_message(Filters.me & Filters.command(["hmention"], Command))
+@app.on_message(filters.me & filters.command(["hmention"], Command))
 async def hidden_mention(client, message):
     if len(message.command) < 3:
         await message.edit("Incorrect format\nExample: hmention @pokurt")

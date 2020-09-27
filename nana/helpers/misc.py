@@ -1,5 +1,5 @@
 
-from pyrogram import InlineKeyboardButton
+from pyrogram.types import InlineKeyboardButton
 
 
 class EqInlineKeyboardButton(InlineKeyboardButton):

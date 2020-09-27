@@ -1,7 +1,7 @@
 import os
 
 from gtts import gTTS
-from pyrogram import Filters
+from pyrogram import filters
 import asyncio
 from nana import app, Command
 
@@ -37,7 +37,7 @@ zh-tw: Chinese (Mandarin/Taiwan)`
 lang = "en"  # Default Language for voice
 
 
-@app.on_message(Filters.me & Filters.command(["voice"], Command))
+@app.on_message(filters.me & filters.command(["voice"], Command))
 async def voice(client, message):
     global lang
     cmd = message.command
@@ -64,7 +64,7 @@ async def voice(client, message):
     os.remove("nana/cache/voice.mp3")
 
 
-@app.on_message(Filters.me & Filters.command(["voicelang"], Command))
+@app.on_message(filters.me & filters.command(["voicelang"], Command))
 async def voicelang(_client, message):
     global lang
     temp = lang

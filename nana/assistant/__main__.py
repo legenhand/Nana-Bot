@@ -1,7 +1,7 @@
 import os
 from platform import python_version
-
-from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, Owner, \
     OwnerName, NANA_IMG
 from nana.assistant.settings import get_text_settings, get_button_settings
@@ -11,7 +11,7 @@ if DB_AVAILABLE:
     from nana.modules.database.chats_db import get_all_chats
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["start"]))
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["start"]))
 async def start(_client, message):
     if len(message.text.split()) >= 2:
         helparg = message.text.split()[1]
@@ -60,7 +60,7 @@ Convert a text to various style, can be used anywhere!
     await setbot.send_photo(Owner, img, caption=start_message, reply_markup=buttons)
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["getme"]))
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["getme"]))
 async def get_myself(client, message):
     try:
         me = await app.get_me()
@@ -89,7 +89,7 @@ async def get_myself(client, message):
         await message.reply(text, reply_markup=button)
 
 
-@setbot.on_callback_query(Filters.regex("^hide_number"))
+@setbot.on_callback_query(filters.regex("^hide_number"))
 async def get_myself_btn(client, query):
     try:
         me = await app.get_me()
@@ -117,7 +117,7 @@ async def get_myself_btn(client, query):
         await query.message.edit(text, reply_markup=button)
 
 
-@setbot.on_callback_query(Filters.regex("^report_errors"))
+@setbot.on_callback_query(filters.regex("^report_errors"))
 async def report_some_errors(client, query):
     app.join_chat("@AyraSupport")
     text = "Hi @AyraHikari, i got an error for you.\nPlease take a look and fix it if possible.\n\nThank you ❤️"
@@ -129,7 +129,7 @@ async def report_some_errors(client, query):
     await client.answer_callback_query(query.id, "Report was sent!")
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["settings"]) & Filters.private)
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["settings"]) & filters.private)
 async def settings(_client, message):
     text = await get_text_settings()
     button = await get_button_settings()

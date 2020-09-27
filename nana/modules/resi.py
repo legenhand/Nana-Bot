@@ -1,10 +1,10 @@
 import requests
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, BINDERBYTE_API
 
 
-@app.on_message(Filters.me & Filters.command(["lacak"], Command))
+@app.on_message(filters.me & filters.command(["lacak"], Command))
 async def resi(_, message):
     msg = message.command
     result = await cek_resi(msg[1], msg[2])

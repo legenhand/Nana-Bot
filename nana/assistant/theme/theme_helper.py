@@ -6,7 +6,7 @@ from nana.assistant.database.custom_theme_db import get_list_costum_theme, get_c
 from nana.helpers.aiohttp_helper import AioHttp
 from nana.assistant.database.theme_db import get_name_theme_set, is_custom_theme
 from nana import Owner
-from pyrogram import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 cache_theme = {}
 

@@ -2,7 +2,7 @@
 import requests
 import asyncio
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 from nana.helpers.string import replace_text
@@ -14,7 +14,7 @@ __HELP__ = """
 
 """
 
-@app.on_message(Filters.me & Filters.command(["cas"], Command))
+@app.on_message(filters.me & filters.command(["cas"], Command))
 async def cas(_client, message):
     cmd = message.command
 

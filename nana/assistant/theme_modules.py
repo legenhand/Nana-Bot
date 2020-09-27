@@ -1,4 +1,5 @@
-from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nana import setbot, Owner, AdminSettings
 from .database.custom_theme_db import add_custom_theme
 from .database.theme_db import set_name_theme_set
@@ -7,7 +8,7 @@ from .theme.theme_helper import theme_list, name_theme
 
 
 
-@setbot.on_callback_query(Filters.regex("^theme"))
+@setbot.on_callback_query(filters.regex("^theme"))
 async def chgtheme(_client, query):
     text = "**⚙ Theme Configuration **\n" \
            "`Change Your Nana Theme Here! `\n"
@@ -16,7 +17,7 @@ async def chgtheme(_client, query):
     await query.message.edit_text(text, reply_markup=button)
 
 
-@setbot.on_callback_query(Filters.regex("^thm"))
+@setbot.on_callback_query(filters.regex("^thm"))
 async def chgtheme(_client, query):
     code_theme = query.data[4:]
     name = await name_theme(code_theme)
@@ -27,7 +28,7 @@ async def chgtheme(_client, query):
     await query.message.edit_text(text)
 
 
-@setbot.on_callback_query(Filters.regex("^cthm"))
+@setbot.on_callback_query(filters.regex("^cthm"))
 async def chg_custom_theme(_client, query):
     code_theme = query.data
     await set_name_theme_set(Owner, code_theme, True)
@@ -37,7 +38,7 @@ async def chg_custom_theme(_client, query):
     await query.message.edit_text(text)
 
 
-@setbot.on_callback_query(Filters.regex("^addtheme"))
+@setbot.on_callback_query(filters.regex("^addtheme"))
 async def addtheme(client, query):
     await query.message.delete()
     global temp_input

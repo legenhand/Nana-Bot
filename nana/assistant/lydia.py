@@ -4,7 +4,7 @@ import re
 
 from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import setbot, AdminSettings, lydia_api
 import nana.modules.meme_strings as meme_strings
@@ -15,7 +15,7 @@ lydia = None
 session = None
 poki_uwu = False
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["lydia"]) & (Filters.group | Filters.private))
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["lydia"]) & (filters.group | filters.private))
 async def lydia_stats(_client, message):
     global lydia_status, coffeehouse_api, lydia, session
     if lydia_api == "":
@@ -42,7 +42,7 @@ async def lydia_stats(_client, message):
         await message.reply("now Lydia will reply your message!")
 
 
-@setbot.on_message(~Filters.me & ~Filters.edited & (Filters.mentioned | Filters.private), group=2)
+@setbot.on_message(~filters.me & ~filters.edited & (filters.mentioned | filters.private), group=2)
 async def lydia_settings(client, message):
     global lydia_status, session
     if lydia_status:
@@ -72,7 +72,7 @@ async def lydia_settings(client, message):
         return
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.regex("^pokichan") & (Filters.mentioned | Filters.private))
+@setbot.on_message(filters.user(AdminSettings) & filters.regex("^pokichan") & (filters.mentioned | filters.private))
 async def lydia_uwu(client, message):
     global poki_uwu
     if poki_uwu:

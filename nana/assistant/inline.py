@@ -3,8 +3,8 @@ import traceback
 import random
 from uuid import uuid4
 
-from pyrogram import InlineQueryResultArticle
-from pyrogram import errors, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
+from pyrogram.types import InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
+from pyrogram import errors
 
 from nana import setbot, Owner, OwnerName, DB_AVAILABLE
 from nana.helpers.msg_types import Types

@@ -1,7 +1,7 @@
 import os
 from telegraph import upload_file
 
-from pyrogram import Filters
+from pyrogram import filters
 from nana import Command, app
 
 __MODULE__ = "Telegra.ph"
@@ -16,7 +16,7 @@ Reply to Media as args to upload it to telegraph.
 """
 
 
-@app.on_message(Filters.me & Filters.command(["telegraph"], Command))
+@app.on_message(filters.me & filters.command(["telegraph"], Command))
 async def telegraph(client, message):
     replied = message.reply_to_message
     if not replied:

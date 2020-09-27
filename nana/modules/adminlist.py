@@ -1,6 +1,6 @@
 import html
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 from nana.helpers.parser import mention_html, mention_markdown
@@ -26,7 +26,7 @@ Check all bots in spesific chat or current chat
 """
 
 
-@app.on_message(Filters.me & Filters.command(["admins", "adminlist"], Command))
+@app.on_message(filters.me & filters.command(["admins", "adminlist"], Command))
 async def adminlist(client, message):
     replyid = None
     toolong = False
@@ -88,7 +88,7 @@ async def adminlist(client, message):
         await message.edit(teks)
 
 
-@app.on_message(Filters.me & Filters.command(["reportadmin", "reportadmins"], Command))
+@app.on_message(filters.me & filters.command(["reportadmin", "reportadmins"], Command))
 async def report_admin(client, message):
     await message.delete()
     if len(message.text.split()) >= 2:
@@ -121,7 +121,7 @@ async def report_admin(client, message):
         await client.send_message(message.chat.id, teks, parse_mode="html")
 
 
-@app.on_message(Filters.me & Filters.command(["everyone"], Command))
+@app.on_message(filters.me & filters.command(["everyone"], Command))
 async def tag_all_users(client, message):
     await message.delete()
     if len(message.text.split()) >= 2:
@@ -139,7 +139,7 @@ async def tag_all_users(client, message):
         await client.send_message(message.chat.id, text, parse_mode="html")
 
 
-@app.on_message(Filters.me & Filters.command(["botlist"], Command))
+@app.on_message(filters.me & filters.command(["botlist"], Command))
 async def get_list_bots(client, message):
     replyid = None
     if len(message.text.split()) >= 2:

@@ -3,7 +3,7 @@ from typing import List
 import time
 
 from nana import app, Owner, Command, StartTime
-from pyrogram import Filters
+from pyrogram import filters
 
 sites_list = {
     "Telegram": "https://api.telegram.org",
@@ -57,7 +57,7 @@ def ping_func(to_ping: List[str]) -> List[str]:
     return ping_result
 
 
-@app.on_message(Filters.user(Owner) & Filters.command(["ping"], Command))
+@app.on_message(filters.user(Owner) & filters.command(["ping"], Command))
 async def ping(client, message):
     telegram_ping = ping_func(["Telegram"])[0].split(": ", 1)[1]
     uptime = get_readable_time((time.time() - StartTime))

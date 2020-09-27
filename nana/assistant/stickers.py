@@ -3,8 +3,8 @@
 #
 import time
 from .settings import get_text_settings, get_button_settings
-from pyrogram import Filters, ReplyKeyboardMarkup
-
+from pyrogram import filters
+from pyrogram.types import ReplyKeyboardMarkup
 from nana import setbot, AdminSettings, DB_AVAILABLE, app, Owner
 from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
 
@@ -13,7 +13,7 @@ USER_SET = {}
 TODEL = {}
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setsticker"]))
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["setsticker"]))
 async def get_stickers(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
@@ -36,7 +36,7 @@ async def get_stickers(_client, message):
 
 # app.read_history("@Stickers")
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["setanimation"]))
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["setanimation"]))
 async def get_stickers_animation(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
@@ -59,7 +59,7 @@ async def get_stickers_animation(_client, message):
 
 # app.read_history("@Stickers")
 
-def get_stickerlist(message):
+def get_stickerlist(_, __, message):
     if not DB_AVAILABLE:
         return
     global TEMP_KEYBOARD, USER_SET
@@ -95,7 +95,7 @@ async def set_stickers(client, message):
     await setbot.send_photo(Owner, "https://raw.githubusercontent.com/legenhand/Nana-bot-file/master/image/bannernanasettings.jpeg", caption=text, reply_markup=button)
 
 
-@setbot.on_callback_query(Filters.regex("^setsticker"))
+@setbot.on_callback_query(filters.regex("^setsticker"))
 async def settings_sticker(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")

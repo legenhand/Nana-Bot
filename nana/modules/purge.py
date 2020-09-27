@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 import asyncio
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana.helpers.admincheck import admin_check
 from nana import Owner, app, Command
@@ -33,7 +33,7 @@ Delete's a message that you reply to
 """
 
 
-@app.on_message(Filters.me & Filters.command(["purge"], Command))
+@app.on_message(filters.me & filters.command(["purge"], Command))
 async def purge_message(client, message):
     if message.chat.type in (("supergroup", "channel")):
         is_admin = await admin_check(message)
@@ -74,7 +74,7 @@ async def purge_message(client, message):
     await msg.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["purgeme"], Command))
+@app.on_message(filters.me & filters.command(["purgeme"], Command))
 async def purge_myself(client, message):
     if len(message.text.split()) >= 2 and message.text.split()[1].isdigit():
         target = int(message.text.split()[1])
@@ -109,7 +109,7 @@ async def purge_myself(client, message):
         await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-@app.on_message(Filters.me & Filters.command(["del"], Command))
+@app.on_message(filters.me & filters.command(["del"], Command))
 async def delete_replied(client, message):
     msg_ids = [message.message_id]
     if message.reply_to_message:

@@ -1,5 +1,5 @@
 from bitlyshortener import Shortener
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, bitly_token
 
@@ -14,7 +14,7 @@ Shorten your url with bitly
 """
 
 
-@app.on_message(Filters.me & Filters.command(["bitly"], Command))
+@app.on_message(filters.me & filters.command(["bitly"], Command))
 async def bitly(_client, message):
     args = message.text.split(None, 1)
     shortener = Shortener(tokens=bitly_token, max_cache_size=8192)

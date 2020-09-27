@@ -2,7 +2,7 @@ import os
 import shutil
 
 import requests
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, thumbnail_API, screenshotlayer_API
 
@@ -22,7 +22,7 @@ Take screenshot of that website, if `full` args given, take full of website and 
 """
 
 
-@app.on_message(Filters.me & Filters.command(["print"], Command))
+@app.on_message(filters.me & filters.command(["print"], Command))
 async def ss_web(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `print web.url`")
@@ -55,7 +55,7 @@ async def ss_web(client, message):
     message.edit(capt)
 
 
-@app.on_message(Filters.me & Filters.command(["ss"], Command))
+@app.on_message(filters.me & filters.command(["ss"], Command))
 async def ss_web(client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `print web.url`")

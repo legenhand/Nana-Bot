@@ -1,7 +1,7 @@
 import os
 from asyncio import sleep
-from pyrogram.api import functions
-from pyrogram import Filters
+from pyrogram.raw import functions
+from pyrogram import filters
 from nana import app, Command, DB_AVAILABLE
 
 if DB_AVAILABLE:
@@ -31,7 +31,7 @@ revert to original identity
 profile_photo = "nana/downloads/pfp.jpg"
 
 
-@app.on_message(Filters.me & Filters.command(["setpfp"], Command))
+@app.on_message(filters.me & filters.command(["setpfp"], Command))
 async def set_pfp(client, message):
     replied = message.reply_to_message
     if (replied and replied.media and (
@@ -57,7 +57,7 @@ async def set_pfp(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["vpfp"], Command))
+@app.on_message(filters.me & filters.command(["vpfp"], Command))
 async def view_pfp(client, message):
     replied = message.reply_to_message
     if replied:
@@ -77,7 +77,7 @@ async def view_pfp(client, message):
         os.remove(profile_photo)
 
 
-@app.on_message(Filters.me & Filters.command(["clone"], Command))
+@app.on_message(filters.me & filters.command(["clone"], Command))
 async def clone(client, message):
     if message.reply_to_message:
         target = message.reply_to_message.from_user.id
@@ -106,7 +106,7 @@ async def clone(client, message):
     await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["revert"], Command))
+@app.on_message(filters.me & filters.command(["revert"], Command))
 async def revert(client, message):
     first_name, last_name, bio = restore_identity()
 

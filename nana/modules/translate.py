@@ -1,5 +1,5 @@
 from googletrans import Translator
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 
@@ -21,7 +21,7 @@ Reply a message to translate that.
 
 # TODO: Setlang for translation
 
-@app.on_message(Filters.me & Filters.command(["tr"], Command))
+@app.on_message(filters.me & filters.command(["tr"], Command))
 async def translate(_client, message):
     if message.reply_to_message and (message.reply_to_message.text or message.reply_to_message.caption):
         if len(message.text.split()) == 1:

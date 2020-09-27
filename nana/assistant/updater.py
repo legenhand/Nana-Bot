@@ -3,7 +3,8 @@ import time
 
 from git import Repo
 from git.exc import GitCommandError, NoSuchPathError, InvalidGitRepositoryError
-from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from nana import setbot, Owner, USERBOT_VERSION, ASSISTANT_VERSION, log, OFFICIAL_BRANCH, \
     REPOSITORY, RANDOM_STICKERS, REMINDER_UPDATE, TEST_DEVELOP, HEROKU_API, DB_AVAILABLE, OwnerName
 from nana.__main__ import restart_all, loop
@@ -74,7 +75,7 @@ async def update_checker():
     await setbot.send_message(Owner, text, reply_markup=button, parse_mode="markdown")
 
 
-@setbot.on_callback_query(Filters.regex("^update_now"))
+@setbot.on_callback_query(filters.regex("^update_now"))
 async def update_button(_client, query):
     await query.message.edit_text("Updating, please wait...")
     try:

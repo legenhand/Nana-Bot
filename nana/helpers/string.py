@@ -1,7 +1,7 @@
 import re
 import time
 
-from pyrogram import InlineKeyboardButton
+from pyrogram.types import InlineKeyboardButton
 
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\(buttonurl:(?:/{0,2})(.+?)(:same)?\))")
 

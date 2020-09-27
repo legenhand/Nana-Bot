@@ -9,7 +9,8 @@ import traceback
 import pafy
 import requests
 from bs4 import BeautifulSoup
-from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pytube import YouTube
 
 from nana import app, setbot, Command
@@ -37,7 +38,7 @@ Download youtube music, and then send to tg as music.
 """
 
 
-@app.on_message(Filters.user("self") & Filters.command(["youtube", "yt"], Command))
+@app.on_message(filters.user("self") & filters.command(["youtube", "yt"], Command))
 async def youtube_search(_client, message):
 	args = message.text.split(None, 1)
 	if len(args) == 1:
@@ -62,7 +63,7 @@ async def youtube_search(_client, message):
 	await message.edit(yutub, disable_web_page_preview=True, parse_mode="html")
 
 
-@app.on_message(Filters.user("self") & Filters.command(["ytdl"], Command))
+@app.on_message(filters.user("self") & filters.command(["ytdl"], Command))
 async def youtube_download(_client, message):
 	args = message.text.split(None, 2)
 	await message.edit("Checking")
@@ -110,7 +111,7 @@ async def youtube_download(_client, message):
 		return
 
 
-@app.on_message(Filters.user("self") & Filters.command(["ytmusic", "ytaudio"], Command))
+@app.on_message(filters.user("self") & filters.command(["ytmusic", "ytaudio"], Command))
 async def youtube_music(_client, message):
 	args = message.text.split(None, 1)
 	if len(args) == 1:

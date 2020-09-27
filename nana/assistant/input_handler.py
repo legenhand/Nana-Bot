@@ -1,18 +1,23 @@
 import heroku3
-from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
-
-from nana import AdminSettings, setbot, Owner, HEROKU_API
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from nana import AdminSettings, setbot, Owner, HEROKU_API, DB_AVAILABLE
 from nana.assistant.database.custom_theme_db import add_custom_theme
+from nana.assistant.database.stickers_db import set_stanim_set, set_sticker_set
+from nana.assistant.settings import get_text_settings, get_button_settings
+from nana.assistant.theme.theme_helper import get_theme
 
 temp_input = False
 theme_format = []
 temp_query = {}
 temp_vars = []
+TEMP_KEYBOARD = []
+USER_SET = {}
 
 
-@setbot.on_message(Filters.user(AdminSettings))
+@setbot.on_message(filters.user(AdminSettings))
 async def theme_input_handlers(client, message):
-    global temp_input, theme_format, temp_query, temp_vars
+    global temp_input, theme_format, temp_query, temp_vars, USER_SET, TEMP_KEYBOARD
     if temp_input:
         text = "**⚙️Add Theme **\n"
         if len(theme_format) >= 1:
@@ -54,9 +59,34 @@ async def theme_input_handlers(client, message):
             text += "`Successfully added config vars! `"
             await client.send_message(Owner, text)
             temp_vars = []
+    elif message.from_user and message.from_user.id in list(USER_SET):
+        if not DB_AVAILABLE:
+            await message.edit("Your database is not avaiable!")
+            return
+        if message.text in TEMP_KEYBOARD:
+            await client.delete_messages(message.chat.id, USER_SET[message.from_user.id])
+            print(USER_SET)
+            if USER_SET["type"] == 2:
+                set_sticker_set(message.from_user.id, message.text)
+            elif USER_SET["type"] == 1:
+                set_stanim_set(message.from_user.id, message.text)
+            status = "Ok, sticker was set to `{}`".format(message.text)
+            TEMP_KEYBOARD = []
+            USER_SET = {}
+        else:
+            status = "Invalid pack selected."
+            TEMP_KEYBOARD = []
+            USER_SET = {}
+        text = await get_text_settings()
+        text += "\n{}".format(status)
+        button = await get_button_settings()
+        img = await get_theme("settings")
+        await setbot.send_photo(Owner,
+                                img,
+                                caption=text, reply_markup=button)
 
 
-@setbot.on_callback_query(Filters.regex("^cancel"))
+@setbot.on_callback_query(filters.regex("^cancel"))
 async def cancel_input(client, query):
     global temp_input, theme_format, temp_vars
     temp_input = False

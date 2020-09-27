@@ -1,6 +1,6 @@
 
 
-from pyrogram import Filters
+from pyrogram import filters
 from asyncio import sleep
 import subprocess
 
@@ -22,7 +22,7 @@ Turn your Device's Torch on & off   .
 """
 torch = False
 
-@app.on_message(Filters.me & Filters.command(["bstats"], Command))
+@app.on_message(filters.me & filters.command(["bstats"], Command))
 async def bstat(_client, message):
     if TERMUX_USER:
         termux_command = subprocess.Popen("termux-battery-status", shell=True, stdout=subprocess.PIPE)
@@ -35,7 +35,7 @@ async def bstat(_client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["torch"], Command))
+@app.on_message(filters.me & filters.command(["torch"], Command))
 async def termux_torch(_client, message):
     global torch
     if torch:

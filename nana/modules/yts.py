@@ -7,7 +7,7 @@ import re
 import requests
 import asyncio
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 
@@ -25,7 +25,7 @@ Example: `yts lion king -l10 -q1080p`
 """
 
 
-@app.on_message(Filters.me & Filters.command(["yts"], Command))
+@app.on_message(filters.me & filters.command(["yts"], Command))
 async def yts(client, message):
     qual = None
     max_limit = 5

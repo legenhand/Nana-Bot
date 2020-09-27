@@ -5,7 +5,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from pydrive.drive import GoogleDrive
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, setbot, Command, gauth, gdrive_credentials, HEROKU_API
 from nana.helpers.parser import cleanhtml
@@ -66,7 +66,7 @@ async def get_driveinfo(driveid):
     return filename
 
 
-@app.on_message(Filters.me & Filters.command(["credentials"], Command))
+@app.on_message(filters.me & filters.command(["credentials"], Command))
 async def credentials(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
@@ -80,7 +80,7 @@ async def credentials(_client, message):
         return
 
 
-@app.on_message(Filters.me & Filters.command(["gdrive"], Command))
+@app.on_message(filters.me & filters.command(["gdrive"], Command))
 async def gdrive_stuff(client, message):
     gauth.LoadCredentialsFile("nana/session/drive")
     if gauth.credentials is None:

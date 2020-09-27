@@ -1,6 +1,6 @@
 import os
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, DB_AVAILABLE
 
@@ -26,7 +26,7 @@ Deletes a Message Replied with this command.
 def get_msgc():
     return MESSAGE_RECOUNTER
 
-@app.on_message(Filters.group, group=10)
+@app.on_message(filters.group, group=10)
 async def updatemychats(_client, message):
     global MESSAGE_RECOUNTER
     if DB_AVAILABLE:
@@ -34,7 +34,7 @@ async def updatemychats(_client, message):
     MESSAGE_RECOUNTER += 1
 
 
-@app.on_message(Filters.me & Filters.command(["chatlist"], Command))
+@app.on_message(filters.me & filters.command(["chatlist"], Command))
 async def get_chat(client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")

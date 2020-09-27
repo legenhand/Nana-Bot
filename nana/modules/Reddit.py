@@ -1,4 +1,4 @@
-from pyrogram import Filters
+from pyrogram import filters
 from nana import app
 
 __MODULE__ = "Reddit"
@@ -11,7 +11,7 @@ As long as your message starts with r/, it will automatically generate a subredd
 the_regex = r"^r\/([^\s\/])+"
 
 
-@app.on_message(Filters.me & Filters.regex(the_regex))
+@app.on_message(filters.me & filters.regex(the_regex))
 async def r_gen(_client, message):
     html = "<a href='{link}'>{string}</a>"
     await message.edit(

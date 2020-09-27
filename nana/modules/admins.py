@@ -2,7 +2,8 @@ import asyncio
 import time
 from emoji import get_emoji_regexp
 
-from pyrogram import ChatPermissions, Filters
+from pyrogram import filters
+from pyrogram.types import ChatPermissions
 from pyrogram.errors import (UsernameInvalid,
                              ChatAdminRequired,
                              PeerIdInvalid,
@@ -98,7 +99,7 @@ unmute_permissions = ChatPermissions(
 )
 
 
-@app.on_message(Filters.me & Filters.command(["pin"], Command))
+@app.on_message(filters.me & filters.command(["pin"], Command))
 async def pin_message(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -136,7 +137,7 @@ async def pin_message(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["mute"], Command))
+@app.on_message(filters.me & filters.command(["mute"], Command))
 async def mute_hammer(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -190,7 +191,7 @@ async def mute_hammer(client, message):
     else:
         await message.delete()
 
-@app.on_message(Filters.me & Filters.command(["unmute"], Command))
+@app.on_message(filters.me & filters.command(["unmute"], Command))
 async def unmute(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -231,7 +232,7 @@ async def unmute(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["kick"], Command))
+@app.on_message(filters.me & filters.command(["kick"], Command))
 async def kick_user(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -279,7 +280,7 @@ async def kick_user(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["ban"], Command))
+@app.on_message(filters.me & filters.command(["ban"], Command))
 async def ban_usr(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -342,7 +343,7 @@ async def ban_usr(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["unban"], Command))
+@app.on_message(filters.me & filters.command(["unban"], Command))
 async def unban_usr(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -380,7 +381,7 @@ async def unban_usr(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["promote"], Command))
+@app.on_message(filters.me & filters.command(["promote"], Command))
 async def promote_usr(client, message):
     if message.chat.type in ['group', 'supergroup']:
         cmd = message.command
@@ -458,7 +459,7 @@ async def promote_usr(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["demote"], Command))
+@app.on_message(filters.me & filters.command(["demote"], Command))
 async def demote_usr(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -504,7 +505,7 @@ async def demote_usr(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["lock"], Command))
+@app.on_message(filters.me & filters.command(["lock"], Command))
 async def lock_permission(client, message):
     """locks group permission"""
     if message.chat.type in ['group', 'supergroup']:
@@ -636,7 +637,7 @@ async def lock_permission(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["unlock"], Command))
+@app.on_message(filters.me & filters.command(["unlock"], Command))
 async def unlock_permission(client, message):
     """unlocks group permission"""
     if message.chat.type in ['group', 'supergroup']:
@@ -781,7 +782,7 @@ async def unlock_permission(client, message):
         await message.delete()
 
 
-@app.on_message(Filters.me & Filters.command(["vlock"], Command))
+@app.on_message(filters.me & filters.command(["vlock"], Command))
 async def view_perm(client, message):
     """view group permission"""
     if message.chat.type in ['group', 'supergroup']:

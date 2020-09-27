@@ -10,7 +10,7 @@
 import os
 
 from removebg import RemoveBg
-from pyrogram import Filters
+from pyrogram import filters
 from nana import app, Command, remove_bg_api
 from nana.helpers.PyroHelpers import ReplyCheck
 
@@ -19,7 +19,7 @@ DOWN_PATH = 'nana/'
 IMG_PATH = DOWN_PATH + "image.jpg"
 
 
-@app.on_message(Filters.me & Filters.command(["rmbg"], Command))
+@app.on_message(filters.me & filters.command(["rmbg"], Command))
 async def remove_bg(client, message):
     if not remove_bg_api:
         await message.edit("Get the API from [Remove.bg](https://www.remove.bg/b/background-removal-api)",

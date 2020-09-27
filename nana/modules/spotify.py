@@ -1,6 +1,6 @@
 # This module ported from https://github.com/muhammedfurkan/Spotify-Telegram-Bio-Updater
 # Ported By : Legenhand
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, setbot, Owner, log, SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET
 from pyrogram.errors import FloodWait, AboutTooLong
@@ -37,7 +37,7 @@ LIMIT = 70 - OFFSET
 
 spotify_bio_status = False
 
-@app.on_message(Filters.me & Filters.command(["sp"], Command))
+@app.on_message(filters.me & filters.command(["sp"], Command))
 async def spotify(_, message):
     global spotify_bio_status
     if spotify_bio_status:

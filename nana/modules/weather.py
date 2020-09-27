@@ -3,7 +3,7 @@ import asyncio
 import aiohttp
 from html import escape
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 
@@ -19,7 +19,7 @@ Powered by `wttr.in`
 """
 
 
-@app.on_message(Filters.me & Filters.command(["wttr"], Command))
+@app.on_message(filters.me & filters.command(["wttr"], Command))
 async def weather(_client, message):
     if len(message.command) == 1:
         await message.edit("Usage: `wttr Maldives`")

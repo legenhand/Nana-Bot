@@ -4,7 +4,7 @@ import sys
 
 from git import Repo
 from git.exc import InvalidGitRepositoryError, GitCommandError, NoSuchPathError
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, OFFICIAL_BRANCH, REPOSITORY, HEROKU_API
 from nana.__main__ import restart_all, except_hook
@@ -52,7 +52,7 @@ async def initial_git(repo):
     os.rename('nana-old/nana/session/', 'nana/session/')
 
 
-@app.on_message(Filters.me & Filters.command(["update"], Command))
+@app.on_message(filters.me & filters.command(["update"], Command))
 async def updater(client, message):
     await message.edit("__Checking update...__")
     initial = False

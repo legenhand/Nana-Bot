@@ -3,7 +3,7 @@ import asyncio
 
 import heroku3
 import requests
-from pyrogram import Filters
+from pyrogram import filters
 from nana import app, Command, HEROKU_API
 
 # ================= CONSTANT =================
@@ -12,7 +12,7 @@ heroku_api = "https://api.heroku.com"
 # ================= CONSTANT =================
 
 
-@app.on_message(Filters.me & Filters.command(["usage"], Command))
+@app.on_message(filters.me & filters.command(["usage"], Command))
 async def usage(client, message):
     useragent = ('Mozilla/5.0 (Linux; Android 10; SM-G975F) '
                  'AppleWebKit/537.36 (KHTML, like Gecko) '

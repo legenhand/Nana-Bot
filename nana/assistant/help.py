@@ -2,7 +2,8 @@ import re
 import time
 
 from __main__ import HELP_COMMANDS
-from pyrogram import Filters, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from nana import setbot, AdminSettings, Command, DB_AVAILABLE, StartTime, NANA_IMG, Owner
 from nana.assistant.theme.theme_helper import get_theme
@@ -59,7 +60,7 @@ async def help_parser(client, chat_id, text, keyboard=None):
         await client.send_message(chat_id, text, reply_markup=keyboard)
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["help"]))
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["help"]))
 async def help_command(client, message):
     if message.chat.type != "private":
         keyboard = InlineKeyboardMarkup(
@@ -70,12 +71,12 @@ async def help_command(client, message):
     await help_parser(client, message.chat.id, HELP_STRINGS)
 
 
-def help_button_callback(_, query):
+def help_button_callback(_, __, query):
     if re.match(r"help_", query.data):
         return True
 
 
-help_button_create = Filters.create(help_button_callback)
+help_button_create = filters.create(help_button_callback)
 
 
 @setbot.on_callback_query(help_button_create)
@@ -97,7 +98,7 @@ async def help_button(_client, query):
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELP_COMMANDS, "help")))
 
 
-@setbot.on_message(Filters.user(AdminSettings) & Filters.command(["stats"]) & (Filters.group | Filters.private))
+@setbot.on_message(filters.user(AdminSettings) & filters.command(["stats"]) & (filters.group | filters.private))
 async def stats(_client, message):
     text = ""
     if DB_AVAILABLE:

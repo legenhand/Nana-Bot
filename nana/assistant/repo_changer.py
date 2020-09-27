@@ -4,17 +4,10 @@ import urllib.request
 from git import Repo
 from nana import HEROKU_API, setbot
 from nana.helpers.aiohttp_helper import AioHttp
-from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup
-
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 repo_name = ""
 repo_docker = ""
-
-# For callback query button
-def dynamic_data_filter(data):
-    return Filters.create(
-        lambda flt, query: flt.data == query.data,
-        data=data  # "data" kwarg is accessed with "flt.data" above
-    )
 
 
 async def change_repo(url):
@@ -61,7 +54,7 @@ async def configrepo():
     r = await AioHttp().get_json('http://api.harumi.tech/repo')
     return r
 
-@setbot.on_callback_query(dynamic_data_filter("change_repo"))
+@setbot.on_callback_query(filters.regex("^change_repo"))
 async def chgrepo(_client, query):
     text = "**⚙️ Repository Configuration **\n" \
            "`Change Your Repo Source Here! `\n"
@@ -76,7 +69,7 @@ async def chgrepo(_client, query):
     await query.message.edit_text(text, reply_markup=button)
 
 
-@setbot.on_callback_query(Filters.regex("^Nana"))
+@setbot.on_callback_query(filters.regex("^Nana"))
 async def chgrepoo(_client, query):
     rp = await configrepo()
     global repo_name
@@ -94,14 +87,13 @@ async def chgrepoo(_client, query):
     await query.message.edit_text(text, reply_markup=button)
 
 
-@setbot.on_callback_query(Filters.regex("^vs"))
+@setbot.on_callback_query(filters.regex("^vs"))
 async def selectversion(_client, query):
     ver = query.data[2:]
     rp = await configrepo()
     list_button = []
     global repo_name, repo_docker
     desc = rp[repo_name]["version"][ver]["description"]
-    print(rp[repo_name]["version"][ver])
     repo_docker = rp[repo_name]["version"][ver]["dockerfile"]
     text = "**⚙️ Repository Configuration **\n" \
            "`description : {} `\n".format(desc)
@@ -114,7 +106,7 @@ async def selectversion(_client, query):
     button = InlineKeyboardMarkup(list_button)
     await query.message.edit_text(text, reply_markup=button)
 
-@setbot.on_callback_query(Filters.regex("chg_repo"))
+@setbot.on_callback_query(filters.regex("chg_repo"))
 async def selectversion(_client, query):
     global repo_docker
     text = "Repo Changed! It will take up to 5 minutes, Please Wait...."

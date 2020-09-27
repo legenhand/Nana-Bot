@@ -1,4 +1,4 @@
-from pyrogram import Filters
+from pyrogram import filters
 from asyncio import sleep
 
 from nana import app, Command
@@ -15,7 +15,7 @@ Search urban for dictionary
 """
 
 
-@app.on_message(Filters.me & Filters.command(["ud"], Command))
+@app.on_message(filters.me & filters.command(["ud"], Command))
 async def urban_dictionary(_client, message):
     if len(message.text.split()) == 1:
         await message.edit("Usage: `ud example`")

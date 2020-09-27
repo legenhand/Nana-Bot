@@ -1,4 +1,4 @@
-from pyrogram import Message
+from pyrogram.types import Message
 
 
 async def admin_check(message: Message) -> bool:

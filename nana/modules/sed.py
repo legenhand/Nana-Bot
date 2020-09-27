@@ -1,7 +1,7 @@
 import re
 import sre_constants
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app
 
@@ -73,7 +73,7 @@ async def separate_sed(sed_string):
         return replace, replace_with, flags.lower()
 
 
-@app.on_message(Filters.me & Filters.regex("^s/(.*?)"))
+@app.on_message(filters.me & filters.regex("^s/(.*?)"))
 async def sed_msg(client, message):
     sed_result = await separate_sed("s/" + message.text)
     if sed_result:

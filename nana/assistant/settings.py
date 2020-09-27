@@ -1,6 +1,7 @@
 from platform import python_version
 
-from pyrogram import Filters, InlineKeyboardButton, InlineKeyboardMarkup, errors
+from pyrogram import filters, errors
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from .theme.theme_helper import get_theme
 from nana import setbot, app, USERBOT_VERSION, ASSISTANT_VERSION, DB_AVAILABLE, HEROKU_API, Owner
 from nana.__main__ import reload_userbot, restart_all
@@ -42,7 +43,7 @@ async def get_button_settings():
     return InlineKeyboardMarkup(list_button)
 
 
-@setbot.on_callback_query(Filters.regex("^toggle_startbot"))
+@setbot.on_callback_query(filters.regex("^toggle_startbot"))
 async def start_stop_bot(client, query):
     try:
         await app.stop()
@@ -67,7 +68,7 @@ async def start_stop_bot(client, query):
     await client.answer_callback_query(query.id, "Bot was stopped!")
 
 
-@setbot.on_callback_query(Filters.regex("^restart_bot"))
+@setbot.on_callback_query(filters.regex("^restart_bot"))
 async def reboot_bot(client, query):
     await restart_all()
     text = await get_text_settings()
@@ -82,7 +83,7 @@ async def reboot_bot(client, query):
 # Back button
 
 
-@setbot.on_callback_query(Filters.regex("^back"))
+@setbot.on_callback_query(filters.regex("^back"))
 async def back(_client, message):
     text = await get_text_settings()
     button = await get_button_settings()

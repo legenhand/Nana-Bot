@@ -5,7 +5,7 @@ import datetime
 import os
 
 import pycurl
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command, log
 from .downloads import download_file_from_tg, name_file, humanbytes
@@ -21,7 +21,7 @@ Reply to telegram file for mirroring to transfer.sh
 """
 
 
-@app.on_message(Filters.me & Filters.command(["tfsh"], Command))
+@app.on_message(filters.me & filters.command(["tfsh"], Command))
 async def tfsh(client, message):
     if not message.reply_to_message:
         await message.edit("`Reply to any file telegram message!`")

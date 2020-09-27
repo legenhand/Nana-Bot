@@ -1,7 +1,7 @@
 
 import asyncio
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import Command, app
 from nana.helpers.aiohttp_helper import AioHttp
@@ -16,7 +16,7 @@ Check info of cases corona virus disease 2019
 """
 
 
-@app.on_message(Filters.me & Filters.command(["covid"], Command))
+@app.on_message(filters.me & filters.command(["covid"], Command))
 async def corona(_client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
@@ -37,7 +37,6 @@ Deaths/Mil: `{r['deathsPerOneMillion']}``
             return
         except Exception as e:
             await message.edit("`The corona API could not be reached`")
-            print(e)
             await asyncio.sleep(3)
             await message.delete()
             return
@@ -63,6 +62,5 @@ Deaths/Mil: `{r['deathsPerOneMillion']}`
             await message.edit(f"{reply_text}")
         except Exception as e:
             await message.edit("`The corona API could not be reached`")
-            print(e)
             await asyncio.sleep(3)
             await message.delete()

@@ -1,6 +1,6 @@
 import asyncio
 
-from pyrogram import Filters
+from pyrogram import filters
 
 from nana import app, Command
 
@@ -15,7 +15,7 @@ Search a track on Deezer and send into a chat
 """
 
 
-@app.on_message(Filters.me & Filters.command(["music"], Command))
+@app.on_message(filters.me & filters.command(["music"], Command))
 async def send_music(client, message):
     try:
         cmd = message.command

@@ -7,9 +7,7 @@ from pyrogram import filters
 from pyrogram.types import ReplyKeyboardMarkup
 from nana import setbot, AdminSettings, DB_AVAILABLE, app, Owner
 from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
-
-TEMP_KEYBOARD = []
-USER_SET = {}
+from .input_handler import TEMP_KEYBOARD, USER_SET
 TODEL = {}
 
 
@@ -59,7 +57,7 @@ async def get_stickers_animation(_client, message):
 
 # app.read_history("@Stickers")
 
-def get_stickerlist(_, __, message):
+def get_stickerlist(message):
     if not DB_AVAILABLE:
         return
     global TEMP_KEYBOARD, USER_SET

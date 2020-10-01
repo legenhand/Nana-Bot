@@ -2,12 +2,14 @@
 # Settings For Sticker
 #
 import time
-from .settings import get_text_settings, get_button_settings
+
 from pyrogram import filters
 from pyrogram.types import ReplyKeyboardMarkup
+
 from nana import setbot, AdminSettings, DB_AVAILABLE, app, Owner
 from nana.assistant.database.stickers_db import set_sticker_set, set_stanim_set
-from .input_handler import TEMP_KEYBOARD, USER_SET
+from .settings import get_text_settings, get_button_settings
+
 TODEL = {}
 
 

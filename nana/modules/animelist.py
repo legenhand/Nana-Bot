@@ -1,7 +1,9 @@
+import asyncio
+
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
 from pyrogram import filters
-import asyncio
+
 from nana import app, Command
 from nana.helpers.string import replace_text
 

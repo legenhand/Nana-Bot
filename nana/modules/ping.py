@@ -1,9 +1,10 @@
-import requests
-from typing import List
 import time
 
-from nana import app, Owner, Command, StartTime
+import requests
 from pyrogram import filters
+from typing import List
+
+from nana import app, Owner, Command, StartTime
 
 sites_list = {
     "Telegram": "https://api.telegram.org",

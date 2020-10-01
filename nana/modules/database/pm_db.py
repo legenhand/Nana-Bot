@@ -1,15 +1,12 @@
+import threading
+
 from sqlalchemy import Column, String
 
 from nana import BASE, SESSION
 
 
-
 # class set_req
 # class get_req
-
-import threading
-
-
 
 
 class WhitelistUsers(BASE):

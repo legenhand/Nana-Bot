@@ -1,8 +1,9 @@
+import asyncio
 import os
 
 from gtts import gTTS
 from pyrogram import filters
-import asyncio
+
 from nana import app, Command
 
 __MODULE__ = "Voice"

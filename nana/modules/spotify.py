@@ -1,12 +1,13 @@
 # This module ported from https://github.com/muhammedfurkan/Spotify-Telegram-Bio-Updater
 # Ported By : Legenhand
+import asyncio
+import json
+
+import requests
 from pyrogram import filters
+from pyrogram.errors import FloodWait, AboutTooLong
 
 from nana import app, Command, setbot, Owner, log, SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET
-from pyrogram.errors import FloodWait, AboutTooLong
-import asyncio
-import requests
-import json
 
 __MODULE__ = "spotify"
 __HELP__ = """

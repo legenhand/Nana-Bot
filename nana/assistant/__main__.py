@@ -1,9 +1,11 @@
 import os
 from platform import python_version
+
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 from nana import app, setbot, AdminSettings, DB_AVAILABLE, USERBOT_VERSION, ASSISTANT_VERSION, BotUsername, Owner, \
-    OwnerName, NANA_IMG
+    OwnerName
 from nana.assistant.settings import get_text_settings, get_button_settings
 from nana.assistant.theme.theme_helper import get_theme
 

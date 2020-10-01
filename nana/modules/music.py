@@ -4,7 +4,6 @@ from pyrogram import filters
 
 from nana import app, Command
 
-
 __MODULE__ = "Deezer"
 __HELP__ = """
 This Module is to send music into a chat.

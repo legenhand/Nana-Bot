@@ -2,10 +2,10 @@
 # Author of Carbon API: Sumanjay (https://github.com/cyberboysumanjay) (@cyberboysumanjay)
 # All rights reserved.
 
-import requests
 import asyncio
 from time import sleep
 
+import requests
 from pyrogram import filters
 
 from nana import app, Command

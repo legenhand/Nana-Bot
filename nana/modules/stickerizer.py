@@ -6,7 +6,6 @@ from pyrogram import filters
 from nana import app, Command
 from nana.helpers.PyroHelpers import ReplyCheck
 
-
 __MODULE__ = "Stickerizer"
 __HELP__ = """
 Module that uses inline Stickerizer bot!

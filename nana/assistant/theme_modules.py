@@ -1,11 +1,9 @@
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from nana import setbot, Owner, AdminSettings
-from .database.custom_theme_db import add_custom_theme
+
+from nana import setbot, Owner
 from .database.theme_db import set_name_theme_set
 from .theme.theme_helper import theme_list, name_theme
-
-
 
 
 @setbot.on_callback_query(filters.regex("^theme"))

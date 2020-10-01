@@ -1,14 +1,15 @@
 
 # ffmpeg -i video_1573046696-542963.mp4 -vf scale=500x500 -strict -2 vid.mp4
 
-from asyncio import sleep
-import subprocess
 import os
+import subprocess
+from asyncio import sleep
+
+from pyrogram import filters
 
 from nana import setbot, app, Command, Owner
-from pyrogram import filters
-from nana.modules.downloads import download_reply_nocall
 from nana.helpers.PyroHelpers import ReplyCheck
+from nana.modules.downloads import download_reply_nocall
 
 __MODULE__ = "Video Note"
 __HELP__ = """

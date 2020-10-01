@@ -1,8 +1,9 @@
-import requests
 from asyncio import sleep
 
-from nana import app, Command
+import requests
 from pyrogram import filters
+
+from nana import app, Command
 
 __MODULE__ = "Device"
 __HELP__ = """

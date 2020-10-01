@@ -3,7 +3,7 @@ import re
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import app, setbot, Command, Owner, BotUsername, DB_AVAILABLE, lydia_api, AdminSettings, OwnerName, PM_PERMIT
+from nana import app, setbot, Command, Owner, BotUsername, DB_AVAILABLE, AdminSettings, OwnerName, PM_PERMIT
 from nana.helpers.parser import mention_markdown
 
 if DB_AVAILABLE:

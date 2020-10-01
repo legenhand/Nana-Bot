@@ -1,10 +1,10 @@
+import random
 import sys
 import traceback
-import random
 from uuid import uuid4
 
-from pyrogram.types import InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 from pyrogram import errors
+from pyrogram.types import InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 
 from nana import setbot, Owner, OwnerName, DB_AVAILABLE
 from nana.helpers.msg_types import Types

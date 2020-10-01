@@ -3,7 +3,7 @@ import time
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from nana import app, setbot, Owner, OwnerName, Command, DB_AVAILABLE
+from nana import app, setbot, Owner, OwnerName, Command, DB_AVAILABLE, edrep
 from nana.helpers.msg_types import Types, get_message_type
 from nana.helpers.parser import mention_markdown, escape_markdown
 
@@ -33,7 +33,7 @@ AFK_RESTIRECT = {}
 DELAY_TIME = 60  # seconds
 
 
-@app.on_message(filters.me & (filters.command(["afk"], Command) | filters.regex("^brb ")))
+@app.on_message(filters.me & (filters.command("afk", Command)))
 async def afk(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
@@ -64,22 +64,19 @@ async def afk_mentioned(_client, message):
         else:
             cid = str(message.chat.id)
 
-        if cid in list(AFK_RESTIRECT):
-            if int(AFK_RESTIRECT[cid]) >= int(time.time()):
-                return
+        if cid in list(AFK_RESTIRECT) and int(AFK_RESTIRECT[cid]) >= int(
+            time.time()
+        ):
+            return
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get['reason']:
-            await message.reply(
-                "Sorry, {} is AFK!\nBecause of {}".format(mention_markdown(Owner, OwnerName), get['reason']))
+            await edrep(message, text=f"Sorry, {mention_markdown(Owner, OwnerName)} is AFK!\nBecause of {get['reason']}")
         else:
-            await message.reply("Sorry, {} is AFK!".format(mention_markdown(Owner, OwnerName)))
+            await edrep(message, text=f"Sorry, {mention_markdown(Owner, OwnerName)} is AFK!")
 
         _, message_type = get_message_type(message)
         if message_type == Types.TEXT:
-            if message.text:
-                text = message.text
-            else:
-                text = message.caption
+            text = message.text if message.text else message.caption
         else:
             text = message_type.name
 

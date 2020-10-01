@@ -3,29 +3,13 @@ from html import escape
 
 from pyrogram import filters
 
-from nana import app, Command
+from nana import app, Command, AdminSettings, edrep
 
 __MODULE__ = "Stylish Text"
 __HELP__ = """
 Convert your text to stylish text!
 
-Use this custom format:
--> `<upside>Upside-down text</upside>` = `ʇxəʇ uʍop-əpısp∩`
--> `<oline>Overline text</oline>` = `̅o̅v̅e̅r̅l̅i̅n̅e̅ ̅t̅e̅x̅t̅`
--> `<strike>Strike text</strike>` = `̶s̶t̶r̶i̶k̶e̶ ̶t̶e̶x̶t̶`
--> `<unline>Underline text</unline>` = `̲u̲n̲d̲e̲r̲l̲i̲n̲e̲ ̲t̲e̲x̲t̲`
--> `<point>Point text</point>` = `p̤o̤i̤n̤t̤ ̤t̤e̤x̤t̤`
--> `<smallcaps>Smallcaps text</smallcaps>` = `sᴍᴀʟʟᴄᴀᴘs ᴛᴇxᴛ`
--> `<superscript>Superscript text</superscript>` = `ˢᵘᵖᵉʳˢᶜʳᶦᵖᵗ ᵗᵉˣᵗ`
--> `<subscript>Subscript text</subscript>` = `ₛᵤᵦₛ𝒸ᵣᵢₚₜ ₜₑₓₜ`
--> `<wide>Wide text</wide>` = `ｗｉｄｅ ｔｅｘｔ`
--> `<bubble>Bubbles text</bubble>` = `ⒷⓊⒷⒷⓁⒺⓈ ⓉⒺⓍⓉ`
--> `<bubble2>Bubbles black text</bubble2>` = `🅑🅤🅑🅑🅛🅔🅢 🅑🅛🅐🅒🅚 🅣🅔🅧🅣`
--> `<smoth>Smoth text</smoth>` = `ᔑᗰᝪᎢᕼ Ꭲᗴ᙭Ꭲ`
--> `<graffiti>Graffiti text</graffiti>` = `𝔊𝔯𝔞𝔣𝔣𝔦𝔱𝔦 𝔱𝔢𝔵𝔱`
--> `<graffitib>Graffiti Bold text</graffitib>` = `𝕲𝖗𝖆𝖋𝖋𝖎𝖙𝖎 𝕭𝖔𝖑𝖉 𝖙𝖊𝖝𝖙`
--> `<handwriting>Handwaritng text</handwriting>` = `𝐻𝒶𝓃𝒹𝓌𝓇𝒾𝓉𝒾𝓃𝑔 𝓉𝑒𝓍𝓉`
--> `<handwritingb>Handwriting Bold text</handwritingb>` = `𝓗𝓪𝓷𝓭𝔀𝓻𝓲𝓽𝓲𝓷𝓰 𝓑𝓸𝓵𝓭 𝓽𝓮𝔁𝓽`
+Use this custom format: [Click here to Read](https://telegra.ph/Nana-Remix-Stylish-Text-Helper-07-17)
 
 ──「 **Stylish Generator** 」──
 -> `stylish Your text here <upside>with</upside> <strike>formatted</strike> <unline>style</unline>`
@@ -78,8 +62,8 @@ def text_style_generator(text, text_type):
     for i, _ in enumerate(teks):
         teks[i] = text_type + teks[i]
     pesan = ""
-    for x in range(len(teks)):
-        pesan += teks[x]
+    for tek in teks:
+        pesan += tek
     return pesan + text_type
 
 
@@ -124,7 +108,7 @@ def stylish_formatting(text):
     smallcaps_compile = re.compile(r'<smallcaps>(.*?)</smallcaps>')
     src_code = smallcaps_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, smallcaps))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, smallcaps)}
         convtext = x.translate(unic)
         text = re.sub(r'<smallcaps>(.*?)</smallcaps>', convtext, text, 1)
 
@@ -132,7 +116,7 @@ def stylish_formatting(text):
     superscript_compile = re.compile(r'<superscript>(.*?)</superscript>')
     src_code = superscript_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, superscript))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, superscript)}
         convtext = x.translate(unic)
         text = re.sub(r'<superscript>(.*?)</superscript>', convtext, text, 1)
 
@@ -140,7 +124,7 @@ def stylish_formatting(text):
     subscript_compile = re.compile(r'<subscript>(.*?)</subscript>')
     src_code = subscript_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, subscript))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, subscript)}
         convtext = x.translate(unic)
         text = re.sub(r'<subscript>(.*?)</subscript>', convtext, text, 1)
 
@@ -148,7 +132,7 @@ def stylish_formatting(text):
     wide_compile = re.compile(r'<wide>(.*?)</wide>')
     src_code = wide_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, wide))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, wide)}
         convtext = x.translate(unic)
         text = re.sub(r'<wide>(.*?)</wide>', convtext, text, 1)
 
@@ -156,7 +140,7 @@ def stylish_formatting(text):
     bubble_compile = re.compile(r'<bubble>(.*?)</bubble>')
     src_code = bubble_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, bubbles))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, bubbles)}
         convtext = x.translate(unic)
         text = re.sub(r'<bubble>(.*?)</bubble>', convtext, text, 1)
 
@@ -164,7 +148,7 @@ def stylish_formatting(text):
     bubble2_compile = re.compile(r'<bubble2>(.*?)</bubble2>')
     src_code = bubble2_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, bubblesblack))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, bubblesblack)}
         convtext = x.translate(unic)
         text = re.sub(r'<bubble2>(.*?)</bubble2>', convtext, text, 1)
 
@@ -172,35 +156,35 @@ def stylish_formatting(text):
     smoth_compile = re.compile(r'<smoth>(.*?)</smoth>')
     src_code = smoth_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, smothtext))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, smothtext)}
         convtext = x.translate(unic)
         text = re.sub(r'<smoth>(.*?)</smoth>', convtext, text, 1)
     graffiti_compile = re.compile(r'<graffiti>(.*?)</graffiti>')
     src_code = graffiti_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, graffiti))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, graffiti)}
         convtext = x.translate(unic)
         text = re.sub(r'<graffiti>(.*?)</graffiti>', convtext, text, 1)
     handwriting_compile = re.compile(r'<handwriting>(.*?)</handwriting>')
     src_code = handwriting_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, handwriting))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, handwriting)}
         convtext = x.translate(unic)
         text = re.sub(r'<handwriting>(.*?)</handwriting>', convtext, text, 1)
 
     handwritingb_compile = re.compile(r'<handwritingb>(.*?)</handwritingb>')
     src_code = handwritingb_compile.findall(text)
     for x in src_code:
-        unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, handwritingb))
+        unic = {ord(x[0]): x[1] for x in zip(normaltext, handwritingb)}
         convtext = x.translate(unic)
         text = re.sub(r'<handwritingb>(.*?)</handwritingb>', convtext, text, 1)
     return text
 
 
-@app.on_message(filters.me & filters.command(["stylish"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("stylish", Command))
 async def stylish_generator(_client, message):
     if message.text and len(message.text.split()) == 1 or message.caption and len(message.caption.split()) == 1:
-        await message.edit("Usage: `stylish your text goes here`")
+        await edrep(message, text="Usage: `stylish your text goes here`")
         return
 
     if message.caption:
@@ -213,14 +197,13 @@ async def stylish_generator(_client, message):
     if message.caption:
         await message.edit_caption(text)
     else:
-        await message.edit(text)
+        await edrep(message, text=text)
 
 
 # For inline stuff
 def formatting_text_inline(text, text_style):
-    unic = dict((ord(x[0]), x[1]) for x in zip(normaltext, text_style))
-    conv = text.translate(unic)
-    return conv
+    unic = {ord(x[0]): x[1] for x in zip(normaltext, text_style)}
+    return text.translate(unic)
 
 
 def upsidedown_text_inline(text):

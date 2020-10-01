@@ -11,12 +11,14 @@ class Cloner(BASE):
     bio = Column(UnicodeText)
 
     def __init__(self, user_id, first_name, last_name, bio):
+        "intialize cloner db"
         self.user_id = str(user_id)
         self.first_name = first_name
         self.last_name = last_name
         self.bio = bio
 
     def __repr__(self):
+        "clooner message for db"
         return "<Cloner {}>".format(self.user_id)
 
 

@@ -4,9 +4,9 @@ import shutil
 import requests
 from pyrogram import filters
 
-from nana import app, Command
+from nana import app, Command, AdminSettings, edrep
 
-__MODULE__ = "Uploader image"
+__MODULE__ = "Uploader"
 __HELP__ = """
 Reupload URL image to telegram without save it first.
 
@@ -20,10 +20,10 @@ Upload image and convert to sticker, please note image from telegraph will resul
 """
 
 
-@app.on_message(filters.me & filters.command(["pic"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("pic", Command))
 async def PictureUploader(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `.pic <url>`")
+        await edrep(message, text="Usage: `.pic <url>`")
         return
     photo = message.text.split(None, 1)[1]
     await message.delete()
@@ -45,10 +45,10 @@ async def PictureUploader(client, message):
             await client.send_photo(message.chat.id, photo, "")
 
 
-@app.on_message(filters.me & filters.command(["stk"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("stk", Command))
 async def StickerUploader(client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `.stk <url>`")
+        await edrep(message, text="Usage: `.stk <url>`")
         return
     photo = message.text.split(None, 1)[1]
     await message.delete()

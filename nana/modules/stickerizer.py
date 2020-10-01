@@ -3,7 +3,7 @@ import random
 
 from pyrogram import filters
 
-from nana import app, Command
+from nana import app, Command, AdminSettings, edrep
 from nana.helpers.PyroHelpers import ReplyCheck
 
 __MODULE__ = "Stickerizer"
@@ -32,9 +32,19 @@ waifus = [20, 32, 33, 40, 41, 42, 58]
 senpais = [37, 38, 48, 55]
 
 
-@app.on_message(filters.me & filters.command(["ggl"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("ggl", Command))
 async def google_search(client, message):
-    googles = message.reply_to_message.text
+    cmd = message.command
+    googles = ""
+    if len(cmd) > 1:
+        googles = " ".join(cmd[1:])
+    elif message.reply_to_message and len(cmd) == 1:
+        googles = message.reply_to_message.text
+    elif len(cmd) == 1:
+        await edrep(message, text="`No text Given hence can not google the void.`")
+        await asyncio.sleep(2)
+        await message.delete()
+        return
     x = await client.get_inline_bot_results("Stickerizerbot", f"#12{googles}")
     await message.delete()
     await client.send_inline_bot_result(chat_id=message.chat.id,
@@ -44,7 +54,7 @@ async def google_search(client, message):
                                         hide_via=True)
 
 
-@app.on_message(filters.me & filters.command(["mock"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("mock", Command))
 async def mock_spongebob(client, message):
     cmd = message.command
     mock = ""
@@ -52,8 +62,8 @@ async def mock_spongebob(client, message):
         mock = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         mock = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("`Can't mock the void.`")
+    elif len(cmd) == 1:
+        await edrep(message, text="`Can't mock the void.`")
         await asyncio.sleep(2)
         await message.delete()
         return
@@ -66,7 +76,7 @@ async def mock_spongebob(client, message):
                                         hide_via=True)
 
 
-@app.on_message(filters.me & filters.command(["senpai"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("senpai", Command))
 async def senpai_sticker(client, message):
     cmd = message.command
     senpai = ""
@@ -74,8 +84,8 @@ async def senpai_sticker(client, message):
         senpai = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         senpai = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("`No text Given hence the senpai Ran Away.`")
+    elif len(cmd) == 1:
+        await edrep(message, text="`No text Given hence the senpai Ran Away.`")
         await asyncio.sleep(2)
         await message.delete()
         return
@@ -88,7 +98,7 @@ async def senpai_sticker(client, message):
                                         hide_via=True)
 
 
-@app.on_message(filters.me & filters.command(["waifu"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("waifu", Command))
 async def waifu_sticker(client, message):
     cmd = message.command
     waifu = ""
@@ -96,8 +106,8 @@ async def waifu_sticker(client, message):
         waifu = " ".join(cmd[1:])
     elif message.reply_to_message and len(cmd) == 1:
         waifu = message.reply_to_message.text
-    elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("`No text Given hence the waifu Ran Away.`")
+    elif len(cmd) == 1:
+        await edrep(message, text="`No text Given hence the waifu Ran Away.`")
         await asyncio.sleep(2)
         await message.delete()
         return

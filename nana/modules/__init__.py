@@ -1,3 +1,6 @@
+"""
+Directory for modules.
+"""
 from nana import USERBOT_LOAD, USERBOT_NOLOAD, log
 
 

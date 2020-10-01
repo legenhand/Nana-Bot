@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 from pyDownload import Downloader
 from pyrogram import filters
 
-from nana import app, Command
+from nana import app, Command, AdminSettings, edrep
 
 __MODULE__ = "Downloads"
 __HELP__ = """
@@ -47,13 +47,10 @@ androidfilehost.com`
 """
 
 
-@app.on_message(filters.me & filters.command(["ls"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("ls", Command))
 async def ls(_client, message):
     args = message.text.split(None, 1)
-    if len(args) == 2:
-        basepath = "nana/{}".format(args[1])
-    else:
-        basepath = "nana/"
+    basepath = "nana/{}".format(args[1]) if len(args) == 2 else "nana/"
     directory = ""
     listfile = ""
     for entry in os.listdir(basepath):
@@ -62,14 +59,14 @@ async def ls(_client, message):
     for entry in os.listdir(basepath):
         if os.path.isfile(os.path.join(basepath, entry)):
             listfile += "\n{}".format(entry)
-    await message.edit("**List directory :**`{}`\n**List file :**`{}`".format(directory, listfile))
+    await edrep(message, text="**List directory :**`{}`\n**List file :**`{}`".format(directory, listfile))
 
 
-@app.on_message(filters.me & filters.command(["upload"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("upload", Command))
 async def upload_file(client, message):
     args = message.text.split(None, 1)
     if len(args) == 1:
-        await message.edit("usage : upload (path)")
+        await edrep(message, text="usage : upload (path)")
         return
     path = "nana/{}".format(args[1])
     try:
@@ -78,9 +75,9 @@ async def upload_file(client, message):
     except Exception as e:
         logging.error("Exception occured", exc_info=True)
         logging.error(e)
-        await message.edit("`File not found!`")
+        await edrep(message, text="`File not found!`")
         return
-    await message.edit("`Success!`")
+    await edrep(message, text="`Success!`")
     await asyncio.sleep(5)
     await client.delete_messages(message.chat.id, message.message_id)
 
@@ -138,10 +135,10 @@ async def download_url(url, file_name):
     return downlaoded
 
 
-@app.on_message(filters.me & filters.command(["dl"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("dl", Command))
 async def download_from_url(_client, message):
     if len(message.text.split()) == 1:
-        await message.edit("Usage: `dl <url> <filename>`")
+        await edrep(message, text="Usage: `dl <url> <filename>`")
         return
     if len(message.text.split()) == 2:
         url = message.text.split(None, 1)[1]
@@ -150,44 +147,44 @@ async def download_from_url(_client, message):
         url = message.text.split(None, 2)[1]
         file_name = message.text.split(None, 2)[2]
     else:
-        await message.edit("Invaild args given!")
+        await edrep(message, text="Invaild args given!")
         return
     try:
         os.listdir("nana/downloads/")
     except FileNotFoundError:
-        await message.edit("Invalid download path in config!")
+        await edrep(message, text="Invalid download path in config!")
         return
-    await message.edit("Downloading...")
+    await edrep(message, text="Downloading...")
     download = await download_url(url, file_name)
-    await message.edit(download)
+    await edrep(message, text=download)
 
 
-@app.on_message(filters.me & filters.command(["download"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("download", Command))
 async def dssownload_from_telegram(client, message):
     if message.reply_to_message:
         await download_file_from_tg(client, message)
     else:
-        await message.edit("Reply document to download it")
+        await edrep(message, text="Reply document to download it")
 
 
-@app.on_message(filters.me & filters.command(["direct"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("direct", Command))
 async def direct_link_generator(_client, message):
     args = message.text.split(None, 1)
-    await message.edit("`Processing...`")
+    await edrep(message, text="`Processing...`")
     if len(args) == 1:
-        await message.edit("Write any args here!")
+        await edrep(message, text="Write any args here!")
         return
     downloadurl = args[1]
     reply = ''
     links = re.findall(r'\bhttps?://.*\.\S+', downloadurl)
     if not links:
         reply = "`No links found!`"
-        await message.edit(reply)
+        await edrep(message, text=reply)
     for link in links:
         if 'drive.google.com' in link:
             reply += gdrive(link)
         elif 'zippyshare.com' in link:
-            reply += zippy_share(link)
+            reply += 'Zippy Share disabled of security reasons'
         elif 'yadi.sk' in link:
             reply += yandex_disk(link)
         elif 'mediafire.com' in link:
@@ -203,11 +200,11 @@ async def direct_link_generator(_client, message):
         else:
             reply += re.findall(r"\bhttps?://(.*?[^/]+)",
                                 link)[0] + 'is not supported'
-    await message.edit(reply)
+    await edrep(message, text=reply)
 
 
 def gdrive(url: str) -> str:
-    """ GDrive direct links generator """
+    """GDrive direct links generator"""
     drive = 'https://drive.google.com'
     try:
         link = re.findall(r'\bhttps?://drive\.google\.com\S+', url)[0]
@@ -249,38 +246,8 @@ def gdrive(url: str) -> str:
     return reply
 
 
-def zippy_share(url: str) -> str:
-    """ ZippyShare direct links generator
-    Based on https://github.com/LameLemon/ziggy"""
-    reply = ''
-    dl_url = ''
-    try:
-        link = re.findall(r'\bhttps?://.*zippyshare\.com\S+', url)[0]
-    except IndexError:
-        reply = "`No ZippyShare links found`\n"
-        return reply
-    session = requests.Session()
-    base_url = re.search('http.+.com', link).group()
-    response = session.get(link)
-    page_soup = BeautifulSoup(response.content, "lxml")
-    scripts = page_soup.find_all("script", {"type": "text/javascript"})
-    for script in scripts:
-        if "getElementById('dlbutton')" in script.text:
-            url_raw = re.search(r'= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);',
-                                script.text).group('url')
-            mathh = re.search(r'= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);',
-                              script.text).group('math')
-            dl_url = url_raw.replace(mathh, '"' + str(eval(mathh)) + '"')
-            break
-    dl_url = base_url + eval(dl_url)
-    name = urllib.parse.unquote(dl_url.split('/')[-1])
-    reply += f'[{name}]({dl_url})\n'
-    return reply
-
-
 def yandex_disk(url: str) -> str:
-    """ Yandex.Disk direct links generator
-    Based on https://github.com/wldhx/yadisk-direct"""
+    """Yandex.Disk direct links generator"""
     reply = ''
     try:
         link = re.findall(r'\bhttps?://.*yadi\.sk\S+', url)[0]
@@ -299,7 +266,7 @@ def yandex_disk(url: str) -> str:
 
 
 def mediafire(url: str) -> str:
-    """ MediaFire direct links generator """
+    """MediaFire direct links generator"""
     try:
         link = re.findall(r'\bhttps?://.*mediafire\.com\S+', url)[0]
     except IndexError:
@@ -316,7 +283,7 @@ def mediafire(url: str) -> str:
 
 
 def sourceforge(url: str) -> str:
-    """ SourceForge direct links generator """
+    """SourceForge direct links generator"""
     try:
         link = re.findall(r'\bhttps?://.*sourceforge\.net\S+', url)[0]
     except IndexError:
@@ -337,7 +304,7 @@ def sourceforge(url: str) -> str:
 
 
 def osdn(url: str) -> str:
-    """ OSDN direct links generator """
+    """OSDN direct links generator"""
     osdn_link = 'https://osdn.net'
     try:
         link = re.findall(r'\bhttps?://.*osdn\.net\S+', url)[0]
@@ -359,7 +326,7 @@ def osdn(url: str) -> str:
 
 
 def github(url: str) -> str:
-    """ GitHub direct links generator """
+    """GitHub direct links generator"""
     try:
         link = re.findall(r'\bhttps?://.*github\.com.*releases\S+', url)[0]
     except IndexError:
@@ -378,7 +345,7 @@ def github(url: str) -> str:
 
 
 def androidfilehost(url: str) -> str:
-    """ AFH direct links generator """
+    """AFH direct links generator"""
     try:
         link = re.findall(r'\bhttps?://.*androidfilehost.*fid.*\S+', url)[0]
     except IndexError:
@@ -429,9 +396,7 @@ def androidfilehost(url: str) -> str:
 
 
 def useragent():
-    """
-    useragent random setter
-    """
+    """useragent random setter"""
     useragents = BeautifulSoup(
         requests.get(
             'https://developers.whatismybrowser.com/'
@@ -459,7 +424,7 @@ async def progressdl(current, total, event, start, type_of_ps, file_name=None):
               "{0} of {1}\nETA: {2}".format(
                   humanbytes(current),
                   humanbytes(total),
-                  time_formatter(estimated_total_time)
+                  await time_formatter(estimated_total_time)
               )
         if file_name:
             await event.edit("{}\nFile Name: `{}`\n{}".format(
@@ -469,8 +434,7 @@ async def progressdl(current, total, event, start, type_of_ps, file_name=None):
 
 
 def humanbytes(size):
-    """Input size in bytes,
-    outputs in a human readable format"""
+    """Input size in bytes"""
     # https://stackoverflow.com/a/49361727/4723940
     if not size:
         return ""
@@ -484,9 +448,8 @@ def humanbytes(size):
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
 
-def time_formatter(milliseconds: int) -> str:
-    """Inputs time in milliseconds, to get beautified time,
-    as string"""
+async def time_formatter(milliseconds: int) -> str:
+    """Inputs time in milliseconds"""
     seconds, milliseconds = divmod(int(milliseconds), 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
@@ -516,7 +479,7 @@ async def download_reply_nocall(client, message):
 		nama = "{}".format(message.reply_to_message.audio.file_name)
 		await client.download_media(message.reply_to_message.audio, file_name="nana/downloads/" + nama)
 	elif message.reply_to_message.voice:
-		nama = "audio_{}.ogg".format(message.reply_to_message.voice)
+		nama = "audio_{}.ogg".format(message.reply_to_message.voice.date)
 		await client.download_media(message.reply_to_message.voice, file_name="nana/downloads/" + nama)
 	elif message.reply_to_message.document:
 		nama = "{}".format(message.reply_to_message.document.file_name)
@@ -527,7 +490,6 @@ async def download_reply_nocall(client, message):
 
 
 async def download_file_from_tg(client, message):
-    await message.edit("__Downloading...__")
     start = int(time.time())
     c_time = time.time()
     name = await name_file(client, message)
@@ -560,12 +522,12 @@ async def download_file_from_tg(client, message):
                                     progress=lambda d, t: asyncio.get_event_loop().create_task(
                                         progressdl(d, t, message, c_time, "Downloading...")))
     else:
-        await message.edit("Unknown file!")
+        await edrep(message, text="Unknown file!")
         return
     end = int(time.time())
     times = await time_parser(start, end)
     text = f"**⬇ Downloaded!**\n🗂 File name: `{name}`\n🏷 Saved to: `nana/downloads/`\n⏲ Downloaded in: {times}"
-    await message.edit(text)
+    await edrep(message, text=text)
 
 
 async def name_file(_client, message):
@@ -588,5 +550,5 @@ async def name_file(_client, message):
     elif message.reply_to_message.document:
         return "{}".format(message.reply_to_message.document.file_name)
     else:
-        await message.edit("Unknown file!")
+        await edrep(message, text="Unknown file!")
         return

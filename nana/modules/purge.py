@@ -4,7 +4,7 @@ from datetime import datetime
 
 from pyrogram import filters
 
-from nana import Owner, app, Command
+from nana import Owner, app, Command, AdminSettings, edrep
 from nana.helpers.admincheck import admin_check
 
 __MODULE__ = "Purges"
@@ -34,7 +34,7 @@ Delete's a message that you reply to
 """
 
 
-@app.on_message(filters.me & filters.command(["purge"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("purge", Command))
 async def purge_message(client, message):
     if message.chat.type in (("supergroup", "channel")):
         is_admin = await admin_check(message)
@@ -58,7 +58,7 @@ async def purge_message(client, message):
                 )
                 count_del_etion_s += len(message_ids)
                 message_ids = []
-        if len(message_ids) > 0:
+        if message_ids:
             await client.delete_messages(
                 chat_id=message.chat.id,
                 message_ids=message_ids,
@@ -67,20 +67,20 @@ async def purge_message(client, message):
             count_del_etion_s += len(message_ids)
     end_t = datetime.now()
     time_taken_ms = (end_t - start_t).seconds
-    msg = await client.send_message(
+    ms_g = await client.send_message(
         message.chat.id,
         f"Purged {count_del_etion_s} messages in {time_taken_ms} seconds"
         )
     await asyncio.sleep(5)
-    await msg.delete()
+    await ms_g.delete()
 
 
-@app.on_message(filters.me & filters.command(["purgeme"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("purgeme", Command))
 async def purge_myself(client, message):
     if len(message.text.split()) >= 2 and message.text.split()[1].isdigit():
         target = int(message.text.split()[1])
     else:
-        await message.edit("Give me a number for a range!")
+        await edrep(message, text="Give me a number for a range!")
     get_msg = await client.get_history(message.chat.id)
     listall = []
     counter = 0
@@ -95,7 +95,7 @@ async def purge_myself(client, message):
         semua = listall
         jarak = 0
         jarak2 = 0
-        for x in range(math.ceil(len(listall) / 100)):
+        for x in range(math.ceil(len(semua) / 100)):
             if total >= 101:
                 jarak2 += 100
                 await client.delete_messages(message.chat.id, message_ids=semua[jarak:jarak2])
@@ -110,7 +110,7 @@ async def purge_myself(client, message):
         await client.delete_messages(message.chat.id, message_ids=listall)
 
 
-@app.on_message(filters.me & filters.command(["del"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("del", Command))
 async def delete_replied(client, message):
     msg_ids = [message.message_id]
     if message.reply_to_message:

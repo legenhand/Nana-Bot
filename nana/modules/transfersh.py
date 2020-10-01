@@ -7,7 +7,7 @@ import os
 import pycurl
 from pyrogram import filters
 
-from nana import app, Command, log
+from nana import app, Command, log, AdminSettings, edrep
 from .downloads import download_file_from_tg, name_file, humanbytes
 
 __MODULE__ = "transfer sh"
@@ -21,39 +21,31 @@ Reply to telegram file for mirroring to transfer.sh
 """
 
 
-@app.on_message(filters.me & filters.command(["tfsh"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("tfsh", Command))
 async def tfsh(client, message):
     if not message.reply_to_message:
-        await message.edit("`Reply to any file telegram message!`")
+        await edrep(message, text="`Reply to any file telegram message!`")
         return
-    await message.edit("`Processing...`")
+    await edrep(message, text="`Processing...`")
     name = await name_file(client, message)
     await download_file_from_tg(client, message)
-    if len(name) > 10:
-        name_file_upload = name[-10:]
-    else:
-        name_file_upload = name
+    name_file_upload = name[-10:] if len(name) > 10 else name
     name_file_upload.encode('ascii', 'ignore')
     os.rename(r'nana/downloads/{}'.format(name), r'nana/downloads/{}'.format(name_file_upload))
     print(name_file_upload)
-    await message.edit(
+    await edrep(message, text=
         await send_to_transfersh("nana/downloads/{}".format(name_file_upload), message, name_file_upload))
     os.remove("nana/downloads/{}".format(name_file_upload))
     return
 
 
 async def send_to_transfersh(file, message, name):
-    """
-    send file to transfersh, retrieve download link, and copy it to clipboard
-    :param file: absolute path to file
-    :param message: a message atribute
-    :return: download_link
-    """
+    """send file to transfersh, retrieve download link"""
     size_of_file = get_size(file)
     final_date = get_date_in_two_weeks()
     file_name = os.path.basename(file)
 
-    await message.edit("\nSending file: {} (size of the file: {})".format(file_name, size_of_file))
+    await edrep(message, text="\nSending file: {} (size of the file: {})".format(file_name, size_of_file))
     url = 'https://transfer.sh/{}'.format(name)
     c = pycurl.Curl()
     c.setopt(c.URL, url)

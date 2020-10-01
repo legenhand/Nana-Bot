@@ -1,7 +1,7 @@
 from pyrogram import filters, errors
 from pyrogram.types import InlineKeyboardMarkup
 
-from nana import app, setbot, Command, Owner, BotUsername, DB_AVAILABLE
+from nana import app, setbot, Command, Owner, BotUsername, DB_AVAILABLE, edrep
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana.helpers.msg_types import Types, get_note_type
 from nana.helpers.string import parse_button, build_keyboard
@@ -62,7 +62,7 @@ GET_FORMAT = {
 }
 
 
-@app.on_message(filters.user(Owner) & filters.command(["save"], Command))
+@app.on_message(filters.user(Owner) & filters.command("save", Command))
 async def save_note(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
@@ -83,7 +83,7 @@ async def save_note(_client, message):
     await message.edit(f'Saved note `{note_name}`!')
 
 
-@app.on_message(filters.user(Owner) & filters.command(["get"], Command))
+@app.on_message(filters.user(Owner) & filters.command("get", Command))
 async def get_note(client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")
@@ -101,10 +101,7 @@ async def get_note(client, message):
     if getnotes['type'] == Types.TEXT:
         teks, button = parse_button(getnotes.get('value'))
         button = build_keyboard(button)
-        if button:
-            button = InlineKeyboardMarkup(button)
-        else:
-            button = None
+        button = InlineKeyboardMarkup(button) if button else None
         if button:
             try:
                 inlineresult = await app.get_inline_bot_results(f"@{BotUsername}", f"note {note}")
@@ -137,10 +134,7 @@ async def get_note(client, message):
         if getnotes.get('value'):
             teks, button = parse_button(getnotes.get('value'))
             button = build_keyboard(button)
-            if button:
-                button = InlineKeyboardMarkup(button)
-            else:
-                button = None
+            button = InlineKeyboardMarkup(button) if button else None
         else:
             teks = None
             button = None
@@ -185,14 +179,14 @@ async def local_notes(_client, message):
     rply = "**Local notes:**\n"
     for x in getnotes:
         if len(rply) >= 1800:
-            await message.reply(rply)
+            await edrep(message, text=rply)
             rply = "**Local notes:**\n"
         rply += f"- `{x}`\n"
 
     await message.edit(rply)
 
 
-@app.on_message(filters.user(Owner) & filters.command(["clear"], Command))
+@app.on_message(filters.user(Owner) & filters.command("clear", Command))
 async def clear_note(_client, message):
     if not DB_AVAILABLE:
         await message.edit("Your database is not avaiable!")

@@ -63,7 +63,6 @@ api_hash = get_var('api_hash', None)
 
 # Session
 USERBOT_SESSION = get_var('USERBOT_SESSION', None)
-ASSISTANT_SESSION = get_var('ASSISTANT_SESSION', None)
 
 # Required for some features
 # Set temp var for load later
@@ -135,9 +134,7 @@ logging.getLogger('').addHandler(console)
 
 log = logging.getLogger()
 
-if USERBOT_SESSION and ASSISTANT_SESSION:
-    BOT_SESSION = ASSISTANT_SESSION
-    APP_SESSION = USERBOT_SESSION
+APP_SESSION = USERBOT_SESSION
 
 gauth = GoogleAuth()
 
@@ -208,7 +205,7 @@ if not os.path.exists("./nana/session/database_spotify.json") and SPOTIPY_CLIENT
     with open('./nana/session/database_spotify.json', 'w+') as outfile:
         json.dump(to_create, outfile, indent=4, sort_keys=True)
 
-setbot = Client(BOT_SESSION, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER,
+setbot = Client(app_version, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER,
                 test_mode=TEST_MODE)
 
 app = Client(APP_SESSION, api_id=api_id, api_hash=api_hash, app_version=app_version, device_model=device_model,

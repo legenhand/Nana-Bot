@@ -59,7 +59,6 @@ class Config(object):
 
 	# Fill this if you want to login using session code, else leave it blank
 	USERBOT_SESSION = ""
-	ASSISTANT_SESSION = ""
 
 	# Pass True if you want to use test mode
 	TEST_MODE = False

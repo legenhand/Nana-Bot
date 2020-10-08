@@ -6,7 +6,7 @@ import sys
 import time
 
 import requests
-from pydrive.auth import GoogleAuth
+
 from pyrogram import Client, errors
 from sqlalchemy import create_engine, exc
 from sqlalchemy.ext.declarative import declarative_base
@@ -139,7 +139,10 @@ if USERBOT_SESSION and ASSISTANT_SESSION:
     BOT_SESSION = ASSISTANT_SESSION
     APP_SESSION = USERBOT_SESSION
 
-gauth = GoogleAuth()
+# gdrive
+if not HEROKU_API:
+    from pydrive.auth import GoogleAuth
+    gauth = GoogleAuth()
 
 DB_AVAILABLE = False
 BOTINLINE_AVAIABLE = False

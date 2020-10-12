@@ -228,7 +228,7 @@ async def inline_query_handler(client, query):
 
     # PM_PERMIT
     elif string.split()[0] == "engine_pm":
-        button = [[InlineKeyboardButton("Ask for porn", callback_data="engine_pm_block"),
+        button = [[InlineKeyboardButton("Ask for dinner", callback_data="engine_pm_block"),
                    InlineKeyboardButton("Contact me", callback_data="engine_pm_nope")],
                   [InlineKeyboardButton("Report", callback_data="engine_pm_report"),
                    InlineKeyboardButton("Passing by", callback_data="engine_pm_none")]]

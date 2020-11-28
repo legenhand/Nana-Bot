@@ -2,7 +2,6 @@ psycopg2
 kbbi
 pySmartDL==1.3.3
 requests==2.24.0
-git+https://github.com/pytube3/pytube3.git
 pyrogram
 TgCrypto
 pydrive==1.3.1
@@ -19,7 +18,6 @@ pillow==7.1.2
 gtts==2.1.1
 gitpython
 pafy==0.5.5
-youtube_dl==2020.6.6
 googletrans==3.0.0
 currencyconverter
 bitlyshortener==0.3.5

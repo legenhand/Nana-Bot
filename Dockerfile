@@ -1,7 +1,9 @@
 # We're using Debian Slim Buster image
-FROM amazonlinux:latest
+FROM debian:bullseye
 
 ENV PIP_NO_CACHE_DIR 1
+
+RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
 
 # Installing Required Packages
 RUN apt update && apt upgrade -y && \

@@ -61,7 +61,7 @@ RUN apt update && apt upgrade -y && \
 RUN pip3 install --upgrade pip setuptools
 
 # Copy Python Requirements to /root/nana
-RUN git clone https://github.com/legenhand/Nana-Bot.git -b herokutest /root/nana
+RUN git clone https://github.com/legenhand/Nana-Bot.git /root/nana
 WORKDIR /root/nana
 
 #Copy config file to /root/nana/nana

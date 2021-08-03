@@ -33,7 +33,7 @@ async def caching_theme():
             name = int(name[5:])
             cache_theme = await get_custom_theme(name)
         else:
-            theme = await AioHttp().get_json('http://api.harumi.tech/theme')
+            theme = await AioHttp().get_json('https://nanaapi.herokuapp.com/theme')
             cache_theme = {
                 "welcome": theme[name]["welcome"],
                 "start": theme[name]["start"],
@@ -52,13 +52,13 @@ async def get_theme(type):
             theme = await get_custom_theme(name)
             return theme[type]
         else:
-            theme = await AioHttp().get_json('http://api.harumi.tech/theme')
+            theme = await AioHttp().get_json('https://nanaapi.herokuapp.com/theme')
             return theme[name][type]
     return cache_theme[type]
 
 
 async def theme_list():
-    theme = await AioHttp().get_json('http://api.harumi.tech/theme')
+    theme = await AioHttp().get_json('https://nanaapi.herokuapp.com/theme')
     list_button = []
     for i in theme:
         theme_code = theme[i]["theme-code"]
@@ -76,7 +76,7 @@ async def theme_list():
 
 
 async def name_theme(theme_code):
-    theme = await AioHttp().get_json('http://api.harumi.tech/theme')
+    theme = await AioHttp().get_json('https://nanaapi.herokuapp.com/theme')
     for i in theme:
         if theme_code == theme[i]["theme-code"]:
             return i

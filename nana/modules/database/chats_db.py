@@ -10,11 +10,13 @@ class MyChats(BASE):
     chat_username = Column(UnicodeText)
 
     def __init__(self, chat_id, chat_name, chat_username):
+        "initializing db"
         self.chat_id = str(chat_id)
         self.chat_name = chat_name
         self.chat_username = chat_username
 
     def __repr__(self):
+        "chat message for db"
         return "<Chat {} ({})>".format(self.chat_name, self.chat_id)
 
 
@@ -25,10 +27,13 @@ MY_ALL_CHATS = {}
 
 def update_chat(chat):
     global MY_ALL_CHATS
-    if chat.id in list(MY_ALL_CHATS):
-        if MY_ALL_CHATS.get(chat.id) and MY_ALL_CHATS[chat.id].get('name') == chat.title and MY_ALL_CHATS[chat.id].get(
-                'username') == chat.username:
-            return
+    if (
+        chat.id in list(MY_ALL_CHATS)
+        and MY_ALL_CHATS.get(chat.id)
+        and MY_ALL_CHATS[chat.id].get('name') == chat.title
+        and MY_ALL_CHATS[chat.id].get('username') == chat.username
+    ):
+        return
     chat_db = SESSION.query(MyChats).get(str(chat.id))
     if chat_db:
         SESSION.delete(chat_db)

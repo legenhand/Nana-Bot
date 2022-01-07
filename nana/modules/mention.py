@@ -3,7 +3,7 @@ from functools import partial
 
 from pyrogram import filters
 
-from nana import Command, app
+from nana import Command, app, AdminSettings, edrep
 
 __MODULE__ = "Mention"
 __HELP__ = """
@@ -25,39 +25,39 @@ hmention = partial(
 )
 
 
-@app.on_message(filters.me & filters.command(["mention"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("mention", Command))
 async def mention_user(client, message):
     if len(message.command) < 3:
-        await message.edit("Incorrect format\nExample: mention @pokurt CTO")
+        await edrep(message, text="Incorrect format\nExample: mention @pokurt CTO")
         await sleep(3)
         await message.delete()
         return
     try:
         user = await client.get_users(message.command[1])
     except Exception:
-        await message.edit("User not found")
+        await edrep(message, text="User not found")
         await sleep(3)
         await message.delete()
         return
 
     _mention = mention(user.id, ' '.join(message.command[2:]))
-    await message.edit(_mention)
+    await edrep(message, text=_mention)
 
 
-@app.on_message(filters.me & filters.command(["hmention"], Command))
+@app.on_message(filters.me & filters.command("hmention", Command))
 async def hidden_mention(client, message):
     if len(message.command) < 3:
-        await message.edit("Incorrect format\nExample: hmention @pokurt")
+        await edrep(message, text="Incorrect format\nExample: hmention @pokurt")
         await sleep(3)
         await message.delete()
         return
     try:
         user = await client.get_users(message.command[1])
     except Exception:
-        await message.edit("User not found")
+        await edrep(message, text="User not found")
         await sleep(3)
         await message.delete()
         return
 
     _hmention = hmention(user.id, ' '.join(message.command[2:]))
-    await message.edit(_hmention)
+    await edrep(message, text=_hmention)

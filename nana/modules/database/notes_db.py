@@ -15,6 +15,7 @@ class SelfNotes(BASE):
     file = Column(UnicodeText)
 
     def __init__(self, user_id, name, value, msgtype, file):
+        """initializing db"""
         self.user_id = user_id
         self.name = name
         self.value = value
@@ -22,6 +23,7 @@ class SelfNotes(BASE):
         self.file = file
 
     def __repr__(self):
+        """get db message"""
         return "<Note %s>" % self.name
 
 
@@ -69,7 +71,7 @@ def get_selfnote(user_id, note_name):
 def get_all_selfnotes(user_id):
     if not SELF_NOTES.get(user_id):
         SELF_NOTES[user_id] = {}
-        return []
+        return None
     allnotes = list(SELF_NOTES[user_id])
     allnotes.sort()
     return allnotes
@@ -111,7 +113,5 @@ def __load_allnotes():
             SELF_NOTES[x.user_id] = {}
         SELF_NOTES[x.user_id][x.name] = {'value': x.value, 'type': x.msgtype, 'file': x.file}
 
-def count_notes():
-    return SESSION.query(SelfNotes).count()
 
 __load_allnotes()

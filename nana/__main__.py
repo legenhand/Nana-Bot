@@ -117,6 +117,8 @@ async def start_bot():
             if not imported_module.__MODULE__.lower() in HELP_COMMANDS:
                 HELP_COMMANDS[imported_module.__MODULE__.lower()] = imported_module
             else:
+                print(HELP_COMMANDS[imported_module.__MODULE__.lower()])
+                pass
                 raise Exception("Can't have two modules with the same name! Please change one")
         if hasattr(imported_module, "__HELP__") and imported_module.__HELP__:
             HELP_COMMANDS[imported_module.__MODULE__.lower()] = imported_module

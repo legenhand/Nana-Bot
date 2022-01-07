@@ -5,23 +5,23 @@ from html import escape
 import aiohttp
 from pyrogram import filters
 
-from nana import app, Command
+from nana import app, Command, AdminSettings, edrep
 
 __MODULE__ = "Weather"
 __HELP__ = """
 Get current weather in your location
 
 ──「 **Weather** 」──
--> `wttr (location)`
+-> `wtr (location)`
 Get current weather in your location.
 Powered by `wttr.in`
 """
 
 
-@app.on_message(filters.me & filters.command(["wttr"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command('wttr', Command))
 async def weather(_client, message):
     if len(message.command) == 1:
-        await message.edit("Usage: `wttr Maldives`")
+        await edrep(message, text="Usage: `wttr Maldives`")
         await asyncio.sleep(3)
         await message.delete()
 
@@ -35,10 +35,10 @@ async def weather(_client, message):
                     data = await resp.text()
         except Exception as e:
             print(e)
-            await message.edit("Failed to get the weather forecast")
+            await edrep(message, text="Failed to get the weather forecast")
 
         if 'we processed more than 1M requests today' in data:
-            await message.edit("`Sorry, we cannot process this request today!`")
+            await edrep(message, text="`Sorry, we cannot process this request today!`")
         else:
             weather_data = f"<code>{escape(data.replace('report', 'Report'))}</code>"
-            await message.edit(weather_data, parse_mode='html')
+            await edrep(message, text=weather_data, parse_mode='html')

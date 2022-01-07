@@ -65,9 +65,8 @@ def get_stickerlist(message):
     global TEMP_KEYBOARD, USER_SET
     if message.from_user and message.from_user.id in list(USER_SET):
         return True
-    else:
-        TEMP_KEYBOARD = []
-        USER_SET = {}
+    TEMP_KEYBOARD = []
+    USER_SET = {}
 
 
 @setbot.on_message(get_stickerlist)

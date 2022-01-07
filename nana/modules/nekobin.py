@@ -4,7 +4,7 @@ import os
 import aiohttp
 from pyrogram import filters
 
-from nana import Command, app
+from nana import Command, app, AdminSettings, edrep
 from nana.helpers.aiohttp_helper import AioHttp
 
 __MODULE__ = "Nekobin"
@@ -16,12 +16,13 @@ Create a Nekobin paste using replied to message.
 """
 
 
-@app.on_message(filters.me & filters.command(["neko"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command("neko", Command))
 async def paste(client, message):
     if message.reply_to_message:
         text = message.reply_to_message.text
     if message.reply_to_message.document and message.reply_to_message.document.file_size < 2 ** 20 * 10:
         var = os.path.splitext(message.reply_to_message.document.file_name)[1]
+        print(var)
         path = await message.reply_to_message.download("nana/")
         with open(path, 'r') as doc:
             text = doc.read()
@@ -41,13 +42,19 @@ async def paste(client, message):
         return
     else:
         url = f'https://nekobin.com/{key}'
-        reply_text = f'Nekofied to [Nekobin]({url})'
+        raw_url = f'https://nekobin.com/raw/{key}'
+        reply_text = '**Nekofied:**\n'
+        reply_text += f' - **Link**: {url}\n'
+        reply_text += f' - **Raw**: {raw_url}'
         delete = True if len(message.command) > 1 and \
                          message.command[1] in ['d', 'del'] and \
                          message.reply_to_message.from_user.is_self else False
         if delete:
             await asyncio.gather(
-                client.send_message(message.chat.id, reply_text, disable_web_page_preview=True),
+                client.send_message(message.chat.id,
+                                    reply_text,
+                                    disable_web_page_preview=True
+                                    ),
                 message.reply_to_message.delete(),
                 message.delete()
             )
@@ -58,14 +65,14 @@ async def paste(client, message):
             )
 
 
-@app.on_message(filters.me & filters.command(["gpaste"], Command))
+@app.on_message(filters.user(AdminSettings) & filters.command(["gpaste"], Command))
 async def get_paste_(_client, message):
-    """ fetches the content of a dogbin or nekobin URL """
+    """fetches the content of a dogbin or nekobin URL."""
     link = message.reply_to_message.text
     if not link:
-        await message.edit("input not found!")
+        await edrep(message, text="input not found!")
         return
-    await message.edit("`Getting paste content...`")
+    await edrep(message, text="`Getting paste content...`")
     format_view = 'https://del.dog/v/'
     if link.startswith(format_view):
         link = link[len(format_view):]
@@ -83,8 +90,7 @@ async def get_paste_(_client, message):
         link = link[len("nekobin.com/"):]
         raw_link = f'https://nekobin.com/raw/{link}'
     else:
-        await message.edit("Is that even a paste url?")
+        await edrep(message, text="Is that even a paste url?")
         return
     resp = await AioHttp().get_text(raw_link)
-    await message.edit(
-        f"**URL content** :\n`{resp}`")
+    await edrep(message, text=f"**URL content** :\n`{resp}`")

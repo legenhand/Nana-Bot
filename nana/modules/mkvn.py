@@ -7,7 +7,7 @@ from asyncio import sleep
 
 from pyrogram import filters
 
-from nana import setbot, app, Command, Owner
+from nana import setbot, app, Command, Owner, AdminSettings, edrep
 from nana.helpers.PyroHelpers import ReplyCheck
 from nana.modules.downloads import download_reply_nocall
 
@@ -19,23 +19,41 @@ Video Note Maker
 Reply a video to make it as video note
 """
 
+error_message = '''
+Hello 🙂
+You need to install ffmpeg to make audio works better, here is guide how to install it:
+**If you're using linux**, go to your terminal, type:
+`sudo apt install ffmpeg`
+**If you're using Windows**, download ffmpeg here:
+`https://ffmpeg.zeranoe.com/builds/`
+And then extract (if was archive), and place ffmpeg.exe to workdir (in current dir)
+**If you're using heroku**, type this in your workdir:
+`heroku buildpacks:add https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`
+Or if you not using heroku term, follow this guide:
+1. Go to heroku.com
+2. Go to your app in heroku
+3. Change tabs/click Settings, then search for Buildpacks text
+4. Click button Add build pack, then type `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`
+5. Click Save changes, and you need to rebuild your heroku app to take changes!
+'''
 
-@app.on_message(filters.user("self") & filters.command(["mkvn"], Command))
+
+@app.on_message(filters.user(AdminSettings) & filters.command("mkvn", Command))
 async def vn_maker(client, message):
 	if message.reply_to_message and message.reply_to_message.video:
 		dlvid = await download_reply_nocall(client, message)
 		if dlvid:
-			await message.edit("__Converting...__")
+			await edrep(message, text="__Converting...__")
 			try:
 				subprocess.Popen("ffmpeg", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			except Exception as err:
 				if "The system cannot find the file specified" in str(err) or "No such file or directory" in str(err):
-					await message.edit("an error occured! check assistant for more details")
+					await edrep(message, text="an error occured! check assistant for more details")
 					await sleep(5)
 					await message.delete()
 					await setbot.send_message(
                         Owner,
-                        "Hello 🙂\nYou need to install ffmpeg to make audio works better, here is guide how to install it:\n\n**If you're using linux**, go to your terminal, type:\n`sudo apt install ffmpeg`\n\n**If you're using Windows**, download ffmpeg here:\n`https://ffmpeg.zeranoe.com/builds/`\nAnd then extract (if was archive), and place ffmpeg.exe to workdir (in current dir)\n\n**If you're using heroku**, type this in your workdir:\n`heroku buildpacks:add https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`\nOr if you not using heroku term, follow this guide:\n1. Go to heroku.com\n2. Go to your app in heroku\n3. Change tabs/click Settings, then search for Buildpacks text\n4. Click button Add build pack, then type `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest`\n5. Click Save changes, and you need to rebuild your heroku app to take changes!"
+                        error_message
                     )
 					return
 			os.system(

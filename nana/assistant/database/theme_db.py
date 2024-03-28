@@ -10,7 +10,8 @@ class ThemeSet(BASE):
     name_theme = Column(UnicodeText)
     is_custom = Column(Boolean)
 
-    def __init__(self, my_id, name_theme, is_custom):
+    def __init__(self, my_id, name_theme, is_custom, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.my_id = my_id
         self.name_theme = str(name_theme)
         self.is_custom = is_custom

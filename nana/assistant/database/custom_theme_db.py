@@ -1,3 +1,5 @@
+from typing import Any
+
 from sqlalchemy import Column, UnicodeText, Integer
 
 from nana import BASE, SESSION
@@ -12,7 +14,8 @@ class CustomThemeSet(BASE):
     settings = Column(UnicodeText)
     stats = Column(UnicodeText)
 
-    def __init__(self, name, welcome, start, settings, stats):
+    def __init__(self, name, welcome, start, settings, stats, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = str(name)
         self.welcome = str(welcome)
         self.start = str(start)

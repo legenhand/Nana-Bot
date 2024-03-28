@@ -4,6 +4,7 @@ import traceback
 from uuid import uuid4
 
 from pyrogram import errors
+from pyrogram.enums import ParseMode
 from pyrogram.types import InlineQueryResultArticle, InlineKeyboardMarkup, InputTextMessageContent, InlineKeyboardButton
 
 from nana import setbot, Owner, OwnerName, DB_AVAILABLE
@@ -234,10 +235,10 @@ async def inline_query_handler(client, query):
                    InlineKeyboardButton("Passing by", callback_data="engine_pm_none")]]
         random.shuffle(button)
         answers.append(InlineQueryResultArticle(
-            id=uuid4(),
+            id=uuid4().__str__(),
             title="Engine pm",
             description="Filter pm",
-            input_message_content=InputTextMessageContent(welc_txt, parse_mode="markdown"),
+            input_message_content=InputTextMessageContent(welc_txt, ParseMode.MARKDOWN),
             reply_markup=InlineKeyboardMarkup(button)))
         await client.answer_inline_query(query.id,
                                          results=answers,

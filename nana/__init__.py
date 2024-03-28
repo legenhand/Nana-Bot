@@ -145,7 +145,7 @@ BOTINLINE_AVAIABLE = False
 
 
 # Postgresql
-def mulaisql() -> scoped_session:
+def start_sql() -> bool | scoped_session:
     global DB_AVAILABLE
     engine = create_engine(DB_URI, client_encoding="utf8")
     BASE.metadata.bind = engine
@@ -190,7 +190,7 @@ async def get_bot():
 
 
 BASE = declarative_base()
-SESSION = mulaisql()
+SESSION = start_sql()
 
 # Spotify Startup
 

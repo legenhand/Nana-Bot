@@ -8,7 +8,8 @@ class StickerSet(BASE):
     my_id = Column(Integer, primary_key=True)
     sticker = Column(UnicodeText)
 
-    def __init__(self, my_id, sticker):
+    def __init__(self, my_id, sticker, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.my_id = my_id
         self.sticker = str(sticker)
 
@@ -21,7 +22,8 @@ class StickerAnimationSet(BASE):
     my_id = Column(Integer, primary_key=True)
     sticker = Column(UnicodeText)
 
-    def __init__(self, my_id, sticker):
+    def __init__(self, my_id, sticker, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.my_id = my_id
         self.sticker = str(sticker)
 

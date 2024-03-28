@@ -72,7 +72,7 @@ async def reboot():
 
 async def restart_all():
     # Restarting and load all plugins
-    asyncio.get_event_loop().create_task(reboot())
+    await asyncio.get_event_loop().create_task(reboot())
 
 
 RANDOM_STICKERS = ["CAADAgAD6EoAAuCjggf4LTFlHEcvNAI", "CAADAgADf1AAAuCjggfqE-GQnopqyAI",

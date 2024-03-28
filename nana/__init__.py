@@ -16,7 +16,6 @@ from .startup.var import get_var
 
 StartTime = time.time()
 
-
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
     TEST_DEVELOP = bool(os.environ.get('TEST_DEVELOP', False))
@@ -208,8 +207,9 @@ if not os.path.exists("./nana/session/database_spotify.json") and SPOTIPY_CLIENT
     with open('./nana/session/database_spotify.json', 'w+') as outfile:
         json.dump(to_create, outfile, indent=4, sort_keys=True)
 
-setbot = Client(BOT_SESSION, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER,
+setbot = Client("setbot",session_string=BOT_SESSION, api_id=api_id, api_hash=api_hash, bot_token=ASSISTANT_BOT_TOKEN, workers=ASSISTANT_WORKER,
                 test_mode=TEST_MODE)
 
-app = Client(APP_SESSION, api_id=api_id, api_hash=api_hash, app_version=app_version, device_model=device_model,
+app = Client("app", session_string=APP_SESSION, api_id=api_id, api_hash=api_hash, app_version=app_version,
+             device_model=device_model,
              system_version=system_version, lang_code=lang_code, workers=NANA_WORKER, test_mode=TEST_MODE)

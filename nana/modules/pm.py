@@ -87,10 +87,6 @@ async def pm_button(client, query):
                                     pm_bot_message,
                                     reply_markup=buttons)
             set_req(query.from_user.id, True)
-            from nana.modules.lydia import lydia_status
-            if lydia_status:
-                await app.send_message(query.from_user.id,
-                                    "During the wait for permission from my master, why do not we have a little chat?")
         elif re.match("engine_pm_report", query.data):
             await setbot.edit_inline_text(query.inline_message_id, "👍")
             await app.send_message(query.from_user.id,

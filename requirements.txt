@@ -13,7 +13,7 @@ jikanpy==4.2.1
 simplejson
 removebg==0.4
 telegraph==1.4.1
-aiohttp==3.6.2
+aiohttp==3.9.3
 pyDownload==0.0.1.dev4
 pillow==7.1.2
 gtts==2.1.1

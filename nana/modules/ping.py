@@ -4,6 +4,8 @@ import requests
 from pyrogram import filters
 from typing import List
 
+from pyrogram.enums import ParseMode
+
 from nana import app, Owner, Command, StartTime
 
 sites_list = {
@@ -64,4 +66,4 @@ async def ping(client, message):
     uptime = get_readable_time((time.time() - StartTime))
     reply_msg = (
         f"<b>Time Taken:</b> <code>{telegram_ping}</code>\n<b>Userbot uptime:</b> <code>{uptime}</code>")
-    await message.edit(reply_msg, parse_mode="html")
+    await message.edit(reply_msg, parse_mode=ParseMode.HTML)

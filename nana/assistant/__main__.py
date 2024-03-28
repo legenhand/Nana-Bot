@@ -69,11 +69,7 @@ async def get_myself(client, message):
     except ConnectionError:
         message.reply("Bot is currently turned off!")
         return
-    getphoto = await client.get_profile_photos(me.id)
-    if len(getphoto) == 0:
-        getpp = None
-    else:
-        getpp = getphoto[0].file_id
+    getpp = await client.download_media(me.photo.big_file_id)
     text = "**ℹ️ Your profile:**\n"
     text += "First name: {}\n".format(me.first_name)
     if me.last_name:

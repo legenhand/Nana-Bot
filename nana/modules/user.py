@@ -44,7 +44,7 @@ async def set_pfp(client, message):
     ):
         await client.download_media(
             message=replied,
-            file_name=profile_photo
+            file_name="../"+profile_photo
         )
         await client.set_profile_photo(profile_photo)
         if os.path.exists(profile_photo):
@@ -71,7 +71,7 @@ async def view_pfp(client, message):
         return
     await client.download_media(
         user.photo.big_file_id,
-        file_name=profile_photo
+        file_name="../"+profile_photo
     )
     await client.send_photo(message.chat.id, profile_photo)
     await message.delete()

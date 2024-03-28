@@ -12,7 +12,6 @@ from .settings import get_text_settings, get_button_settings
 
 TODEL = {}
 
-
 @setbot.on_message(filters.user(AdminSettings) & filters.command(["setsticker"]))
 async def get_stickers(_client, message):
     if not DB_AVAILABLE:
@@ -92,7 +91,9 @@ async def set_stickers(client, message):
     text = await get_text_settings()
     text += "\n{}".format(status)
     button = await get_button_settings()
-    await setbot.send_photo(Owner, "https://raw.githubusercontent.com/legenhand/Nana-bot-file/master/image/bannernanasettings.jpeg", caption=text, reply_markup=button)
+    await setbot.send_photo(Owner,
+                            "https://raw.githubusercontent.com/legenhand/Nana-bot-file/master/image/bannernanasettings.jpeg",
+                            caption=text, reply_markup=button)
 
 
 @setbot.on_callback_query(filters.regex("^setsticker"))
@@ -105,18 +106,18 @@ async def settings_sticker(_client, message):
     # app.read_history("@Stickers")
     time.sleep(0.2)
     try:
-        keyboard = await app.get_history("@Stickers", limit=1)
-        keyboard = keyboard[0].reply_markup.keyboard
-    except:
-        message.message.edit_text("You dont have any sticker pack!\nAdd stickers pack in @Stickers ")
+        async for message in app.get_chat_history("@Stickers", limit=1):
+            keyboard = message.reply_markup.keyboard
+    except Exception as e:
+        print("Error", e)
+        await message.message.edit_text("You dont have any sticker pack!\nAdd stickers pack in @Stickers ")
         return
     for x in keyboard:
         for y in x:
             TEMP_KEYBOARD.append(y)
     await app.send_message("@Stickers", "/cancel")
-    await message.message.delete()
+    # await message.message.delete()
     msg = await setbot.send_message(Owner, "Select your stickers for set as kang animation sticker",
                                     reply_markup=ReplyKeyboardMarkup(keyboard))
-    USER_SET[message.from_user.id] = msg.message_id
+    USER_SET[message.from_user.id] = msg.id
     USER_SET["type"] = 2
-

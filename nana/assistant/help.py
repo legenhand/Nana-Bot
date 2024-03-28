@@ -63,8 +63,9 @@ async def help_parser(client, chat_id, text, keyboard=None):
 @setbot.on_message(filters.user(AdminSettings) & filters.command(["help"]))
 async def help_command(client, message):
     if message.chat.type != "private":
+        me = await setbot.get_me()
         keyboard = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(text="Bantuan", url=f"t.me/{setbot.get_me()['username']}?start=help")]])
+            [[InlineKeyboardButton(text="Bantuan", url=f"t.me/{me.username}?start=help")]])
         await message.reply("Hubungi saya di PM untuk mendapatkan daftar perintah.", reply_markup=keyboard)
         return
     #TODO: Add image of nana in NANA_IMG

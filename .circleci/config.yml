@@ -1,5 +1,13 @@
 version: 2.1
+orbs:
+  qodana: jetbrains/qodana@2023.3
 jobs:
+  code-quality:
+    machine:
+      image: 'ubuntu-2004:current'
+    steps:
+      - checkout
+      - qodana/scan
   build:
     docker:
       - image: circleci/python:3.8
@@ -22,3 +30,5 @@ workflows:
   build-deploy:
     jobs:
       - build
+      - code-quality:
+          context: qodana

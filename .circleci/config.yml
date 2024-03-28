@@ -1,10 +1,24 @@
-version: 2
+version: 2.1
 jobs:
- build:
-   machine: true
-   steps:
-     - checkout
-     # build the application image
-     - run: docker build -t nana/bot:v1.0 .
-      # run the docker image
-     - run: docker run -e ENV=Yes -e TEST_DEVELOP=True -e api_id=$api_id -e api_hash=$api_hash -e DB_URI=$DB_URI -e ASSISTANT_BOT_TOKEN=$ASSISTANT_BOT_TOKEN -e AdminSettings=$AdminSettings -e USERBOT_SESSION=$USERBOT_SESSION -e ASSISTANT_SESSION=$ASSISTANT_SESSION nana/bot:v1.0
+  build:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            python3 -m nana
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
